@@ -55,6 +55,10 @@ header > nav a.active {
     padding-bottom: 0;
 }
 
+header > nav a.active {
+    font-weight: bold;
+}
+
 header > img {
     flex: 0 0 auto;
     width: 40px;
