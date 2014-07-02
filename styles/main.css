@@ -11,7 +11,7 @@ body {
     flex-direction: column;
 }
 
-header {
+body > header {
     box-shadow: 0 0 8px rgb(13, 31, 97);
     background: rgb(255, 255, 255);
     background: rgba(255, 255, 255, 0.8);
@@ -22,7 +22,7 @@ header {
     align-items: center;
 }
 
-header > button {
+body > header > button {
     flex: 0 0 auto;
     margin: 2px 20px;
     width: 48px;
@@ -33,15 +33,15 @@ header > button {
     font-weight: bold;
 }
 
-header > button.off {
+body > header > button.off {
     background: red;
 }
 
-header > nav {
+body > header > nav {
     flex: 1 1 auto;
 }
 
-header > nav a {
+body > header > nav a {
     display: inline-block;
     line-height: 50px;
     border-bottom: 1px solid rgb(13, 31, 97);
@@ -49,29 +49,52 @@ header > nav a {
     transition: all 0.2s;
 }
 
-header > nav a:hover,
-header > nav a.active {
+body > header > nav a:hover,
+body > header > nav a.active {
     border-bottom-width: 3px;
     padding-bottom: 0;
 }
 
-header > nav a.active {
+body > header > nav a.active {
     font-weight: bold;
 }
 
-header > img {
+body > header > img {
     flex: 0 0 auto;
     width: 40px;
     height: 40px;
     margin: 6px;
 }
 
-main {
-    display: flex;
+body > main {
     flex: 1 1 auto;
+    padding: 16px;
+    overflow: auto;
 }
 
-main > textarea {
-    padding: 16px;
-    flex: 1 1 auto;
+body > main table {
+    border-collapse: initial;
+    border-spacing: 0 2px;
+    width: 100%;
+}
+
+body > main tr {
+
+}
+
+body > main tr:nth-child(even) {
+    background: rgb(170, 190, 200);
+}
+
+body > main tr:nth-child(odd) {
+    background: rgb(170, 180, 200);
+}
+
+body > main td,
+body > main th {
+    padding: 4px;
+}
+
+body > main th {
+    font-weight: bold;
 }
