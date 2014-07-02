@@ -82,11 +82,11 @@ body > main tr {
 }
 
 body > main tr:nth-child(even) {
-    background: rgb(170, 190, 200);
+    background: rgb(230, 240, 255);
 }
 
 body > main tr:nth-child(odd) {
-    background: rgb(170, 180, 200);
+    background: rgb(230, 245, 255);
 }
 
 body > main td,
@@ -114,4 +114,8 @@ body > main section[hidden] {
     flex: 1 1 auto;
     padding: 16px;
     overflow: auto;
+}
+
+#log td:first-child {
+    font-weight: bold;
 }
