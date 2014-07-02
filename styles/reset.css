@@ -37,6 +37,7 @@ ul {
 }
 
 button {
+    color: inherit;
     background: none;
 }
 

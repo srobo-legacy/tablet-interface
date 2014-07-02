@@ -12,9 +12,9 @@ body {
 }
 
 body > header {
-    box-shadow: 0 0 8px rgb(13, 31, 97);
-    background: rgb(255, 255, 255);
-    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 4px black;
+    background: rgb(13, 31, 97);
+    color: white;
     flex: 0 0 auto;
     z-index: 1000;
 
@@ -24,17 +24,9 @@ body > header {
 
 body > header > button {
     flex: 0 0 auto;
-    margin: 2px 20px;
-    width: 48px;
-    height: 48px;
-    border-radius: 100%;
-    color: white;
+    margin: 2px 32px;
     text-transform: uppercase;
     font-weight: bold;
-}
-
-body > header > button.off {
-    background: red;
 }
 
 body > header > nav {
@@ -44,15 +36,12 @@ body > header > nav {
 body > header > nav a {
     display: inline-block;
     line-height: 50px;
-    border-bottom: 1px solid rgb(13, 31, 97);
     padding: 2px 32px;
-    transition: all 0.2s;
 }
 
 body > header > nav a:hover,
 body > header > nav a.active {
-    border-bottom-width: 3px;
-    padding-bottom: 0;
+    background: rgb(20, 48, 150);
 }
 
 body > header > nav a.active {
