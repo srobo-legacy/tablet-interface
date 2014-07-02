@@ -68,8 +68,7 @@ body > header > img {
 
 body > main {
     flex: 1 1 auto;
-    padding: 16px;
-    overflow: auto;
+    display: flex;
 }
 
 body > main table {
@@ -97,4 +96,22 @@ body > main th {
 
 body > main th {
     font-weight: bold;
+}
+
+body > main section {
+    flex: 1 1 auto;
+}
+
+body > main section[hidden] {
+    display: none !important;
+}
+
+#log {
+    display: flex;
+}
+
+#log > main {
+    flex: 1 1 auto;
+    padding: 16px;
+    overflow: auto;
 }
