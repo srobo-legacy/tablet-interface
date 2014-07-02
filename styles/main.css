@@ -95,6 +95,14 @@ body > main section[hidden] {
     display: none !important;
 }
 
+#status {
+
+}
+
+#status > main {
+
+}
+
 #log {
     display: flex;
 }
