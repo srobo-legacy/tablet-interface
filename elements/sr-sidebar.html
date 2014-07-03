@@ -25,6 +25,7 @@
             }
 
             :host #content.opened {
+                left: 52px;
             }
 
             :host #content.closed {
@@ -39,7 +40,9 @@
                 background: none;
                 border: none;
                 font-size: 1.3em;
-                padding: 10px;
+                width: 48px;
+                height: 48px;
+                border-radius: 4px;
                 color: white;
             }
 
@@ -59,11 +62,12 @@
 
     <script>
         Polymer("sr-sidebar", {
+            state: "closed",
             onHamburgerClicked: function() {
-                if (this.state == "open") {
+                if (this.state == "opened") {
                     this.state = "closed";
                 } else {
-                    this.state = "open";
+                    this.state = "opened";
                 }
             }
         });
