@@ -23,7 +23,7 @@
     </head>
 
     <body fullbleed unresolved>
-        <sr-header style="position: fixed; left: 0; top: 10px; width: 100%;" horizontal center layout>
+        <sr-header style="position: fixed; left: 0; top: 10px; width: 100%;">
             <sr-tabs style="margin-left: 180px;" flex>
                 <sr-tab>Setup</sr-tab>
                 <sr-tab>Log</sr-tab>
@@ -31,10 +31,34 @@
                 <sr-tab>Manual Control</sr-tab>
             </sr-tabs>
 
-            <sr-battery level="0.8" style="width: 80px; height: 30px;"></sr-battery>
+            <sr-battery level="0.6" style="width: 80px; height: 30px;"></sr-battery>
         </sr-header>
 
         <sr-starter-button state="off" style="position: fixed; left: 15px; top: -15px;"></sr-starter-button>
+
+        <div style="position: fixed; top: 100px; left: 20px; right: 20px; bottom: 20px;" horizontal center-justified center layout>
+            <div horizontal start layout>
+                <div vertical layout style="margin: 20px;">
+                    <h1>Zone</h1>
+
+                    <ul>
+                        <li>0</li>
+                        <li>1</li>
+                        <li>2</li>
+                        <li>3</li>
+                    </ul>
+                </div>
+
+                <div vertical layout style="margin: 20px;">
+                    <h1>Mode</h1>
+
+                    <ul>
+                        <li>Development</li>
+                        <li>Production</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </body>
 
 </html>
