@@ -8,54 +8,32 @@
             }
 
             button {
-                width: 128px;
-                height: 128px;
-                border-radius: 100%;
-                text-transform: uppercase;
+                width: 150px;
+                height: 150px;
+                border: 0;
+                outline: none;
                 box-shadow: 0 0 10px white;
-                border: 1px solid white;
+                border-radius: 100%;
             }
 
-            .off {
-                background: linear-gradient(to bottom, #00FF00 0%, #1F991F 100%);
+            button.on {
+                background: url("sr-starter-button/normal-on.svg");
             }
 
-            .off:active {
-                background: linear-gradient(to top, #00FF00 0%, #1F991F 100%);
+            button:active.on {
+                background: url("sr-starter-button/active-on.svg");
             }
 
-            .off .stop {
-                opacity: 0.2;
+            button.off {
+                background: url("sr-starter-button/normal-off.svg");
             }
 
-            .on {
-                background: linear-gradient(to bottom, #FF0000 0%, #991F1F 100%);
-            }
-
-            .on:active {
-                background: linear-gradient(to top, #FF0000 0%, #991F1F 100%);
-            }
-
-            .on .start {
-                opacity: 0.2;
-            }
-
-            .small {
-                font-size: 1.2em;
-                color: white;
-            }
-
-            .large {
-                font-size: 1.5em;
-                font-weight: bold;
+            button:active.off {
+                background: url("sr-starter-button/active-off.svg");
             }
         </style>
 
-        <button id="btn" class="{{ state }}" on-click="{{onClick}}">
-            <span class="small">Robot</span><br />
-            <span class="large start">Start</span><br />
-            <span class="large stop">Stop</span>
-        </button>
+        <button class="{{state}}" on-click="{{onClick}}"></button>
     </template>
 
     <script>
