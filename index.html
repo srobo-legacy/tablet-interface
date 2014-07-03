@@ -1,20 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
     <head>
+        <meta charset="UTF-8" />
+
+        <title>SR Tablet Interface</title>
+
         <script src="bower_components/platform/platform.js"></script>
 
         <link rel="import" href="elements/sr-battery.html" />
+        <link rel="import" href="elements/sr-starter-button.html" />
 
         <style>
             body {
                 background: black;
+                color: white;
+                line-height: 1.2;
             }
         </style>
     </head>
 
     <body fullbleed unresolved>
-        <sr-battery level="0.5" style="width: 120px; position: fixed; right: 10px; bottom: 10px;"></sr-battery>
+        <sr-starter-button state="off" style="position: fixed; left: -10px; top: -10px;"></sr-starter-button>
+
+        <div style="position: fixed; right: 10px; bottom: 10px;" horizontal layout>
+            <p style="margin-right: 10px;">Battery has 2 hours left.</p>
+            <sr-battery level="0.5" style="width: 120px;"></sr-battery>
+        </div>
     </body>
 
 </html>
