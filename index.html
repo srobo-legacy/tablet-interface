@@ -11,28 +11,27 @@
         <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Inconsolata:500" />
 
         <link rel="import" href="elements/sr-battery.html" />
-        <link rel="import" href="elements/sr-status-box.html" />
+        <link rel="import" href="elements/sr-header.html" />
         <link rel="import" href="elements/sr-starter-button.html" />
 
         <style>
             body {
-                background: black;
-                background-image: url("images/background.svg");
-                background-size: cover;
-
-                color: white;
                 line-height: 1.2;
             }
         </style>
     </head>
 
     <body fullbleed unresolved>
-        <sr-starter-button state="off" style="position: fixed; left: -10px; top: -10px;"></sr-starter-button>
+        <sr-header style="position: fixed; left: 0; top: 10px; width: 100%;" horizontal center layout>
+            <sr-navigation style="margin-left: 180px;" flex>
+                <ul>
+                </ul>
+            </sr-navigation>
 
-        <sr-status-box style="position: fixed; right: 10px; bottom: 10px; font-family: 'Inconsolata';">
-            <p>Battery has 2 hours left.</p>
-            <sr-battery level="0.5" style="width: 120px; height: 30px;"></sr-battery>
-        </sr-status-box>
+            <sr-battery level="0.8" style="width: 80px; height: 30px;"></sr-battery>
+        </sr-header>
+
+        <sr-starter-button state="off" style="position: fixed; left: 15px; top: -15px;"></sr-starter-button>
     </body>
 
 </html>
