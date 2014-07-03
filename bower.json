@@ -1,0 +1,9 @@
+{
+  "name": "srobo-tablet-interface",
+  "version": "0.0.0",
+  "homepage": "https://github.com/tomleese/srobo-tablet-interface",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.3.3"
+  }
+}
