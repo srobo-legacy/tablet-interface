@@ -1,0 +1,71 @@
+<link rel="import" href="../bower_components/polymer/polymer.html" />
+
+<polymer-element name="sr-sidebar" attributes="state">
+    <template>
+        <link rel="stylesheet" href="../bower_components/components-font-awesome/css/font-awesome.css" />
+
+        <style>
+            :host {
+                display: block;
+            }
+
+            :host > div {
+                height: 100%;
+                position: fixed;
+                background: rgb(13, 31, 97);
+                top: 0;
+                left: 0;
+                bottom: 0;
+            }
+
+            :host #content {
+                width: 33%;
+                transition: left 0.4s;
+                box-shadow: 0 0 20px black;
+            }
+
+            :host #content.opened {
+            }
+
+            :host #content.closed {
+                left: -100%;
+            }
+
+            :host #hamburger {
+                padding: 2px;
+            }
+
+            :host #hamburger button {
+                background: none;
+                border: none;
+                font-size: 1.3em;
+                padding: 10px;
+                color: white;
+            }
+
+            :host #hamburger button:active {
+                background: rgba(0, 0, 0, 0.5);
+            }
+        </style>
+
+        <div id="content" class="{{state}}">
+            <content></content>
+        </div>
+
+        <div id="hamburger">
+            <button on-click="{{onHamburgerClicked}}"><span class="fa fa-bars"></span></button>
+        </div>
+    </template>
+
+    <script>
+        Polymer("sr-sidebar", {
+            onHamburgerClicked: function() {
+                if (this.state == "open") {
+                    this.state = "closed";
+                } else {
+                    this.state = "open";
+                }
+            }
+        });
+    </script>
+</polymer-element>

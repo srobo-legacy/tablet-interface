@@ -9,6 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 
         <script src="bower_components/platform/platform.js"></script>
+        <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
 
         <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Inconsolata:500" />
         <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Lato:400,700" />
@@ -21,10 +22,11 @@
         <link rel="import" href="elements/sr-tabs.html" />
         <link rel="import" href="elements/sr-starter-button.html" />
         <link rel="import" href="elements/sr-zone-picker.html" />
+        <link rel="import" href="elements/sr-sidebar.html" />
     </head>
 
     <body fullbleed unresolved>
-        <sr-header style="position: fixed; left: 0; top: 10px; width: 100%;">
+        <!--<sr-header style="position: fixed; left: 100px; top: 10px; width: 100%;">
             <sr-tabs style="margin-left: 180px;" flex>
                 <sr-tab>Setup</sr-tab>
                 <sr-tab>Log</sr-tab>
@@ -52,7 +54,13 @@
             </div>
         </div>
 
-        <sr-starter-button state="off" style="position: fixed; left: 15px; top: -15px;"></sr-starter-button>
+        <sr-starter-button state="off" style="position: fixed; left: -10px; bottom: -10px;"></sr-starter-button>-->
+
+        <sr-sidebar state="closed">
+            <h1>Student Robotics</h1>
+        </sr-sidebar>
+
+        <h1>Setup</h1>
     </body>
 
 </html>

@@ -4,6 +4,7 @@
   "homepage": "https://github.com/tomleese/srobo-tablet-interface",
   "private": true,
   "dependencies": {
-    "polymer": "Polymer/polymer#~0.3.3"
+    "polymer": "Polymer/polymer#~0.3.3",
+    "components-font-awesome": "~4.1.0"
   }
 }
