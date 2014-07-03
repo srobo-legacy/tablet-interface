@@ -1,0 +1,51 @@
+<link rel="import" href="../bower_components/polymer/polymer.html" />
+
+<polymer-element name="sr-zone-picker" attributes="zone" noscript>
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+
+            button {
+                width: 64px;
+                height: 64px;
+                margin: 8px;
+                font-size: 2em;
+                font-weight: bold;
+                border-radius: 2px;
+                border: none;
+            }
+
+            button::before {
+                content: attr(data-zone);
+            }
+
+            button[data-zone='0'] {
+                background: #00ff00;
+            }
+
+            button[data-zone='1'] {
+                background: #ff6600;
+            }
+
+            button[data-zone='2'] {
+                background: #ff00ff;
+            }
+
+            button[data-zone='3'] {
+                background: #ffff00;
+            }
+
+            button.selected {
+                box-shadow: inset 0 0 10px black;
+            }
+        </style>
+
+        <button data-zone="0" class="selected"></button>
+        <button data-zone="1"></button>
+        <br />
+        <button data-zone="2"></button>
+        <button data-zone="3"></button>
+    </template>
+</polymer-element>

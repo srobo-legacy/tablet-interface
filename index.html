@@ -14,6 +14,7 @@
         <link rel="import" href="elements/sr-header.html" />
         <link rel="import" href="elements/sr-tabs.html" />
         <link rel="import" href="elements/sr-starter-button.html" />
+        <link rel="import" href="elements/sr-zone-picker.html" />
 
         <style>
             body {
@@ -36,22 +37,15 @@
 
         <sr-starter-button state="off" style="position: fixed; left: 15px; top: -15px;"></sr-starter-button>
 
-        <div style="position: fixed; top: 100px; left: 20px; right: 20px; bottom: 20px;" horizontal center-justified center layout>
+        <div style="position: fixed; top: 60px; left: 20px; right: 20px; bottom: 20px;" horizontal center-justified center layout>
             <div horizontal start layout>
                 <div vertical layout style="margin: 20px;">
                     <h1>Zone</h1>
-
-                    <ul>
-                        <li>0</li>
-                        <li>1</li>
-                        <li>2</li>
-                        <li>3</li>
-                    </ul>
+                    <sr-zone-picker></sr-zone-picker>
                 </div>
 
                 <div vertical layout style="margin: 20px;">
                     <h1>Mode</h1>
-
                     <ul>
                         <li>Development</li>
                         <li>Production</li>
