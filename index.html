@@ -12,6 +12,7 @@
 
         <link rel="import" href="elements/sr-battery.html" />
         <link rel="import" href="elements/sr-header.html" />
+        <link rel="import" href="elements/sr-tabs.html" />
         <link rel="import" href="elements/sr-starter-button.html" />
 
         <style>
@@ -23,10 +24,12 @@
 
     <body fullbleed unresolved>
         <sr-header style="position: fixed; left: 0; top: 10px; width: 100%;" horizontal center layout>
-            <sr-navigation style="margin-left: 180px;" flex>
-                <ul>
-                </ul>
-            </sr-navigation>
+            <sr-tabs style="margin-left: 180px;" flex>
+                <sr-tab>Setup</sr-tab>
+                <sr-tab>Log</sr-tab>
+                <sr-tab>Camera</sr-tab>
+                <sr-tab>Manual Control</sr-tab>
+            </sr-tabs>
 
             <sr-battery level="0.8" style="width: 80px; height: 30px;"></sr-battery>
         </sr-header>
