@@ -8,6 +8,8 @@
 
         <script src="bower_components/platform/platform.js"></script>
 
+        <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Inconsolata:500" />
+
         <link rel="import" href="elements/sr-battery.html" />
         <link rel="import" href="elements/sr-starter-button.html" />
 
@@ -23,7 +25,7 @@
     <body fullbleed unresolved>
         <sr-starter-button state="off" style="position: fixed; left: -10px; top: -10px;"></sr-starter-button>
 
-        <div style="position: fixed; right: 10px; bottom: 10px;" horizontal layout>
+        <div style="position: fixed; right: 10px; bottom: 10px; font-family: 'Inconsolata';" horizontal layout>
             <p style="margin-right: 10px;">Battery has 2 hours left.</p>
             <sr-battery level="0.5" style="width: 120px;"></sr-battery>
         </div>
