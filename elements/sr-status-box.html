@@ -1,0 +1,21 @@
+<link rel="import" href="../bower_components/polymer/polymer.html" />
+
+<polymer-element name="sr-status-box" noscript>
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+
+            :host div {
+                padding: 10px;
+                border-radius: 10px;
+                background: rgba(20, 20, 20, 0.5);
+            }
+        </style>
+
+        <div horizontal layout>
+            <content></content>
+        </div>
+    </template>
+</polymer-element>
