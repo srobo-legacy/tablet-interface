@@ -7,6 +7,8 @@
         <style>
             :host {
                 display: block;
+                position: relative;
+                z-index: 1000;
             }
 
             :host > div {
@@ -20,17 +22,22 @@
 
             :host #content {
                 width: 33%;
-                transition: left 0.4s;
+                transition: -webkit-transform 0.4s;
+                transition: transform 0.4s;
                 box-shadow: 0 0 20px black;
+                color: white;
+                left: 52px;
+                padding: 10px;
             }
 
             :host #content.opened {
-                left: 52px;
+                transform: translateX(0);
+                -webkit-transform: translateX(0);
             }
 
             :host #content.closed {
-                left: -100%;
-                left: calc(-100% + 52px);
+                transform: translateX(-110%); /* 10% for the shadow */
+                -webkit-transform: translateX(-110%); /* 10% for the shadow */
             }
 
             :host #hamburger {
