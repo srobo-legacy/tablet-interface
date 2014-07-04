@@ -1,63 +1,26 @@
 <link rel="import" href="../bower_components/polymer/polymer.html" />
 
 <polymer-element name="sr-navigation-drawer" attributes="state">
-    <template>
+    <template class="{{state}}">
         <style>
             :host {
                 display: block;
-                position: relative;
-                z-index: 1000;
-            }
-
-            :host > div {
-                height: 100%;
                 position: fixed;
-                background: rgb(13, 31, 97);
-                top: 0;
-                left: 0;
-                bottom: 0;
-            }
-
-            :host #content {
                 width: 33%;
+                height: 100%;
+                background: rgb(13, 31, 97);
+                box-shadow: 0 0 10px black;
                 transition: -webkit-transform 0.4s;
                 transition: transform 0.4s;
-                box-shadow: 0 0 20px black;
-                color: white;
-                left: 52px;
+            }
+
+            div {
                 padding: 10px;
-            }
-
-            :host #content.opened {
-                transform: translateX(0);
-                -webkit-transform: translateX(0);
-            }
-
-            :host #content.closed {
-                transform: translateX(-110%); /* 10% for the shadow */
-                -webkit-transform: translateX(-110%); /* 10% for the shadow */
-            }
-
-            :host #hamburger {
-                padding: 2px;
-            }
-
-            :host #hamburger button {
-                background: none;
-                border: none;
-                font-size: 1.3em;
-                width: 48px;
-                height: 48px;
-                border-radius: 4px;
                 color: white;
-            }
-
-            :host #hamburger button:active {
-                background: rgba(0, 0, 0, 0.5);
             }
         </style>
 
-        <div id="content" class="{{state}}">
+        <div>
             <content></content>
         </div>
     </template>
@@ -65,11 +28,33 @@
     <script>
         Polymer("sr-navigation-drawer", {
             state: "closed",
-            onHamburgerClicked: function() {
-                if (this.state == "opened") {
-                    this.state = "closed";
+            domReady: function() {
+                this.stateChanged();
+            },
+            stateChanged: function() {
+                // to work around the inability to style the :host based on attributes
+                if (this.state === "closed") {
+                    this.style.webkitTransform = "translateX(-110%)";
+                    this.style.transform = "translateX(-110%)";
+                } else if (this.state == "opened") {
+                    this.style.webkitTransform = null;
+                    this.style.transform = null;
+                }
+            },
+            open: function() {
+                this.state = "opened";
+            },
+            close: function() {
+                this.state = "closed";
+            },
+            isOpen: function() {
+                return this.state === "opened";
+            },
+            toggle: function() {
+                if (this.isOpen()) {
+                    this.close();
                 } else {
-                    this.state = "opened";
+                    this.open();
                 }
             }
         });
