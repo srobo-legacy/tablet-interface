@@ -1,0 +1,38 @@
+<link rel="import" href="../bower_components/polymer/polymer.html" />
+
+<polymer-element name="sr-log">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+
+            textarea {
+                width: 100%;
+                resize: none;
+            }
+        </style>
+
+        <textarea id="log"></textarea>
+    </template>
+
+    <script>
+        Polymer("sr-log", {
+            isAtBottom: function() {
+                var log = this.$.log;
+                return Math.abs((log.scrollTop + log.clientHeight) - log.scrollHeight) <= 10;
+            },
+            scrollToBottom: function() {
+                var log = this.$.log;
+                log.scrollTop = log.scrollHeight;
+            },
+            addEntry: function(text) {
+                var isAtBottom = this.isAtBottom();
+                this.$.log.innerHTML += text + "\n";
+                if (isAtBottom) {
+                    this.scrollToBottom();
+                }
+            }
+        });
+    </script>
+</polymer-element>
