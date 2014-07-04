@@ -42,9 +42,11 @@
             domReady: function() {
                 var buttons = this.shadowRoot.querySelectorAll("button");
                 for (var i = 0; i < buttons.length; i++) {
-                    buttons[i].addEventListener("click", function(e) {
-                        this.mode = e.target.dataset.mode;
-                    }.bind(this));
+                    (function(btn) {
+                        btn.addEventListener("click", function(e) {
+                            this.mode = btn.dataset.mode;
+                        }.bind(this));
+                    }.bind(this)(buttons[i]));
                 }
             }
         });
