@@ -23,7 +23,7 @@
         <link rel="import" href="elements/sr-button-bar.html" />
         <link rel="import" href="elements/sr-fa-button.html" />
         <link rel="import" href="elements/sr-log.html" />
-        <link rel="import" href="elements/sr-page.html" />
+        <link rel="import" href="elements/sr-pages.html" />
     </head>
 
     <body fullbleed unresolved horizontal layout>
@@ -32,34 +32,62 @@
             <div flex></div>
         </sr-button-bar>
 
-        <sr-navigation-drawer>
-            <sr-fa-button icon="cogs">Setup</sr-fa-button>
-            <sr-fa-button icon="file-text-o">Log</sr-fa-button>
-            <sr-fa-button icon="camera">Camera</sr-fa-button>
-            <sr-fa-button icon="arrows">Manual Control</sr-fa-button>
+        <sr-navigation-drawer id="navigation">
+            <sr-fa-button id="btn-setup" icon="cogs">Setup</sr-fa-button>
+            <sr-fa-button id="btn-log" icon="file-text-o">Log</sr-fa-button>
+            <sr-fa-button id="btn-camera" icon="camera">Camera</sr-fa-button>
+            <sr-fa-button id="btn-mci" icon="arrows">Manual Control</sr-fa-button>
             <div flex></div>
             <sr-fa-button icon="play">Start Robot</sr-fa-button>
             <sr-fa-button icon="refresh">Refresh</sr-fa-button>
             <sr-fa-button icon="question">Help</sr-fa-button>
         </sr-navigation-drawer>
 
-        <main flex>
+        <sr-pages id="pages" flex>
             <sr-page name="setup">
-                <h1>Setup</h1>
-
+                <h1>Set up your robot</h1>
                 <sr-zone-picker></sr-zone-picker>
                 <sr-mode-picker></sr-mode-picker>
                 <sr-starter-button></sr-starter-button>
             </sr-page>
 
-            <sr-page name="log">
-                <h1>Log</h1>
-
+            <sr-page name="log" hidden>
+                <h1>View Robot Logs</h1>
                 <sr-log></sr-log>
             </sr-page>
-        </main>
+
+            <sr-page name="camera" hidden>
+                <canvas></canvas>
+            </sr-page>
+
+            <sr-page name="mci" hidden>
+                <h1>Manual Control Interface</h1>
+            </sr-page>
+        </sr-pages>
 
         <sr-battery level="0.8" style="position: fixed; top: 10px; right: 10px;"></sr-battery>
+
+        <script>
+            document.querySelector("#btn-setup").addEventListener("click", function(e) {
+                document.querySelector("#pages").changePage("setup");
+                document.querySelector("#navigation").close();
+            });
+
+            document.querySelector("#btn-log").addEventListener("click", function(e) {
+                document.querySelector("#pages").changePage("log");
+                document.querySelector("#navigation").close();
+            });
+
+            document.querySelector("#btn-camera").addEventListener("click", function(e) {
+                document.querySelector("#pages").changePage("camera");
+                document.querySelector("#navigation").close();
+            });
+
+            document.querySelector("#btn-mci").addEventListener("click", function(e) {
+                document.querySelector("#pages").changePage("mci");
+                document.querySelector("#navigation").close();
+            });
+        </script>
     </body>
 
 </html>
