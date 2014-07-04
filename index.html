@@ -25,6 +25,7 @@
         <link rel="import" href="elements/sr-pages.html" />
         <link rel="import" href="elements/sr-zone-picker.html" />
         <link rel="import" href="elements/pages/page-setup.html" />
+        <link rel="import" href="elements/pages/page-log.html" />
     </head>
 
     <body fullbleed unresolved horizontal layout>
@@ -40,17 +41,13 @@
             <sr-fa-button id="btn-mci" icon="arrows">Manual Control</sr-fa-button>
             <div flex></div>
             <sr-fa-button icon="play">Start Robot</sr-fa-button>
-            <sr-fa-button icon="refresh">Refresh</sr-fa-button>
+            <sr-fa-button id="btn-install" icon="download">Install</sr-fa-button>
             <sr-fa-button icon="question">Help</sr-fa-button>
         </sr-navigation-drawer>
 
         <sr-pages id="pages" flex>
             <page-setup></page-setup>
-
-            <sr-page name="log" hidden>
-                <h1>View Robot Logs</h1>
-                <sr-log></sr-log>
-            </sr-page>
+            <page-log hidden></page-log>
 
             <sr-page name="camera" hidden>
                 <canvas></canvas>
@@ -82,6 +79,21 @@
             document.querySelector("#btn-mci").addEventListener("click", function(e) {
                 document.querySelector("#pages").changePage("mci");
                 document.querySelector("#navigation").close();
+            });
+
+            var btnInstall = document.querySelector("#btn-install");
+            btnInstall.addEventListener("click", function(e) {
+                // https://bugzilla.mozilla.org/show_bug.cgi?id=745928 :D
+                var manifestUrl = location.protocol + "//" + location.host + "/manifest.webapp";
+                console.log(manifestUrl);
+                var request = window.navigator.mozApps.install(manifestUrl);
+                console.log(request);
+                request.onsuccess = function() {
+                    console.log(this);
+                };
+                request.onerror = function() {
+                    console.log(this.error);
+                };
             });
         </script>
     </body>

@@ -10,6 +10,5 @@ External libraries are managed with `bower`, therefore you must have it installe
 
 ## Running
 
-To run the interface you should serve the HTML from a web server, a quick way of doing this would be to use the `SimpleHTTPServer` found in Python 2.x.
+    $ ./runserver.py
 
-    $ python2 -m SimpleHTTPServer

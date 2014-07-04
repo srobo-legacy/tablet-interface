@@ -1,0 +1,24 @@
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+
+<polymer-element name="page-log" extends="sr-page">
+    <template>
+        <style>
+            h1 {
+                margin: 20px;
+            }
+
+            sr-log {
+                margin: 20px;
+            }
+        </style>
+
+        <h1>View Robot Logs</h1>
+        <sr-log></sr-log>
+    </template>
+
+    <script>
+        Polymer("page-log", {
+            name: "log"
+        });
+    </script>
+</polymer-element>
