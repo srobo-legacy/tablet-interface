@@ -1,7 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer.html" />
 
 <polymer-element name="sr-navigation-drawer" attributes="state">
-    <template class="{{state}}">
+    <template>
         <style>
             :host {
                 display: block;
@@ -11,7 +11,6 @@
                 display: block;
                 position: absolute;
                 top: 0;
-                width: 33%;
                 height: 100%;
                 background: rgb(13, 31, 97);
                 box-shadow: 0 0 10px black;
@@ -19,6 +18,7 @@
                 transition: transform 0.4s;
                 padding: 10px;
                 color: white;
+                box-sizing: border-box;
             }
 
             div.closed {
