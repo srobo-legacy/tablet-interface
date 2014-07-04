@@ -1,0 +1,52 @@
+<link rel="import" href="../bower_components/polymer/polymer.html" />
+
+<polymer-element name="sr-mode-picker" attributes="mode">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+
+            button {
+                margin: 8px;
+                padding: 8px;
+                border-radius: 10px;
+                border: none;
+            }
+
+            button::before {
+                content: attr(data-zone);
+            }
+
+            button.selected {
+                box-shadow: inset 0 0 20px rgb(10, 10, 10);
+            }
+
+            h1 {
+                margin: 10px;
+            }
+        </style>
+
+        <button data-mode="development" class="{{ {selected: mode == 'development'} | tokenList }}">
+            <h1>Development</h1>
+        </button>
+
+        <button data-mode="competition" class="{{ {selected: mode == 'competition'} | tokenList }}">
+            <h1>Competition</h1>
+        </button>
+    </template>
+
+    <script>
+        Polymer("sr-mode-picker", {
+            mode: "development",
+            domReady: function() {
+                var buttons = this.shadowRoot.querySelectorAll("button");
+                for (var i = 0; i < buttons.length; i++) {
+                    buttons[i].addEventListener("click", function(e) {
+                        this.mode = e.target.dataset.mode;
+                    }.bind(this));
+                }
+            }
+        });
+    </script>
+</polymer-element>
