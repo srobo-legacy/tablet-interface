@@ -1,6 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html" />
 
-<polymer-element name="sr-zone-picker" attributes="zone" noscript>
+<polymer-element name="sr-zone-picker" attributes="zone">
     <template>
         <style>
             :host {
@@ -12,8 +12,7 @@
                 height: 64px;
                 margin: 8px;
                 font-size: 2em;
-                font-weight: bold;
-                border-radius: 2px;
+                border-radius: 3px;
                 border: none;
             }
 
@@ -21,31 +20,31 @@
                 content: attr(data-zone);
             }
 
-            button[data-zone='0'] {
-                background: #00ff00;
-            }
-
-            button[data-zone='1'] {
-                background: #ff6600;
-            }
-
-            button[data-zone='2'] {
-                background: #ff00ff;
-            }
-
-            button[data-zone='3'] {
-                background: #ffff00;
-            }
-
             button.selected {
                 box-shadow: inset 0 0 10px black;
             }
         </style>
 
-        <button data-zone="0" class="selected"></button>
-        <button data-zone="1"></button>
+        <!-- TODO fetch these buttons from the competition API? -->
+
+        <button data-zone="0" style="background: #00ff00" class="{{ {selected: zone == 0} | tokenList }}"></button>
+        <button data-zone="1" style="background: #ff6600" class="{{ {selected: zone == 1} | tokenList }}"></button>
         <br />
-        <button data-zone="2"></button>
-        <button data-zone="3"></button>
+        <button data-zone="2" style="background: #ff00ff" class="{{ {selected: zone == 2} | tokenList }}"></button>
+        <button data-zone="3" style="background: #ffff00" class="{{ {selected: zone == 3} | tokenList }}"></button>
     </template>
+
+    <script>
+        Polymer("sr-zone-picker", {
+            zone: "0",
+            domReady: function() {
+                var buttons = this.shadowRoot.querySelectorAll("button");
+                for (var i = 0; i < buttons.length; i++) {
+                    buttons[i].addEventListener("click", function(e) {
+                        this.zone = e.target.dataset.zone;
+                    }.bind(this));
+                }
+            }
+        });
+    </script>
 </polymer-element>
