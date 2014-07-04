@@ -7,8 +7,9 @@
                 display: block;
             }
 
-            div {
-                display: block;
+            #content {
+                display: flex;
+                flex-direction: column;
                 position: absolute;
                 z-index: 50;
                 top: 0;
@@ -24,13 +25,13 @@
                 overflow: auto;
             }
 
-            div.closed {
+            #content.closed {
                 transform: translateX(-110%);
                 -webkit-transform: translateX(-110%);
             }
         </style>
 
-        <div class="{{state}}" vertical layout>
+        <div id="content" class="{{state}}">
             <content></content>
         </div>
     </template>
