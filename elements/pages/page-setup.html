@@ -1,0 +1,33 @@
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+
+<polymer-element name="page-setup" extends="sr-page">
+    <template>
+        <style>
+            h1 {
+                margin: 20px;
+            }
+        </style>
+
+        <h1>Set up your robot</h1>
+
+        <div vertical center layout>
+            <div horizontal start layout>
+                <div vertical center layout style="margin: 0 20px;">
+                    <h2>Zone</h2>
+                    <sr-zone-picker></sr-zone-picker>
+                </div>
+
+                <div vertical center layout style="margin: 0 20px;">
+                    <h2>Mode</h2>
+                    <sr-mode-picker></sr-mode-picker>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        Polymer("page-setup", {
+            name: "setup"
+        });
+    </script>
+</polymer-element>

@@ -15,7 +15,7 @@
     <script>
         Polymer("sr-pages", {
             changePage: function(name) {
-                var pages = this.querySelectorAll("sr-page");
+                var pages = this.children;
                 for (var i = 0; i < pages.length; i++) {
                     if (pages[i].name === name) {
                         pages[i].hidden = false;
@@ -35,6 +35,8 @@
                 display: block;
                 position: relative;
                 overflow: auto;
+                width: 100%;
+                height: 100%;
             }
         </style>
 
