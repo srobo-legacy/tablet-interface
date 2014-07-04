@@ -5,22 +5,29 @@
         <style>
             :host {
                 display: block;
-                position: fixed;
+            }
+
+            div {
+                display: block;
+                position: absolute;
+                top: 0;
                 width: 33%;
                 height: 100%;
                 background: rgb(13, 31, 97);
                 box-shadow: 0 0 10px black;
                 transition: -webkit-transform 0.4s;
                 transition: transform 0.4s;
-            }
-
-            div {
                 padding: 10px;
                 color: white;
             }
+
+            div.closed {
+                transform: translateX(-110%);
+                -webkit-transform: translateX(-110%);
+            }
         </style>
 
-        <div>
+        <div class="{{state}}">
             <content></content>
         </div>
     </template>
@@ -28,19 +35,6 @@
     <script>
         Polymer("sr-navigation-drawer", {
             state: "closed",
-            domReady: function() {
-                this.stateChanged();
-            },
-            stateChanged: function() {
-                // to work around the inability to style the :host based on attributes
-                if (this.state === "closed") {
-                    this.style.webkitTransform = "translateX(-110%)";
-                    this.style.transform = "translateX(-110%)";
-                } else if (this.state == "opened") {
-                    this.style.webkitTransform = null;
-                    this.style.transform = null;
-                }
-            },
             open: function() {
                 this.state = "opened";
             },
