@@ -7,6 +7,7 @@
     "polymer": "Polymer/polymer#~0.3.3",
     "components-font-awesome": "~4.1.0",
     "normalize-css": "~3.0.1",
-    "core-elements": "Polymer/core-elements#~0.3.3"
+    "core-elements": "Polymer/core-elements#~0.3.3",
+    "moment": "~2.7.0"
   }
 }

@@ -36,7 +36,8 @@
             },
             addEntry: function(text) {
                 var isAtBottom = this.isAtBottom();
-                this.$.log.innerHTML += text + "\n";
+                var date = moment().format("HH:mm:ss");
+                this.$.log.innerHTML += date + ": " + text + "\n";
                 if (isAtBottom) {
                     this.scrollToBottom();
                 }
