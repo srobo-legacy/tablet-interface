@@ -14,7 +14,7 @@
             xmlns="http://www.w3.org/2000/svg"
             version="1.1"
             width="30"
-            height="94"
+            height="90"
             viewBox="0 0 50 130">
             <g transform="rotate(-90 65 25) translate(-40 -40)">
                 <clipPath id="level-clip">
@@ -50,6 +50,7 @@
 
     <script>
         Polymer("sr-battery", {
+            level: 1.0,
             domReady: function() {
                 this.$.get.go();
                 setInterval(this.$.get.go.bind(this.$.get), 60 * 1000);
