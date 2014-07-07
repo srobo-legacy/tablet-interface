@@ -22,7 +22,7 @@
             name: "log",
             domReady: function() {
                 this.log = this.$.log;
-                this.log.addEntry("Hello, world.");
+                setInterval(this.log.addEntry.bind(this.log, "Hello, world."), 1000);
             }
         });
     </script>
