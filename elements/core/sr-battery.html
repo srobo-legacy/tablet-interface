@@ -39,12 +39,26 @@
                     style="fill: white" />
             </g>
         </svg>
+
+        <core-ajax
+            id="get"
+            url="/battery"
+            handleAs="json"
+            on-core-response="{{handleGetResponse}}"></core-ajax>
+
     </template>
 
     <script>
         Polymer("sr-battery", {
+            domReady: function() {
+                this.$.get.go();
+                setInterval(this.$.get.go.bind(this.$.get), 60 * 1000);
+            },
             floor: function(value) {
                 return Math.floor(value);
+            },
+            handleGetResponse: function(e) {
+                // TODO implement based on server response
             }
         });
     </script>
