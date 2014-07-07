@@ -36,7 +36,7 @@
     <body fullbleed unresolved horizontal layout>
         <sr-button-bar>
             <sr-fa-button icon="bars" onclick="document.querySelector('sr-navigation-drawer').toggle();"></sr-fa-button>
-            <sr-fa-button icon="play"></sr-fa-button>
+            <sr-fa-button id="btn-play" icon="play"></sr-fa-button>
             <div flex></div>
             <sr-battery></sr-battery>
         </sr-button-bar>
@@ -59,6 +59,16 @@
             <page-mci hidden></page-mci>
             <page-battery hidden></page-battery>
         </sr-pages>
+
+        <core-ajax
+            id="ajax-start"
+            url="/start"
+            handleAs="json"></core-ajax>
+
+        <core-ajax
+            id="ajax-stop"
+            url="/stop"
+            handleAs="json"></core-ajax>
 
         <script>
             document.querySelector("#btn-setup").addEventListener("click", function(e) {
@@ -84,6 +94,16 @@
             document.querySelector("#btn-battery").addEventListener("click", function(e) {
                 document.querySelector("#pages").changePage("battery");
                 document.querySelector("#navigation").close();
+            });
+
+            document.querySelector("#btn-play").addEventListener("click", function(e) {
+                if (e.target.icon == "play") {
+                    e.target.icon = "stop";
+                    document.querySelector("#ajax-start").go();
+                } else {
+                    e.target.icon = "play";
+                    document.querySelector("#ajax-stop").go();
+                }
             });
 
             var btnInstall = document.querySelector("#btn-install");
