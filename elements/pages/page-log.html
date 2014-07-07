@@ -4,21 +4,26 @@
     <template>
         <style>
             h1 {
-                margin: 20px;
+                margin: 15px 15px 5px;
             }
 
             sr-log {
-                margin: 20px;
+                margin: 5px 15px 15px;
+                flex: 1 1 auto;
             }
         </style>
 
         <h1>View Robot Logs</h1>
-        <sr-log></sr-log>
+        <sr-log id="log"></sr-log>
     </template>
 
     <script>
         Polymer("page-log", {
-            name: "log"
+            name: "log",
+            domReady: function() {
+                this.log = this.$.log;
+                this.log.addEntry("Hello, world.");
+            }
         });
     </script>
 </polymer-element>
