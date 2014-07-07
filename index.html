@@ -28,6 +28,7 @@
         <link rel="import" href="elements/pages/page-log.html" />
         <link rel="import" href="elements/pages/page-camera.html" />
         <link rel="import" href="elements/pages/page-mci.html" />
+        <link rel="import" href="elements/pages/page-battery.html" />
     </head>
 
     <body fullbleed unresolved horizontal layout>
@@ -41,6 +42,7 @@
             <sr-fa-button id="btn-log" icon="file-text-o">Log</sr-fa-button>
             <sr-fa-button id="btn-camera" icon="camera">Camera</sr-fa-button>
             <sr-fa-button id="btn-mci" icon="arrows">Manual Control</sr-fa-button>
+            <sr-fa-button id="btn-battery" icon="bolt">Battery</sr-fa-button>
             <div flex></div>
             <sr-fa-button icon="play">Start Robot</sr-fa-button>
             <sr-fa-button id="btn-install" icon="download">Install</sr-fa-button>
@@ -52,6 +54,7 @@
             <page-log hidden></page-log>
             <page-camera hidden></page-camera>
             <page-mci hidden></page-mci>
+            <page-battery hidden></page-battery>
         </sr-pages>
 
         <sr-battery level="0.8" style="position: fixed; top: 10px; right: 10px;"></sr-battery>
@@ -74,6 +77,11 @@
 
             document.querySelector("#btn-mci").addEventListener("click", function(e) {
                 document.querySelector("#pages").changePage("mci");
+                document.querySelector("#navigation").close();
+            });
+
+            document.querySelector("#btn-battery").addEventListener("click", function(e) {
+                document.querySelector("#pages").changePage("battery");
                 document.querySelector("#navigation").close();
             });
 
