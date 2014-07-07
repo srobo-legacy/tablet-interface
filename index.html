@@ -89,9 +89,7 @@
             btnInstall.addEventListener("click", function(e) {
                 // https://bugzilla.mozilla.org/show_bug.cgi?id=745928 :D
                 var manifestUrl = location.protocol + "//" + location.host + "/manifest.webapp";
-                console.log(manifestUrl);
                 var request = window.navigator.mozApps.install(manifestUrl);
-                console.log(request);
                 request.onsuccess = function() {
                     console.log(this);
                 };
