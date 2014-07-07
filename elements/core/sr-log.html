@@ -19,6 +19,13 @@
 
     <script>
         Polymer("sr-log", {
+            domReady: function() {
+                this.socket = new WebSocket("ws:///log");
+                this.socket.onopen = this.addEntry.bind(this, "Connected to Robot.");
+                this.socket.onerror = this.addEntry.bind(this, "An error has occured.");
+                this.socket.onclose = this.addEntry.bind(this, "Disconnected from Robot.");
+                this.socket.onmessage = this.addEntry.bind(this);
+            },
             isAtBottom: function() {
                 var log = this.$.log;
                 return Math.abs((log.scrollTop + log.clientHeight) - log.scrollHeight) <= 10;
