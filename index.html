@@ -98,11 +98,17 @@
 
             document.querySelector("#btn-play").addEventListener("click", function(e) {
                 if (e.target.icon == "play") {
-                    e.target.icon = "stop";
-                    document.querySelector("#ajax-start").go();
+                    e.target.icon = "cog fa-spin";
+                    setTimeout(function() {
+                        e.target.icon = "stop";
+                        document.querySelector("#ajax-start").go();
+                    }, 1000);
                 } else {
-                    e.target.icon = "play";
-                    document.querySelector("#ajax-stop").go();
+                    e.target.icon = "cog fa-spin";
+                    setTimeout(function() {
+                        e.target.icon = "play";
+                        document.querySelector("#ajax-stop").go();
+                    }, 1000);
                 }
             });
 
