@@ -36,7 +36,7 @@
     <body fullbleed unresolved horizontal layout>
         <sr-button-bar>
             <sr-fa-button icon="bars" onclick="document.querySelector('sr-navigation-drawer').toggle();"></sr-fa-button>
-            <sr-fa-button id="btn-play" icon="play"></sr-fa-button>
+            <sr-fa-button class="btn-play" icon="play"></sr-fa-button>
             <div flex></div>
             <sr-battery></sr-battery>
         </sr-button-bar>
@@ -48,6 +48,7 @@
             <sr-fa-button id="btn-mci" icon="arrows">Manual Control</sr-fa-button>
             <sr-fa-button id="btn-battery" icon="bolt">Battery</sr-fa-button>
             <div flex style="min-height: 50px;"></div>
+            <sr-fa-button class="btn-play" icon="play">Start Robot</sr-fa-button>
             <sr-fa-button id="btn-install" icon="download">Install</sr-fa-button>
             <sr-fa-button icon="question" onclick="window.open('https://www.studentrobotics.org/docs/')">Docs</sr-fa-button>
         </sr-navigation-drawer>
@@ -96,22 +97,6 @@
                 document.querySelector("#navigation").close();
             });
 
-            document.querySelector("#btn-play").addEventListener("click", function(e) {
-                if (e.target.icon == "play") {
-                    e.target.icon = "cog fa-spin";
-                    setTimeout(function() {
-                        e.target.icon = "stop";
-                        document.querySelector("#ajax-start").go();
-                    }, 1000);
-                } else {
-                    e.target.icon = "cog fa-spin";
-                    setTimeout(function() {
-                        e.target.icon = "play";
-                        document.querySelector("#ajax-stop").go();
-                    }, 1000);
-                }
-            });
-
             var btnInstall = document.querySelector("#btn-install");
             btnInstall.addEventListener("click", function(e) {
                 // https://bugzilla.mozilla.org/show_bug.cgi?id=745928 :D
@@ -124,6 +109,48 @@
                     console.log(this.error);
                 };
             });
+        </script>
+
+        <script>
+            (function() {
+                var btns = document.querySelectorAll(".btn-play");
+                var changeIcon = function(icon) {
+                    for (var i = 0; i < btns.length; i++) {
+                        btns[i].icon = icon;
+                    }
+                };
+                var changeText = function(text) {
+                    for (var i = 0; i < btns.length; i++) {
+                        if (btns[i].textContent.length !== 0) {
+                            btns[i].textContent = text;
+                        }
+                    }
+                };
+
+                var onclick = function(e) {
+                    if (e.target.icon == "play") {
+                        changeIcon("cog fa-spin");
+                        changeText("Starting…");
+                        setTimeout(function() {
+                            changeIcon("stop");
+                            changeText("Stop Robot");
+                            document.querySelector("#ajax-start").go();
+                        }, 1000);
+                    } else {
+                        changeIcon("cog fa-spin");
+                        changeText("Stopping…");
+                        setTimeout(function() {
+                            changeIcon("play");
+                            changeText("Start Robot");
+                            document.querySelector("#ajax-stop").go();
+                        }, 1000);
+                    }
+                };
+
+                for (var i = 0; i < btns.length; i++) {
+                    btns[i].onclick = onclick;
+                }
+            }());
         </script>
     </body>
 
