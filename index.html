@@ -26,6 +26,8 @@
         <link rel="import" href="elements/sr-zone-picker.html" />
         <link rel="import" href="elements/pages/page-setup.html" />
         <link rel="import" href="elements/pages/page-log.html" />
+        <link rel="import" href="elements/pages/page-camera.html" />
+        <link rel="import" href="elements/pages/page-mci.html" />
     </head>
 
     <body fullbleed unresolved horizontal layout>
@@ -48,14 +50,8 @@
         <sr-pages id="pages" flex>
             <page-setup></page-setup>
             <page-log hidden></page-log>
-
-            <sr-page name="camera" hidden>
-                <canvas></canvas>
-            </sr-page>
-
-            <sr-page name="mci" hidden>
-                <h1>Manual Control Interface</h1>
-            </sr-page>
+            <page-camera hidden></page-camera>
+            <page-mci hidden></page-mci>
         </sr-pages>
 
         <sr-battery level="0.8" style="position: fixed; top: 10px; right: 10px;"></sr-battery>
