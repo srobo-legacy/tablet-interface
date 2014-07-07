@@ -27,27 +27,53 @@
             }
         </style>
 
-        <button data-mode="development" class="{{ {selected: mode == 'development'} | tokenList }}">
+        <button data-mode="dev" class="{{ {selected: mode == 'dev'} | tokenList }}">
             <h1>Development</h1>
         </button>
 
-        <button data-mode="competition" class="{{ {selected: mode == 'competition'} | tokenList }}">
+        <button data-mode="comp" class="{{ {selected: mode == 'comp'} | tokenList }}">
             <h1>Competition</h1>
         </button>
+
+        <core-ajax
+            id="get"
+            url="/settings/mode"
+            handleAs="json"
+            on-core-response="{{handleGetResponse}}"></core-ajax>
+
+        <core-ajax
+            id="put"
+            method="PUT"
+            url="/settings/mode"
+            handleAs="json"
+            on-core-response="{{handlePutResponse}}"></core-ajax>
+
     </template>
 
     <script>
         Polymer("sr-mode-picker", {
-            mode: "development",
+            mode: "dev",
             domReady: function() {
                 var buttons = this.shadowRoot.querySelectorAll("button");
                 for (var i = 0; i < buttons.length; i++) {
                     (function(btn) {
                         btn.addEventListener("click", function(e) {
                             this.mode = btn.dataset.mode;
+                            this.$.put.body = JSON.stringify({mode: this.mode});
+                            this.$.put.go();
                         }.bind(this));
                     }.bind(this)(buttons[i]));
                 }
+
+                this.$.get.go();
+
+                setInterval(this.$.get.go.bind(this.$.get), 60 * 1000);
+            },
+            handleGetResponse: function(e) {
+                // TODO implement based on server response
+            },
+            handlerPutResponse: function(e) {
+                // TODO implement based on server response
             }
         });
     </script>
