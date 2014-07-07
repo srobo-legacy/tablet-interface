@@ -3,6 +3,8 @@
 <polymer-element name="sr-mode-picker" attributes="mode">
     <template>
         <style>
+            @import "/bower_components/components-font-awesome/css/font-awesome.css";
+
             :host {
                 display: flex;
                 flex-direction: column;
@@ -28,14 +30,18 @@
             h1 {
                 margin: 10px;
             }
+
+            h1 > span.fa {
+                margin-right: 12px;
+            }
         </style>
 
         <button data-mode="dev" class="{{ {selected: mode == 'dev'} | tokenList }}">
-            <h1>Development</h1>
+            <h1><span class="fa fa-code"></span> Development</h1>
         </button>
 
         <button data-mode="comp" class="{{ {selected: mode == 'comp'} | tokenList }}">
-            <h1>Competition</h1>
+            <h1><span class="fa fa-trophy"></span> Competition</h1>
         </button>
 
         <core-ajax
