@@ -28,11 +28,11 @@
         Polymer("sr-log", {
             domReady: function() {
                 this.$.get.go();
-                this.socket = new WebSocket("ws:///log");
+                this.socket = new WebSocket("ws://localhost:8000/ws/log");
                 this.socket.onopen = this.addEntry.bind(this, "Connected to Robot.");
                 this.socket.onerror = this.addEntry.bind(this, "An error has occured.");
                 this.socket.onclose = this.addEntry.bind(this, "Disconnected from Robot.");
-                this.socket.onmessage = this.addEntry.bind(this);
+                this.socket.onmessage = this.addEntryFromWebSocket.bind(this);
             },
             isAtBottom: function() {
                 var log = this.$.log;
@@ -53,12 +53,15 @@
                     var date = moment().format("HH:mm:ss");
                     this.$.log.innerHTML += date + ": ";
                 }
-                
+
                 this.$.log.innerHTML += text + "\n";
 
                 if (isAtBottom) {
                     this.scrollToBottom();
                 }
+            },
+            addEntryFromWebSocket: function(msg) {
+                this.addEntry(msg.data);
             },
             handleGetResponse: function(e) {
                 this.addEntry("-- Previous Log Starts Here --")

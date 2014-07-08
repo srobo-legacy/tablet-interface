@@ -10,5 +10,5 @@ External libraries are managed with `bower`, therefore you must have it installe
 
 ## Running
 
-    $ ./runserver.py
-
+    $ pip install gunicorn Flask Flask-sockets
+    $ gunicorn -k flask_sockets.worker runserver:app
