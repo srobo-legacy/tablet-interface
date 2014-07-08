@@ -28,7 +28,7 @@
         Polymer("sr-log", {
             domReady: function() {
                 this.$.get.go();
-                this.socket = new WebSocket("ws://localhost:8000/ws/log");
+                this.socket = new WebSocket("ws://" + location.host + "/ws/log");
                 this.socket.onopen = this.addEntry.bind(this, "Connected to Robot.");
                 this.socket.onerror = this.addEntry.bind(this, "An error has occured.");
                 this.socket.onclose = this.addEntry.bind(this, "Disconnected from Robot.");
