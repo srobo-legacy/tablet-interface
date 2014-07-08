@@ -60,14 +60,15 @@
                 for (var i = 0; i < buttons.length; i++) {
                     buttons[i].addEventListener("click", function(e) {
                         this.zone = e.target.dataset.zone;
-                        this.$.put.body = JSON.stringify({zone: this.zone});
-                        this.$.put.go();
                     }.bind(this));
                 }
 
                 this.$.get.go();
-
                 setInterval(this.$.get.go.bind(this.$.get), 60 * 1000);
+            },
+            zoneChanged: function() {
+                this.$.put.body = JSON.stringify({zone: this.zone});
+                this.$.put.go();
             },
             handleGetResponse: function(e) {
                 this.zone = e.detail.response.zone;
