@@ -1,4 +1,5 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="/elements/core/sr-log.html" />
 
 <polymer-element name="page-log" extends="sr-page">
     <template>
@@ -14,15 +15,12 @@
         </style>
 
         <h1>View Robot Logs</h1>
-        <sr-log id="log"></sr-log>
+        <sr-log></sr-log>
     </template>
 
     <script>
         Polymer("page-log", {
-            name: "log",
-            domReady: function() {
-                this.log = this.$.log;
-            }
+            name: "log"
         });
     </script>
 </polymer-element>
