@@ -16,11 +16,18 @@
         </style>
 
         <textarea id="log" readonly></textarea>
+
+        <core-ajax
+            id="get"
+            url="/log"
+            handleAs="json"
+            on-core-response="{{handleGetResponse}}"></core-ajax>
     </template>
 
     <script>
         Polymer("sr-log", {
             domReady: function() {
+                this.$.get.go();
                 this.socket = new WebSocket("ws:///log");
                 this.socket.onopen = this.addEntry.bind(this, "Connected to Robot.");
                 this.socket.onerror = this.addEntry.bind(this, "An error has occured.");
@@ -35,13 +42,28 @@
                 var log = this.$.log;
                 log.scrollTop = log.scrollHeight;
             },
-            addEntry: function(text) {
+            addEntry: function(text, addDate) {
+                if (addDate === undefined) {
+                    addDate = true;
+                }
+
                 var isAtBottom = this.isAtBottom();
-                var date = moment().format("HH:mm:ss");
-                this.$.log.innerHTML += date + ": " + text + "\n";
+
+                if (addDate) {
+                    var date = moment().format("HH:mm:ss");
+                    this.$.log.innerHTML += date + ": ";
+                }
+                
+                this.$.log.innerHTML += text + "\n";
+
                 if (isAtBottom) {
                     this.scrollToBottom();
                 }
+            },
+            handleGetResponse: function(e) {
+                this.addEntry("-- Previous Log Starts Here --")
+                this.addEntry(e.target.response.log, false);
+                this.addEntry("-- Previous Log Ends Here --")
             }
         });
     </script>
