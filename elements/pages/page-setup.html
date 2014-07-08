@@ -61,12 +61,26 @@
         <div id="overlay" class="{{ {disabled: disabled} | tokenList }}">
             <h1>Stop the robot first.</h1>
         </div>
+
+        <core-ajax
+            id="getState"
+            url="/state"
+            handleAs="json"
+            on-core-response="{{handleGetStateResponse}}"></core-ajax>
+
     </template>
 
     <script>
         Polymer("page-setup", {
             name: "setup",
-            disabled: false
+            disabled: false,
+            domReady: function() {
+                this.$.getState.go();
+                setInterval(this.$.getState.go.bind(this.$.getState), 5 * 1000);
+            },
+            handleGetStateResponse: function(e) {
+                this.disabled = e.target.response.state !== "stopped";
+            }
         });
     </script>
 </polymer-element>
