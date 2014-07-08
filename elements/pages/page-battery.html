@@ -1,4 +1,5 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="/elements/core/sr-battery-history.html" />
 
 <polymer-element name="page-battery" extends="sr-page">
     <template>
@@ -7,67 +8,20 @@
                 margin: 15px 15px 5px;
             }
 
-            div {
+            sr-battery-history {
                 margin: 5px 15px 15px;
                 flex: 1 1 auto;
-                display: flex;
-                justify-content: center;
-            }
-
-            canvas {
-                align-self: center;
             }
         </style>
 
         <h1>View Battery History</h1>
 
-        <div>
-            <canvas id="canvas" width="660" height="300"></canvas>
-        </div>
-
-        <core-ajax
-            id="get"
-            url="/battery"
-            handleAs="json"
-            on-core-response="{{handleGetResponse}}"></core-ajax>
-
+        <sr-battery-history id="history"></sr-battery-history>
     </template>
-
-    <script src="/bower_components/chartjs/Chart.js"></script>
 
     <script>
         Polymer("page-battery", {
-            name: "battery",
-            domReady: function() {
-                this.$.get.go();
-                setInterval(this.$.get.go.bind(this.$.get), 60 * 1000);
-            },
-            handleGetResponse: function(e) {
-                var level = e.target.response.level;
-
-                if (!this.chart) {
-                    var data = {
-                        labels: ["", ""],
-                        datasets: [
-                            {
-                                label: "Battery Level",
-                                fillColor: "rgba(220,220,220,0.2)",
-                                strokeColor: "rgba(220,220,220,1)",
-                                pointColor: "rgba(220,220,220,1)",
-                                pointStrokeColor: "#fff",
-                                pointHighlightFill: "#fff",
-                                pointHighlightStroke: "rgba(220,220,220,1)",
-                                data: [level, level] // FIXME Chart.js doesn't like not having initial values?
-                            }
-                        ]
-                    };
-                    var options = {};
-                    this.ctx = this.$.canvas.getContext("2d");
-                    this.chart = new Chart(this.ctx).Line(data, options);
-                }
-
-                this.chart.addData([level], moment().format("HH:mm:ss"));
-            }
+            name: "battery"
         });
     </script>
 </polymer-element>

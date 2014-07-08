@@ -1,0 +1,62 @@
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+
+<polymer-element name="sr-battery-history" attributes="level">
+    <template>
+        <style>
+            :host {
+                display: flex;
+                justify-content: center;
+            }
+
+            canvas {
+                align-self: center;
+            }
+        </style>
+
+        <canvas id="canvas" width="660" height="300"></canvas>
+
+        <core-ajax
+            id="get"
+            url="/battery"
+            handleAs="json"
+            on-core-response="{{handleGetResponse}}"></core-ajax>
+    </template>
+
+    <script src="/bower_components/chartjs/Chart.js"></script>
+
+    <script>
+        Polymer("sr-battery-history", {
+            domReady: function() {
+                this.$.get.go();
+                setInterval(this.$.get.go.bind(this.$.get), 60 * 1000);
+            },
+            levelChanged: function() {
+                if (!this.chart) {
+                    var data = {
+                        labels: ["", ""],
+                        datasets: [
+                            {
+                                label: "Battery Level",
+                                fillColor: "rgba(220,220,220,0.2)",
+                                strokeColor: "rgba(220,220,220,1)",
+                                pointColor: "rgba(220,220,220,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(220,220,220,1)",
+                                data: [this.level, this.level] // FIXME Chart.js doesn't like not having initial values?
+                            }
+                        ]
+                    };
+                    var options = {};
+                    this.ctx = this.$.canvas.getContext("2d");
+                    this.chart = new Chart(this.ctx).Line(data, options);
+                }
+
+                this.chart.addData([this.level], moment().format("HH:mm:ss"));
+            },
+            handleGetResponse: function(e) {
+                this.level = e.target.response.level;
+            }
+        });
+    </script>
+</polymer-element>
