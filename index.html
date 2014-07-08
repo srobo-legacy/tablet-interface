@@ -104,10 +104,11 @@
                 var manifestUrl = location.protocol + "//" + location.host + "/manifest.webapp";
                 var request = window.navigator.mozApps.install(manifestUrl);
                 request.onsuccess = function() {
+                    document.querySelector("#navigation").close();
                     console.log(this);
                 };
                 request.onerror = function() {
-                    console.log(this.error);
+                    alert(this.error);
                 };
             });
         </script>
