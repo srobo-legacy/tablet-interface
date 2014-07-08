@@ -53,13 +53,13 @@
             level: 1.0,
             domReady: function() {
                 this.$.get.go();
-                setInterval(this.$.get.go.bind(this.$.get), 60 * 1000);
+                setInterval(this.$.get.go.bind(this.$.get), 10 * 1000);
             },
             floor: function(value) {
                 return Math.floor(value);
             },
             handleGetResponse: function(e) {
-                // TODO implement based on server response
+                this.level = e.target.response.level;
             }
         });
     </script>
