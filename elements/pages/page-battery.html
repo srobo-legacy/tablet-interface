@@ -7,7 +7,7 @@
                 margin: 15px 15px 5px;
             }
 
-            canvas {
+            div {
                 margin: 5px 15px 15px;
                 flex: 1 1 auto;
             }
@@ -15,12 +15,48 @@
 
         <h1>View Battery History</h1>
 
-        <canvas></canvas>
+        <div>
+            <canvas id="canvas"></canvas>
+        </div>
+
+        <core-ajax
+            id="get"
+            url="/battery"
+            handleAs="json"
+            on-core-response="{{handleGetResponse}}"></core-ajax>
+
     </template>
+
+    <script src="/bower_components/chartjs/Chart.js"></script>
 
     <script>
         Polymer("page-battery", {
-            name: "battery"
+            name: "battery",
+            domReady: function() {
+                var data = {
+                    labels: ["", ""],
+                    datasets: [
+                        {
+                            label: "Battery Level",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "rgba(220,220,220,1)",
+                            pointColor: "rgba(220,220,220,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(220,220,220,1)",
+                            data: [1, 1] // FIXME Chart.js doesn't like not having initial values?
+                        }
+                    ]
+                };
+                var options = {responsive: false, bezierCurve: false};
+                this.ctx = this.$.canvas.getContext("2d");
+                this.chart = new Chart(this.ctx).Line(data, options);
+
+                setInterval(this.$.get.go.bind(this.$.get), 60 * 1000);
+            },
+            handleGetResponse: function(e) {
+                this.chart.addData([e.target.response.level], moment().format("HH:mm:ss"));
+            }
         });
     </script>
 </polymer-element>
