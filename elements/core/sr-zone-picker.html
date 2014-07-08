@@ -47,6 +47,7 @@
             method="PUT"
             url="/settings/zone"
             handleAs="json"
+            contentType="application/json"
             on-core-response="{{handlePutResponse}}"></core-ajax>
 
     </template>
@@ -69,10 +70,10 @@
                 setInterval(this.$.get.go.bind(this.$.get), 60 * 1000);
             },
             handleGetResponse: function(e) {
-                // TODO implement based on server response
+                this.zone = e.detail.response.zone;
             },
             handlerPutResponse: function(e) {
-                // TODO implement based on server response
+                this.zone = e.detail.response.zone;
             }
         });
     </script>
