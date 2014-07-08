@@ -67,6 +67,11 @@
             url="/stop"
             handleAs="json"></core-ajax>
 
+        <core-ajax
+            id="ajax-state"
+            url="/state"
+            handleAs="json"></core-ajax>
+
         <script>
             document.querySelector("#btn-setup").addEventListener("click", function(e) {
                 document.querySelector("#pages").changePage("setup");
@@ -108,7 +113,7 @@
         </script>
 
         <script>
-            (function() {
+            window.addEventListener("polymer-ready", function() {
                 var btns = document.querySelectorAll(".btn-play");
                 var changeIcon = function(icon) {
                     for (var i = 0; i < btns.length; i++) {
@@ -128,27 +133,39 @@
                         changeIcon("cog fa-spin");
                         changeText("Starting…");
                         document.querySelector("#page-setup").disabled = true;
-                        setTimeout(function() {
-                            changeIcon("stop");
-                            changeText("Stop Robot");
-                            document.querySelector("#ajax-start").go();
-                        }, 1000);
+                        document.querySelector("#ajax-start").go();
                     } else {
                         changeIcon("cog fa-spin");
                         changeText("Stopping…");
-                        setTimeout(function() {
-                            changeIcon("play");
-                            changeText("Start Robot");
-                            document.querySelector("#page-setup").disabled = false;
-                            document.querySelector("#ajax-stop").go();
-                        }, 1000);
+                        document.querySelector("#ajax-stop").go();
                     }
                 };
 
                 for (var i = 0; i < btns.length; i++) {
                     btns[i].onclick = onclick;
                 }
-            }());
+
+                var ajaxState = document.querySelector("#ajax-state");
+                ajaxState.addEventListener("core-response", function(e) {
+                    var state = e.target.response.state;
+                    if (state === "started") {
+                        changeIcon("stop");
+                        changeText("Stop Robot");
+                    } else if (state === "stopped") {
+                        changeIcon("play");
+                        changeText("Start Robot");
+                    } else if (state === "booting") {
+                        changeIcon("cog fa-spin");
+                        changeText("Starting…");
+                    } else if (state === "stopping") {
+                        changeIcon("cog fa-spin");
+                        changeText("Stopping");
+                    }
+                });
+
+                ajaxState.go();
+                setInterval(ajaxState.go.bind(ajaxState), 1000);
+            });
         </script>
     </body>
 
