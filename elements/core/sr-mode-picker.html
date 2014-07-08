@@ -54,6 +54,7 @@
             method="PUT"
             url="/settings/mode"
             handleAs="json"
+            contentType="application/json"
             on-core-response="{{handlePutResponse}}"></core-ajax>
 
     </template>
@@ -78,10 +79,10 @@
                 setInterval(this.$.get.go.bind(this.$.get), 60 * 1000);
             },
             handleGetResponse: function(e) {
-                // TODO implement based on server response
+                this.mode = e.detail.response.mode;
             },
             handlerPutResponse: function(e) {
-                // TODO implement based on server response
+                this.mode = e.detail.response.mode;
             }
         });
     </script>
