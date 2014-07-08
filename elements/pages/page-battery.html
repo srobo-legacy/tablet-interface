@@ -61,7 +61,7 @@
                             }
                         ]
                     };
-                    var options = {responsive: false, bezierCurve: false};
+                    var options = {};
                     this.ctx = this.$.canvas.getContext("2d");
                     this.chart = new Chart(this.ctx).Line(data, options);
                 }
