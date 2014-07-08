@@ -2,7 +2,15 @@
 
 <polymer-element name="page-camera" extends="sr-page">
     <template>
-        <canvas></canvas>
+        <style>
+            video {
+                flex: 1 1 auto;
+            }
+        </style>
+
+        <video preload="none" autoplay>
+            
+        </video>
     </template>
 
     <script>
