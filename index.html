@@ -54,7 +54,7 @@
         </sr-navigation-drawer>
 
         <sr-pages id="pages" flex>
-            <page-setup></page-setup>
+            <page-setup id="page-setup"></page-setup>
             <page-log hidden></page-log>
             <page-camera hidden></page-camera>
             <page-mci hidden></page-mci>
@@ -131,6 +131,7 @@
                     if (e.target.icon == "play") {
                         changeIcon("cog fa-spin");
                         changeText("Starting…");
+                        document.querySelector("#page-setup").disabled = true;
                         setTimeout(function() {
                             changeIcon("stop");
                             changeText("Stop Robot");
@@ -142,6 +143,7 @@
                         setTimeout(function() {
                             changeIcon("play");
                             changeText("Start Robot");
+                            document.querySelector("#page-setup").disabled = false;
                             document.querySelector("#ajax-stop").go();
                         }, 1000);
                     }

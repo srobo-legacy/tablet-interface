@@ -1,6 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<polymer-element name="page-setup" extends="sr-page">
+<polymer-element name="page-setup" attributes="disabled" extends="sr-page">
     <template>
         <style>
             h1 {
@@ -12,6 +12,30 @@
                 flex: 1 1 auto;
                 align-self: center;
                 justify-content: center;
+            }
+
+            #overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(255, 255, 255, 0.95);
+                display: none;
+                align-self: center;
+                justify-content: center;
+            }
+
+            #overlay.disabled {
+                display: flex;
+            }
+
+            #overlay > h1 {
+                align-self: center;
+                font-size: 3em;
+                font-weight: bold;
             }
         </style>
 
@@ -30,11 +54,16 @@
                 </div>
             </div>
         </div>
+
+        <div id="overlay" class="{{ {disabled: disabled} | tokenList }}">
+            <h1>Stop the robot first.</h1>
+        </div>
     </template>
 
     <script>
         Polymer("page-setup", {
-            name: "setup"
+            name: "setup",
+            disabled: false
         });
     </script>
 </polymer-element>
