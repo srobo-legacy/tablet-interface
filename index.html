@@ -86,7 +86,7 @@
                 });
 
                 window.addEventListener("change-page", function(e) {
-                    document.querySelector("sr-pages").changePage(e.detail.button.dataset.page);
+                    document.querySelector("sr-pages").changePage(e.detail.sender.dataset.page);
                     document.querySelector("sr-navigation-drawer").close();
                 });
             }());
@@ -98,7 +98,7 @@
                 var manifestUrl = location.protocol + "//" + location.host + "/manifest.webapp";
                 var request = window.navigator.mozApps.install(manifestUrl);
                 request.onsuccess = function() {
-                    document.querySelector("#navigation").close();
+                    document.querySelector("sr-navigation-drawer").close();
                     console.log(this);
                 };
                 request.onerror = function() {
@@ -124,8 +124,7 @@
                 };
 
                 window.addEventListener("play", function(e) {
-                    console.log(e.detail);
-                    if (e.detail.button.icon == "play") {
+                    if (e.detail.sender.icon == "play") {
                         changeIcon("cog fa-spin");
                         changeText("Starting…");
                         document.querySelector("#page-setup").disabled = true;
