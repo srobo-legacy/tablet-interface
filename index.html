@@ -22,11 +22,13 @@
         <link rel="import" href="elements/core/sr-button-bar.html" />
         <link rel="import" href="elements/core/sr-fa-button.html" />
         <link rel="import" href="elements/core/sr-navigation-drawer.html" />
-        <link rel="import" href="elements/pages/page-setup.html" />
-        <link rel="import" href="elements/pages/page-log.html" />
-        <link rel="import" href="elements/pages/page-camera.html" />
-        <link rel="import" href="elements/pages/page-motors.html" />
         <link rel="import" href="elements/pages/page-battery.html" />
+        <link rel="import" href="elements/pages/page-camera.html" />
+        <link rel="import" href="elements/pages/page-io.html" />
+        <link rel="import" href="elements/pages/page-log.html" />
+        <link rel="import" href="elements/pages/page-motors.html" />
+        <link rel="import" href="elements/pages/page-servos.html" />
+        <link rel="import" href="elements/pages/page-setup.html" />
     </head>
 
     <body fullbleed unresolved horizontal layout>
@@ -40,10 +42,13 @@
         <sr-navigation-drawer id="navigation">
             <sr-fa-button id="btn-setup" icon="cogs">Set up</sr-fa-button>
             <sr-fa-button id="btn-log" icon="file-text-o">Log</sr-fa-button>
-            <sr-fa-button id="btn-camera" icon="camera">Camera</sr-fa-button>
-            <sr-fa-button id="btn-motors" icon="arrows">Motors</sr-fa-button>
+            <div flex style="min-height: 25px;"></div>
             <sr-fa-button id="btn-battery" icon="bolt">Battery</sr-fa-button>
-            <div flex style="min-height: 50px;"></div>
+            <sr-fa-button id="btn-camera" icon="camera">Camera</sr-fa-button>
+            <sr-fa-button id="btn-io" icon="file">I/O</sr-fa-button>
+            <sr-fa-button id="btn-motors" icon="arrows">Motors</sr-fa-button>
+            <sr-fa-button id="btn-servos" icon="wrench">Servos</sr-fa-button>
+            <div flex style="min-height: 25px;"></div>
             <sr-fa-button class="btn-play" icon="play">Start Robot</sr-fa-button>
             <sr-fa-button id="btn-install" icon="download">Install</sr-fa-button>
             <!-- <sr-fa-button icon="question" onclick="window.open('https://www.studentrobotics.org/docs/')">Docs</sr-fa-button> -->
@@ -52,9 +57,11 @@
         <sr-pages id="pages" flex>
             <page-setup id="page-setup"></page-setup>
             <page-log hidden></page-log>
-            <page-camera hidden></page-camera>
-            <page-motors hidden></page-motors>
             <page-battery hidden></page-battery>
+            <page-camera hidden></page-camera>
+            <page-io hidden></page-io>
+            <page-motors hidden></page-motors>
+            <page-servos hidden></page-servos>
         </sr-pages>
 
         <core-ajax
@@ -83,8 +90,18 @@
                 document.querySelector("#navigation").close();
             });
 
+            document.querySelector("#btn-battery").addEventListener("click", function(e) {
+                document.querySelector("#pages").changePage("battery");
+                document.querySelector("#navigation").close();
+            });
+
             document.querySelector("#btn-camera").addEventListener("click", function(e) {
                 document.querySelector("#pages").changePage("camera");
+                document.querySelector("#navigation").close();
+            });
+
+            document.querySelector("#btn-io").addEventListener("click", function(e) {
+                document.querySelector("#pages").changePage("io");
                 document.querySelector("#navigation").close();
             });
 
@@ -93,8 +110,8 @@
                 document.querySelector("#navigation").close();
             });
 
-            document.querySelector("#btn-battery").addEventListener("click", function(e) {
-                document.querySelector("#pages").changePage("battery");
+            document.querySelector("#btn-servos").addEventListener("click", function(e) {
+                document.querySelector("#pages").changePage("servos");
                 document.querySelector("#navigation").close();
             });
 
