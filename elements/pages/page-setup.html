@@ -66,7 +66,12 @@
 
         <div id="overlay" class="{{ {disabled: disabled} | tokenList }}">
             <h1>Stop the robot first.</h1>
-            <p>Mode: <strong>{{$.modePicker.mode === "dev" ? "Development" : "Competition"}}</strong><br />Zone: <strong>{{$.zonePicker.zone}}</strong></p>
+            <p>
+                Mode: <strong>{{$.modePicker.mode === "dev" ? "Development" : "Competition"}}</strong><br />
+                Zone: <strong>{{$.zonePicker.zone}}</strong><br />
+                Project: <strong>{{project.name}}</strong> @ <strong>{{project.version}}</strong><br />
+                Pyenv: <strong>{{pyenv.version}}</strong>
+            </p>
         </div>
 
         <core-ajax
@@ -87,6 +92,8 @@
             },
             handleGetStateResponse: function(e) {
                 this.disabled = e.target.response.state !== "stopped";
+                this.project = e.target.response.project;
+                this.pyenv = e.target.response.pyenv;
             }
         });
     </script>
