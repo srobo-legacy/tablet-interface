@@ -1,0 +1,10 @@
+- old logs
+- improve setup disabled interface (show mode and zone)
+- camera annotations
+- camera custom images
+- camera pause/play
+- camera zoome
+- battery colour, size
+- project name, version and pyenv version
+- refresh on internet connection died
+- pub sub
