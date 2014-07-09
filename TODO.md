@@ -2,8 +2,7 @@
 - camera annotations
 - camera custom images
 - camera pause/play
-- camera zoome
-- battery colour, size
+- camera zoom
 - project name, version and pyenv version
 - refresh on internet connection died
 - motors, IO and servos as individual pages
