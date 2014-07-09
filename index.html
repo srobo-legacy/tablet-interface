@@ -40,14 +40,14 @@
         </sr-button-bar>
 
         <sr-navigation-drawer pages="#pages">
-            <sr-fa-button action="setup" icon="cogs">Set up</sr-fa-button>
-            <sr-fa-button action="log" icon="file-text-o">Log</sr-fa-button>
+            <sr-fa-button action="change-page" data-page="setup" icon="cogs">Set up</sr-fa-button>
+            <sr-fa-button action="change-page" data-page="log" icon="file-text-o">Log</sr-fa-button>
             <div flex style="min-height: 25px;"></div>
-            <sr-fa-button action="battery" icon="bolt">Battery</sr-fa-button>
-            <sr-fa-button action="camera" icon="camera">Camera</sr-fa-button>
-            <sr-fa-button action="io" icon="file">I/O</sr-fa-button>
-            <sr-fa-button action="motors" icon="arrows">Motors</sr-fa-button>
-            <sr-fa-button action="servos" icon="wrench">Servos</sr-fa-button>
+            <sr-fa-button action="change-page" data-page="battery" icon="bolt">Battery</sr-fa-button>
+            <sr-fa-button action="change-page" data-page="camera" icon="camera">Camera</sr-fa-button>
+            <sr-fa-button action="change-page" data-page="io" icon="file">I/O</sr-fa-button>
+            <sr-fa-button action="change-page" data-page="motors" icon="arrows">Motors</sr-fa-button>
+            <sr-fa-button action="change-page" data-page="servos" icon="wrench">Servos</sr-fa-button>
             <div flex style="min-height: 25px;"></div>
             <sr-fa-button action="play" icon="play">Start Robot</sr-fa-button>
             <sr-fa-button action="install" icon="download">Install</sr-fa-button>
@@ -84,24 +84,12 @@
                 window.addEventListener("toggle-navigation-drawer", function(e) {
                     document.querySelector("sr-navigation-drawer").toggle();
                 });
-            }());
-        </script>
 
-        <script>
-            window.addEventListener("polymer-ready", function() {
-                var srPages = document.querySelector("sr-pages");
-                var srNavigationDrawer = document.querySelector("sr-navigation-drawer");
-                var pages = ["setup", "log", "battery", "camera", "io", "motors", "servos"];
-                for (var i in pages) {  // why? seriously, just why?
-                    (function(page) {
-                        window.addEventListener(page, function() {
-                            console.log(page);
-                            srPages.changePage(page);
-                            srNavigationDrawer.close();
-                        });
-                    }(pages[i]));
-                }
-            });
+                window.addEventListener("change-page", function(e) {
+                    document.querySelector("sr-pages").changePage(e.detail.button.dataset.page);
+                    document.querySelector("sr-navigation-drawer").close();
+                });
+            }());
         </script>
 
         <script>
