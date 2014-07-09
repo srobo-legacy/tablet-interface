@@ -51,8 +51,6 @@
             <sr-fa-button action="change-page" data-page="servos" icon="wrench">Servos</sr-fa-button>
             <div flex style="min-height: 25px;"></div>
             <sr-fa-button action="play" icon="play">Start Robot</sr-fa-button>
-            <sr-fa-button action="install" icon="download">Install</sr-fa-button>
-            <!-- <sr-fa-button icon="question" onclick="window.open('https://www.studentrobotics.org/docs/')">Docs</sr-fa-button> -->
         </sr-navigation-drawer>
 
         <sr-pages flex>
@@ -91,21 +89,6 @@
                     document.querySelector("sr-navigation-drawer").close();
                 });
             }());
-        </script>
-
-        <script>
-            window.addEventListener("install", function(e) {
-                // https://bugzilla.mozilla.org/show_bug.cgi?id=745928 :D
-                var manifestUrl = location.protocol + "//" + location.host + "/manifest.webapp";
-                var request = window.navigator.mozApps.install(manifestUrl);
-                request.onsuccess = function() {
-                    document.querySelector("sr-navigation-drawer").close();
-                    console.log(this);
-                };
-                request.onerror = function() {
-                    alert(this.error);
-                };
-            });
         </script>
 
         <script>
