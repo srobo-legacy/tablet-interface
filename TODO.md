@@ -4,5 +4,4 @@
 - camera pause/play
 - camera zoom
 - refresh on internet connection died
-- motors, IO and servos as individual pages
 - pub sub
