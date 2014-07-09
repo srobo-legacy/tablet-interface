@@ -13,8 +13,8 @@
                 margin: 0;
             }
 
-            select {
-                margin-right: 2px;
+            select, button {
+                margin: 2px;
                 padding: 4px 8px;
             }
 
@@ -35,14 +35,19 @@
                 <option>7th July 16:27</option>
                 <option>7th July 16:13</option>
             </select>
+            <button id="btnBottom">Jump to bottom</button>
         </div>
 
-        <sr-log></sr-log>
+        <sr-log id="log"></sr-log>
     </template>
 
     <script>
         Polymer("page-log", {
-            name: "log"
+            name: "log",
+            domReady: function() {
+                this.$.btnBottom.addEventListener("click",
+                    this.$.log.scrollToBottom.bind(this.$.log));
+            }
         });
     </script>
 </polymer-element>
