@@ -1,5 +1,4 @@
 - old logs
-- improve setup disabled interface (show mode and zone)
 - camera annotations
 - camera custom images
 - camera pause/play
@@ -7,4 +6,5 @@
 - battery colour, size
 - project name, version and pyenv version
 - refresh on internet connection died
+- motors, IO and servos as individual pages
 - pub sub

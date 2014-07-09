@@ -27,6 +27,7 @@
                 height: 100%;
                 background: rgba(255, 255, 255, 0.95);
                 display: none;
+                flex-direction: column;
                 align-self: center;
                 justify-content: center;
             }
@@ -40,6 +41,11 @@
                 font-size: 3em;
                 font-weight: bold;
             }
+
+            #overlay > p {
+                align-self: center;
+                font-size: 1.2em;
+            }
         </style>
 
         <h1>Set up your robot</h1>
@@ -47,12 +53,12 @@
         <div id="first" vertical center layout>
             <div horizontal start layout>
                 <div vertical center layout style="margin: 0 20px;">
-                    <sr-zone-picker></sr-zone-picker>
+                    <sr-zone-picker id="zonePicker"></sr-zone-picker>
                     <h2>Zone</h2>
                 </div>
 
                 <div vertical center layout style="margin: 0 20px;">
-                    <sr-mode-picker></sr-mode-picker>
+                    <sr-mode-picker id="modePicker"></sr-mode-picker>
                     <h2>Mode</h2>
                 </div>
             </div>
@@ -60,6 +66,7 @@
 
         <div id="overlay" class="{{ {disabled: disabled} | tokenList }}">
             <h1>Stop the robot first.</h1>
+            <p>Mode: <strong>{{$.modePicker.mode === "dev" ? "Development" : "Competition"}}</strong><br />Zone: <strong>{{$.zonePicker.zone}}</strong></p>
         </div>
 
         <core-ajax
