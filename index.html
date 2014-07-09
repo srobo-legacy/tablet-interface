@@ -25,7 +25,7 @@
         <link rel="import" href="elements/pages/page-setup.html" />
         <link rel="import" href="elements/pages/page-log.html" />
         <link rel="import" href="elements/pages/page-camera.html" />
-        <link rel="import" href="elements/pages/page-mci.html" />
+        <link rel="import" href="elements/pages/page-motors.html" />
         <link rel="import" href="elements/pages/page-battery.html" />
     </head>
 
@@ -41,7 +41,7 @@
             <sr-fa-button id="btn-setup" icon="cogs">Set up</sr-fa-button>
             <sr-fa-button id="btn-log" icon="file-text-o">Log</sr-fa-button>
             <sr-fa-button id="btn-camera" icon="camera">Camera</sr-fa-button>
-            <sr-fa-button id="btn-mci" icon="arrows">Manual Control</sr-fa-button>
+            <sr-fa-button id="btn-motors" icon="arrows">Motors</sr-fa-button>
             <sr-fa-button id="btn-battery" icon="bolt">Battery</sr-fa-button>
             <div flex style="min-height: 50px;"></div>
             <sr-fa-button class="btn-play" icon="play">Start Robot</sr-fa-button>
@@ -53,7 +53,7 @@
             <page-setup id="page-setup"></page-setup>
             <page-log hidden></page-log>
             <page-camera hidden></page-camera>
-            <page-mci hidden></page-mci>
+            <page-motors hidden></page-motors>
             <page-battery hidden></page-battery>
         </sr-pages>
 
@@ -88,8 +88,8 @@
                 document.querySelector("#navigation").close();
             });
 
-            document.querySelector("#btn-mci").addEventListener("click", function(e) {
-                document.querySelector("#pages").changePage("mci");
+            document.querySelector("#btn-motors").addEventListener("click", function(e) {
+                document.querySelector("#pages").changePage("motors");
                 document.querySelector("#navigation").close();
             });
 
