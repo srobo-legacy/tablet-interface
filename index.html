@@ -65,9 +65,15 @@
 
         <sr-wamp>
             <sr-wamp-call
-                procedure="org.srobo.start"></sr-wamp-subscribe>
+                id="wamp-start"
+                procedure="org.srobo.start"></sr-wamp-call>
             <sr-wamp-call
-                procedure="org.srobo.stop"></sr-wamp-subscribe>
+                id="wamp-stop"
+                procedure="org.srobo.stop"></sr-wamp-call>
+            <sr-wamp-subscribe
+                auto
+                id="subscribe"
+                topic="org.srobo.state"></sr-wamp-subscribe>
         </sr-wamp>
         <script>
             (function() {
@@ -83,54 +89,45 @@
         </script>
 
         <script>
-            window.addEventListener("polymer-ready", function() {
-                var btns = document.querySelectorAll("sr-fa-button[action='play']");
-                var changeIcon = function(icon) {
-                    for (var i = 0; i < btns.length; i++) {
-                        btns[i].icon = icon;
-                    }
-                };
-                var changeText = function(text) {
-                    for (var i = 0; i < btns.length; i++) {
-                        if (btns[i].textContent.length !== 0) {
-                            btns[i].textContent = text;
-                        }
-                    }
-                };
+            window.addEventListener("play", function(e) {
+                if (e.detail.sender.icon == "play") {
+                    document.querySelector("#wamp-start").go();
+                } else {
+                    document.querySelector("#wamp-stop").go();
+                }
+            });
+        </script>
 
-                window.addEventListener("play", function(e) {
-                    if (e.detail.sender.icon == "play") {
-                        changeIcon("cog fa-spin");
-                        changeText("Starting…");
-                        document.querySelector("#page-setup").disabled = true;
-                        document.querySelector("#ajax-start").go();
-                    } else {
-                        changeIcon("cog fa-spin");
-                        changeText("Stopping…");
-                        document.querySelector("#ajax-stop").go();
+        <script>
+            var btns = document.querySelectorAll("sr-fa-button[action='play']");
+            var changeIcon = function(icon) {
+                for (var i = 0; i < btns.length; i++) {
+                    btns[i].icon = icon;
+                }
+            };
+            var changeText = function(text) {
+                for (var i = 0; i < btns.length; i++) {
+                    if (btns[i].textContent.length !== 0) {
+                        btns[i].textContent = text;
                     }
-                });
+                }
+            };
 
-                var ajaxState = document.querySelector("#ajax-state");
-                ajaxState.addEventListener("core-response", function(e) {
-                    var state = e.target.response.state;
-                    if (state === "started") {
-                        changeIcon("stop");
-                        changeText("Stop Robot");
-                    } else if (state === "stopped") {
-                        changeIcon("play");
-                        changeText("Start Robot");
-                    } else if (state === "booting") {
-                        changeIcon("cog fa-spin");
-                        changeText("Starting…");
-                    } else if (state === "stopping") {
-                        changeIcon("cog fa-spin");
-                        changeText("Stopping…");
-                    }
-                });
-
-                ajaxState.go();
-                setInterval(ajaxState.go.bind(ajaxState), 1000);
+            document.querySelector("#subscribe").addEventListener("handle", function(e) {
+                var state = e.detail.result || e.detail.args[0];
+                if (state === "started") {
+                    changeIcon("stop");
+                    changeText("Stop Robot");
+                } else if (state === "stopped") {
+                    changeIcon("play");
+                    changeText("Start Robot");
+                } else if (state === "booting") {
+                    changeIcon("cog fa-spin");
+                    changeText("Starting…");
+                } else if (state === "stopping") {
+                    changeIcon("cog fa-spin");
+                    changeText("Stopping…");
+                }
             });
         </script>
     </body>
