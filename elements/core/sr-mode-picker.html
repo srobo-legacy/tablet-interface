@@ -1,4 +1,5 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="sr-wamp/index.html" />
 
 <polymer-element name="sr-mode-picker" attributes="mode">
     <template>
@@ -43,20 +44,11 @@
             <span class="fa fa-trophy"></span> Competition
         </button>
 
-        <core-ajax
-            id="get"
-            url="/settings/mode"
-            handleAs="json"
-            on-core-response="{{handleGetResponse}}"></core-ajax>
-
-        <core-ajax
-            id="put"
-            method="PUT"
-            url="/settings/mode"
-            handleAs="json"
-            contentType="application/json"
-            on-core-response="{{handlePutResponse}}"></core-ajax>
-
+        <sr-wamp id="wamp">
+            <sr-wamp-subscribe
+                topic="org.srobo.mode"
+                on-handle="{{handleMode}}"></sr-wamp-subscribe>
+        </sr-wamp>
     </template>
 
     <script>
@@ -67,22 +59,14 @@
                 for (var i = 0; i < buttons.length; i++) {
                     (function(btn) {
                         btn.addEventListener("click", function(e) {
-                            this.mode = btn.dataset.mode;
-                            this.$.put.body = JSON.stringify({mode: this.mode});
-                            this.$.put.go();
+                            this.mode = e.target.dataset.mode;
+                            this.$.wamp.publish("org.srobo.mode", [this.mode]);
                         }.bind(this));
                     }.bind(this)(buttons[i]));
                 }
-
-                this.$.get.go();
-
-                setInterval(this.$.get.go.bind(this.$.get), 60 * 1000);
             },
-            handleGetResponse: function(e) {
-                this.mode = e.detail.response.mode;
-            },
-            handlerPutResponse: function(e) {
-                this.mode = e.detail.response.mode;
+            handleMode: function(e) {
+                this.mode = e.detail.args[0];
             }
         });
     </script>

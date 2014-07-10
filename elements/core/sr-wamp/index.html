@@ -52,6 +52,9 @@
                 subscribe: function(topic, handler, options) {
                     return this.session.subscribe(topic, handler, options);
                 },
+                publish: function(topic, args, kwargs, options) {
+                    return this.session.publish(topic, args, kwargs, options);
+                },
                 onOpen: function() {
                     var subscribers = this.querySelectorAll("sr-wamp-subscribe");
                     for (var i = 0; i < subscribers.length; i++) {
