@@ -48,6 +48,9 @@
             <sr-wamp-subscribe
                 topic="org.srobo.mode"
                 on-handle="{{handleMode}}"></sr-wamp-subscribe>
+            <sr-wamp-publish
+                id="pub"
+                topic="org.srobo.mode"></sr-wamp-publish>
         </sr-wamp>
     </template>
 
@@ -60,7 +63,7 @@
                     (function(btn) {
                         btn.addEventListener("click", function(e) {
                             this.mode = e.target.dataset.mode;
-                            this.$.wamp.publish("org.srobo.mode", [this.mode]);
+                            this.$.pub.go([this.mode]);
                         }.bind(this));
                     }.bind(this)(buttons[i]));
                 }

@@ -34,7 +34,10 @@
 
     <script>
         Polymer("sr-wamp-publish", {
-            wamp: undefined
+            wamp: undefined,
+            go: function(args, kwargs, options) {
+                return this.wamp.publish(this.topic, args, kwargs, options);
+            }
         })
     </script>
 </polymer-element>
