@@ -91,7 +91,7 @@
             disabled: false,
             handleState: function(e) {
                 var state = e.detail.result || e.detail.args[0];
-                this.disabled = e.target.response.state !== "stopped";
+                this.disabled = state !== "stopped";
                 //this.project = e.target.response.project;
                 //this.pyenv = e.target.response.pyenv;
             }
