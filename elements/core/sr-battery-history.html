@@ -1,4 +1,5 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="sr-wamp/index.html" />
 
 <polymer-element name="sr-battery-history" attributes="level">
     <template>
@@ -15,21 +16,17 @@
 
         <canvas id="canvas" width="660" height="300"></canvas>
 
-        <core-ajax
-            id="get"
-            url="/battery"
-            handleAs="json"
-            on-core-response="{{handleGetResponse}}"></core-ajax>
+        <sr-wamp>
+            <sr-wamp-subscribe
+                topic="org.srobo.battery.level"
+                on-handle="{{handleBatteryLevel}}"></sr-wamp-subscribe>
+        </sr-wamp>
     </template>
 
     <script src="/bower_components/chartjs/Chart.js"></script>
 
     <script>
         Polymer("sr-battery-history", {
-            domReady: function() {
-                this.$.get.go();
-                setInterval(this.$.get.go.bind(this.$.get), 60 * 1000);
-            },
             levelChanged: function() {
                 if (!this.chart) {
                     var data = {
@@ -54,8 +51,8 @@
 
                 this.chart.addData([this.level], moment().format("HH:mm:ss"));
             },
-            handleGetResponse: function(e) {
-                this.level = e.target.response.level;
+            handleBatteryLevel: function(e) {
+                this.level = e.detail.args[0];
             }
         });
     </script>
