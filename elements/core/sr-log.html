@@ -17,23 +17,18 @@
 
         <textarea id="log" readonly></textarea>
 
-        <core-ajax
-            id="get"
-            url="/log"
-            handleAs="json"
-            on-core-response="{{handleGetResponse}}"></core-ajax>
+        <sr-wamp>
+            <sr-wamp-subscribe
+                topic="org.srobo.log"
+                on-handle="{{handleLog}}"></sr-wamp-subscribe>
+            <sr-wamp-call
+                procedure="org.srobo.log"
+                on-success="{{handleLog}}"></sr-wamp-call>
+        </sr-wamp>
     </template>
 
     <script>
         Polymer("sr-log", {
-            domReady: function() {
-                this.$.get.go();
-                this.socket = new WebSocket("ws://" + location.host + "/ws/log");
-                this.socket.onopen = this.addEntry.bind(this, "Connected to Robot.");
-                this.socket.onerror = this.addEntry.bind(this, "An error has occured.");
-                this.socket.onclose = this.addEntry.bind(this, "Disconnected from Robot.");
-                this.socket.onmessage = this.addEntryFromWebSocket.bind(this);
-            },
             isAtBottom: function() {
                 var log = this.$.log;
                 return Math.abs((log.scrollTop + log.clientHeight) - log.scrollHeight) <= 10;
@@ -60,16 +55,17 @@
                     this.scrollToBottom();
                 }
             },
-            addEntryFromWebSocket: function(msg) {
-                this.addEntry(msg.data);
-            },
-            handleGetResponse: function(e) {
-                var text = e.target.response.log.trim();
-                if (text.length > 0) {
-                    this.addEntry("-- Previous Log Starts Here --");
-                    this.addEntry(text, false);
-                    this.addEntry("-- Previous Log Ends Here --");
-                    this.scrollToBottom();
+            handleLog: function(e) {
+                if (e.detail.result !== undefined) {
+                    var text = e.detail.result.trim();
+                    if (text.length > 0) {
+                        this.addEntry("-- Previous Log Starts Here --");
+                        this.addEntry(text, false);
+                        this.addEntry("-- Previous Log Ends Here --");
+                        this.scrollToBottom();
+                    }
+                } else {
+                    this.addEntry(e.detail.args[0]);
                 }
             }
         });
