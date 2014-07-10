@@ -49,7 +49,7 @@
                     this.chart = new Chart(this.ctx).Line(data, options);
                 }
 
-                this.chart.addData([this.level], moment().format("HH:mm:ss"));
+                //this.chart.addData([this.level], moment().format("HH:mm:ss"));
             },
             handleBatteryLevel: function(e) {
                 this.level = e.detail.args[0];
