@@ -1,6 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<polymer-element name="sr-wamp-subscribe" attributes="topic" noscript>
+<polymer-element name="sr-wamp-subscribe" attributes="topic wamp">
     <template>
         <style>
             :host {
@@ -8,6 +8,35 @@
             }
         </style>
     </template>
+
+    <script>
+        Polymer("sr-wamp-subscribe", {
+            wamp: undefined,
+            wampChanged: function() {
+                this.wamp.subscribe(this.topic, function(args, kwargs, details) {
+                    this.fire("handle", {
+                        args: args, kwargs: kwargs, details: details
+                    });
+                }.bind(this));
+            }
+        })
+    </script>
+</polymer-element>
+
+<polymer-element name="sr-wamp-publish" attributes="topic wamp">
+    <template>
+        <style>
+            :host {
+                display: none;
+            }
+        </style>
+    </template>
+
+    <script>
+        Polymer("sr-wamp-publish", {
+            wamp: undefined
+        })
+    </script>
 </polymer-element>
 
 <polymer-element name="sr-wamp">
@@ -58,11 +87,12 @@
                 onOpen: function() {
                     var subscribers = this.querySelectorAll("sr-wamp-subscribe");
                     for (var i = 0; i < subscribers.length; i++) {
-                        (function(subscriber) {
-                            _session.subscribe(subscriber.topic, function(args, kwargs, details) {
-                                subscriber.fire("handle", {args: args, kwargs: kwargs, details: details});
-                            });
-                        }(subscribers[i]));
+                        subscribers[i].wamp = this;
+                    }
+
+                    var publishers = this.querySelectorAll("sr-wamp-publish");
+                    for (var i = 0; i < publishers.length; i++) {
+                        publishers[i].wamp = this;
                     }
 
                     this.fire("open");
