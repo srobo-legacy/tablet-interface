@@ -4,5 +4,4 @@
 - camera pause/play
 - camera zoom
 - refresh on internet connection died
-- pub sub
 - log jump to bottom
