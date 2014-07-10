@@ -23,7 +23,7 @@
     </script>
 </polymer-element>
 
-<polymer-element name="sr-wamp-publish" attributes="topic wamp">
+<polymer-element name="sr-wamp-publish" attributes="topic args kwargs options wamp">
     <template>
         <style>
             :host {
@@ -34,15 +34,39 @@
 
     <script>
         Polymer("sr-wamp-publish", {
+            topic: undefined,
+            args: undefined,
+            kwargs: undefined,
+            options: undefined,
             wamp: undefined,
-            go: function(args, kwargs, options) {
-                return this.wamp.publish(this.topic, args, kwargs, options);
+            topicChanged: function() {
+                this.go();
+            },
+            argsChanged: function() {
+                this.go();
+            },
+            kwargsChanged: function() {
+                this.go();
+            },
+            optionsChanged: function() {
+                this.go();
+            },
+            wampChanged: function() {
+                this.go();
+            },
+            go: function() {
+                if (this.topic && this.wamp) {
+                    return this.wamp.publish(this.topic,
+                                             JSON.parse(this.args),
+                                             JSON.parse(this.kwargs),
+                                             JSON.parse(this.options));
+                }
             }
         })
     </script>
 </polymer-element>
 
-<polymer-element name="sr-wamp-call" attributes="procedure wamp">
+<polymer-element name="sr-wamp-call" attributes="procedure args kwargs options wamp">
     <template>
         <style>
             :host {
@@ -53,11 +77,35 @@
 
     <script>
         Polymer("sr-wamp-call", {
+            procedure: undefined,
+            args: undefined,
+            kwargs: undefined,
+            options: undefined,
             wamp: undefined,
+            procedureChanged: function() {
+                this.go();
+            },
+            argsChanged: function() {
+                this.go();
+            },
+            kwargsChanged: function() {
+                this.go();
+            },
+            optionsChanged: function() {
+                this.go();
+            },
             wampChanged: function() {
-                this.wamp.session.call(this.procedure).then(function(result) {
-                    this.fire("success", {result: result});
-                }.bind(this));
+                this.go();
+            },
+            go: function() {
+                if (this.procedure && this.wamp) {
+                    this.wamp.call(this.procedure,
+                                   JSON.parse(this.args),
+                                   JSON.parse(this.kwargs),
+                                   JSON.parse(this.options)).then(function(result) {
+                                       this.fire("success", {result: result});
+                                   }.bind(this));
+                }
             }
         });
     </script>
@@ -107,6 +155,9 @@
                 },
                 publish: function(topic, args, kwargs, options) {
                     return this.session.publish(topic, args, kwargs, options);
+                },
+                call: function(procedure, args, kwargs, options) {
+                    return this.session.call(procedure, args, kwargs, options);
                 },
                 onOpen: function() {
                     var things = this.querySelectorAll("sr-wamp-subscribe, sr-wamp-publish, sr-wamp-call");
