@@ -79,6 +79,12 @@
             <sr-wamp-subscribe
                 topic="org.srobo.state"
                 on-handle="{{handleState}}"></sr-wamp-subscribe>
+            <sr-wamp-subscribe
+                topic="org.srobo.project.name"
+                on-handle="{{handleProjectName}}"></sr-wamp-subscribe>
+            <sr-wamp-subscribe
+                topic="org.srobo.project.version"
+                on-handle="{{handleProjectVersion}}"></sr-wamp-subscribe>
             <sr-wamp-call
                 topic="org.srobo.state"
                 on-handle="{{handleState}}"></sr-wamp-subscribe>
@@ -89,11 +95,19 @@
         Polymer("page-setup", {
             name: "setup",
             disabled: false,
+            created: function() {
+                this.project = {}
+            },
             handleState: function(e) {
                 var state = e.detail.result || e.detail.args[0];
                 this.disabled = state !== "stopped";
-                //this.project = e.target.response.project;
                 //this.pyenv = e.target.response.pyenv;
+            },
+            handleProjectName: function(e) {
+                this.project.name = e.detail.args[0];
+            },
+            handleProjectVersion: function(e) {
+                this.project.version = e.detail.args[0];
             }
         });
     </script>
