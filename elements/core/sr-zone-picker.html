@@ -62,7 +62,7 @@
                 }
             },
             handleZone: function(e) {
-                this.zone = e.detail.result || e.detail.args[0];
+                this.zone = e.detail.result !== undefined ? e.detail.result : e.detail.args[0];
             }
         });
     </script>

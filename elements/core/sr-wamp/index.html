@@ -128,20 +128,23 @@
         (function() {
             var _session;
             var _connection = new autobahn.Connection({
-                url: "ws://localhost:8080/ws",
-                realm: "org.srobo"
+                url: "ws://localhost:9000",
+                realm: "srobo"
             });
 
             _connection.onopen = function(session) {
                 _session = session;
+                console.log("Opened connection to WAMP server.");
                 window.dispatchEvent(new CustomEvent("sr-wamp-open"));
             };
 
-            _connection.onclose = function() {
+            _connection.onclose = function(e) {
+                console.log("Closed connection to WAMP server.", e);
                 window.dispatchEvent(new CustomEvent("sr-wamp-close"));
             };
 
             window.addEventListener("polymer-ready", function() {
+                console.log("Connecting to WAMP server.");
                 _connection.open();
             })
 
