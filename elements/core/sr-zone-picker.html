@@ -1,5 +1,5 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
-<link rel="import" href="/bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="sr-wamp/index.html" />
 
 <polymer-element name="sr-zone-picker" attributes="zone">
     <template>
@@ -28,7 +28,7 @@
             }
         </style>
 
-        <!-- TODO fetch these buttons from the competition API? -->
+        <!-- TODO fetch the colours from the competition API? -->
 
         <button data-zone="0" style="background: #00ff00" class="{{ {selected: zone == 0} | tokenList }}"></button>
         <button data-zone="1" style="background: #ff6600" class="{{ {selected: zone == 1} | tokenList }}"></button>
@@ -36,20 +36,17 @@
         <button data-zone="2" style="background: #ff00ff" class="{{ {selected: zone == 2} | tokenList }}"></button>
         <button data-zone="3" style="background: #ffff00" class="{{ {selected: zone == 3} | tokenList }}"></button>
 
-        <core-ajax
-            id="get"
-            url="/settings/zone"
-            handleAs="json"
-            on-core-response="{{handleGetResponse}}"></core-ajax>
-
-        <core-ajax
-            id="put"
-            method="PUT"
-            url="/settings/zone"
-            handleAs="json"
-            contentType="application/json"
-            on-core-response="{{handlePutResponse}}"></core-ajax>
-
+        <sr-wamp>
+            <sr-wamp-subscribe
+                topic="org.srobo.zone"
+                on-handle="{{handleZone}}"></sr-wamp-subscribe>
+            <sr-wamp-publish
+                id="pub"
+                topic="org.srobo.zone"></sr-wamp-publish>
+            <sr-wamp-call
+                procedure="org.srobo.zone"
+                on-success="{{handleZone}}"></sr-wamp-call>
+        </sr-wamp>
     </template>
 
     <script>
@@ -60,21 +57,12 @@
                 for (var i = 0; i < buttons.length; i++) {
                     buttons[i].addEventListener("click", function(e) {
                         this.zone = e.target.dataset.zone;
+                        this.$.pub.args = JSON.stringify([this.zone]);
                     }.bind(this));
                 }
-
-                this.$.get.go();
-                setInterval(this.$.get.go.bind(this.$.get), 60 * 1000);
             },
-            zoneChanged: function() {
-                this.$.put.body = JSON.stringify({zone: this.zone});
-                this.$.put.go();
-            },
-            handleGetResponse: function(e) {
-                this.zone = e.detail.response.zone;
-            },
-            handlerPutResponse: function(e) {
-                this.zone = e.detail.response.zone;
+            handleZone: function(e) {
+                this.zone = e.detail.result || e.detail.args[0];
             }
         });
     </script>
