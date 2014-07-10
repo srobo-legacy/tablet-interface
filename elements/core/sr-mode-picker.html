@@ -44,7 +44,7 @@
             <span class="fa fa-trophy"></span> Competition
         </button>
 
-        <sr-wamp id="wamp">
+        <sr-wamp id="wamp" on-open="{{wampOpen}}">
             <sr-wamp-subscribe
                 topic="org.srobo.mode"
                 on-handle="{{handleMode}}"></sr-wamp-subscribe>
@@ -64,6 +64,11 @@
                         }.bind(this));
                     }.bind(this)(buttons[i]));
                 }
+            },
+            wampOpen: function() {
+                this.$.wamp.session.call("org.srobo.mode").then(function(res) {
+                    this.mode = res;
+                }.bind(this));
             },
             handleMode: function(e) {
                 this.mode = e.detail.args[0];
