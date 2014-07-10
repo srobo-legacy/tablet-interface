@@ -10,5 +10,6 @@ External libraries are managed with `bower`, therefore you must have it installe
 
 ## Running
 
-    $ pip install gunicorn Flask Flask-sockets
-    $ gunicorn -k flask_sockets.worker runserver:app
+    $ pip install autobahn
+    $ ./server.py &
+    $ python3 -m http.server &
