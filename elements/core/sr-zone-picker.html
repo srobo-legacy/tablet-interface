@@ -42,8 +42,10 @@
                 on-handle="{{handleZone}}"></sr-wamp-subscribe>
             <sr-wamp-publish
                 id="pub"
+                auto
                 topic="org.srobo.zone"></sr-wamp-publish>
             <sr-wamp-call
+                auto
                 procedure="org.srobo.zone"
                 on-success="{{handleZone}}"></sr-wamp-call>
         </sr-wamp>

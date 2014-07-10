@@ -63,21 +63,12 @@
             <page-servos hidden></page-servos>
         </sr-pages>
 
-        <core-ajax
-            id="ajax-start"
-            url="/start"
-            handleAs="json"></core-ajax>
-
-        <core-ajax
-            id="ajax-stop"
-            url="/stop"
-            handleAs="json"></core-ajax>
-
-        <!--<core-ajax
-            id="ajax-state"
-            url="/state"
-            handleAs="json"></core-ajax>-->
-
+        <sr-wamp>
+            <sr-wamp-call
+                procedure="org.srobo.start"></sr-wamp-subscribe>
+            <sr-wamp-call
+                procedure="org.srobo.stop"></sr-wamp-subscribe>
+        </sr-wamp>
         <script>
             (function() {
                 window.addEventListener("toggle-navigation-drawer", function(e) {

@@ -23,7 +23,7 @@
     </script>
 </polymer-element>
 
-<polymer-element name="sr-wamp-publish" attributes="topic args kwargs options wamp">
+<polymer-element name="sr-wamp-publish" attributes="auto topic args kwargs options wamp">
     <template>
         <style>
             :host {
@@ -34,25 +34,36 @@
 
     <script>
         Polymer("sr-wamp-publish", {
+            auti: false,
             topic: undefined,
             args: undefined,
             kwargs: undefined,
             options: undefined,
             wamp: undefined,
             topicChanged: function() {
-                this.go();
+                if (this.auto) {
+                    this.go();
+                }
             },
             argsChanged: function() {
-                this.go();
+                if (this.auto) {
+                    this.go();
+                }
             },
             kwargsChanged: function() {
-                this.go();
+                if (this.auto) {
+                    this.go();
+                }
             },
             optionsChanged: function() {
-                this.go();
+                if (this.auto) {
+                    this.go();
+                }
             },
             wampChanged: function() {
-                this.go();
+                if (this.auto) {
+                    this.go();
+                }
             },
             go: function() {
                 if (this.topic && this.wamp) {
@@ -66,7 +77,7 @@
     </script>
 </polymer-element>
 
-<polymer-element name="sr-wamp-call" attributes="procedure args kwargs options wamp">
+<polymer-element name="sr-wamp-call" attributes="auto procedure args kwargs options wamp">
     <template>
         <style>
             :host {
@@ -77,25 +88,36 @@
 
     <script>
         Polymer("sr-wamp-call", {
+            auto: false,
             procedure: undefined,
             args: undefined,
             kwargs: undefined,
             options: undefined,
             wamp: undefined,
             procedureChanged: function() {
-                this.go();
+                if (this.auto) {
+                    this.go();
+                }
             },
             argsChanged: function() {
-                this.go();
+                if (this.auto) {
+                    this.go();
+                }
             },
             kwargsChanged: function() {
-                this.go();
+                if (this.auto) {
+                    this.go();
+                }
             },
             optionsChanged: function() {
-                this.go();
+                if (this.auto) {
+                    this.go();
+                }
             },
             wampChanged: function() {
-                this.go();
+                if (this.auto) {
+                    this.go();
+                }
             },
             go: function() {
                 if (this.procedure && this.wamp) {

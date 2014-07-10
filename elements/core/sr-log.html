@@ -19,9 +19,11 @@
 
         <sr-wamp>
             <sr-wamp-subscribe
+                auto
                 topic="org.srobo.log"
                 on-handle="{{handleLog}}"></sr-wamp-subscribe>
             <sr-wamp-call
+                auto
                 procedure="org.srobo.log"
                 on-success="{{handleLog}}"></sr-wamp-call>
         </sr-wamp>

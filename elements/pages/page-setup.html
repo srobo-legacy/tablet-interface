@@ -75,26 +75,25 @@
             </p>
         </div>
 
-        <!--<core-ajax
-            id="getState"
-            url="/state"
-            handleAs="json"
-            on-core-response="{{handleGetStateResponse}}"></core-ajax>-->
-
+        <sr-wamp>
+            <sr-wamp-subscribe
+                topic="org.srobo.state"
+                on-handle="{{handleState}}"></sr-wamp-subscribe>
+            <sr-wamp-call
+                topic="org.srobo.state"
+                on-handle="{{handleState}}"></sr-wamp-subscribe>
+        </sr-wamp>
     </template>
 
     <script>
         Polymer("page-setup", {
             name: "setup",
             disabled: false,
-            domReady: function() {
-                this.$.getState.go();
-                setInterval(this.$.getState.go.bind(this.$.getState), 5 * 1000);
-            },
-            handleGetStateResponse: function(e) {
+            handleState: function(e) {
+                var state = e.detail.result || e.detail.args[0];
                 this.disabled = e.target.response.state !== "stopped";
-                this.project = e.target.response.project;
-                this.pyenv = e.target.response.pyenv;
+                //this.project = e.target.response.project;
+                //this.pyenv = e.target.response.pyenv;
             }
         });
     </script>

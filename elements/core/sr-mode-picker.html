@@ -50,8 +50,10 @@
                 on-handle="{{handleMode}}"></sr-wamp-subscribe>
             <sr-wamp-publish
                 id="pub"
+                auto
                 topic="org.srobo.mode"></sr-wamp-publish>
             <sr-wamp-call
+                auto
                 procedure="org.srobo.mode"
                 on-success="{{handleMode}}"></sr-wamp-call>
         </sr-wamp>
