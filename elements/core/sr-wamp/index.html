@@ -40,12 +40,12 @@
                 window.dispatchEvent(new CustomEvent("sr-wamp-close"));
             };
 
-            Polymer("sr-wamp", {
-                domReady: function() {
-                    if (!this.connection.isOpen) {
-                        this.connection.open();
-                    }
+            window.addEventListener("polymer-ready", function() {
+                _connection.open();
+            })
 
+            Polymer("sr-wamp", {
+                created: function() {
                     window.addEventListener("sr-wamp-open", this.onOpen.bind(this));
                     window.addEventListener("sr-wamp-close", this.onClose.bind(this));
                 },
