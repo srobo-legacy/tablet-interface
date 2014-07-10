@@ -1,5 +1,15 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
+<polymer-element name="sr-wamp-subscribe" attributes="topic" noscript>
+    <template>
+        <style>
+            :host {
+                display: none;
+            }
+        </style>
+    </template>
+</polymer-element>
+
 <polymer-element name="sr-wamp">
     <template>
         <style>
@@ -7,6 +17,8 @@
                 display: none;
             }
         </style>
+
+        <content></content>
     </template>
 
     <script src="autobahn.min.js"></script>
@@ -34,11 +46,26 @@
                         this.connection.open();
                     }
 
-                    window.addEventListener("sr-wamp-open", this.fire.bind(this, "open"));
-                    window.addEventListener("sr-wamp-close", this.fire.bind(this, "close"));
+                    window.addEventListener("sr-wamp-open", this.onOpen.bind(this));
+                    window.addEventListener("sr-wamp-close", this.onClose.bind(this));
                 },
                 subscribe: function(topic, handler, options) {
                     return this.session.subscribe(topic, handler, options);
+                },
+                onOpen: function() {
+                    var subscribers = this.querySelectorAll("sr-wamp-subscribe");
+                    for (var i = 0; i < subscribers.length; i++) {
+                        (function(subscriber) {
+                            _session.subscribe(subscriber.topic, function(args, kwargs, details) {
+                                subscriber.fire("handle", {args: args, kwargs: kwargs, details: details});
+                            });
+                        }(subscribers[i]));
+                    }
+
+                    this.fire("open");
+                },
+                onClose: function() {
+                    this.fire("close");
                 },
                 get connection() {
                     return _connection;

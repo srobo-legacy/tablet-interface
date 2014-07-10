@@ -41,18 +41,19 @@
             </g>
         </svg>
 
-        <sr-wamp id="wamp" on-open="{{onWampOpen}}"></sr-wamp>
+        <sr-wamp>
+            <sr-wamp-subscribe
+                topic="org.srobo.battery.level"
+                on-handle="{{handleBatteryLevel}}"></sr-wamp-subscribe>
+        </sr-wamp>
 
     </template>
 
     <script>
         Polymer("sr-battery", {
             level: 1.0,
-            onWampOpen: function() {
-                this.$.wamp.subscribe("org.srobo.battery.level", this.onBatteryLevel.bind(this));
-            },
-            onBatteryLevel: function(args, kwargs, details) {
-                this.level = args[0];
+            handleBatteryLevel: function(e) {
+                this.level = e.detail.args[0];
             },
             floor: function(value) {
                 return Math.floor(value);
