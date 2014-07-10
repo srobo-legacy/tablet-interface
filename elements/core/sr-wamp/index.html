@@ -42,6 +42,27 @@
     </script>
 </polymer-element>
 
+<polymer-element name="sr-wamp-call" attributes="procedure wamp">
+    <template>
+        <style>
+            :host {
+                display: none;
+            }
+        </style>
+    </template>
+
+    <script>
+        Polymer("sr-wamp-call", {
+            wamp: undefined,
+            wampChanged: function() {
+                this.wamp.session.call(this.procedure).then(function(result) {
+                    this.fire("success", {result: result});
+                }.bind(this));
+            }
+        });
+    </script>
+</polymer-element>
+
 <polymer-element name="sr-wamp">
     <template>
         <style>
@@ -88,14 +109,9 @@
                     return this.session.publish(topic, args, kwargs, options);
                 },
                 onOpen: function() {
-                    var subscribers = this.querySelectorAll("sr-wamp-subscribe");
-                    for (var i = 0; i < subscribers.length; i++) {
-                        subscribers[i].wamp = this;
-                    }
-
-                    var publishers = this.querySelectorAll("sr-wamp-publish");
-                    for (var i = 0; i < publishers.length; i++) {
-                        publishers[i].wamp = this;
+                    var things = this.querySelectorAll("sr-wamp-subscribe, sr-wamp-publish, sr-wamp-call");
+                    for (var i = 0; i < things.length; i++) {
+                        things[i].wamp = this;
                     }
 
                     this.fire("open");

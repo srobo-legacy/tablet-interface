@@ -51,6 +51,10 @@
             <sr-wamp-publish
                 id="pub"
                 topic="org.srobo.mode"></sr-wamp-publish>
+            <sr-wamp-call
+                id="call"
+                procedure="org.srobo.mode"
+                on-success="{{handleMode}}"></sr-wamp-call>
         </sr-wamp>
     </template>
 
@@ -68,13 +72,8 @@
                     }.bind(this)(buttons[i]));
                 }
             },
-            wampOpen: function() {
-                this.$.wamp.session.call("org.srobo.mode").then(function(res) {
-                    this.mode = res;
-                }.bind(this));
-            },
             handleMode: function(e) {
-                this.mode = e.detail.args[0];
+                this.mode = e.detail.result || e.detail.args[0];
             }
         });
     </script>
