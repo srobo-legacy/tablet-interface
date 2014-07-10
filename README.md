@@ -8,8 +8,16 @@ External libraries are managed with `bower`, therefore you must have it installe
 
     $ bower install
 
+To run the server, you must install some dependencies
+
+    $ pip install twisted Flask
+    $ git clone git@github.com:tavendo/AutobahnPython.git
+    $ cd AutobahnPython
+    $ python build.py install
+    $ cd ..
+
 ## Running
 
-    $ pip install autobahn
-    $ ./server.py &
-    $ python3 -m http.server &
+    $ ./server.py
+
+You can then go to `http://localhost:8000` in a browser.
