@@ -71,9 +71,12 @@
                 id="wamp-stop"
                 procedure="org.srobo.stop"></sr-wamp-call>
             <sr-wamp-subscribe
-                auto
-                id="subscribe"
+                id="wamp-sub-state"
                 topic="org.srobo.state"></sr-wamp-subscribe>
+            <sr-wamp-call
+                auto
+                id="wamp-call-state"
+                procedure="org.srobo.state"></sr-wamp-call>
         </sr-wamp>
         <script>
             (function() {
@@ -92,7 +95,7 @@
             window.addEventListener("play", function(e) {
                 if (e.detail.sender.icon == "play") {
                     document.querySelector("#wamp-start").go();
-                } else {
+                } else if (e.detail.sender.icon == "stop") {
                     document.querySelector("#wamp-stop").go();
                 }
             });
@@ -113,7 +116,7 @@
                 }
             };
 
-            document.querySelector("#subscribe").addEventListener("handle", function(e) {
+            var handleState = function(e) {
                 var state = e.detail.result || e.detail.args[0];
                 if (state === "started") {
                     changeIcon("stop");
@@ -128,7 +131,10 @@
                     changeIcon("cog fa-spin");
                     changeText("Stopping…");
                 }
-            });
+            };
+
+            document.querySelector("#wamp-sub-state").addEventListener("handle", handleState);
+            document.querySelector("#wamp-call-state").addEventListener("success", handleState);
         </script>
     </body>
 

@@ -86,8 +86,13 @@
                 topic="org.srobo.project.version"
                 on-handle="{{handleProjectVersion}}"></sr-wamp-subscribe>
             <sr-wamp-call
-                topic="org.srobo.state"
-                on-handle="{{handleState}}"></sr-wamp-subscribe>
+                auto
+                procedure="org.srobo.state"
+                on-success="{{handleState}}"></sr-wamp-call>
+            <sr-wamp-call
+                auto
+                procedure="org.srobo.pyenv.version"
+                on-success="{{handlePyenvVersion}}"></sr-wamp-call>
         </sr-wamp>
     </template>
 
@@ -97,6 +102,7 @@
             disabled: false,
             created: function() {
                 this.project = {}
+                this.pyenv = {};
             },
             handleState: function(e) {
                 var state = e.detail.result || e.detail.args[0];
@@ -108,6 +114,9 @@
             },
             handleProjectVersion: function(e) {
                 this.project.version = e.detail.args[0];
+            },
+            handlePyenvVersion: function(e) {
+                this.pyenv.version = e.detail.result;
             }
         });
     </script>
