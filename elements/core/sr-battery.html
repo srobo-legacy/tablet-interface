@@ -1,4 +1,5 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="sr-wamp/index.html" />
 
 <polymer-element name="sr-battery" attributes="level">
     <template>
@@ -40,26 +41,21 @@
             </g>
         </svg>
 
-        <core-ajax
-            id="get"
-            url="/battery"
-            handleAs="json"
-            on-core-response="{{handleGetResponse}}"></core-ajax>
+        <sr-wamp id="wamp" on-open="{{onWampOpen}}"></sr-wamp>
 
     </template>
 
     <script>
         Polymer("sr-battery", {
             level: 1.0,
-            domReady: function() {
-                this.$.get.go();
-                setInterval(this.$.get.go.bind(this.$.get), 10 * 1000);
+            onWampOpen: function() {
+                this.$.wamp.subscribe("org.srobo.battery.level", this.onBatteryLevel.bind(this));
+            },
+            onBatteryLevel: function(args, kwargs, details) {
+                this.level = args[0];
             },
             floor: function(value) {
                 return Math.floor(value);
-            },
-            handleGetResponse: function(e) {
-                this.level = e.target.response.level;
             }
         });
     </script>

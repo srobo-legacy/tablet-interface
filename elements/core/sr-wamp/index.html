@@ -1,0 +1,52 @@
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+
+<polymer-element name="sr-wamp">
+    <template>
+        <style>
+            :host {
+                display: none;
+            }
+        </style>
+    </template>
+
+    <script src="autobahn.min.js"></script>
+
+    <script>
+        (function() {
+            var _session;
+            var _connection = new autobahn.Connection({
+                url: "ws://localhost:8080/ws",
+                realm: "org.srobo"
+            });
+
+            _connection.onopen = function(session) {
+                _session = session;
+                window.dispatchEvent(new CustomEvent("sr-wamp-open"));
+            };
+
+            _connection.onclose = function() {
+                window.dispatchEvent(new CustomEvent("sr-wamp-close"));
+            };
+
+            Polymer("sr-wamp", {
+                domReady: function() {
+                    if (!this.connection.isOpen) {
+                        this.connection.open();
+                    }
+
+                    window.addEventListener("sr-wamp-open", this.fire.bind(this, "open"));
+                    window.addEventListener("sr-wamp-close", this.fire.bind(this, "close"));
+                },
+                subscribe: function(topic, handler, options) {
+                    return this.session.subscribe(topic, handler, options);
+                },
+                get connection() {
+                    return _connection;
+                },
+                get session() {
+                    return _session;
+                }
+            });
+        }());
+    </script>
+</polymer-element>
