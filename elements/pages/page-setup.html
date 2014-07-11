@@ -47,6 +47,13 @@
                 align-self: center;
                 font-size: 1.2em;
             }
+
+            .col1 {
+                display: inline-block;
+                min-width: 100px;
+                text-align: right;
+                margin-right: 12px;
+            }
         </style>
 
         <h1>Set up your robot</h1>
@@ -68,10 +75,10 @@
         <div id="overlay" class="{{ {disabled: disabled} | tokenList }}">
             <h1>Project running…</h1>
             <p>
-                Mode: <strong>{{$.modePicker.mode === "dev" ? "Development" : "Competition"}}</strong><br />
-                Zone: <strong>{{$.zonePicker.zone}}</strong><br />
-                Project: <strong>{{project.name}}</strong> @ <strong>{{project.version}}</strong><br />
-                Pyenv: <strong>v{{pyenv.version}}</strong>
+                <span class="col1">Mode</span><strong>{{$.modePicker.mode === "dev" ? "Development" : "Competition"}}</strong><br />
+                <span class="col1">Zone</span><strong>{{$.zonePicker.zone}}</strong><br />
+                <span class="col1">Project</span><strong>{{project.name}}</strong> @ <strong>{{project.version}}</strong><br />
+                <span class="col1">Pyenv</span><strong>v{{pyenv.version}}</strong>
             </p>
         </div>
 
