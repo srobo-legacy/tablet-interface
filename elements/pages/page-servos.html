@@ -7,9 +7,87 @@
             h1 {
                 margin: 15px 15px 5px;
             }
+
+            :host > div {
+                margin: 5px 15px 15px;
+            }
+
+            div {
+                flex: 1 1 auto;
+                display: flex;
+            }
+
+            div > div {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            input[type=range] {
+                flex: 1 1 auto;
+                -webkit-appearance: slider-vertical;
+                writing-mode: bt-lr;
+            }
         </style>
 
         <h1>Servo Control</h1>
+
+        <div>
+            <div>
+                <h2>0</h2>
+                <input type="range" orient="vertical" />
+                <input type="checkbox" />
+                <span></span>
+            </div>
+
+            <div>
+                <h2>1</h2>
+                <input type="range" orient="vertical" />
+                <input type="checkbox" />
+                <span></span>
+            </div>
+
+            <div>
+                <h2>2</h2>
+                <input type="range" orient="vertical" />
+                <input type="checkbox" />
+                <span></span>
+            </div>
+
+            <div>
+                <h2>3</h2>
+                <input type="range" orient="vertical" />
+                <input type="checkbox" />
+                <span></span>
+            </div>
+
+            <div>
+                <h2>4</h2>
+                <input type="range" orient="vertical" />
+                <input type="checkbox" />
+                <span></span>
+            </div>
+
+            <div>
+                <h2>5</h2>
+                <input type="range" orient="vertical" />
+                <input type="checkbox" />
+                <span></span>
+            </div>
+
+            <div>
+                <h2>6</h2>
+                <input type="range" orient="vertical" />
+                <input type="checkbox" />
+                <span></span>
+            </div>
+
+            <div>
+                <h2>7</h2>
+                <input type="range" orient="vertical" />
+                <input type="checkbox" />
+                <span></span>
+            </div>
+        </div>
     </template>
 
     <script>
