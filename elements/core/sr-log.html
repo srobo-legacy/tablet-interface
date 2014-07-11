@@ -17,13 +17,12 @@
 
         <textarea id="log" readonly></textarea>
 
-        <sr-wamp>
+        <sr-wamp on-open="{{handleOpen}}">
             <sr-wamp-subscribe
-                auto
                 topic="org.srobo.log"
                 on-handle="{{handleLog}}"></sr-wamp-subscribe>
             <sr-wamp-call
-                auto
+                id="call"
                 procedure="org.srobo.log"
                 on-success="{{handleLog}}"></sr-wamp-call>
         </sr-wamp>
@@ -31,6 +30,9 @@
 
     <script>
         Polymer("sr-log", {
+            handleOpen: function() {
+                this.$.call.go();
+            },
             isAtBottom: function() {
                 var log = this.$.log;
                 return Math.abs((log.scrollTop + log.clientHeight) - log.scrollHeight) <= 10;
