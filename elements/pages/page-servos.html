@@ -1,6 +1,7 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="/elements/core/sr-pages.html" />
 <link rel="import" href="/elements/core/sr-wamp/index.html" />
+<link rel="import" href="../core/sr-servo-controller/index.html" />
 
 <polymer-element name="page-servos" extends="sr-page">
     <template>
@@ -11,105 +12,26 @@
 
             :host > div {
                 margin: 5px 15px 15px;
-            }
-
-            div {
                 flex: 1 1 auto;
                 display: flex;
             }
 
-            div > div {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            input[type=range] {
+            sr-servo-controller {
                 flex: 1 1 auto;
-                -webkit-appearance: slider-vertical;
-                writing-mode: bt-lr;
-                margin: 32px 0;
-            }
-
-            input[type=checkbox] {
-                width: 20px;
-                height: 20px;
-                margin: 3px 0;
-            }
-
-            h2 {
-                margin: 2px 0;
-            }
-
-            span {
-                color: grey;
-                margin: 2px 0;
-                font-size: 1.2em;
-            }
-
-            span.checked {
-                color: black;
-                font-weight: bold;
             }
         </style>
 
         <h1>Servo Control</h1>
 
         <div>
-            <div>
-                <h2>0</h2>
-                <input type="range" orient="vertical" min="0" max="100" step="0.1" value="{{values[0]}}" />
-                <input type="checkbox" checked="{{states[0]}}" />
-                <span class="{{ {checked: states[0]} | tokenList }}">{{values[0]}}</span>
-            </div>
-
-            <div>
-                <h2>1</h2>
-                <input type="range" orient="vertical" min="0" max="100" step="0.1" value="{{values[1]}}" />
-                <input type="checkbox" checked="{{states[1]}}" />
-                <span class="{{ {checked: states[1]} | tokenList }}">{{values[1]}}</span>
-            </div>
-
-            <div>
-                <h2>2</h2>
-                <input type="range" orient="vertical" min="0" max="100" step="0.1" value="{{values[2]}}" />
-                <input type="checkbox" checked="{{states[2]}}" />
-                <span class="{{ {checked: states[2]} | tokenList }}">{{values[2]}}</span>
-            </div>
-
-            <div>
-                <h2>3</h2>
-                <input type="range" orient="vertical" min="0" max="100" step="0.1" value="{{values[3]}}" />
-                <input type="checkbox" checked="{{states[3]}}" />
-                <span class="{{ {checked: states[3]} | tokenList }}">{{values[3]}}</span>
-            </div>
-
-            <div>
-                <h2>4</h2>
-                <input type="range" orient="vertical" min="0" max="100" step="0.1" value="{{values[4]}}" />
-                <input type="checkbox" checked="{{states[4]}}" />
-                <span class="{{ {checked: states[4]} | tokenList }}">{{values[4]}}</span>
-            </div>
-
-            <div>
-                <h2>5</h2>
-                <input type="range" orient="vertical" min="0" max="100" step="0.1" value="{{values[5]}}" />
-                <input type="checkbox" checked="{{states[5]}}" />
-                <span class="{{ {checked: states[5]} | tokenList }}">{{values[5]}}</span>
-            </div>
-
-            <div>
-                <h2>6</h2>
-                <input type="range" orient="vertical" min="0" max="100" step="0.1" value="{{values[6]}}" />
-                <input type="checkbox" checked="{{states[6]}}" />
-                <span class="{{ {checked: states[6]} | tokenList }}">{{values[6]}}</span>
-            </div>
-
-            <div>
-                <h2>7</h2>
-                <input type="range" orient="vertical" min="0" max="100" step="0.1" value="{{values[7]}}" />
-                <input type="checkbox" checked="{{states[7]}}" />
-                <span class="{{ {checked: states[7]} | tokenList }}">{{values[7]}}</span>
-            </div>
+            <sr-servo-controller servo="0"></sr-servo-controller>
+            <sr-servo-controller servo="1"></sr-servo-controller>
+            <sr-servo-controller servo="2"></sr-servo-controller>
+            <sr-servo-controller servo="3"></sr-servo-controller>
+            <sr-servo-controller servo="4"></sr-servo-controller>
+            <sr-servo-controller servo="5"></sr-servo-controller>
+            <sr-servo-controller servo="6"></sr-servo-controller>
+            <sr-servo-controller servo="7"></sr-servo-controller>
         </div>
 
         <sr-wamp on-open="{{handleOpen}}">
@@ -117,56 +39,21 @@
                 id="call"
                 procedure="org.srobo.servos"
                 on-success="{{handleCallSuccess}}"></sr-wamp-call>
-            <sr-wamp-subscribe
-                topic="org.srobo.servos.value"
-                on-handle="{{handleValue}}"></sr-wamp-subscribe>
-            <sr-wamp-publish
-                id="publishValue"
-                topic="org.srobo.servos.value"></sr-wamp-publish>
-            <sr-wamp-subscribe
-                topic="org.srobo.servos.state"
-                on-handle="{{handleState}}"></sr-wamp-subscribe>
-            <sr-wamp-publish
-                id="publishState"
-                topic="org.srobo.servos.state"></sr-wamp-publish>
         </sr-wamp>
     </template>
 
     <script>
         Polymer("page-servos", {
             name: "servos",
-            values: [50, 50, 50, 50, 50, 50, 50, 50],
-            states: [false, false, false, false, false, false, false, false],
-            domReady: function() {
-                this.ranges = this.shadowRoot.querySelectorAll("input[type=range]");
-                this.checkboxes = this.shadowRoot.querySelectorAll("input[type=checkbox]");
-                for (var i = 0; i < this.ranges.length; i++) {
-                    (function(i) {
-                        this.ranges[i].addEventListener("change", function(e) {
-                            this.$.publishValue.go([i, e.target.value]);
-                        }.bind(this));
-
-                        this.checkboxes[i].addEventListener("change", function(e) {
-                            this.$.publishState.go([i, e.target.checked]);
-                        }.bind(this));
-                    }.bind(this)(i));
-                }
-            },
             handleOpen: function() {
                 this.$.call.go();
             },
             handleCallSuccess: function(e) {
-                var servos = e.detail.result;
+                var servos = this.shadowRoot.querySelectorAll("sr-servo-controller");
                 for (var i = 0; i < servos.length; i++) {
-                    this.values[i] = servos[i].value;
-                    this.states[i] = servos[i].state;
+                    servos[i].value = e.detail.result[i].value;
+                    servos[i].state = e.detail.result[i].state;
                 }
-            },
-            handleValue: function(e) {
-                this.values[e.detail.args[0]] = parseFloat(e.detail.args[1]);
-            },
-            handleState: function(e) {
-                this.states[e.detail.args[0]] = e.detail.args[1];
             }
         });
     </script>

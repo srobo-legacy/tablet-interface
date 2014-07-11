@@ -1,0 +1,86 @@
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="../sr-wamp/index.html" />
+
+<polymer-element name="sr-servo-controller" attributes="servo value state">
+    <template>
+        <style>
+            :host {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            input[type=range] {
+                flex: 1 1 auto;
+                -webkit-appearance: slider-vertical;
+                writing-mode: bt-lr;
+                margin: 32px 0;
+            }
+
+            input[type=checkbox] {
+                width: 20px;
+                height: 20px;
+                margin: 3px 0;
+            }
+
+            h2 {
+                margin: 2px 0;
+            }
+
+            span {
+                color: grey;
+                margin: 2px 0;
+                font-size: 1.2em;
+            }
+
+            span.checked {
+                color: black;
+                font-weight: bold;
+            }
+        </style>
+
+        <h2>{{servo}}</h2>
+        <input id="value" type="range" orient="vertical" min="0" max="100" step="0.1" value="{{value}}" on-change="{{handleValueChange}}" />
+        <input id="state" type="checkbox" checked="{{state}}" on-change="{{handleStateChange}}" />
+        <span class="{{ {checked: state} | tokenList }}">{{value}}</span>
+
+        <sr-wamp>
+            <sr-wamp-subscribe
+                topic="org.srobo.servos.value"
+                on-handle="{{handleValue}}"></sr-wamp-subscribe>
+            <sr-wamp-publish
+                id="publishValue"
+                topic="org.srobo.servos.value"></sr-wamp-publish>
+            <sr-wamp-subscribe
+                topic="org.srobo.servos.state"
+                on-handle="{{handleState}}"></sr-wamp-subscribe>
+            <sr-wamp-publish
+                id="publishState"
+                topic="org.srobo.servos.state"></sr-wamp-publish>
+        </sr-wamp>
+    </template>
+
+    <script>
+        Polymer("sr-servo-controller", {
+            servo: 0,
+            value: 50,
+            state: false,
+            handleValueChange: function() {
+                this.$.publishValue.go([this.servo, parseFloat(this.value)]);
+            },
+            handleStateChange: function() {
+                this.$.publishState.go([this.servo, this.state]);
+            },
+            handleValue: function(e) {
+                if (e.detail.args[0] === this.servo) {
+                    this.value = parseFloat(e.detail.args[1]);
+                }
+            },
+            handleState: function(e) {
+                if (e.detail.args[0] === this.servo) {
+                    this.state = e.detail.args[1];
+                }
+            }
+        });
+    </script>
+</polymer-element>
