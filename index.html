@@ -74,7 +74,6 @@
                 id="wamp-sub-state"
                 topic="org.srobo.state"></sr-wamp-subscribe>
             <sr-wamp-call
-                auto
                 id="wamp-call-state"
                 procedure="org.srobo.state"></sr-wamp-call>
         </sr-wamp>
@@ -133,6 +132,9 @@
                 }
             };
 
+            document.querySelector("sr-wamp").addEventListener("open", function() {
+                document.querySelector("#wamp-call-state").go();
+            });
             document.querySelector("#wamp-sub-state").addEventListener("handle", handleState);
             document.querySelector("#wamp-call-state").addEventListener("success", handleState);
         </script>
