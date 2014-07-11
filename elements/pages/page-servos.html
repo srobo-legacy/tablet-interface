@@ -100,6 +100,10 @@
         </div>
 
         <sr-wamp on-open="{{handleOpen}}">
+            <sr-wamp-call
+                id="call"
+                procedure="org.srobo.servos"
+                on-success="{{handleCallSuccess}}"></sr-wamp-call>
             <sr-wamp-subscribe
                 topic="org.srobo.servos.value"
                 on-handle="{{handleValue}}"></sr-wamp-subscribe>
@@ -107,11 +111,11 @@
                 id="publishValue"
                 topic="org.srobo.servos.value"></sr-wamp-publish>
             <sr-wamp-subscribe
-                topic="org.srobo.servos.states"
+                topic="org.srobo.servos.state"
                 on-handle="{{handleState}}"></sr-wamp-subscribe>
             <sr-wamp-publish
                 id="publishState"
-                topic="org.srobo.servos.states"></sr-wamp-publish>
+                topic="org.srobo.servos.state"></sr-wamp-publish>
         </sr-wamp>
     </template>
 
@@ -133,6 +137,16 @@
                             this.$.publishState.go([i, e.target.checked]);
                         }.bind(this));
                     }.bind(this)(i));
+                }
+            },
+            handleOpen: function() {
+                this.$.call.go();
+            },
+            handleCallSuccess: function(e) {
+                var servos = e.detail.result;
+                for (var i = 0; i < servos.length; i++) {
+                    this.values[i] = servos[i].value;
+                    this.states[i] = servos[i].state;
                 }
             },
             handleValue: function(e) {
