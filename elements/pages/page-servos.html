@@ -106,6 +106,12 @@
             <sr-wamp-publish
                 id="publishValue"
                 topic="org.srobo.servos.value"></sr-wamp-publish>
+            <sr-wamp-subscribe
+                topic="org.srobo.servos.states"
+                on-handle="{{handleState}}"></sr-wamp-subscribe>
+            <sr-wamp-publish
+                id="publishState"
+                topic="org.srobo.servos.states"></sr-wamp-publish>
         </sr-wamp>
     </template>
 
@@ -116,16 +122,24 @@
             states: [false, false, false, false, false, false, false, false],
             domReady: function() {
                 this.ranges = this.shadowRoot.querySelectorAll("input[type=range]");
+                this.checkboxes = this.shadowRoot.querySelectorAll("input[type=checkbox]");
                 for (var i = 0; i < this.ranges.length; i++) {
                     (function(i) {
                         this.ranges[i].addEventListener("change", function(e) {
                             this.$.publishValue.go([i, e.target.value]);
+                        }.bind(this));
+
+                        this.checkboxes[i].addEventListener("change", function(e) {
+                            this.$.publishState.go([i, e.target.checked]);
                         }.bind(this));
                     }.bind(this)(i));
                 }
             },
             handleValue: function(e) {
                 this.values[e.detail.args[0]] = parseFloat(e.detail.args[1]);
+            },
+            handleState: function(e) {
+                this.states[e.detail.args[0]] = e.detail.args[1];
             }
         });
     </script>
