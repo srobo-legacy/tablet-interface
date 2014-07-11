@@ -85,6 +85,9 @@
             <sr-wamp-subscribe
                 topic="org.srobo.project.version"
                 on-handle="{{handleProjectVersion}}"></sr-wamp-subscribe>
+            <sr-wamp-subscribe
+                topic="org.srobo.pyenv.version"
+                on-handle="{{handlePyenvVersion}}"></sr-wamp-subscribe>
             <sr-wamp-call
                 id="stateCall"
                 procedure="org.srobo.state"
