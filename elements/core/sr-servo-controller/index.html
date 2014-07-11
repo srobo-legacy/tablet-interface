@@ -40,9 +40,9 @@
         </style>
 
         <h2>{{servo}}</h2>
-        <input id="value" type="range" orient="vertical" min="0" max="100" step="0.1" value="{{value}}" on-change="{{handleValueChange}}" />
+        <input id="value" type="range" orient="vertical" min="0" max="100" step="0.01" value="{{value}}" on-change="{{handleValueChange}}" />
         <input id="state" type="checkbox" checked="{{state}}" on-change="{{handleStateChange}}" />
-        <span class="{{ {checked: state} | tokenList }}">{{value}}</span>
+        <span class="{{ {checked: state} | tokenList }}">{{value | formatValue}}</span>
 
         <sr-wamp>
             <sr-wamp-subscribe
@@ -80,6 +80,9 @@
                 if (e.detail.args[0] === this.servo) {
                     this.state = e.detail.args[1];
                 }
+            },
+            formatValue: function(v) {
+                return Number(v).toFixed(2);
             }
         });
     </script>
