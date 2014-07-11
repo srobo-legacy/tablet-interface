@@ -150,7 +150,7 @@
         (function() {
             var _session;
             var _connection = new autobahn.Connection({
-                url: "ws://localhost:9000",
+                url: "ws://" + location.hostname + ":9000",
                 realm: "srobo"
             });
 
