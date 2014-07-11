@@ -1,5 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="/elements/core/sr-pages.html" />
+<link rel="import" href="/elements/core/sr-wamp/index.html" />
 
 <polymer-element name="page-servos" extends="sr-page">
     <template>
@@ -27,6 +28,15 @@
                 -webkit-appearance: slider-vertical;
                 writing-mode: bt-lr;
             }
+
+            span {
+                color: grey;
+            }
+
+            span.checked {
+                color: black;
+                font-weight: bold;
+            }
         </style>
 
         <h1>Servo Control</h1>
@@ -34,82 +44,81 @@
         <div>
             <div>
                 <h2>0</h2>
-                <input type="range" orient="vertical" min="0" max="100" step="0.1" data-servo="0" />
-                <input type="checkbox" data-servo="0" />
-                <span data-servo="0"></span>
+                <input type="range" orient="vertical" min="0" max="100" step="0.1" value="{{values[0]}}" />
+                <input type="checkbox" checked="{{states[0]}}" />
+                <span class="{{ {checked: states[0]} | tokenList }}">{{values[0]}}</span>
             </div>
 
             <div>
                 <h2>1</h2>
-                <input type="range" orient="vertical" min="0" max="100" step="0.1" data-servo="1" />
-                <input type="checkbox" data-servo="1" />
-                <span data-servo="1"></span>
+                <input type="range" orient="vertical" min="0" max="100" step="0.1" value="{{values[1]}}" />
+                <input type="checkbox" checked="{{states[1]}}" />
+                <span class="{{ {checked: states[1]} | tokenList }}">{{values[1]}}</span>
             </div>
 
             <div>
                 <h2>2</h2>
-                <input type="range" orient="vertical" min="0" max="100" step="0.1" data-servo="2" />
-                <input type="checkbox" data-servo="2" />
-                <span data-servo="2"></span>
+                <input type="range" orient="vertical" min="0" max="100" step="0.1" value="{{values[2]}}" />
+                <input type="checkbox" checked="{{states[2]}}" />
+                <span class="{{ {checked: states[2]} | tokenList }}">{{values[2]}}</span>
             </div>
 
             <div>
                 <h2>3</h2>
-                <input type="range" orient="vertical" min="0" max="100" step="0.1" data-servo="3" />
-                <input type="checkbox" data-servo="3" />
-                <span data-servo="0"></span>
+                <input type="range" orient="vertical" min="0" max="100" step="0.1" value="{{values[3]}}" />
+                <input type="checkbox" checked="{{states[3]}}" />
+                <span class="{{ {checked: states[3]} | tokenList }}">{{values[3]}}</span>
             </div>
 
             <div>
                 <h2>4</h2>
-                <input type="range" orient="vertical" min="0" max="100" step="0.1" data-servo="4" />
-                <input type="checkbox" data-servo="4" />
-                <span data-servo="4"></span>
+                <input type="range" orient="vertical" min="0" max="100" step="0.1" value="{{values[4]}}" />
+                <input type="checkbox" checked="{{states[4]}}" />
+                <span class="{{ {checked: states[4]} | tokenList }}">{{values[4]}}</span>
             </div>
 
             <div>
                 <h2>5</h2>
-                <input type="range" orient="vertical" min="0" max="100" step="0.1" data-servo="5" />
-                <input type="checkbox" data-servo="5" />
-                <span data-servo="5"></span>
+                <input type="range" orient="vertical" min="0" max="100" step="0.1" value="{{values[5]}}" />
+                <input type="checkbox" checked="{{states[5]}}" />
+                <span class="{{ {checked: states[5]} | tokenList }}">{{values[5]}}</span>
             </div>
 
             <div>
                 <h2>6</h2>
-                <input type="range" orient="vertical" min="0" max="100" step="0.1" data-servo="6" />
-                <input type="checkbox" data-servo="6" />
-                <span data-servo="6"></span>
+                <input type="range" orient="vertical" min="0" max="100" step="0.1" value="{{values[6]}}" />
+                <input type="checkbox" checked="{{states[6]}}" />
+                <span class="{{ {checked: states[6]} | tokenList }}">{{values[6]}}</span>
             </div>
 
             <div>
                 <h2>7</h2>
-                <input type="range" orient="vertical" min="0" max="100" step="0.1" data-servo="7" />
-                <input type="checkbox" data-servo="7" />
-                <span data-servo="7"></span>
+                <input type="range" orient="vertical" min="0" max="100" step="0.1" value="{{values[7]}}" />
+                <input type="checkbox" checked="{{states[7]}}" />
+                <span class="{{ {checked: states[7]} | tokenList }}">{{values[7]}}</span>
             </div>
         </div>
+
+        <sr-wamp on-open="{{handleOpen}}">
+            <sr-wamp-subscribe
+                topic="org.srobo.servos.value"
+                on-handle="{{handleValue}}"></sr-wamp-subscribe>
+            <sr-wamp-publish
+                id="publishValue"
+                topic="org.srobo.servos.value"></sr-wamp-publish>
+        </sr-wamp>
     </template>
 
     <script>
         Polymer("page-servos", {
             name: "servos",
+            values: [50, 50, 50, 50, 50, 50, 50, 50],
+            states: [false, false, false, false, false, false, false, false],
             domReady: function() {
-                var sliders = this.shadowRoot.querySelectorAll("input[type=range]");
-                var checkboxes = this.shadowRoot.querySelectorAll("input[type=checkbox]");
-                var spans = this.shadowRoot.querySelectorAll("span[data-servo]");
-                for (var i = 0; i < sliders.length; i++) {
-                    (function(i) {
-                        sliders[i].addEventListener("input", function(e) {
-                            spans[i].textContent = e.target.value;
-                        });
-                    }(i));
 
-                    sliders[i].value = 50;
-                    spans[i].textContent = "50";
-                }
             },
-            sliderChanged: function() {
-
+            handleValue: function(e) {
+                var value = e.detail.result || e.detail.args[0];
             }
         });
     </script>
