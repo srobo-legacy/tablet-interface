@@ -23,7 +23,7 @@
     </script>
 </polymer-element>
 
-<polymer-element name="sr-wamp-publish" attributes="auto topic args kwargs options wamp">
+<polymer-element name="sr-wamp-publish" attributes="topic wamp">
     <template>
         <style>
             :host {
@@ -34,46 +34,12 @@
 
     <script>
         Polymer("sr-wamp-publish", {
-            auto: false,
             topic: undefined,
-            args: undefined,
-            kwargs: undefined,
-            options: undefined,
             wamp: undefined,
-            topicChanged: function() {
-                if (this.auto) {
-                    this.go();
-                }
-            },
-            argsChanged: function() {
-                if (this.auto) {
-                    this.go();
-                }
-            },
-            kwargsChanged: function() {
-                if (this.auto) {
-                    this.go();
-                }
-            },
-            optionsChanged: function() {
-                if (this.auto) {
-                    this.go();
-                }
-            },
-            wampChanged: function() {
-                if (this.auto) {
-                    this.go();
-                }
-            },
-            go: function() {
-                if (this.topic && this.wamp) {
-                    return this.wamp.publish(this.topic,
-                                             JSON.parse(this.args),
-                                             JSON.parse(this.kwargs),
-                                             JSON.parse(this.options));
-                }
+            go: function(args, kwargs, options) {
+                return this.wamp.publish(this.topic, args, kwargs, options);
             }
-        })
+        });
     </script>
 </polymer-element>
 
@@ -88,46 +54,12 @@
 
     <script>
         Polymer("sr-wamp-call", {
-            auto: false,
             procedure: undefined,
-            args: undefined,
-            kwargs: undefined,
-            options: undefined,
             wamp: undefined,
-            procedureChanged: function() {
-                if (this.auto) {
-                    this.go();
-                }
-            },
-            argsChanged: function() {
-                if (this.auto) {
-                    this.go();
-                }
-            },
-            kwargsChanged: function() {
-                if (this.auto) {
-                    this.go();
-                }
-            },
-            optionsChanged: function() {
-                if (this.auto) {
-                    this.go();
-                }
-            },
-            wampChanged: function() {
-                if (this.auto) {
-                    this.go();
-                }
-            },
-            go: function() {
-                if (this.procedure && this.wamp) {
-                    this.wamp.call(this.procedure,
-                                   JSON.parse(this.args),
-                                   JSON.parse(this.kwargs),
-                                   JSON.parse(this.options)).then(function(result) {
-                                       this.fire("success", {result: result});
-                                   }.bind(this));
-                }
+            go: function(args, kwargs, options) {
+                this.wamp.call(this.procedure, args, kwargs, options).then(function(result) {
+                    this.fire("success", {result: result});
+                }.bind(this));
             }
         });
     </script>

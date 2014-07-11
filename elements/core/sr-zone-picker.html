@@ -36,16 +36,15 @@
         <button data-zone="2" style="background: #ff00ff" class="{{ {selected: zone == 2} | tokenList }}"></button>
         <button data-zone="3" style="background: #ffff00" class="{{ {selected: zone == 3} | tokenList }}"></button>
 
-        <sr-wamp>
+        <sr-wamp on-open="{{handleOpen}}">
             <sr-wamp-subscribe
                 topic="org.srobo.zone"
                 on-handle="{{handleZone}}"></sr-wamp-subscribe>
             <sr-wamp-publish
                 id="pub"
-                auto
                 topic="org.srobo.zone"></sr-wamp-publish>
             <sr-wamp-call
-                auto
+                id="call"
                 procedure="org.srobo.zone"
                 on-success="{{handleZone}}"></sr-wamp-call>
         </sr-wamp>
@@ -59,9 +58,12 @@
                 for (var i = 0; i < buttons.length; i++) {
                     buttons[i].addEventListener("click", function(e) {
                         this.zone = e.target.dataset.zone;
-                        this.$.pub.args = JSON.stringify([this.zone]);
+                        this.$.pub.go([this.zone]);
                     }.bind(this));
                 }
+            },
+            handleOpen: function() {
+                this.$.call.go();
             },
             handleZone: function(e) {
                 this.zone = e.detail.result !== undefined ? e.detail.result : e.detail.args[0];

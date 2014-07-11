@@ -44,16 +44,15 @@
             <span class="fa fa-trophy"></span> Competition
         </button>
 
-        <sr-wamp>
+        <sr-wamp on-open="{{handleOpen}}">
             <sr-wamp-subscribe
                 topic="org.srobo.mode"
                 on-handle="{{handleMode}}"></sr-wamp-subscribe>
             <sr-wamp-publish
                 id="pub"
-                auto
                 topic="org.srobo.mode"></sr-wamp-publish>
             <sr-wamp-call
-                auto
+                id="call"
                 procedure="org.srobo.mode"
                 on-success="{{handleMode}}"></sr-wamp-call>
         </sr-wamp>
@@ -68,10 +67,13 @@
                     (function(btn) {
                         btn.addEventListener("click", function(e) {
                             this.mode = e.target.dataset.mode;
-                            this.$.pub.args = JSON.stringify([this.mode]);
+                            this.$.pub.go([this.mode]);
                         }.bind(this));
                     }.bind(this)(buttons[i]));
                 }
+            },
+            handleOpen: function() {
+                this.$.call.go();
             },
             handleMode: function(e) {
                 this.mode = e.detail.result || e.detail.args[0];
