@@ -1,7 +1,7 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../sr-wamp/index.html" />
 
-<polymer-element name="sr-servo-controller" attributes="servo value state">
+<polymer-element name="sr-servo-controller" attributes="board servo value state">
     <template>
         <style>
             :host {
@@ -62,23 +62,25 @@
 
     <script>
         Polymer("sr-servo-controller", {
+            board: 0,
             servo: 0,
             value: 50,
             state: false,
             handleValueChange: function() {
-                this.$.publishValue.go([this.servo, parseFloat(this.value)]);
+                this.$.publishValue.go([this.board, this.servo, parseFloat(this.value)]);
             },
             handleStateChange: function() {
-                this.$.publishState.go([this.servo, this.state]);
+                this.$.publishState.go([this.board, this.servo, this.state]);
             },
             handleValue: function(e) {
-                if (e.detail.args[0] === this.servo) {
-                    this.value = parseFloat(e.detail.args[1]);
+                console.log(e.detail, this.board, this.servo);
+                if (e.detail.args[0] === this.board && e.detail.args[1] === this.servo) {
+                    this.value = parseFloat(e.detail.args[2]);
                 }
             },
             handleState: function(e) {
-                if (e.detail.args[0] === this.servo) {
-                    this.state = e.detail.args[1];
+                if (e.detail.args[0] === this.board && e.detail.args[1] === this.servo) {
+                    this.state = e.detail.args[2];
                 }
             },
             formatValue: function(v) {

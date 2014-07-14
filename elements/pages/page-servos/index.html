@@ -7,8 +7,13 @@
 <polymer-element name="page-servos" extends="sr-page">
     <template>
         <style>
-            div {
+            #controllers {
                 margin: 10px;
+                flex: 1 1 auto;
+                display: flex;
+            }
+
+            .controllersContainer {
                 flex: 1 1 auto;
                 display: flex;
             }
@@ -20,22 +25,10 @@
 
         <sr-toolbar>
             <h1 flex>Servo Control</h1>
-
-            <select>
-                <option value="0">Board 0</option>
-                <option value="1">Board 1</option>
-            </select>
+            <select id="boardSelection" on-change="{{boardSelectionChanged}}"></select>
         </sr-toolbar>
 
-        <div>
-            <sr-servo-controller servo="0"></sr-servo-controller>
-            <sr-servo-controller servo="1"></sr-servo-controller>
-            <sr-servo-controller servo="2"></sr-servo-controller>
-            <sr-servo-controller servo="3"></sr-servo-controller>
-            <sr-servo-controller servo="4"></sr-servo-controller>
-            <sr-servo-controller servo="5"></sr-servo-controller>
-            <sr-servo-controller servo="6"></sr-servo-controller>
-            <sr-servo-controller servo="7"></sr-servo-controller>
+        <div id="controllers">
         </div>
 
         <sr-wamp on-open="{{handleOpen}}">
@@ -52,12 +45,48 @@
             handleOpen: function() {
                 this.$.call.go();
             },
-            handleCallSuccess: function(e) {
-                var servos = this.shadowRoot.querySelectorAll("sr-servo-controller");
-                for (var i = 0; i < servos.length; i++) {
-                    servos[i].value = e.detail.result[i].value;
-                    servos[i].state = e.detail.result[i].state;
+            changeBoard: function(index) {
+                var divs = this.shadowRoot.querySelectorAll(".controllersContainer");
+                for (var i = 0; i < divs.length; i++) {
+                    divs[i].hidden = true;
                 }
+                this.shadowRoot.querySelector("#board_" + index).hidden = false;
+            },
+            createBoardOption: function(i) {
+                var option = document.createElement("option");
+                option.value = i;
+                option.textContent = "Board " + i;
+                return option;
+            },
+            createBoardDiv: function(i, board) {
+                var div = document.createElement("div");
+                div.className = "controllersContainer";
+                div.id = "board_" + i;
+                for (var j = 0; j < board.length; j++) {
+                    var controller = document.createElement("sr-servo-controller");
+                    controller.board = i;
+                    controller.servo = j;
+                    controller.value = board[j].value;
+                    controller.state = board[j].state;
+                    div.appendChild(controller);
+                }
+                return div;
+            },
+            handleCallSuccess: function(e) {
+                var boards = e.detail.result;
+                for (var i = 0; i < boards.length; i++) {
+                    var option = this.createBoardOption(i);
+                    var div = this.createBoardDiv(i, boards[i]);
+
+                    this.shadowRoot.querySelector("#controllers").appendChild(div);
+                    this.shadowRoot.querySelector("#boardSelection").appendChild(option);
+                }
+
+                this.changeBoard(0);
+            },
+            boardSelectionChanged: function(e) {
+                var i = this.$.boardSelection.value;
+                this.changeBoard(i);
             }
         });
     </script>

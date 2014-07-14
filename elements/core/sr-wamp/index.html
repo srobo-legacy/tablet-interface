@@ -13,13 +13,16 @@
         Polymer("sr-wamp-subscribe", {
             wamp: undefined,
             wampChanged: function() {
+                this.wamp.addEventListener("open", this.go.bind(this));
+            },
+            go: function() {
                 this.wamp.subscribe(this.topic, function(args, kwargs, details) {
                     this.fire("handle", {
                         args: args, kwargs: kwargs, details: details
                     });
                 }.bind(this));
             }
-        })
+        });
     </script>
 </polymer-element>
 
@@ -98,30 +101,49 @@
             };
 
             window.addEventListener("polymer-ready", function() {
-                console.log("Connecting to WAMP server.");
-                _connection.open();
-            })
+                setTimeout(function() {
+                    console.log("Connecting to WAMP server.");
+                    _connection.open();
+                }, 1000);
+            });
 
             Polymer("sr-wamp", {
                 created: function() {
                     window.addEventListener("sr-wamp-open", this.onOpen.bind(this));
                     window.addEventListener("sr-wamp-close", this.onClose.bind(this));
                 },
-                subscribe: function(topic, handler, options) {
-                    return this.session.subscribe(topic, handler, options);
-                },
-                publish: function(topic, args, kwargs, options) {
-                    return this.session.publish(topic, args, kwargs, options);
-                },
-                call: function(procedure, args, kwargs, options) {
-                    return this.session.call(procedure, args, kwargs, options);
-                },
-                onOpen: function() {
+                domReady: function() {
                     var things = this.querySelectorAll("sr-wamp-subscribe, sr-wamp-publish, sr-wamp-call");
                     for (var i = 0; i < things.length; i++) {
                         things[i].wamp = this;
                     }
 
+                    if (_connection.isOpen) {
+                        this.onOpen();
+                    }
+                },
+                subscribe: function(topic, handler, options, callback) {
+                    console.log("Subscribing to:", topic);
+                    this.session.subscribe(topic, handler, options).then(
+                        function(subscription) {
+                            if (callback !== undefined) {
+                                callback(subscription);
+                            }
+                        },
+                        function(error) {
+                            console.log("Subscription failed!", error);
+                        }
+                    )
+                },
+                publish: function(topic, args, kwargs, options) {
+                    console.log("Publishing:", topic, args, kwargs, options);
+                    return this.session.publish(topic, args, kwargs, options);
+                },
+                call: function(procedure, args, kwargs, options) {
+                    console.log("Calling:", procedure, args, kwargs, options);
+                    return this.session.call(procedure, args, kwargs, options);
+                },
+                onOpen: function() {
                     this.fire("open");
                 },
                 onClose: function() {
