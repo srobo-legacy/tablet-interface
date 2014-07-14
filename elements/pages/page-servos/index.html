@@ -58,6 +58,12 @@
                 option.textContent = "Board " + i;
                 return option;
             },
+            createBoardButton: function(i) {
+                var button = document.createElement("button");
+                button.textContent = "Board " + i;
+                button.onclick = this.changeBoard.bind(this, i);
+                return button;
+            },
             createBoardDiv: function(i, board) {
                 var div = document.createElement("div");
                 div.className = "controllersContainer";
@@ -76,8 +82,10 @@
                 var boards = e.detail.result;
                 for (var i = 0; i < boards.length; i++) {
                     var option = this.createBoardOption(i);
+                    var button = this.createBoardButton(i);
                     var div = this.createBoardDiv(i, boards[i]);
 
+                    this.shadowRoot.querySelector("sr-toolbar").appendChild(button);
                     this.shadowRoot.querySelector("#controllers").appendChild(div);
                     this.shadowRoot.querySelector("#boardSelection").appendChild(option);
                 }
