@@ -7,8 +7,6 @@
                 display: none;
             }
         </style>
-
-        <content></content>
     </template>
 
     <script src="autobahn.min.js"></script>
@@ -41,6 +39,11 @@
                 created: function() {
                     window.addEventListener("sr-wamp-open", this.onOpen.bind(this));
                     window.addEventListener("sr-wamp-close", this.onClose.bind(this));
+                },
+                domReady: function() {
+                    if (_connection.isOpen) {
+                        this.onOpen();
+                    }
                 },
                 subscribe: function(topic, handler, options, callback) {
                     console.log("Subscribing to:", topic);
