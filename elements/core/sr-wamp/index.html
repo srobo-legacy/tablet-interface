@@ -1,73 +1,5 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<polymer-element name="sr-wamp-subscribe" attributes="topic wamp">
-    <template>
-        <style>
-            :host {
-                display: none;
-            }
-        </style>
-    </template>
-
-    <script>
-        Polymer("sr-wamp-subscribe", {
-            wamp: undefined,
-            wampChanged: function() {
-                this.wamp.addEventListener("open", this.go.bind(this));
-            },
-            go: function() {
-                this.wamp.subscribe(this.topic, function(args, kwargs, details) {
-                    this.fire("handle", {
-                        args: args, kwargs: kwargs, details: details
-                    });
-                }.bind(this));
-            }
-        });
-    </script>
-</polymer-element>
-
-<polymer-element name="sr-wamp-publish" attributes="topic wamp">
-    <template>
-        <style>
-            :host {
-                display: none;
-            }
-        </style>
-    </template>
-
-    <script>
-        Polymer("sr-wamp-publish", {
-            topic: undefined,
-            wamp: undefined,
-            go: function(args, kwargs, options) {
-                return this.wamp.publish(this.topic, args, kwargs, options);
-            }
-        });
-    </script>
-</polymer-element>
-
-<polymer-element name="sr-wamp-call" attributes="auto procedure args kwargs options wamp">
-    <template>
-        <style>
-            :host {
-                display: none;
-            }
-        </style>
-    </template>
-
-    <script>
-        Polymer("sr-wamp-call", {
-            procedure: undefined,
-            wamp: undefined,
-            go: function(args, kwargs, options) {
-                this.wamp.call(this.procedure, args, kwargs, options).then(function(result) {
-                    this.fire("success", {result: result});
-                }.bind(this));
-            }
-        });
-    </script>
-</polymer-element>
-
 <polymer-element name="sr-wamp">
     <template>
         <style>
@@ -112,16 +44,6 @@
                     window.addEventListener("sr-wamp-open", this.onOpen.bind(this));
                     window.addEventListener("sr-wamp-close", this.onClose.bind(this));
                 },
-                domReady: function() {
-                    var things = this.querySelectorAll("sr-wamp-subscribe, sr-wamp-publish, sr-wamp-call");
-                    for (var i = 0; i < things.length; i++) {
-                        things[i].wamp = this;
-                    }
-
-                    if (_connection.isOpen) {
-                        this.onOpen();
-                    }
-                },
                 subscribe: function(topic, handler, options, callback) {
                     console.log("Subscribing to:", topic);
                     this.session.subscribe(topic, handler, options).then(
@@ -157,5 +79,71 @@
                 }
             });
         }());
+    </script>
+</polymer-element>
+
+<polymer-element name="sr-wamp-subscribe" attributes="topic">
+    <template>
+        <style>
+            :host {
+                display: none;
+            }
+        </style>
+
+        <sr-wamp id="wamp" on-open="{{handleOpen}}"></sr-wamp>
+    </template>
+
+    <script>
+        Polymer("sr-wamp-subscribe", {
+            handleOpen: function() {
+                this.$.wamp.subscribe(this.topic, function(args, kwargs, details) {
+                    this.fire("handle", {
+                        args: args, kwargs: kwargs, details: details
+                    });
+                }.bind(this));
+            }
+        });
+    </script>
+</polymer-element>
+
+<polymer-element name="sr-wamp-publish" attributes="topic">
+    <template>
+        <style>
+            :host {
+                display: none;
+            }
+        </style>
+
+        <sr-wamp id="wamp"></sr-wamp>
+    </template>
+
+    <script>
+        Polymer("sr-wamp-publish", {
+            go: function(args, kwargs, options) {
+                return this.$.wamp.publish(this.topic, args, kwargs, options);
+            }
+        });
+    </script>
+</polymer-element>
+
+<polymer-element name="sr-wamp-call" attributes="procedure args kwargs options">
+    <template>
+        <style>
+            :host {
+                display: none;
+            }
+        </style>
+
+        <sr-wamp id="wamp"></sr-wamp>
+    </template>
+
+    <script>
+        Polymer("sr-wamp-call", {
+            go: function(args, kwargs, options) {
+                this.$.wamp.call(this.procedure, args, kwargs, options).then(function(result) {
+                    this.fire("success", {result: result});
+                }.bind(this));
+            }
+        });
     </script>
 </polymer-element>
