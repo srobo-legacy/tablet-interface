@@ -2,16 +2,21 @@
 <link rel="import" href="../../core/sr-pages/index.html" />
 <link rel="import" href="../../core/sr-wamp/index.html" />
 <link rel="import" href="../../core/sr-servo-controller/index.html" />
+<link rel="import" href="../../core/sr-toolbar/index.html" />
 
 <polymer-element name="page-servos" extends="sr-page">
     <template>
         <style>
             h1 {
-                margin: 15px 15px 5px;
+                margin: 0;
+            }
+
+            select {
+                margin: 0;
             }
 
             :host > div {
-                margin: 5px 15px 15px;
+                margin: 15px;
                 flex: 1 1 auto;
                 display: flex;
             }
@@ -21,7 +26,14 @@
             }
         </style>
 
-        <h1>Servo Control</h1>
+        <sr-toolbar>
+            <h1 flex>Servo Control</h1>
+
+            <select>
+                <option value="0">Board 0</option>
+                <option value="1">Board 1</option>
+            </select>
+        </sr-toolbar>
 
         <div>
             <sr-servo-controller servo="0"></sr-servo-controller>
