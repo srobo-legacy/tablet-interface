@@ -36,18 +36,18 @@
         <button data-zone="2" style="background: #ff00ff" class="{{ {selected: zone == 2} | tokenList }}"></button>
         <button data-zone="3" style="background: #ffff00" class="{{ {selected: zone == 3} | tokenList }}"></button>
 
-        <sr-wamp on-open="{{handleOpen}}">
-            <sr-wamp-subscribe
-                topic="org.srobo.zone"
-                on-handle="{{handleZone}}"></sr-wamp-subscribe>
-            <sr-wamp-publish
-                id="pub"
-                topic="org.srobo.zone"></sr-wamp-publish>
-            <sr-wamp-call
-                id="call"
-                procedure="org.srobo.zone"
-                on-success="{{handleZone}}"></sr-wamp-call>
-        </sr-wamp>
+        <sr-wamp
+            on-open="{{handleOpen}}"></sr-wamp>
+        <sr-wamp-subscribe
+            topic="org.srobo.zone"
+            on-handle="{{handleZone}}"></sr-wamp-subscribe>
+        <sr-wamp-publish
+            id="pub"
+            topic="org.srobo.zone"></sr-wamp-publish>
+        <sr-wamp-call
+            id="call"
+            procedure="org.srobo.zone"
+            on-success="{{handleZone}}"></sr-wamp-call>
     </template>
 
     <script>

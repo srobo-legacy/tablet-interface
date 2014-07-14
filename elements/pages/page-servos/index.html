@@ -31,12 +31,12 @@
         <div id="controllers">
         </div>
 
-        <sr-wamp on-open="{{handleOpen}}">
-            <sr-wamp-call
-                id="call"
-                procedure="org.srobo.servos"
-                on-success="{{handleCallSuccess}}"></sr-wamp-call>
-        </sr-wamp>
+        <sr-wamp
+            on-open="{{handleOpen}}"></sr-wamp>
+        <sr-wamp-call
+            id="call"
+            procedure="org.srobo.servos"
+            on-success="{{handleCallSuccess}}"></sr-wamp-call>
     </template>
 
     <script>

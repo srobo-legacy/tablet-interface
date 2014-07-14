@@ -63,20 +63,19 @@
             <page-servos hidden></page-servos>
         </sr-pages>
 
-        <sr-wamp>
-            <sr-wamp-call
-                id="wamp-start"
-                procedure="org.srobo.start"></sr-wamp-call>
-            <sr-wamp-call
-                id="wamp-stop"
-                procedure="org.srobo.stop"></sr-wamp-call>
-            <sr-wamp-subscribe
-                id="wamp-sub-state"
-                topic="org.srobo.state"></sr-wamp-subscribe>
-            <sr-wamp-call
-                id="wamp-call-state"
-                procedure="org.srobo.state"></sr-wamp-call>
-        </sr-wamp>
+        <sr-wamp></sr-wamp>
+        <sr-wamp-call
+            id="wamp-start"
+            procedure="org.srobo.start"></sr-wamp-call>
+        <sr-wamp-call
+            id="wamp-stop"
+            procedure="org.srobo.stop"></sr-wamp-call>
+        <sr-wamp-subscribe
+            id="wamp-sub-state"
+            topic="org.srobo.state"></sr-wamp-subscribe>
+        <sr-wamp-call
+            id="wamp-call-state"
+            procedure="org.srobo.state"></sr-wamp-call>
 
         <script>
             (function() {

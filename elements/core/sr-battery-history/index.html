@@ -16,11 +16,9 @@
 
         <canvas id="canvas" width="660" height="300"></canvas>
 
-        <sr-wamp>
-            <sr-wamp-subscribe
-                topic="org.srobo.battery.level"
-                on-handle="{{handleBatteryLevel}}"></sr-wamp-subscribe>
-        </sr-wamp>
+        <sr-wamp-subscribe
+            topic="org.srobo.battery.level"
+            on-handle="{{handleBatteryLevel}}"></sr-wamp-subscribe>
     </template>
 
     <script src="/bower_components/chartjs/Chart.js"></script>

@@ -44,18 +44,18 @@
             <span class="fa fa-trophy"></span> Competition
         </button>
 
-        <sr-wamp on-open="{{handleOpen}}">
-            <sr-wamp-subscribe
-                topic="org.srobo.mode"
-                on-handle="{{handleMode}}"></sr-wamp-subscribe>
-            <sr-wamp-publish
-                id="pub"
-                topic="org.srobo.mode"></sr-wamp-publish>
-            <sr-wamp-call
-                id="call"
-                procedure="org.srobo.mode"
-                on-success="{{handleMode}}"></sr-wamp-call>
-        </sr-wamp>
+        <sr-wamp
+            on-open="{{handleOpen}}"></sr-wamp>
+        <sr-wamp-subscribe
+            topic="org.srobo.mode"
+            on-handle="{{handleMode}}"></sr-wamp-subscribe>
+        <sr-wamp-publish
+            id="pub"
+            topic="org.srobo.mode"></sr-wamp-publish>
+        <sr-wamp-call
+            id="call"
+            procedure="org.srobo.mode"
+            on-success="{{handleMode}}"></sr-wamp-call>
     </template>
 
     <script>

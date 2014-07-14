@@ -44,20 +44,18 @@
         <input id="state" type="checkbox" checked="{{state}}" on-change="{{handleStateChange}}" />
         <span class="{{ {checked: state} | tokenList }}">{{value | formatValue}}</span>
 
-        <sr-wamp>
-            <sr-wamp-subscribe
-                topic="org.srobo.servos.value"
-                on-handle="{{handleValue}}"></sr-wamp-subscribe>
-            <sr-wamp-publish
-                id="publishValue"
-                topic="org.srobo.servos.value"></sr-wamp-publish>
-            <sr-wamp-subscribe
-                topic="org.srobo.servos.state"
-                on-handle="{{handleState}}"></sr-wamp-subscribe>
-            <sr-wamp-publish
-                id="publishState"
-                topic="org.srobo.servos.state"></sr-wamp-publish>
-        </sr-wamp>
+        <sr-wamp-subscribe
+            topic="org.srobo.servos.value"
+            on-handle="{{handleValue}}"></sr-wamp-subscribe>
+        <sr-wamp-publish
+            id="publishValue"
+            topic="org.srobo.servos.value"></sr-wamp-publish>
+        <sr-wamp-subscribe
+            topic="org.srobo.servos.state"
+            on-handle="{{handleState}}"></sr-wamp-subscribe>
+        <sr-wamp-publish
+            id="publishState"
+            topic="org.srobo.servos.state"></sr-wamp-publish>
     </template>
 
     <script>
@@ -73,7 +71,6 @@
                 this.$.publishState.go([this.board, this.servo, this.state]);
             },
             handleValue: function(e) {
-                console.log(e.detail, this.board, this.servo);
                 if (e.detail.args[0] === this.board && e.detail.args[1] === this.servo) {
                     this.value = parseFloat(e.detail.args[2]);
                 }

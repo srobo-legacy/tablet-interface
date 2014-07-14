@@ -80,36 +80,36 @@
             </p>
         </div>
 
-        <sr-wamp on-open="{{handleOpen}}">
-            <sr-wamp-subscribe
-                topic="org.srobo.state"
-                on-handle="{{handleState}}"></sr-wamp-subscribe>
-            <sr-wamp-subscribe
-                topic="org.srobo.project.name"
-                on-handle="{{handleProjectName}}"></sr-wamp-subscribe>
-            <sr-wamp-subscribe
-                topic="org.srobo.project.version"
-                on-handle="{{handleProjectVersion}}"></sr-wamp-subscribe>
-            <sr-wamp-subscribe
-                topic="org.srobo.pyenv.version"
-                on-handle="{{handlePyenvVersion}}"></sr-wamp-subscribe>
-            <sr-wamp-call
-                id="stateCall"
-                procedure="org.srobo.state"
-                on-success="{{handleState}}"></sr-wamp-call>
-            <sr-wamp-call
-                id="pyenvCall"
-                procedure="org.srobo.pyenv.version"
-                on-success="{{handlePyenvVersion}}"></sr-wamp-call>
-            <sr-wamp-call
-                id="projectVersionCall"
-                procedure="org.srobo.project.version"
-                on-success="{{handleProjectVersion}}"></sr-wamp-call>
-            <sr-wamp-call
-                id="projectNameCall"
-                procedure="org.srobo.project.name"
-                on-success="{{handleProjectName}}"></sr-wamp-call>
-        </sr-wamp>
+        <sr-wamp
+            on-open="{{handleOpen}}"></sr-wamp>
+        <sr-wamp-subscribe
+            topic="org.srobo.state"
+            on-handle="{{handleState}}"></sr-wamp-subscribe>
+        <sr-wamp-subscribe
+            topic="org.srobo.project.name"
+            on-handle="{{handleProjectName}}"></sr-wamp-subscribe>
+        <sr-wamp-subscribe
+            topic="org.srobo.project.version"
+            on-handle="{{handleProjectVersion}}"></sr-wamp-subscribe>
+        <sr-wamp-subscribe
+            topic="org.srobo.pyenv.version"
+            on-handle="{{handlePyenvVersion}}"></sr-wamp-subscribe>
+        <sr-wamp-call
+            id="stateCall"
+            procedure="org.srobo.state"
+            on-success="{{handleState}}"></sr-wamp-call>
+        <sr-wamp-call
+            id="pyenvCall"
+            procedure="org.srobo.pyenv.version"
+            on-success="{{handlePyenvVersion}}"></sr-wamp-call>
+        <sr-wamp-call
+            id="projectVersionCall"
+            procedure="org.srobo.project.version"
+            on-success="{{handleProjectVersion}}"></sr-wamp-call>
+        <sr-wamp-call
+            id="projectNameCall"
+            procedure="org.srobo.project.name"
+            on-success="{{handleProjectName}}"></sr-wamp-call>
     </template>
 
     <script>

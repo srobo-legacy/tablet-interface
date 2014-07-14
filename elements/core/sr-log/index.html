@@ -17,15 +17,15 @@
 
         <textarea id="log" readonly></textarea>
 
-        <sr-wamp on-open="{{handleOpen}}">
-            <sr-wamp-subscribe
-                topic="org.srobo.log"
-                on-handle="{{handleLog}}"></sr-wamp-subscribe>
-            <sr-wamp-call
-                id="call"
-                procedure="org.srobo.log"
-                on-success="{{handleLog}}"></sr-wamp-call>
-        </sr-wamp>
+        <sr-wamp
+            on-open="{{handleOpen}}"></sr-wamp>
+        <sr-wamp-subscribe
+            topic="org.srobo.log"
+            on-handle="{{handleLog}}"></sr-wamp-subscribe>
+        <sr-wamp-call
+            id="call"
+            procedure="org.srobo.log"
+            on-success="{{handleLog}}"></sr-wamp-call>
     </template>
 
     <script>
