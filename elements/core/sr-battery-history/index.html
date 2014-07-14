@@ -27,9 +27,11 @@
         Polymer("sr-battery-history", {
             _lastTime: new Date(),
             levelChanged: function() {
+                var timeStr = moment().format("HH:mm:ss");
+
                 if (!this.chart) {
                     var data = {
-                        labels: ["", ""],
+                        labels: [timeStr, timeStr],
                         datasets: [
                             {
                                 label: "Battery Level",
@@ -50,7 +52,7 @@
 
                 var diff = parseInt((new Date() - this._lastTime) / 1000);
                 if (diff >= 59) {
-                    this.chart.addData([this.level], moment().format("HH:mm:ss"));
+                    this.chart.addData([this.level], timeStr);
                     this._lastTime = new Date();
                 }
             },
