@@ -4,11 +4,40 @@
 
 <polymer-element name="page-motors" extends="sr-page">
     <template>
+        <style>
+            :host > div {
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: row;
+            }
+
+            :host > div > div {
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: column;
+                margin: 10px;
+            }
+
+            sr-motor-controller {
+                flex: 1 1 auto;
+            }
+        </style>
+
         <sr-toolbar>
             <h1>Motor Control</h1>
         </sr-toolbar>
 
-        <sr-motor-controller board="0" motor="0"></sr-motor-controller>
+        <div>
+            <div>
+                <sr-motor-controller board="0" motor="0"></sr-motor-controller>
+                <sr-motor-controller board="0" motor="1"></sr-motor-controller>
+            </div>
+
+            <div>
+                <sr-motor-controller board="1" motor="0"></sr-motor-controller>
+                <sr-motor-controller board="1" motor="1"></sr-motor-controller>
+            </div>
+        </div>
     </template>
 
     <script>

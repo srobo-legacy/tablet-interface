@@ -6,30 +6,27 @@
         <style>
             :host {
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
                 align-items: center;
             }
 
             input[type=range] {
                 flex: 1 1 auto;
-                -webkit-appearance: slider-vertical;
-                writing-mode: bt-lr;
-                margin: 32px 0;
+                margin: 0 32px;
             }
 
             h2 {
-                margin: 2px 0;
+                margin: 0 2px;
             }
 
             span {
-                color: grey;
-                margin: 2px 0;
+                margin: 0 2px;
                 font-size: 1.2em;
             }
         </style>
 
         <h2>{{motor}}</h2>
-        <input id="value" type="range" orient="vertical" min="-100" max="100" step="0.01" value="{{value}}" on-change="{{handleValueChange}}" />
+        <input id="value" type="range" min="-100" max="100" step="0.01" value="{{value}}" on-change="{{handleValueChange}}" />
         <span>{{value | formatValue}}</span>
 
         <sr-wamp-subscribe
