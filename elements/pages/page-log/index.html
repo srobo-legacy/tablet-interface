@@ -5,26 +5,13 @@
 <polymer-element name="page-log" extends="sr-page">
     <template>
         <style>
-            div {
-                margin: 15px 15px 5px;
-            }
-
-            h1, select {
-                margin: 0;
-            }
-
-            select, button {
-                margin: 2px;
-                padding: 4px 8px;
-            }
-
             sr-log {
-                margin: 5px 15px 15px;
+                margin: 10px;
                 flex: 1 1 auto;
             }
         </style>
 
-        <div layout horizontal center>
+        <sr-toolbar>
             <h1 flex>View Robot Logs</h1>
             <select>
                 <option>Current</option>
@@ -36,7 +23,7 @@
                 <option>7th July 16:13</option>
             </select>
             <button id="btnBottom">Jump to bottom</button>
-        </div>
+        </sr-toolbar>
 
         <sr-log id="log"></sr-log>
     </template>
