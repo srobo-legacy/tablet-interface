@@ -1,11 +1,14 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../../core/sr-pages/index.html" />
+<link rel="import" href="../../core/sr-motor-controller/index.html" />
 
 <polymer-element name="page-motors" extends="sr-page">
     <template>
         <sr-toolbar>
             <h1>Motor Control</h1>
         </sr-toolbar>
+
+        <sr-motor-controller board="0" motor="0"></sr-motor-controller>
     </template>
 
     <script>
