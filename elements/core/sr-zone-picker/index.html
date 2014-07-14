@@ -58,7 +58,7 @@
                 for (var i = 0; i < buttons.length; i++) {
                     buttons[i].addEventListener("click", function(e) {
                         this.zone = e.target.dataset.zone;
-                        this.$.pub.go([this.zone]);
+                        this.$.pub.go([parseInt(this.zone)]);
                     }.bind(this));
                 }
             },
