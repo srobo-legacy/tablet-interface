@@ -50,15 +50,15 @@
                 this.shadowRoot.querySelector("#board_" + index).hidden = false;
                 this.$.boardSelection.selectedIndex = index;
             },
-            createBoardOption: function(i) {
+            createBoardOption: function(i, board) {
                 var option = document.createElement("option");
                 option.value = i;
-                option.textContent = "Board " + i;
+                option.textContent = "Board " + board.serial_number;
                 return option;
             },
-            createBoardButton: function(i) {
+            createBoardButton: function(i, board) {
                 var button = document.createElement("button");
-                button.textContent = "Board " + i;
+                button.textContent = "Board " + board.serial_number;
                 button.onclick = this.changeBoard.bind(this, i);
                 return button;
             },
@@ -66,11 +66,11 @@
                 var div = document.createElement("div");
                 div.className = "controllersContainer";
                 div.id = "board_" + i;
-                for (var j = 0; j < board.length; j++) {
+                for (var j = 0; j < board.motors.length; j++) {
                     var controller = document.createElement("sr-motor-controller");
                     controller.board = i;
                     controller.motor = j;
-                    controller.value = board[j].value;
+                    controller.value = board.motors[j].value;
                     div.appendChild(controller);
                 }
                 return div;
@@ -78,8 +78,8 @@
             handleCallSuccess: function(e) {
                 var boards = e.detail.result;
                 for (var i = 0; i < boards.length; i++) {
-                    var option = this.createBoardOption(i);
-                    var button = this.createBoardButton(i);
+                    var option = this.createBoardOption(i, boards[i]);
+                    var button = this.createBoardButton(i, boards[i]);
                     var div = this.createBoardDiv(i, boards[i]);
 
                     this.shadowRoot.querySelector("sr-toolbar").appendChild(button);
