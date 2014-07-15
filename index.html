@@ -29,6 +29,7 @@
         <link rel="import" href="elements/pages/page-motors/index.html" />
         <link rel="import" href="elements/pages/page-servos/index.html" />
         <link rel="import" href="elements/pages/page-setup/index.html" />
+        <link rel="import" href="http://localhost:10000/custom_pages/import" />
     </head>
 
     <body fullbleed unresolved horizontal layout>
@@ -142,14 +143,20 @@
         <script>
             window.addEventListener("polymer-ready", function(e) {
                 var xhr = new XMLHttpRequest();
-                xhr.open("GET", "http://" + location.hostname + ":10000/custom_pages");
+                xhr.open("GET", "http://" + location.hostname + ":10000/custom_pages/info");
                 xhr.responseType = "json";
                 xhr.addEventListener("load", function(e) {
                     var pages = e.target.response.pages;
                     pages.forEach(function(page) {
+                        var element = document.createElement(page.name);
+                        element.hidden = true;
+                        document.querySelector("sr-pages").appendChild(element);
+
                         var btn = document.createElement("sr-fa-button");
                         btn.icon = page.icon;
                         btn.textContent = page.title;
+                        btn.action = "change-page";
+                        btn.dataset.page = page.name;
                         document.querySelector("sr-navigation-drawer").appendChild(btn);
                     });
                 });
