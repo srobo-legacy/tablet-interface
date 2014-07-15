@@ -9,6 +9,7 @@
     "normalize-css": "~3.0.1",
     "core-elements": "Polymer/core-elements#~0.3.3",
     "moment": "~2.7.0",
-    "chartjs": "v1.0.1-beta.2"
+    "chartjs": "v1.0.1-beta.2",
+    "aterrien/jQuery-Knob": "~1.2.9"
   }
 }
