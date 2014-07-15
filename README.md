@@ -21,3 +21,14 @@ To run the server, you must install some dependencies
     $ ./server.py
 
 You can then go to `http://localhost:8000` in a browser.
+
+
+## User-code
+
+You can also run an example user code which provides a custom component.
+
+    $ cd usercode
+    $ ./server.py
+
+**Note:** only works when connected via `localhost`.
+
