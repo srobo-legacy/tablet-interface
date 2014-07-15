@@ -5,3 +5,4 @@
 - camera zoom
 - refresh on internet connection died
 - log jump to bottom
+- cope with multi-line page names
