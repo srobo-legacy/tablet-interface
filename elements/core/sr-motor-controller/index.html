@@ -46,7 +46,11 @@
                     step: 0.01,
                     angleOffset: -125,
                     angleArc: 250,
-                    displayPrevious: true
+                    displayPrevious: true,
+                    release: function(v) {
+                        this.value = v;
+                        this.handleValueChange();
+                    }.bind(this)
                 });
             },
             handleValueChange: function() {
