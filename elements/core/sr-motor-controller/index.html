@@ -32,11 +32,11 @@
         <span>{{value | formatValue}}</span>
 
         <sr-wamp-subscribe
-            topic="org.srobo.motors.value"
+            topic="org.srobo.motor.value"
             on-handle="{{handleValue}}"></sr-wamp-subscribe>
         <sr-wamp-publish
             id="publishValue"
-            topic="org.srobo.motors.value"></sr-wamp-publish>
+            topic="org.srobo.motor.value"></sr-wamp-publish>
     </template>
 
     <script>

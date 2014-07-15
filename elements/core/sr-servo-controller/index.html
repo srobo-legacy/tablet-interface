@@ -45,17 +45,17 @@
         <span class="{{ {checked: state} | tokenList }}">{{value | formatValue}}</span>
 
         <sr-wamp-subscribe
-            topic="org.srobo.servos.value"
+            topic="org.srobo.servo.value"
             on-handle="{{handleValue}}"></sr-wamp-subscribe>
         <sr-wamp-publish
             id="publishValue"
-            topic="org.srobo.servos.value"></sr-wamp-publish>
+            topic="org.srobo.servo.value"></sr-wamp-publish>
         <sr-wamp-subscribe
-            topic="org.srobo.servos.state"
+            topic="org.srobo.servo.state"
             on-handle="{{handleState}}"></sr-wamp-subscribe>
         <sr-wamp-publish
             id="publishState"
-            topic="org.srobo.servos.state"></sr-wamp-publish>
+            topic="org.srobo.servo.state"></sr-wamp-publish>
     </template>
 
     <script>
