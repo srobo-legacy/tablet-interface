@@ -50,6 +50,7 @@
                     divs[i].hidden = true;
                 }
                 this.shadowRoot.querySelector("#board_" + index).hidden = false;
+                this.$.boardSelection.selectedIndex = index;
             },
             createBoardOption: function(i) {
                 var option = document.createElement("option");
