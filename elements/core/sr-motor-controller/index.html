@@ -2,29 +2,34 @@
 <link rel="import" href="../sr-wamp/index.html" />
 
 <polymer-element name="sr-motor-controller" attributes="board motor value">
-    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="/bower_components/aterrien/jQuery-Knob/dist/jquery.knob.min.js"></script>
-
     <template>
         <style>
             :host {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                justify-content: center;
+            }
+
+            input[type=range] {
+                flex: 1 1 auto;
+                -webkit-appearance: slider-vertical;
+                writing-mode: bt-lr;
+                margin: 32px 0;
             }
 
             h2 {
                 margin: 2px 0;
             }
 
-            div {
-                margin: 32px 0;
+            span {
+                margin: 2px 0;
+                font-size: 1.2em;
             }
         </style>
 
         <h2>{{motor}}</h2>
-        <input id="value" type="text" value="{{value}}" on-change="{{handleValueChange}}" />
+        <input id="value" type="range" orient="vertical" min="-100" max="100" step="0.01" value="{{value}}" on-change="{{handleValueChange}}" />
+        <span>{{value | formatValue}}</span>
 
         <sr-wamp-subscribe
             topic="org.srobo.motors.value"
@@ -39,20 +44,6 @@
             board: 0,
             motor: 0,
             value: 0,
-            domReady: function() {
-                $(this.$.value).knob({
-                    min: -100,
-                    max: 100,
-                    step: 0.01,
-                    angleOffset: -125,
-                    angleArc: 250,
-                    displayPrevious: true,
-                    release: function(v) {
-                        this.value = v;
-                        this.handleValueChange();
-                    }.bind(this)
-                });
-            },
             handleValueChange: function() {
                 this.$.publishValue.go([this.board, this.motor, parseFloat(this.value)]);
             },
