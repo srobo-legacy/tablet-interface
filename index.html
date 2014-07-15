@@ -138,6 +138,24 @@
             document.querySelector("#wamp-sub-state").addEventListener("handle", handleState);
             document.querySelector("#wamp-call-state").addEventListener("success", handleState);
         </script>
+
+        <script>
+            window.addEventListener("polymer-ready", function(e) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "http://" + location.hostname + ":10000/custom_pages");
+                xhr.responseType = "json";
+                xhr.addEventListener("load", function(e) {
+                    var pages = e.target.response.pages;
+                    pages.forEach(function(page) {
+                        var btn = document.createElement("sr-fa-button");
+                        btn.icon = page.icon;
+                        btn.textContent = page.title;
+                        document.querySelector("sr-navigation-drawer").appendChild(btn);
+                    });
+                });
+                xhr.send();
+            });
+        </script>
     </body>
 
 </html>
