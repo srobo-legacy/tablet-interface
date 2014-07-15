@@ -4,13 +4,77 @@
 <polymer-element name="page-io" extends="sr-page">
     <template>
         <sr-toolbar>
-            <h1>I/O Control</h1>
+            <h1 flex>I/O Control</h1>
+            <select id="boardSelection" on-change="{{boardSelectionChanged}}"></select>
         </sr-toolbar>
+
+        <div id="controllers"></div>
+
+        <sr-wamp
+            on-open="{{handleOpen}}"></sr-wamp>
+        <sr-wamp-call
+            id="call"
+            procedure="org.srobo.ruggeduinos"
+            on-success="{{handleCallSuccess}}"></sr-wamp-call>
     </template>
 
     <script>
         Polymer("page-io", {
-            name: "io"
+            name: "io",
+            handleOpen: function() {
+                this.$.call.go();
+            },
+            changeBoard: function(index) {
+                var divs = this.shadowRoot.querySelectorAll(".controllersContainer");
+                for (var i = 0; i < divs.length; i++) {
+                    divs[i].hidden = true;
+                }
+                this.shadowRoot.querySelector("#board_" + index).hidden = false;
+                this.$.boardSelection.selectedIndex = index;
+            },
+            createBoardOption: function(i, board) {
+                var option = document.createElement("option");
+                option.value = i;
+                option.textContent = "Board " + board.serial_number;
+                return option;
+            },
+            createBoardButton: function(i, board) {
+                var button = document.createElement("button");
+                button.textContent = "Board " + board.serial_number;
+                button.onclick = this.changeBoard.bind(this, i);
+                return button;
+            },
+            createBoardDiv: function(i, board) {
+                var div = document.createElement("div");
+                div.className = "controllersContainer";
+                div.id = "board_" + i;
+                /*for (var j = 0; j < board.ruggeduinos.length; j++) {
+                    var controller = document.createElement("sr-ruggeduino-controller");
+                    controller.board = i;
+                    controller.ruggeduino = j;
+                    controller.value = board.ruggeduinos[j].value;
+                    div.appendChild(controller);
+                }*/
+                return div;
+            },
+            handleCallSuccess: function(e) {
+                var boards = e.detail.result;
+                for (var i = 0; i < boards.length; i++) {
+                    var option = this.createBoardOption(i, boards[i]);
+                    var button = this.createBoardButton(i, boards[i]);
+                    var div = this.createBoardDiv(i, boards[i]);
+
+                    this.shadowRoot.querySelector("sr-toolbar").appendChild(button);
+                    this.shadowRoot.querySelector("#controllers").appendChild(div);
+                    this.shadowRoot.querySelector("#boardSelection").appendChild(option);
+                }
+
+                this.changeBoard(0);
+            },
+            boardSelectionChanged: function(e) {
+                var i = this.$.boardSelection.value;
+                this.changeBoard(i);
+            }
         });
     </script>
 </polymer-element>
