@@ -1,10 +1,10 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
-<link rel="import" href="../../core/sr-motor-controller/index.html" />
-<link rel="import" href="../../core/sr-pages/index.html" />
-<link rel="import" href="../../core/sr-toolbar/index.html" />
-<link rel="import" href="../../core/sr-wamp/index.html" />
+<link rel="import" href="../sr-pages/index.html" />
+<link rel="import" href="../sr-servo-controller/index.html" />
+<link rel="import" href="../sr-toolbar/index.html" />
+<link rel="import" href="../sr-wamp/index.html" />
 
-<polymer-element name="page-motors" extends="sr-page">
+<polymer-element name="page-servos" extends="sr-page">
     <template>
         <style>
             #controllers {
@@ -19,13 +19,13 @@
                 overflow-x: auto;
             }
 
-            sr-motor-controller {
+            sr-servo-controller {
                 flex: 1 1 auto;
             }
         </style>
 
         <sr-toolbar>
-            <h1 flex>Motor Control</h1>
+            <h1 flex>Servo controllers</h1>
             <select id="boardSelection" on-change="{{boardSelectionChanged}}"></select>
         </sr-toolbar>
 
@@ -35,13 +35,13 @@
             on-open="{{handleOpen}}"></sr-wamp>
         <sr-wamp-call
             id="call"
-            procedure="org.srobo.motor_boards"
+            procedure="org.srobo.servo_boards"
             on-success="{{handleCallSuccess}}"></sr-wamp-call>
     </template>
 
     <script>
-        Polymer("page-motors", {
-            name: "motors",
+        Polymer("page-servos", {
+            name: "servos",
             handleOpen: function() {
                 this.$.call.go();
             },
@@ -69,11 +69,11 @@
                 var div = document.createElement("div");
                 div.className = "controllersContainer";
                 div.id = "board_" + i;
-                for (var j = 0; j < board.motors.length; j++) {
-                    var controller = document.createElement("sr-motor-controller");
+                for (var j = 0; j < board.servos.length; j++) {
+                    var controller = document.createElement("sr-servo-controller");
                     controller.board = i;
-                    controller.motor = j;
-                    controller.value = board.motors[j].value;
+                    controller.servo = j;
+                    controller.value = board.servos[j].value;
                     div.appendChild(controller);
                 }
                 return div;

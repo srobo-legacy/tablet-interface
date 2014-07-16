@@ -1,10 +1,31 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
-<link rel="import" href="../../core/sr-pages/index.html" />
+<link rel="import" href="../sr-motor-controller/index.html" />
+<link rel="import" href="../sr-pages/index.html" />
+<link rel="import" href="../sr-toolbar/index.html" />
+<link rel="import" href="../sr-wamp/index.html" />
 
-<polymer-element name="page-io" extends="sr-page">
+<polymer-element name="page-motors" extends="sr-page">
     <template>
+        <style>
+            #controllers {
+                flex: 1 1 auto;
+                display: flex;
+            }
+
+            .controllersContainer {
+                padding: 10px;
+                flex: 1 1 auto;
+                display: flex;
+                overflow-x: auto;
+            }
+
+            sr-motor-controller {
+                flex: 1 1 auto;
+            }
+        </style>
+
         <sr-toolbar>
-            <h1 flex>I/O Control</h1>
+            <h1 flex>Motor Control</h1>
             <select id="boardSelection" on-change="{{boardSelectionChanged}}"></select>
         </sr-toolbar>
 
@@ -14,13 +35,13 @@
             on-open="{{handleOpen}}"></sr-wamp>
         <sr-wamp-call
             id="call"
-            procedure="org.srobo.ruggeduinos"
+            procedure="org.srobo.motor_boards"
             on-success="{{handleCallSuccess}}"></sr-wamp-call>
     </template>
 
     <script>
-        Polymer("page-io", {
-            name: "io",
+        Polymer("page-motors", {
+            name: "motors",
             handleOpen: function() {
                 this.$.call.go();
             },
@@ -48,13 +69,13 @@
                 var div = document.createElement("div");
                 div.className = "controllersContainer";
                 div.id = "board_" + i;
-                /*for (var j = 0; j < board.ruggeduinos.length; j++) {
-                    var controller = document.createElement("sr-ruggeduino-controller");
+                for (var j = 0; j < board.motors.length; j++) {
+                    var controller = document.createElement("sr-motor-controller");
                     controller.board = i;
-                    controller.ruggeduino = j;
-                    controller.value = board.ruggeduinos[j].value;
+                    controller.motor = j;
+                    controller.value = board.motors[j].value;
                     div.appendChild(controller);
-                }*/
+                }
                 return div;
             },
             handleCallSuccess: function(e) {

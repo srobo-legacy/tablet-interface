@@ -1,31 +1,10 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
-<link rel="import" href="../../core/sr-pages/index.html" />
-<link rel="import" href="../../core/sr-servo-controller/index.html" />
-<link rel="import" href="../../core/sr-toolbar/index.html" />
-<link rel="import" href="../../core/sr-wamp/index.html" />
+<link rel="import" href="../sr-pages/index.html" />
 
-<polymer-element name="page-servos" extends="sr-page">
+<polymer-element name="page-io" extends="sr-page">
     <template>
-        <style>
-            #controllers {
-                flex: 1 1 auto;
-                display: flex;
-            }
-
-            .controllersContainer {
-                padding: 10px;
-                flex: 1 1 auto;
-                display: flex;
-                overflow-x: auto;
-            }
-
-            sr-servo-controller {
-                flex: 1 1 auto;
-            }
-        </style>
-
         <sr-toolbar>
-            <h1 flex>Servo controllers</h1>
+            <h1 flex>I/O Control</h1>
             <select id="boardSelection" on-change="{{boardSelectionChanged}}"></select>
         </sr-toolbar>
 
@@ -35,13 +14,13 @@
             on-open="{{handleOpen}}"></sr-wamp>
         <sr-wamp-call
             id="call"
-            procedure="org.srobo.servo_boards"
+            procedure="org.srobo.ruggeduinos"
             on-success="{{handleCallSuccess}}"></sr-wamp-call>
     </template>
 
     <script>
-        Polymer("page-servos", {
-            name: "servos",
+        Polymer("page-io", {
+            name: "io",
             handleOpen: function() {
                 this.$.call.go();
             },
@@ -69,13 +48,13 @@
                 var div = document.createElement("div");
                 div.className = "controllersContainer";
                 div.id = "board_" + i;
-                for (var j = 0; j < board.servos.length; j++) {
-                    var controller = document.createElement("sr-servo-controller");
+                /*for (var j = 0; j < board.ruggeduinos.length; j++) {
+                    var controller = document.createElement("sr-ruggeduino-controller");
                     controller.board = i;
-                    controller.servo = j;
-                    controller.value = board.servos[j].value;
+                    controller.ruggeduino = j;
+                    controller.value = board.ruggeduinos[j].value;
                     div.appendChild(controller);
-                }
+                }*/
                 return div;
             },
             handleCallSuccess: function(e) {
