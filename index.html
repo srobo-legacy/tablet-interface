@@ -22,13 +22,13 @@
         <link rel="import" href="elements/sr-button-bar/index.html" />
         <link rel="import" href="elements/sr-fa-button/index.html" />
         <link rel="import" href="elements/sr-navigation-drawer/index.html" />
-        <link rel="import" href="elements/page-battery/index.html" />
-        <link rel="import" href="elements/page-camera/index.html" />
-        <link rel="import" href="elements/page-io/index.html" />
-        <link rel="import" href="elements/page-log/index.html" />
-        <link rel="import" href="elements/page-motors/index.html" />
-        <link rel="import" href="elements/page-servos/index.html" />
-        <link rel="import" href="elements/page-setup/index.html" />
+        <link rel="import" href="elements/sr-page-battery/index.html" />
+        <link rel="import" href="elements/sr-page-camera/index.html" />
+        <link rel="import" href="elements/sr-page-io/index.html" />
+        <link rel="import" href="elements/sr-page-log/index.html" />
+        <link rel="import" href="elements/sr-page-motors/index.html" />
+        <link rel="import" href="elements/sr-page-servos/index.html" />
+        <link rel="import" href="elements/sr-page-setup/index.html" />
     </head>
 
     <body fullbleed unresolved horizontal layout>
@@ -54,13 +54,13 @@
         </sr-navigation-drawer>
 
         <sr-pages flex>
-            <page-setup></page-setup>
-            <page-log hidden></page-log>
-            <page-battery hidden></page-battery>
-            <page-camera hidden></page-camera>
-            <page-io hidden></page-io>
-            <page-motors hidden></page-motors>
-            <page-servos hidden></page-servos>
+            <sr-page-battery hidden></sr-page-battery>
+            <sr-page-camera hidden></sr-page-camera>
+            <sr-page-io hidden></sr-page-io>
+            <sr-page-log hidden></sr-page-log>
+            <sr-page-motors hidden></sr-page-motors>
+            <sr-page-setup></sr-page-setup>
+            <sr-page-servos hidden></sr-page-servos>
         </sr-pages>
 
         <sr-wamp></sr-wamp>

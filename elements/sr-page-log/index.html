@@ -2,7 +2,7 @@
 <link rel="import" href="../sr-log/index.html" />
 <link rel="import" href="../sr-pages/index.html" />
 
-<polymer-element name="page-log" extends="sr-page">
+<polymer-element name="sr-page-log" extends="sr-page">
     <template>
         <style>
             sr-log {
@@ -33,7 +33,7 @@
     </template>
 
     <script>
-        Polymer("page-log", {
+        Polymer("sr-page-log", {
             name: "log",
             domReady: function() {
                 this.$.btnBottom.addEventListener("click",
