@@ -8,5 +8,4 @@
 - cope with multi-line page names
 - no dates on log
 - camera!
-- remove servo checkboxes
 - custom components...
