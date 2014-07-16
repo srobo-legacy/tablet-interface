@@ -1,10 +1,10 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
-<link rel="import" href="../sr-motor-controller/index.html" />
-<link rel="import" href="../sr-pages/index.html" />
-<link rel="import" href="../sr-toolbar/index.html" />
-<link rel="import" href="../sr-wamp/index.html" />
+<link rel="import" href="../sr-core-motor-controller/index.html" />
+<link rel="import" href="../sr-core-pages/index.html" />
+<link rel="import" href="../sr-core-toolbar/index.html" />
+<link rel="import" href="../sr-core-wamp/index.html" />
 
-<polymer-element name="sr-page-motors" extends="sr-page">
+<polymer-element name="sr-page-motors" extends="sr-core-page">
     <template>
         <style>
             #controllers {
@@ -19,24 +19,24 @@
                 overflow-x: auto;
             }
 
-            sr-motor-controller {
+            sr-core-motor-controller {
                 flex: 1 1 auto;
             }
         </style>
 
-        <sr-toolbar>
+        <sr-core-toolbar>
             <h1 flex>Motor Control</h1>
             <select id="boardSelection" on-change="{{boardSelectionChanged}}"></select>
-        </sr-toolbar>
+        </sr-core-toolbar>
 
         <div id="controllers"></div>
 
-        <sr-wamp
-            on-open="{{handleOpen}}"></sr-wamp>
-        <sr-wamp-call
+        <sr-core-wamp
+            on-open="{{handleOpen}}"></sr-core-wamp>
+        <sr-core-wamp-call
             id="call"
             procedure="org.srobo.motor_boards"
-            on-success="{{handleCallSuccess}}"></sr-wamp-call>
+            on-success="{{handleCallSuccess}}"></sr-core-wamp-call>
     </template>
 
     <script>
@@ -70,7 +70,7 @@
                 div.className = "controllersContainer";
                 div.id = "board_" + i;
                 for (var j = 0; j < board.motors.length; j++) {
-                    var controller = document.createElement("sr-motor-controller");
+                    var controller = document.createElement("sr-core-motor-controller");
                     controller.board = i;
                     controller.motor = j;
                     controller.value = board.motors[j].value;
@@ -85,7 +85,7 @@
                     var button = this.createBoardButton(i, boards[i]);
                     var div = this.createBoardDiv(i, boards[i]);
 
-                    this.shadowRoot.querySelector("sr-toolbar").appendChild(button);
+                    this.shadowRoot.querySelector("sr-core-toolbar").appendChild(button);
                     this.shadowRoot.querySelector("#controllers").appendChild(div);
                     this.shadowRoot.querySelector("#boardSelection").appendChild(option);
                 }

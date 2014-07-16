@@ -18,10 +18,10 @@
         <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Lato:300,400,700/Inconsolata:500" />
         <link rel="stylesheet" href="styles/common.css" />
 
-        <link rel="import" href="elements/sr-battery/index.html" />
-        <link rel="import" href="elements/sr-button-bar/index.html" />
-        <link rel="import" href="elements/sr-fa-button/index.html" />
-        <link rel="import" href="elements/sr-navigation-drawer/index.html" />
+        <link rel="import" href="elements/sr-core-button-bar/index.html" />
+        <link rel="import" href="elements/sr-core-fa-button/index.html" />
+        <link rel="import" href="elements/sr-core-mini-battery/index.html" />
+        <link rel="import" href="elements/sr-core-navigation-drawer/index.html" />
         <link rel="import" href="elements/sr-page-battery/index.html" />
         <link rel="import" href="elements/sr-page-camera/index.html" />
         <link rel="import" href="elements/sr-page-io/index.html" />
@@ -32,28 +32,28 @@
     </head>
 
     <body fullbleed unresolved horizontal layout>
-        <sr-button-bar>
-            <sr-fa-button action="toggle-navigation-drawer" icon="bars"></sr-fa-button>
+        <sr-core-button-bar>
+            <sr-core-fa-button action="toggle-navigation-drawer" icon="bars"></sr-core-fa-button>
             <div style="height: 20px;"></div>
-            <sr-fa-button action="play" icon="play"></sr-fa-button>
+            <sr-core-fa-button action="play" icon="play"></sr-core-fa-button>
             <div flex></div>
-            <sr-battery></sr-battery>
-        </sr-button-bar>
+            <sr-core-mini-battery></sr-core-mini-battery>
+        </sr-core-button-bar>
 
-        <sr-navigation-drawer>
-            <sr-fa-button action="play" icon="play">Start Robot</sr-fa-button>
+        <sr-core-navigation-drawer>
+            <sr-core-fa-button action="play" icon="play">Start Robot</sr-core-fa-button>
             <div flex style="min-height: 20px;"></div>
-            <sr-fa-button action="change-page" data-page="setup" icon="cogs">Set up</sr-fa-button>
-            <sr-fa-button action="change-page" data-page="log" icon="file-text-o">Log</sr-fa-button>
+            <sr-core-fa-button action="change-page" data-page="setup" icon="cogs">Set up</sr-core-fa-button>
+            <sr-core-fa-button action="change-page" data-page="log" icon="file-text-o">Log</sr-core-fa-button>
             <div flex style="min-height: 20px;"></div>
-            <sr-fa-button action="change-page" data-page="battery" icon="bolt">Battery</sr-fa-button>
-            <sr-fa-button action="change-page" data-page="camera" icon="camera">Camera</sr-fa-button>
-            <sr-fa-button action="change-page" data-page="io" icon="file">I/O</sr-fa-button>
-            <sr-fa-button action="change-page" data-page="motors" icon="arrows">Motors</sr-fa-button>
-            <sr-fa-button action="change-page" data-page="servos" icon="wrench">Servos</sr-fa-button>
-        </sr-navigation-drawer>
+            <sr-core-fa-button action="change-page" data-page="battery" icon="bolt">Battery</sr-core-fa-button>
+            <sr-core-fa-button action="change-page" data-page="camera" icon="camera">Camera</sr-core-fa-button>
+            <sr-core-fa-button action="change-page" data-page="io" icon="file">I/O</sr-core-fa-button>
+            <sr-core-fa-button action="change-page" data-page="motors" icon="arrows">Motors</sr-core-fa-button>
+            <sr-core-fa-button action="change-page" data-page="servos" icon="wrench">Servos</sr-core-fa-button>
+        </sr-core-navigation-drawer>
 
-        <sr-pages flex>
+        <sr-core-pages flex>
             <sr-page-battery hidden></sr-page-battery>
             <sr-page-camera hidden></sr-page-camera>
             <sr-page-io hidden></sr-page-io>
@@ -61,31 +61,31 @@
             <sr-page-motors hidden></sr-page-motors>
             <sr-page-setup></sr-page-setup>
             <sr-page-servos hidden></sr-page-servos>
-        </sr-pages>
+        </sr-core-pages>
 
-        <sr-wamp></sr-wamp>
-        <sr-wamp-call
+        <sr-core-wamp></sr-core-wamp>
+        <sr-core-wamp-call
             id="wamp-start"
-            procedure="org.srobo.start"></sr-wamp-call>
-        <sr-wamp-call
+            procedure="org.srobo.start"></sr-core-wamp-call>
+        <sr-core-wamp-call
             id="wamp-stop"
-            procedure="org.srobo.stop"></sr-wamp-call>
-        <sr-wamp-subscribe
+            procedure="org.srobo.stop"></sr-core-wamp-call>
+        <sr-core-wamp-subscribe
             id="wamp-sub-state"
-            topic="org.srobo.state"></sr-wamp-subscribe>
-        <sr-wamp-call
+            topic="org.srobo.state"></sr-core-wamp-subscribe>
+        <sr-core-wamp-call
             id="wamp-call-state"
-            procedure="org.srobo.state"></sr-wamp-call>
+            procedure="org.srobo.state"></sr-core-wamp-call>
 
         <script>
             (function() {
                 window.addEventListener("toggle-navigation-drawer", function(e) {
-                    document.querySelector("sr-navigation-drawer").toggle();
+                    document.querySelector("sr-core-navigation-drawer").toggle();
                 });
 
                 window.addEventListener("change-page", function(e) {
-                    document.querySelector("sr-pages").changePage(e.detail.sender.dataset.page);
-                    document.querySelector("sr-navigation-drawer").close();
+                    document.querySelector("sr-core-pages").changePage(e.detail.sender.dataset.page);
+                    document.querySelector("sr-core-navigation-drawer").close();
                 });
             }());
         </script>
@@ -101,7 +101,7 @@
         </script>
 
         <script>
-            var btns = document.querySelectorAll("sr-fa-button[action='play']");
+            var btns = document.querySelectorAll("sr-core-fa-button[action='play']");
             var changeIcon = function(icon) {
                 for (var i = 0; i < btns.length; i++) {
                     btns[i].icon = icon;
@@ -132,7 +132,7 @@
                 }
             };
 
-            document.querySelector("sr-wamp").addEventListener("open", function() {
+            document.querySelector("sr-core-wamp").addEventListener("open", function() {
                 document.querySelector("#wamp-call-state").go();
             });
             document.querySelector("#wamp-sub-state").addEventListener("handle", handleState);
@@ -158,14 +158,14 @@
                         link.addEventListener("load", function(e) {
                             var element = document.createElement(page.name);
                             element.hidden = true;
-                            document.querySelector("sr-pages").appendChild(element);
+                            document.querySelector("sr-core-pages").appendChild(element);
 
-                            var btn = document.createElement("sr-fa-button");
+                            var btn = document.createElement("sr-core-fa-button");
                             btn.icon = page.icon;
                             btn.textContent = page.title;
                             btn.action = "change-page";
                             btn.dataset.page = page.name;
-                            document.querySelector("sr-navigation-drawer").appendChild(btn);
+                            document.querySelector("sr-core-navigation-drawer").appendChild(btn);
                         });
                     });
                 });

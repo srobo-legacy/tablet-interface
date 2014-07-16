@@ -1,10 +1,10 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="/bower_components/core-ajax/core-ajax.html">
-<link rel="import" href="../sr-mode-picker/index.html" />
-<link rel="import" href="../sr-pages/index.html" />
-<link rel="import" href="../sr-zone-picker/index.html" />
+<link rel="import" href="../sr-core-mode-picker/index.html" />
+<link rel="import" href="../sr-core-pages/index.html" />
+<link rel="import" href="../sr-core-zone-picker/index.html" />
 
-<polymer-element name="sr-page-setup" attributes="disabled" extends="sr-page">
+<polymer-element name="sr-page-setup" attributes="disabled" extends="sr-core-page">
     <template>
         <style>
             #first {
@@ -52,19 +52,19 @@
             }
         </style>
 
-        <sr-toolbar>
+        <sr-core-toolbar>
             <h1>Set up your robot</h1>
-        </sr-toolbar>
+        </sr-core-toolbar>
 
         <div id="first" vertical center layout>
             <div horizontal start layout>
                 <div vertical center layout style="margin: 0 20px;">
-                    <sr-zone-picker id="zonePicker"></sr-zone-picker>
+                    <sr-core-zone-picker id="zonePicker"></sr-core-zone-picker>
                     <h2>Zone</h2>
                 </div>
 
                 <div vertical center layout style="margin: 0 20px;">
-                    <sr-mode-picker id="modePicker"></sr-mode-picker>
+                    <sr-core-mode-picker id="modePicker"></sr-core-mode-picker>
                     <h2>Mode</h2>
                 </div>
             </div>
@@ -80,36 +80,36 @@
             </p>
         </div>
 
-        <sr-wamp
-            on-open="{{handleOpen}}"></sr-wamp>
-        <sr-wamp-subscribe
+        <sr-core-wamp
+            on-open="{{handleOpen}}"></sr-core-wamp>
+        <sr-core-wamp-subscribe
             topic="org.srobo.state"
-            on-handle="{{handleState}}"></sr-wamp-subscribe>
-        <sr-wamp-subscribe
+            on-handle="{{handleState}}"></sr-core-wamp-subscribe>
+        <sr-core-wamp-subscribe
             topic="org.srobo.project.name"
-            on-handle="{{handleProjectName}}"></sr-wamp-subscribe>
-        <sr-wamp-subscribe
+            on-handle="{{handleProjectName}}"></sr-core-wamp-subscribe>
+        <sr-core-wamp-subscribe
             topic="org.srobo.project.version"
-            on-handle="{{handleProjectVersion}}"></sr-wamp-subscribe>
-        <sr-wamp-subscribe
+            on-handle="{{handleProjectVersion}}"></sr-core-wamp-subscribe>
+        <sr-core-wamp-subscribe
             topic="org.srobo.pyenv.version"
-            on-handle="{{handlePyenvVersion}}"></sr-wamp-subscribe>
-        <sr-wamp-call
+            on-handle="{{handlePyenvVersion}}"></sr-core-wamp-subscribe>
+        <sr-core-wamp-call
             id="stateCall"
             procedure="org.srobo.state"
-            on-success="{{handleState}}"></sr-wamp-call>
-        <sr-wamp-call
+            on-success="{{handleState}}"></sr-core-wamp-call>
+        <sr-core-wamp-call
             id="pyenvCall"
             procedure="org.srobo.pyenv.version"
-            on-success="{{handlePyenvVersion}}"></sr-wamp-call>
-        <sr-wamp-call
+            on-success="{{handlePyenvVersion}}"></sr-core-wamp-call>
+        <sr-core-wamp-call
             id="projectVersionCall"
             procedure="org.srobo.project.version"
-            on-success="{{handleProjectVersion}}"></sr-wamp-call>
-        <sr-wamp-call
+            on-success="{{handleProjectVersion}}"></sr-core-wamp-call>
+        <sr-core-wamp-call
             id="projectNameCall"
             procedure="org.srobo.project.name"
-            on-success="{{handleProjectName}}"></sr-wamp-call>
+            on-success="{{handleProjectName}}"></sr-core-wamp-call>
     </template>
 
     <script>

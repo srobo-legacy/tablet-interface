@@ -1,6 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<polymer-element name="sr-wamp">
+<polymer-element name="sr-core-wamp">
     <template>
         <style>
             :host {
@@ -36,7 +36,7 @@
                 _connection.open();
             });
 
-            Polymer("sr-wamp", {
+            Polymer("sr-core-wamp", {
                 created: function() {
                     window.addEventListener("sr-wamp-open", this.onOpen.bind(this));
                     window.addEventListener("sr-wamp-close", this.onClose.bind(this));
@@ -84,7 +84,7 @@
     </script>
 </polymer-element>
 
-<polymer-element name="sr-wamp-subscribe" attributes="topic">
+<polymer-element name="sr-core-wamp-subscribe" attributes="topic">
     <template>
         <style>
             :host {
@@ -92,11 +92,11 @@
             }
         </style>
 
-        <sr-wamp id="wamp" on-open="{{handleOpen}}"></sr-wamp>
+        <sr-core-wamp id="wamp" on-open="{{handleOpen}}"></sr-core-wamp>
     </template>
 
     <script>
-        Polymer("sr-wamp-subscribe", {
+        Polymer("sr-core-wamp-subscribe", {
             handleOpen: function() {
                 this.$.wamp.subscribe(this.topic, function(args, kwargs, details) {
                     this.fire("handle", {
@@ -108,7 +108,7 @@
     </script>
 </polymer-element>
 
-<polymer-element name="sr-wamp-publish" attributes="topic">
+<polymer-element name="sr-core-wamp-publish" attributes="topic">
     <template>
         <style>
             :host {
@@ -116,11 +116,11 @@
             }
         </style>
 
-        <sr-wamp id="wamp"></sr-wamp>
+        <sr-core-wamp id="wamp"></sr-core-wamp>
     </template>
 
     <script>
-        Polymer("sr-wamp-publish", {
+        Polymer("sr-core-wamp-publish", {
             go: function(args, kwargs, options) {
                 return this.$.wamp.publish(this.topic, args, kwargs, options);
             }
@@ -128,7 +128,7 @@
     </script>
 </polymer-element>
 
-<polymer-element name="sr-wamp-call" attributes="procedure args kwargs options">
+<polymer-element name="sr-core-wamp-call" attributes="procedure args kwargs options">
     <template>
         <style>
             :host {
@@ -136,11 +136,11 @@
             }
         </style>
 
-        <sr-wamp id="wamp"></sr-wamp>
+        <sr-core-wamp id="wamp"></sr-core-wamp>
     </template>
 
     <script>
-        Polymer("sr-wamp-call", {
+        Polymer("sr-core-wamp-call", {
             go: function(args, kwargs, options) {
                 this.$.wamp.call(this.procedure, args, kwargs, options).then(function(result) {
                     this.fire("success", {result: result});

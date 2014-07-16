@@ -1,6 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<polymer-element name="sr-fa-button" attributes="icon action">
+<polymer-element name="sr-core-fa-button" attributes="icon action">
     <template>
         <style>
             @import "/bower_components/components-font-awesome/css/font-awesome.css";
@@ -44,7 +44,7 @@
     </template>
 
     <script>
-        Polymer("sr-fa-button", {
+        Polymer("sr-core-fa-button", {
             domReady: function() {
                 this.addEventListener("click", this.handleClick.bind(this));
             },

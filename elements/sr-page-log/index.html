@@ -1,17 +1,17 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
-<link rel="import" href="../sr-log/index.html" />
-<link rel="import" href="../sr-pages/index.html" />
+<link rel="import" href="../sr-core-log/index.html" />
+<link rel="import" href="../sr-core-pages/index.html" />
 
-<polymer-element name="sr-page-log" extends="sr-page">
+<polymer-element name="sr-page-log" extends="sr-core-page">
     <template>
         <style>
-            sr-log {
+            sr-core-log {
                 margin: 10px;
                 flex: 1 1 auto;
             }
         </style>
 
-        <sr-toolbar>
+        <sr-core-toolbar>
             <h1 flex>View Robot Logs</h1>
             <select>
                 <optgroup label="Current Log">
@@ -27,9 +27,9 @@
                 </optgroup>
             </select>
             <button id="btnBottom">Jump to bottom</button>
-        </sr-toolbar>
+        </sr-core-toolbar>
 
-        <sr-log id="log"></sr-log>
+        <sr-core-log id="log"></sr-core-log>
     </template>
 
     <script>

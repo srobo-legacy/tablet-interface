@@ -1,20 +1,20 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
-<link rel="import" href="../sr-battery-history/index.html" />
-<link rel="import" href="../sr-pages/index.html" />
+<link rel="import" href="../sr-core-battery-history/index.html" />
+<link rel="import" href="../sr-core-pages/index.html" />
 
-<polymer-element name="sr-page-battery" extends="sr-page">
+<polymer-element name="sr-page-battery" extends="sr-core-page">
     <template>
         <style>
-            sr-battery-history {
+            sr-core-battery-history {
                 flex: 1 1 auto;
             }
         </style>
 
-        <sr-toolbar>
+        <sr-core-toolbar>
             <h1>View Battery History</h1>
-        </sr-toolbar>
+        </sr-core-toolbar>
 
-        <sr-battery-history id="history"></sr-battery-history>
+        <sr-core-battery-history id="history"></sr-core-battery-history>
     </template>
 
     <script>

@@ -1,6 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<polymer-element name="sr-navigation-drawer" attributes="state">
+<polymer-element name="sr-core-navigation-drawer" attributes="state">
     <template>
         <style>
             :host {
@@ -38,7 +38,7 @@
     </template>
 
     <script>
-        Polymer("sr-navigation-drawer", {
+        Polymer("sr-core-navigation-drawer", {
             state: "closed",
             open: function() {
                 this.state = "opened";

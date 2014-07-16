@@ -1,7 +1,7 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
-<link rel="import" href="../sr-wamp/index.html" />
+<link rel="import" href="../sr-core-wamp/index.html" />
 
-<polymer-element name="sr-mode-picker" attributes="mode">
+<polymer-element name="sr-core-mode-picker" attributes="mode">
     <template>
         <style>
             @import "/bower_components/components-font-awesome/css/font-awesome.css";
@@ -44,22 +44,22 @@
             <span class="fa fa-trophy"></span> Competition
         </button>
 
-        <sr-wamp
-            on-open="{{handleOpen}}"></sr-wamp>
-        <sr-wamp-subscribe
+        <sr-core-wamp
+            on-open="{{handleOpen}}"></sr-core-wamp>
+        <sr-core-wamp-subscribe
             topic="org.srobo.mode"
-            on-handle="{{handleMode}}"></sr-wamp-subscribe>
-        <sr-wamp-publish
+            on-handle="{{handleMode}}"></sr-core-wamp-subscribe>
+        <sr-core-wamp-publish
             id="pub"
-            topic="org.srobo.mode"></sr-wamp-publish>
-        <sr-wamp-call
+            topic="org.srobo.mode"></sr-core-wamp-publish>
+        <sr-core-wamp-call
             id="call"
             procedure="org.srobo.mode"
-            on-success="{{handleMode}}"></sr-wamp-call>
+            on-success="{{handleMode}}"></sr-core-wamp-call>
     </template>
 
     <script>
-        Polymer("sr-mode-picker", {
+        Polymer("sr-core-mode-picker", {
             mode: "dev",
             domReady: function() {
                 var buttons = this.shadowRoot.querySelectorAll("button");

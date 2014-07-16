@@ -1,6 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<polymer-element name="sr-log">
+<polymer-element name="sr-core-log">
     <template>
         <style>
             :host {
@@ -17,19 +17,19 @@
 
         <textarea id="log" readonly></textarea>
 
-        <sr-wamp
-            on-open="{{handleOpen}}"></sr-wamp>
-        <sr-wamp-subscribe
+        <sr-core-wamp
+            on-open="{{handleOpen}}"></sr-core-wamp>
+        <sr-core-wamp-subscribe
             topic="org.srobo.log"
-            on-handle="{{handleLog}}"></sr-wamp-subscribe>
-        <sr-wamp-call
+            on-handle="{{handleLog}}"></sr-core-wamp-subscribe>
+        <sr-core-wamp-call
             id="call"
             procedure="org.srobo.log"
-            on-success="{{handleLog}}"></sr-wamp-call>
+            on-success="{{handleLog}}"></sr-core-wamp-call>
     </template>
 
     <script>
-        Polymer("sr-log", {
+        Polymer("sr-core-log", {
             handleOpen: function() {
                 this.$.call.go();
             },

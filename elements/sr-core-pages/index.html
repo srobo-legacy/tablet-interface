@@ -1,6 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<polymer-element name="sr-pages">
+<polymer-element name="sr-core-pages">
     <template>
         <style>
             :host {
@@ -13,7 +13,7 @@
     </template>
 
     <script>
-        Polymer("sr-pages", {
+        Polymer("sr-core-pages", {
             changePage: function(name) {
                 var pages = this.children;
                 for (var i = 0; i < pages.length; i++) {
@@ -28,7 +28,7 @@
     </script>
 </polymer-element>
 
-<polymer-element name="sr-page" attributes="name" noscript>
+<polymer-element name="sr-core-page" attributes="name" noscript>
     <template>
         <style>
             :host {

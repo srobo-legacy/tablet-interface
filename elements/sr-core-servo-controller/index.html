@@ -1,7 +1,7 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
-<link rel="import" href="../sr-wamp/index.html" />
+<link rel="import" href="../sr-core-wamp/index.html" />
 
-<polymer-element name="sr-servo-controller" attributes="board servo value state">
+<polymer-element name="sr-core-servo-controller" attributes="board servo value state">
     <template>
         <style>
             :host {
@@ -32,16 +32,16 @@
         <input id="value" type="range" orient="vertical" min="0" max="100" step="0.01" value="{{value}}" on-change="{{handleValueChange}}" />
         <span>{{value | formatValue}}</span>
 
-        <sr-wamp-subscribe
+        <sr-core-wamp-subscribe
             topic="org.srobo.servo.value"
-            on-handle="{{handleValue}}"></sr-wamp-subscribe>
-        <sr-wamp-publish
+            on-handle="{{handleValue}}"></sr-core-wamp-subscribe>
+        <sr-core-wamp-publish
             id="publishValue"
-            topic="org.srobo.servo.value"></sr-wamp-publish>
+            topic="org.srobo.servo.value"></sr-core-wamp-publish>
     </template>
 
     <script>
-        Polymer("sr-servo-controller", {
+        Polymer("sr-core-servo-controller", {
             board: 0,
             servo: 0,
             value: 50,

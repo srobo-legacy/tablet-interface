@@ -1,7 +1,7 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
-<link rel="import" href="../sr-wamp/index.html" />
+<link rel="import" href="../sr-core-wamp/index.html" />
 
-<polymer-element name="sr-zone-picker" attributes="zone">
+<polymer-element name="sr-core-zone-picker" attributes="zone">
     <template>
         <style>
             :host {
@@ -36,22 +36,22 @@
         <button data-zone="2" style="background: #ff00ff" class="{{ {selected: zone == 2} | tokenList }}"></button>
         <button data-zone="3" style="background: #ffff00" class="{{ {selected: zone == 3} | tokenList }}"></button>
 
-        <sr-wamp
-            on-open="{{handleOpen}}"></sr-wamp>
-        <sr-wamp-subscribe
+        <sr-core-wamp
+            on-open="{{handleOpen}}"></sr-core-wamp>
+        <sr-core-wamp-subscribe
             topic="org.srobo.zone"
-            on-handle="{{handleZone}}"></sr-wamp-subscribe>
-        <sr-wamp-publish
+            on-handle="{{handleZone}}"></sr-core-wamp-subscribe>
+        <sr-core-wamp-publish
             id="pub"
-            topic="org.srobo.zone"></sr-wamp-publish>
-        <sr-wamp-call
+            topic="org.srobo.zone"></sr-core-wamp-publish>
+        <sr-core-wamp-call
             id="call"
             procedure="org.srobo.zone"
-            on-success="{{handleZone}}"></sr-wamp-call>
+            on-success="{{handleZone}}"></sr-core-wamp-call>
     </template>
 
     <script>
-        Polymer("sr-zone-picker", {
+        Polymer("sr-core-zone-picker", {
             zone: "0",
             domReady: function() {
                 var buttons = this.shadowRoot.querySelectorAll("button");
