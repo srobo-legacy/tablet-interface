@@ -144,7 +144,7 @@
                 console.log("Loading custom components…");
                 var userCodeUrl = "http://" + location.hostname + ":10000";
                 var xhr = new XMLHttpRequest();
-                xhr.open("GET", userCodeUrl + "/custom_pages/info");
+                xhr.open("GET", userCodeUrl + "/custom_pages");
                 xhr.responseType = "json";
                 xhr.addEventListener("load", function(e) {
                     var pages = e.target.response.pages;

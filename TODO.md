@@ -7,4 +7,4 @@
 - camera!
 - only subscribe when page is in view
 - sr-wamp-call automatically
-- rename custom_pages routes
+- rename elements nicely
