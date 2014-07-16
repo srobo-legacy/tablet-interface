@@ -14,13 +14,17 @@
         <sr-toolbar>
             <h1 flex>View Robot Logs</h1>
             <select>
-                <option>Current</option>
-                <option>8th July 16:31</option>
-                <option>8th July 16:20</option>
-                <option>8th July 15:59</option>
-                <option>8th July 15:42</option>
-                <option>7th July 16:27</option>
-                <option>7th July 16:13</option>
+                <optgroup label="Current Log">
+                    <option>Current</option>
+                </optgroup>
+                <optgroup label="Previous Logs">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                </optgroup>
             </select>
             <button id="btnBottom">Jump to bottom</button>
         </sr-toolbar>
