@@ -1,6 +1,8 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
-<link rel="import" href="../../core/sr-pages/index.html" />
 <link rel="import" href="../../core/sr-motor-controller/index.html" />
+<link rel="import" href="../../core/sr-pages/index.html" />
+<link rel="import" href="../../core/sr-toolbar/index.html" />
+<link rel="import" href="../../core/sr-wamp/index.html" />
 
 <polymer-element name="page-motors" extends="sr-page">
     <template>
@@ -11,9 +13,10 @@
             }
 
             .controllersContainer {
+                padding: 10px;
                 flex: 1 1 auto;
                 display: flex;
-                margin: 10px;
+                overflow-x: auto;
             }
 
             sr-motor-controller {

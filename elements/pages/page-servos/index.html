@@ -1,21 +1,22 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../../core/sr-pages/index.html" />
-<link rel="import" href="../../core/sr-wamp/index.html" />
 <link rel="import" href="../../core/sr-servo-controller/index.html" />
 <link rel="import" href="../../core/sr-toolbar/index.html" />
+<link rel="import" href="../../core/sr-wamp/index.html" />
 
 <polymer-element name="page-servos" extends="sr-page">
     <template>
         <style>
             #controllers {
-                margin: 10px;
                 flex: 1 1 auto;
                 display: flex;
             }
 
             .controllersContainer {
+                padding: 10px;
                 flex: 1 1 auto;
                 display: flex;
+                overflow-x: auto;
             }
 
             sr-servo-controller {
