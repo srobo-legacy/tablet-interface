@@ -28,6 +28,7 @@
             _connection.onclose = function(e) {
                 console.log("Closed connection to WAMP server.", e);
                 window.dispatchEvent(new CustomEvent("sr-wamp-close"));
+                window.location.reload();
             };
 
             window.addEventListener("polymer-ready", function() {
