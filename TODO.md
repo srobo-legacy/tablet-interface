@@ -5,4 +5,3 @@
 - camera zoom
 - log jump to bottom
 - camera!
-- custom components...
