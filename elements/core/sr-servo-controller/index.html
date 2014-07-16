@@ -17,32 +17,19 @@
                 margin: 32px 0;
             }
 
-            input[type=checkbox] {
-                width: 20px;
-                height: 20px;
-                margin: 3px 0;
-            }
-
             h2 {
                 margin: 2px 0;
             }
 
             span {
-                color: grey;
                 margin: 2px 0;
                 font-size: 1.2em;
-            }
-
-            span.checked {
-                color: black;
-                font-weight: bold;
             }
         </style>
 
         <h2>{{servo}}</h2>
         <input id="value" type="range" orient="vertical" min="0" max="100" step="0.01" value="{{value}}" on-change="{{handleValueChange}}" />
-        <input id="state" type="checkbox" checked="{{state}}" on-change="{{handleStateChange}}" />
-        <span class="{{ {checked: state} | tokenList }}">{{value | formatValue}}</span>
+        <span>{{value | formatValue}}</span>
 
         <sr-wamp-subscribe
             topic="org.srobo.servo.value"
@@ -50,12 +37,6 @@
         <sr-wamp-publish
             id="publishValue"
             topic="org.srobo.servo.value"></sr-wamp-publish>
-        <sr-wamp-subscribe
-            topic="org.srobo.servo.state"
-            on-handle="{{handleState}}"></sr-wamp-subscribe>
-        <sr-wamp-publish
-            id="publishState"
-            topic="org.srobo.servo.state"></sr-wamp-publish>
     </template>
 
     <script>
@@ -67,17 +48,9 @@
             handleValueChange: function() {
                 this.$.publishValue.go([this.board, this.servo, parseFloat(this.value)]);
             },
-            handleStateChange: function() {
-                this.$.publishState.go([this.board, this.servo, this.state]);
-            },
             handleValue: function(e) {
                 if (e.detail.args[0] === this.board && e.detail.args[1] === this.servo) {
                     this.value = parseFloat(e.detail.args[2]);
-                }
-            },
-            handleState: function(e) {
-                if (e.detail.args[0] === this.board && e.detail.args[1] === this.servo) {
-                    this.state = e.detail.args[2];
                 }
             },
             formatValue: function(v) {
