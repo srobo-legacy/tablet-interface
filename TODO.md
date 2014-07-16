@@ -6,3 +6,8 @@
 - refresh on internet connection died
 - log jump to bottom
 - cope with multi-line page names
+- no dates on log
+- camera!
+- remove servo checkboxes
+- custom components...
+
