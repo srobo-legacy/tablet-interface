@@ -1,5 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../sr-core-pages/index.html" />
+<link rel="import" href="../sr-wamp/index.html" />
 
 <polymer-element name="sr-page-camera" extends="sr-core-page">
     <template>
@@ -9,14 +10,21 @@
             }
         </style>
 
-        <video preload="none" autoplay>
+        <img id="image"></img>
 
-        </video>
+        <sr-wamp-subscribe
+            auto="page"
+            topic="org.srobo.camera.image"
+            on-handle="{{handleImage}}"></sr-wamp-subscribe>
     </template>
 
     <script>
         Polymer("sr-page-camera", {
-            name: "camera"
+            name: "camera",
+            handleImage: function(e) {
+                var src = "data:image/jpeg;base64," + e.detail.args[0];
+                this.$.image.src = src;
+            }
         });
     </script>
 </polymer-element>
