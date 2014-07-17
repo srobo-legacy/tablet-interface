@@ -44,8 +44,6 @@
             <span class="fa fa-trophy"></span> Competition
         </button>
 
-        <sr-core-wamp
-            on-open="{{handleOpen}}"></sr-core-wamp>
         <sr-core-wamp-subscribe
             topic="org.srobo.mode"
             on-handle="{{handleMode}}"></sr-core-wamp-subscribe>
@@ -72,8 +70,11 @@
                     }.bind(this)(buttons[i]));
                 }
             },
-            handleOpen: function() {
+            onPageShow: function(e) {
                 this.$.call.go();
+            },
+            onPageHide: function(e) {
+
             },
             handleMode: function(e) {
                 this.mode = e.detail.result || e.detail.args[0];
