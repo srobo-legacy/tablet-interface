@@ -80,8 +80,6 @@
             </p>
         </div>
 
-        <sr-core-wamp
-            on-open="{{handleOpen}}"></sr-core-wamp>
         <sr-core-wamp-subscribe
             topic="org.srobo.state"
             on-handle="{{handleState}}"></sr-core-wamp-subscribe>
@@ -120,7 +118,7 @@
                 this.project = {}
                 this.pyenv = {};
             },
-            handleOpen: function() {
+            onPageShow: function() {
                 this.$.stateCall.go();
                 this.$.pyenvCall.go();
                 this.$.projectVersionCall.go();
