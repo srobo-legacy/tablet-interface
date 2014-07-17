@@ -15,11 +15,18 @@
     <script>
         Polymer("sr-core-pages", {
             changePage: function(name) {
+                console.log("Changing page to:", name);
                 var pages = this.children;
                 for (var i = 0; i < pages.length; i++) {
                     if (pages[i].name === name) {
+                        if (pages[i].hidden) {
+                            this.fire("show");
+                        }
                         pages[i].hidden = false;
                     } else {
+                        if (!pages[i].hidden) {
+                            this.fire("hide");
+                        }
                         pages[i].hidden = true;
                     }
                 }
