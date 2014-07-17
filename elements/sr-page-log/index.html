@@ -48,7 +48,7 @@
             name: "log",
             domReady: function() {
                 this.$.btnBottom.addEventListener("click",
-                    this.$.currentLog.scrollToBottom.bind(this.$.currentLog));
+                    this.$.log_current.scrollToBottom.bind(this.$.log_current));
             },
             handleOldLogs: function(e) {
                 var oldLogs = e.detail.result || e.detail.args[0];
