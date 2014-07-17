@@ -4,4 +4,3 @@
 - camera pause/play
 - camera zoom
 - log jump to bottom
-- camera!
