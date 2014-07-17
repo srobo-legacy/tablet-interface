@@ -5,6 +5,4 @@
 - camera zoom
 - log jump to bottom
 - camera!
-- only subscribe when page is in view
-- sr-wamp-call automatically
 - rename elements nicely
