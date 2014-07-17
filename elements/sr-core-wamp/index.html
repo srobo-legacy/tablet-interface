@@ -105,20 +105,32 @@
             }
         </style>
 
-        <sr-core-wamp id="wamp"></sr-core-wamp>
+        <sr-core-wamp
+            id="wamp"
+            on-open="{{handleOpen}}"></sr-core-wamp>
     </template>
 
     <script>
         Polymer("sr-core-wamp-subscribe", {
-            _subscriptionHandler: function(args, kwargs, details) {
-                this.fire("handle", {
-                    args: args, kwargs: kwargs, details: details
-                });
+            go: function() {
+                this.$.wamp.subscribe(
+                    this.topic,
+                    function(args, kwargs, details) {
+                        this.fire("handle", {
+                            args: args, kwargs: kwargs, details: details
+                        });
+                    }.bind(this),
+                    undefined,
+                    function(subscription) {
+                        this._subscription = subscription;
+                    }.bind(this)
+                );
+            },
+            handleOpen: function() {
+                this.go();
             },
             onPageShow: function() {
-                this.$.wamp.subscribe(this.topic, this._subscriptionHandler.bind(this), undefined, function(subscription) {
-                    this._subscription = subscription;
-                }.bind(this));
+
             },
             onPageHide: function() {
                 this.$.wamp.unsubscribe(this._subscription);
