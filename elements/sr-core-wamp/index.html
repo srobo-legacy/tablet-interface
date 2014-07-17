@@ -97,7 +97,7 @@
     </script>
 </polymer-element>
 
-<polymer-element name="sr-core-wamp-subscribe" attributes="topic">
+<polymer-element name="sr-core-wamp-subscribe" attributes="topic auto">
     <template>
         <style>
             :host {
@@ -112,7 +112,8 @@
 
     <script>
         Polymer("sr-core-wamp-subscribe", {
-            go: function() {
+            auto: "wamp",
+            subscribe: function() {
                 this.$.wamp.subscribe(
                     this.topic,
                     function(args, kwargs, details) {
@@ -126,14 +127,23 @@
                     }.bind(this)
                 );
             },
+            unsubscribe: function() {
+                this.$.wamp.unsubscribe(this._subscription);
+            },
             handleOpen: function() {
-                this.go();
+                if (this.auto === "wamp") {
+                    this.subscribe();
+                }
             },
             onPageShow: function() {
-
+                if (this.auto === "page") {
+                    this.subscribe();
+                }
             },
             onPageHide: function() {
-                this.$.wamp.unsubscribe(this._subscription);
+                if (this.auto === "page") {
+                    this.unsubscribe();
+                }
             }
         });
     </script>
