@@ -59,7 +59,7 @@
             <sr-page-io hidden></sr-page-io>
             <sr-page-log hidden></sr-page-log>
             <sr-page-motors hidden></sr-page-motors>
-            <sr-page-setup></sr-page-setup>
+            <sr-page-setup hidden></sr-page-setup>
             <sr-page-servos hidden></sr-page-servos>
         </sr-core-pages>
 
@@ -97,6 +97,10 @@
                 } else if (e.detail.sender.icon == "stop") {
                     document.querySelector("#wamp-stop").go();
                 }
+            });
+
+            window.addEventListener("sr-wamp-open", function(e) {
+                document.querySelector("sr-core-pages").changePage("setup");
             });
         </script>
 
