@@ -1,0 +1,37 @@
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="sr-wamp-core.html" />
+
+<polymer-element name="sr-core-wamp-call" attributes="procedure args kwargs options auto">
+    <template>
+        <style>
+            :host {
+                display: none;
+            }
+        </style>
+
+        <sr-core-wamp
+            id="wamp"
+            on-open="{{handleOpen}}"></sr-core-wamp>
+    </template>
+
+    <script>
+        Polymer("sr-core-wamp-call", {
+            auto: null,
+            handleOpen: function() {
+                if (this.auto === "wamp") {
+                    this.go();
+                }
+            },
+            onPageShow: function() {
+                if (this.auto === "page") {
+                    this.go();
+                }
+            },
+            go: function(args, kwargs, options) {
+                this.$.wamp.call(this.procedure, args, kwargs, options).then(function(result) {
+                    this.fire("success", {result: result});
+                }.bind(this));
+            }
+        });
+    </script>
+</polymer-element>

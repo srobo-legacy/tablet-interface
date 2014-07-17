@@ -1,0 +1,54 @@
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="sr-wamp-core.html" />
+
+<polymer-element name="sr-core-wamp-subscribe" attributes="topic auto">
+    <template>
+        <style>
+            :host {
+                display: none;
+            }
+        </style>
+
+        <sr-core-wamp
+            id="wamp"
+            on-open="{{handleOpen}}"></sr-core-wamp>
+    </template>
+
+    <script>
+        Polymer("sr-core-wamp-subscribe", {
+            auto: "wamp",
+            subscribe: function() {
+                this.$.wamp.subscribe(
+                    this.topic,
+                    function(args, kwargs, details) {
+                        this.fire("handle", {
+                            args: args, kwargs: kwargs, details: details
+                        });
+                    }.bind(this),
+                    undefined,
+                    function(subscription) {
+                        this._subscription = subscription;
+                    }.bind(this)
+                );
+            },
+            unsubscribe: function() {
+                this.$.wamp.unsubscribe(this._subscription);
+            },
+            handleOpen: function() {
+                if (this.auto === "wamp") {
+                    this.subscribe();
+                }
+            },
+            onPageShow: function() {
+                if (this.auto === "page") {
+                    this.subscribe();
+                }
+            },
+            onPageHide: function() {
+                if (this.auto === "page") {
+                    this.unsubscribe();
+                }
+            }
+        });
+    </script>
+</polymer-element>

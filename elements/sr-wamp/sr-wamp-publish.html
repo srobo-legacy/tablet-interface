@@ -1,0 +1,22 @@
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="sr-wamp-core.html" />
+
+<polymer-element name="sr-core-wamp-publish" attributes="topic">
+    <template>
+        <style>
+            :host {
+                display: none;
+            }
+        </style>
+
+        <sr-core-wamp id="wamp"></sr-core-wamp>
+    </template>
+
+    <script>
+        Polymer("sr-core-wamp-publish", {
+            go: function(args, kwargs, options) {
+                return this.$.wamp.publish(this.topic, args, kwargs, options);
+            }
+        });
+    </script>
+</polymer-element>

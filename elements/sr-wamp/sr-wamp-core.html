@@ -1,0 +1,98 @@
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+
+<polymer-element name="sr-core-wamp">
+    <template>
+        <style>
+            :host {
+                display: none;
+            }
+        </style>
+    </template>
+
+    <script src="autobahn.min.js"></script>
+
+    <script>
+        (function() {
+            var _session;
+            var _connection = new autobahn.Connection({
+                url: "ws://" + location.hostname + ":9000",
+                realm: "srobo"
+            });
+
+            _connection.onopen = function(session) {
+                _session = session;
+                console.log("Opened connection to WAMP server.");
+                window.dispatchEvent(new CustomEvent("sr-wamp-open"));
+            };
+
+            _connection.onclose = function(e) {
+                console.log("Closed connection to WAMP server.", e);
+                window.dispatchEvent(new CustomEvent("sr-wamp-close"));
+                window.location.reload();
+            };
+
+            window.addEventListener("polymer-ready", function() {
+                console.log("Connecting to WAMP server.");
+                _connection.open();
+            });
+
+            Polymer("sr-core-wamp", {
+                created: function() {
+                    window.addEventListener("sr-wamp-open", this.onOpen.bind(this));
+                    window.addEventListener("sr-wamp-close", this.onClose.bind(this));
+                },
+                domReady: function() {
+                    if (_connection.isOpen) {
+                        this.onOpen();
+                    }
+                },
+                subscribe: function(topic, handler, options, callback) {
+                    console.log("Subscribing to:", topic);
+                    this.session.subscribe(topic, handler, options).then(
+                        function(subscription) {
+                            if (callback !== undefined) {
+                                callback(subscription);
+                            }
+                        },
+                        function(error) {
+                            console.log("Subscription failed!", error);
+                        }
+                    )
+                },
+                unsubscribe: function(subscription, callback) {
+                    console.log("Unsubscribing from:", subscription.topic);
+                    this.session.unsubscribe(subscription).then(
+                        function() {
+                            if (callback !== undefined) {
+                                callback(subscription);
+                            }
+                        },
+                        function(error) {
+                            console.log("Unsubscription failed!", error);
+                        }
+                    )
+                },
+                publish: function(topic, args, kwargs, options) {
+                    console.log("Publishing:", topic, args, kwargs, options);
+                    return this.session.publish(topic, args, kwargs, options);
+                },
+                call: function(procedure, args, kwargs, options) {
+                    console.log("Calling:", procedure, args, kwargs, options);
+                    return this.session.call(procedure, args, kwargs, options);
+                },
+                onOpen: function() {
+                    this.fire("open");
+                },
+                onClose: function() {
+                    this.fire("close");
+                },
+                get connection() {
+                    return _connection;
+                },
+                get session() {
+                    return _session;
+                }
+            });
+        }());
+    </script>
+</polymer-element>
