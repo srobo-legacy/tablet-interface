@@ -5,5 +5,4 @@
 - camera zoom
 - log jump to bottom
 - camera!
-- rename elements nicely
 - fix import dependencies
