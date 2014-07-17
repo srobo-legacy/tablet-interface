@@ -17,22 +17,18 @@
 
         <textarea id="log" readonly></textarea>
 
-        <sr-core-wamp
-            on-open="{{handleOpen}}"></sr-core-wamp>
         <sr-core-wamp-subscribe
+            auto="page"
             topic="org.srobo.log"
             on-handle="{{handleLog}}"></sr-core-wamp-subscribe>
         <sr-core-wamp-call
-            id="call"
+            auto="page"
             procedure="org.srobo.log"
             on-success="{{handleLog}}"></sr-core-wamp-call>
     </template>
 
     <script>
         Polymer("sr-core-log", {
-            handleOpen: function() {
-                this.$.call.go();
-            },
             isAtBottom: function() {
                 var log = this.$.log;
                 return Math.abs((log.scrollTop + log.clientHeight) - log.scrollHeight) <= 10;
@@ -61,6 +57,7 @@
             },
             handleLog: function(e) {
                 if (e.detail.result !== undefined) {
+                    this.$.log.innerHTML = "";
                     var text = e.detail.result.trim();
                     if (text.length > 0) {
                         this.addEntry("-- Previous Log Starts Here --");
