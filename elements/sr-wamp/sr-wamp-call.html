@@ -1,7 +1,7 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="sr-wamp-core.html" />
 
-<polymer-element name="sr-core-wamp-call" attributes="procedure args kwargs options auto">
+<polymer-element name="sr-wamp-call" attributes="procedure args kwargs options auto">
     <template>
         <style>
             :host {
@@ -9,13 +9,13 @@
             }
         </style>
 
-        <sr-core-wamp
+        <sr-wamp-core
             id="wamp"
-            on-open="{{handleOpen}}"></sr-core-wamp>
+            on-open="{{handleOpen}}"></sr-wamp-core>
     </template>
 
     <script>
-        Polymer("sr-core-wamp-call", {
+        Polymer("sr-wamp-call", {
             auto: null,
             handleOpen: function() {
                 if (this.auto === "wamp") {

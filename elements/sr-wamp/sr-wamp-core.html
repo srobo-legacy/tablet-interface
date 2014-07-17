@@ -1,6 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<polymer-element name="sr-core-wamp">
+<polymer-element name="sr-wamp-core">
     <template>
         <style>
             :host {
@@ -36,7 +36,7 @@
                 _connection.open();
             });
 
-            Polymer("sr-core-wamp", {
+            Polymer("sr-wamp-core", {
                 created: function() {
                     window.addEventListener("sr-wamp-open", this.onOpen.bind(this));
                     window.addEventListener("sr-wamp-close", this.onClose.bind(this));

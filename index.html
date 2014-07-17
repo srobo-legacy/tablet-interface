@@ -63,20 +63,20 @@
             <sr-page-servos hidden></sr-page-servos>
         </sr-core-pages>
 
-        <sr-core-wamp
-            id="wamp"></sr-core-wamp>
-        <sr-core-wamp-call
+        <sr-wamp-core
+            id="wamp"></sr-wamp-core>
+        <sr-wamp-call
             id="wamp-start"
-            procedure="org.srobo.start"></sr-core-wamp-call>
-        <sr-core-wamp-call
+            procedure="org.srobo.start"></sr-wamp-call>
+        <sr-wamp-call
             id="wamp-stop"
-            procedure="org.srobo.stop"></sr-core-wamp-call>
-        <sr-core-wamp-subscribe
+            procedure="org.srobo.stop"></sr-wamp-call>
+        <sr-wamp-subscribe
             id="wamp-sub-state"
-            topic="org.srobo.state"></sr-core-wamp-subscribe>
-        <sr-core-wamp-call
+            topic="org.srobo.state"></sr-wamp-subscribe>
+        <sr-wamp-call
             id="wamp-call-state"
-            procedure="org.srobo.state"></sr-core-wamp-call>
+            procedure="org.srobo.state"></sr-wamp-call>
 
         <script>
             (function() {
@@ -137,7 +137,7 @@
                 }
             };
 
-            document.querySelector("sr-core-wamp").addEventListener("open", function() {
+            document.querySelector("sr-wamp-core").addEventListener("open", function() {
                 document.querySelector("#wamp-call-state").go();
             });
             document.querySelector("#wamp-sub-state").addEventListener("handle", handleState);

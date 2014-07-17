@@ -41,15 +41,15 @@
             </g>
         </svg>
 
-        <sr-core-wamp
-            on-open="{{handleOpen}}"></sr-core-wamp>
-        <sr-core-wamp-call
+        <sr-wamp-core
+            on-open="{{handleOpen}}"></sr-wamp-core>
+        <sr-wamp-call
             id="wampGetBatteryLevel"
             procedure="org.srobo.battery.level"
-            on-success="{{handleBatteryLevel}}"></sr-core-wamp-call>
-        <sr-core-wamp-subscribe
+            on-success="{{handleBatteryLevel}}"></sr-wamp-call>
+        <sr-wamp-subscribe
             topic="org.srobo.battery.level"
-            on-handle="{{handleBatteryLevel}}"></sr-core-wamp-subscribe>
+            on-handle="{{handleBatteryLevel}}"></sr-wamp-subscribe>
     </template>
 
     <script>

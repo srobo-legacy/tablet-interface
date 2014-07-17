@@ -32,12 +32,12 @@
         <input id="value" type="range" orient="vertical" min="0" max="100" step="0.01" value="{{value}}" on-change="{{handleValueChange}}" />
         <span>{{value | formatValue}}</span>
 
-        <sr-core-wamp-subscribe
+        <sr-wamp-subscribe
             topic="org.srobo.servo.value"
-            on-handle="{{handleValue}}"></sr-core-wamp-subscribe>
-        <sr-core-wamp-publish
+            on-handle="{{handleValue}}"></sr-wamp-subscribe>
+        <sr-wamp-publish
             id="publishValue"
-            topic="org.srobo.servo.value"></sr-core-wamp-publish>
+            topic="org.srobo.servo.value"></sr-wamp-publish>
     </template>
 
     <script>

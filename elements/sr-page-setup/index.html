@@ -80,34 +80,34 @@
             </p>
         </div>
 
-        <sr-core-wamp-subscribe
+        <sr-wamp-subscribe
             topic="org.srobo.state"
-            on-handle="{{handleState}}"></sr-core-wamp-subscribe>
-        <sr-core-wamp-subscribe
+            on-handle="{{handleState}}"></sr-wamp-subscribe>
+        <sr-wamp-subscribe
             topic="org.srobo.project.name"
-            on-handle="{{handleProjectName}}"></sr-core-wamp-subscribe>
-        <sr-core-wamp-subscribe
+            on-handle="{{handleProjectName}}"></sr-wamp-subscribe>
+        <sr-wamp-subscribe
             topic="org.srobo.project.version"
-            on-handle="{{handleProjectVersion}}"></sr-core-wamp-subscribe>
-        <sr-core-wamp-subscribe
+            on-handle="{{handleProjectVersion}}"></sr-wamp-subscribe>
+        <sr-wamp-subscribe
             topic="org.srobo.pyenv.version"
-            on-handle="{{handlePyenvVersion}}"></sr-core-wamp-subscribe>
-        <sr-core-wamp-call
+            on-handle="{{handlePyenvVersion}}"></sr-wamp-subscribe>
+        <sr-wamp-call
             id="stateCall"
             procedure="org.srobo.state"
-            on-success="{{handleState}}"></sr-core-wamp-call>
-        <sr-core-wamp-call
+            on-success="{{handleState}}"></sr-wamp-call>
+        <sr-wamp-call
             id="pyenvCall"
             procedure="org.srobo.pyenv.version"
-            on-success="{{handlePyenvVersion}}"></sr-core-wamp-call>
-        <sr-core-wamp-call
+            on-success="{{handlePyenvVersion}}"></sr-wamp-call>
+        <sr-wamp-call
             id="projectVersionCall"
             procedure="org.srobo.project.version"
-            on-success="{{handleProjectVersion}}"></sr-core-wamp-call>
-        <sr-core-wamp-call
+            on-success="{{handleProjectVersion}}"></sr-wamp-call>
+        <sr-wamp-call
             id="projectNameCall"
             procedure="org.srobo.project.name"
-            on-success="{{handleProjectName}}"></sr-core-wamp-call>
+            on-success="{{handleProjectName}}"></sr-wamp-call>
     </template>
 
     <script>
