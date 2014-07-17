@@ -3,3 +3,4 @@
 - camera pause/play
 - camera zoom
 - log jump to bottom
+- add ability to hide navigation drawer by clicking somewhere else
