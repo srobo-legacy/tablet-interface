@@ -59,6 +59,19 @@
                         }
                     )
                 },
+                unsubscribe: function(subscription, callback) {
+                    console.log("Unsubscribing from:", subscription.topic);
+                    this.session.unsubscribe(subscription).then(
+                        function() {
+                            if (callback !== undefined) {
+                                callback(subscription);
+                            }
+                        },
+                        function(error) {
+                            console.log("Unsubscription failed!", error);
+                        }
+                    )
+                },
                 publish: function(topic, args, kwargs, options) {
                     console.log("Publishing:", topic, args, kwargs, options);
                     return this.session.publish(topic, args, kwargs, options);
