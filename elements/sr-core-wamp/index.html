@@ -169,7 +169,7 @@
     </script>
 </polymer-element>
 
-<polymer-element name="sr-core-wamp-call" attributes="procedure args kwargs options">
+<polymer-element name="sr-core-wamp-call" attributes="procedure args kwargs options auto">
     <template>
         <style>
             :host {
@@ -177,11 +177,24 @@
             }
         </style>
 
-        <sr-core-wamp id="wamp"></sr-core-wamp>
+        <sr-core-wamp
+            id="wamp"
+            on-open="{{handleOpen}}"></sr-core-wamp>
     </template>
 
     <script>
         Polymer("sr-core-wamp-call", {
+            auto: null,
+            handleOpen: function() {
+                if (this.auto === "wamp") {
+                    this.go();
+                }
+            },
+            onPageShow: function() {
+                if (this.auto === "page") {
+                    this.go();
+                }
+            },
             go: function(args, kwargs, options) {
                 this.$.wamp.call(this.procedure, args, kwargs, options).then(function(result) {
                     this.fire("success", {result: result});
