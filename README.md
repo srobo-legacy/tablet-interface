@@ -29,6 +29,3 @@ You can also run an example user code which provides a custom component.
 
     $ cd usercode
     $ ./server.py
-
-**Note:** only works when connected via `localhost`.
-
