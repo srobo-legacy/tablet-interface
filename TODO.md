@@ -1,4 +1,3 @@
-- old logs
 - camera annotations
 - camera custom images
 - camera pause/play
