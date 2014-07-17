@@ -2,35 +2,45 @@
 <link rel="import" href="../sr-core-log/index.html" />
 <link rel="import" href="../sr-core-pages/index.html" />
 <link rel="import" href="../sr-core-toolbar/index.html" />
+<link rel="import" href="../sr-wamp/index.html" />
 
 <polymer-element name="sr-page-log" extends="sr-core-page">
     <template>
         <style>
-            sr-core-log {
-                margin: 10px;
+            sr-core-log,
+            textarea {
                 flex: 1 1 auto;
+                font-family: "Inconsolate", monospace !important; /* :( */
+            }
+
+            #logs {
+                display: flex;
+                flex: 1 1 auto;
+                padding: 10px;
             }
         </style>
 
         <sr-core-toolbar>
             <h1 flex>View Robot Logs</h1>
-            <select>
+            <select id="logSelection" on-change="{{handleLogSelectionChanged}}">
                 <optgroup label="Current Log">
-                    <option>Current</option>
+                    <option value="current">Current</option>
                 </optgroup>
-                <optgroup label="Previous Logs">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
+                <optgroup label="Previous Logs" id="previousLogs">
+
                 </optgroup>
             </select>
             <button id="btnBottom">Jump to bottom</button>
         </sr-core-toolbar>
 
-        <sr-core-log id="log"></sr-core-log>
+        <div id="logs">
+            <sr-core-log id="log_current"></sr-core-log>
+        </div>
+
+        <sr-wamp-call
+            auto="page"
+            procedure="org.srobo.old_logs"
+            on-success="{{handleOldLogs}}"></sr-wamp-call>
     </template>
 
     <script>
@@ -38,7 +48,39 @@
             name: "log",
             domReady: function() {
                 this.$.btnBottom.addEventListener("click",
-                    this.$.log.scrollToBottom.bind(this.$.log));
+                    this.$.currentLog.scrollToBottom.bind(this.$.currentLog));
+            },
+            handleOldLogs: function(e) {
+                var oldLogs = e.detail.result || e.detail.args[0];
+
+                this.$.previousLogs.innerHTML = "";
+
+                for (var i = 0; i < oldLogs.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = "old_" + i;
+                    option.textContent = i;
+                    this.$.previousLogs.appendChild(option);
+
+                    var textarea = document.createElement("textarea");
+                    textarea.id = "log_old_" + i;
+                    textarea.textContent = oldLogs[i];
+                    textarea.readOnly = true;
+                    textarea.hidden = true;
+                    this.$.logs.appendChild(textarea);
+                }
+            },
+            changeLog: function(log) {
+                console.log("Changing log:", log);
+
+                var logs = this.$.logs.children;
+                for (var i = 0; i < logs.length; i++) {
+                    logs[i].hidden = true;
+                }
+
+                this.shadowRoot.querySelector("#log_" + log).hidden = false;
+            },
+            handleLogSelectionChanged: function(e) {
+                this.changeLog(this.$.logSelection.value);
             }
         });
     </script>
