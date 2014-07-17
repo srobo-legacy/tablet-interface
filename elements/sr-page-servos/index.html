@@ -31,10 +31,8 @@
 
         <div id="controllers"></div>
 
-        <sr-core-wamp
-            on-open="{{handleOpen}}"></sr-core-wamp>
         <sr-core-wamp-call
-            id="call"
+            auto="page"
             procedure="org.srobo.servo_boards"
             on-success="{{handleCallSuccess}}"></sr-core-wamp-call>
     </template>
@@ -42,9 +40,6 @@
     <script>
         Polymer("sr-page-servos", {
             name: "servos",
-            handleOpen: function() {
-                this.$.call.go();
-            },
             changeBoard: function(index) {
                 var divs = this.shadowRoot.querySelectorAll(".controllersContainer");
                 for (var i = 0; i < divs.length; i++) {
@@ -79,6 +74,8 @@
                 return div;
             },
             handleCallSuccess: function(e) {
+                this.$.controllers.innerHTML = "";
+
                 var boards = e.detail.result;
                 for (var i = 0; i < boards.length; i++) {
                     var option = this.createBoardOption(i, boards[i]);
