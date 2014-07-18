@@ -33,6 +33,11 @@
                 flex: 0 0 auto;
                 margin-bottom: 1px;
                 width: 100%;
+                opacity: 0.5;
+            }
+
+            #old img.selected {
+                opacity: 1;
             }
         </style>
 
@@ -52,8 +57,14 @@
         Polymer("sr-page-camera", {
             name: "camera",
             addOldImage: function(src) {
+                var imgs = this.$.old.children;
+                for (var i = 0; i < imgs.length; i++) {
+                    imgs[i].className = "";
+                }
+
                 var img = document.createElement("img");
                 img.src = src;
+                img.className = "selected";
                 this.$.old.appendChild(img);
             },
             handleImage: function(e) {

@@ -2,6 +2,4 @@
 - camera custom images
 - camera pause/play
 - camera zoom
-- camera image over HTTP
-- camera old images on the side
 - add middle 50% thing to sliders
