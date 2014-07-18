@@ -18,20 +18,21 @@
                 flex: 0 0 auto;
                 display: flex;
                 flex-direction: column;
-                overflow: auto;
-            }
-
-            img {
-                object-fit: contain;
+                overflow-y: auto;
+                overflow-x: hidden;
+                border-left: 1px solid black;
+                width: 25%;
             }
 
             #current img {
                 flex: 1 1 auto;
+                object-fit: contain;
             }
 
             #old img {
                 flex: 0 0 auto;
-                width: 200px;
+                margin-bottom: 1px;
+                width: 100%;
             }
         </style>
 
@@ -56,11 +57,8 @@
                 this.$.old.appendChild(img);
             },
             handleImage: function(e) {
-                if (this.$.image.src) {
-                    this.addOldImage(this.$.image.src);
-                }
-
-                var src = "data:image/jpeg;base64," + e.detail.args[0];
+                var src = e.detail.args[0];
+                this.addOldImage(src);
                 this.$.image.src = src;
             }
         });
