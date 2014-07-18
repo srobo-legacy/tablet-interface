@@ -4,3 +4,4 @@
 - camera zoom
 - log jump to bottom
 - add ability to hide navigation drawer by clicking somewhere else
+- add middle 50% thing to sliders
