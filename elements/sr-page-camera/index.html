@@ -18,10 +18,9 @@
                 flex: 0 0 auto;
                 display: flex;
                 flex-direction: column;
-                overflow-y: auto;
-                overflow-x: hidden;
+                overflow: auto;
                 border-left: 1px solid black;
-                width: 25%;
+                width: 20%;
             }
 
             #current img {
@@ -56,21 +55,32 @@
     <script>
         Polymer("sr-page-camera", {
             name: "camera",
-            addOldImage: function(src) {
+            deselectAll: function() {
                 var imgs = this.$.old.children;
                 for (var i = 0; i < imgs.length; i++) {
                     imgs[i].className = "";
                 }
-
+            },
+            changeImage: function(img) {
+                this.deselectAll();
+                img.className = "selected";
+                this.$.image.src = img.src;
+            },
+            addOldImage: function(src) {
                 var img = document.createElement("img");
                 img.src = src;
-                img.className = "selected";
-                this.$.old.appendChild(img);
+                img.onclick = this.changeImage.bind(this, img);
+                if (this.$.old.children.length === 0) {
+                    this.$.old.appendChild(img);
+                } else {
+                    this.$.old.insertBefore(img, this.$.old.children[0]);
+                }
+                return img;
             },
             handleImage: function(e) {
                 var src = e.detail.args[0];
-                this.addOldImage(src);
-                this.$.image.src = src;
+                var img = this.addOldImage(src);
+                this.changeImage(img);
             }
         });
     </script>
