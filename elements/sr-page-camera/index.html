@@ -5,13 +5,41 @@
 <polymer-element name="sr-page-camera" extends="sr-core-page">
     <template>
         <style>
-            img {
+            :host {
+                flex-direction: row;
+            }
+
+            #current {
                 flex: 1 1 auto;
+                display: flex;
+            }
+
+            #old {
+                flex: 0 0 auto;
+                display: flex;
+                flex-direction: column;
+                overflow: auto;
+            }
+
+            img {
                 object-fit: contain;
+            }
+
+            #current img {
+                flex: 1 1 auto;
+            }
+
+            #old img {
+                flex: 0 0 auto;
+                width: 200px;
             }
         </style>
 
-        <img id="image"></img>
+        <div id="current">
+            <img id="image"></img>
+        </div>
+
+        <div id="old"></div>
 
         <sr-wamp-subscribe
             auto="page"
@@ -22,7 +50,16 @@
     <script>
         Polymer("sr-page-camera", {
             name: "camera",
+            addOldImage: function(src) {
+                var img = document.createElement("img");
+                img.src = src;
+                this.$.old.appendChild(img);
+            },
             handleImage: function(e) {
+                if (this.$.image.src) {
+                    this.addOldImage(this.$.image.src);
+                }
+
                 var src = "data:image/jpeg;base64," + e.detail.args[0];
                 this.$.image.src = src;
             }
