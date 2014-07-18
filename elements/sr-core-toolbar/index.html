@@ -22,6 +22,19 @@
             ::content button {
                 padding: 4px 8px;
             }
+
+            /* for older browsers not supporting the native shadow DOM */
+
+            sr-core-toolbar select,
+            sr-core-toolbar button {
+                padding: 4px 8px;
+            }
+
+            sr-core-toolbar h1,
+            sr-core-toolbar select,
+            sr-core-toolbar button {
+                margin: 0 4px;
+            }
         </style>
 
         <content></content>
