@@ -1,0 +1,46 @@
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="../sr-io-pin-mode-controller/index.html" />
+<link rel="import" href="../sr-wamp/index.html" />
+
+<polymer-element name="sr-io-pin-controller" attributes="board pin type">
+    <template>
+        <style>
+            :host {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                min-width: 128px;
+            }
+
+            h2 {
+                margin: 2px 0;
+            }
+
+            h3 {
+                font-size: 0.8em;
+                font-weight: bold;
+                color: rgb(50, 50, 50);
+                margin: 0;
+            }
+
+            sr-io-pin-mode-controller {
+                margin: 20px 5px;
+            }
+        </style>
+
+        <h2>{{pin}}</h2>
+        <h3>{{type}}</h3>
+
+        <sr-io-pin-mode-controller
+            board="{{board}}"
+            pin="{{pin}}"></sr-io-pin-mode-controller>
+    </template>
+
+    <script>
+        Polymer("sr-io-pin-controller", {
+            board: 0,
+            pin: 0,
+            type: undefined
+        });
+    </script>
+</polymer-element>
