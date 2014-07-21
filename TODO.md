@@ -3,5 +3,4 @@
 - camera pause/play
 - camera zoom
 - add middle 50% thing to sliders
-- improve battery history visibility
 - I/O controllers
