@@ -70,18 +70,13 @@
                 var div = document.createElement("div");
                 div.className = "controllersContainer";
                 div.id = "board_" + i;
-                for (var j = 2; j < 14; j++) {
+                for (var j = 0; j < board.pins.length; j++) {
                     var controller = document.createElement("sr-io-pin-controller");
                     controller.board = i;
                     controller.pin = j;
-                    controller.type = "digital";
-                    div.appendChild(controller);
-                }
-                for (var j = 14; j < 20; j++) {
-                    var controller = document.createElement("sr-io-pin-controller");
-                    controller.board = i;
-                    controller.pin = j;
-                    controller.type = "analogue";
+                    controller.type = board.pins[j].type;
+                    controller.mode = board.pins[j].mode;
+                    controller.value = board.pins[j].value;
                     div.appendChild(controller);
                 }
                 return div;
