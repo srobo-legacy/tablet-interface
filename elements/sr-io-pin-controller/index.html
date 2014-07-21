@@ -9,22 +9,24 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                min-width: 128px;
+                min-width: 100px;
+                padding: 10px;
             }
 
             h2 {
-                margin: 2px 0;
+                margin: 0;
             }
 
             h3 {
                 font-size: 0.8em;
                 font-weight: bold;
                 color: rgb(50, 50, 50);
-                margin: 0;
+                margin: 0 0 15px;
             }
 
+            input,
             sr-io-pin-mode-controller {
-                margin: 20px 5px;
+                margin: 5px;
             }
         </style>
 
@@ -34,6 +36,14 @@
         <sr-io-pin-mode-controller
             board="{{board}}"
             pin="{{pin}}"></sr-io-pin-mode-controller>
+
+        <template bind if="{{ type == 'digital' }}">
+            <input type="checkbox" />
+        </template>
+
+        <template bind if="{{ type == 'analogue' }}">
+            <input type="range" />
+        </template>
     </template>
 
     <script>
