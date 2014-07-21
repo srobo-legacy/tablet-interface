@@ -3,5 +3,4 @@
 - camera pause/play
 - camera zoom
 - add middle 50% thing to sliders
-- I/O controllers
 - add individual controller RPC calls rather than a single big one
