@@ -15,7 +15,7 @@
             }
         </style>
 
-        <input id="value" checked="{{value}}" on-change="{{handleValueChange}}" type="checkbox" />
+        <input id="value" checked="{{value}}" on-change="{{handleValueChange}}" type="checkbox" disabled?="{{ !mode }}" />
 
         <sr-wamp-subscribe
             topic="org.srobo.io.digital_value"

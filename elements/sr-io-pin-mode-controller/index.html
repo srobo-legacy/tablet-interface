@@ -15,7 +15,7 @@
         </style>
 
         <select value="{{value}}" on-change="{{handleValueChange}}">
-            <option value="unset">―</option>
+            <option value="">―</option>
             <option value="input">Input</option>
             <option value="output">Output</option>
             <option value="input_pullup">Input Pull-up</option>
@@ -33,7 +33,7 @@
         Polymer("sr-io-pin-mode-controller", {
             board: 0,
             pin: 0,
-            value: "unset",
+            value: null,
             handleValueChange: function() {
                 this.$.publishValue.go([this.board, this.pin, this.value]);
             },
