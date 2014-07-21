@@ -15,7 +15,7 @@
             }
         </style>
 
-        <input id="value" checked="{{value}}" on-change="{{handleValueChange}}" type="checkbox" disabled?="{{ !mode }}" />
+        <input id="value" checked="{{value}}" on-change="{{handleValueChange}}" type="checkbox" disabled?="{{ !isInput }}" />
 
         <sr-wamp-subscribe
             topic="org.srobo.io.digital_value"
@@ -31,6 +31,14 @@
             pin: 0,
             mode: undefined,
             value: false,
+            isInput: false,
+            modeChanged: function() {
+                if (typeof(this.mode) === "string") {
+                    this.isInput = this.mode.indexOf("input") === 0;
+                } else {
+                    this.isInput = false;
+                }
+            },
             handleValueChange: function() {
                 this.$.publishValue.go([this.board, this.pin, this.value]);
             },
