@@ -17,14 +17,14 @@
         <canvas id="canvas" width="660" height="300"></canvas>
 
         <sr-wamp-core
-            on-open="{{handleOpen}}"></sr-wamp-core>
+            on-open="{{ handleOpen }}"></sr-wamp-core>
         <sr-wamp-call
             id="wampGetBatteryLevel"
             procedure="org.srobo.battery.level"
-            on-success="{{handleBatteryLevel}}"></sr-wamp-call>
+            on-success="{{ handleBatteryLevel }}"></sr-wamp-call>
         <sr-wamp-subscribe
             topic="org.srobo.battery.level"
-            on-handle="{{handleBatteryLevel}}"></sr-wamp-subscribe>
+            on-handle="{{ handleBatteryLevel }}"></sr-wamp-subscribe>
     </template>
 
     <script src="/bower_components/chartjs/Chart.js"></script>
