@@ -1,0 +1,44 @@
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="../sr-wamp/index.html" />
+
+<polymer-element name="sr-io-digital-pin-controller" attributes="board pin mode value">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+
+            input {
+                padding: 2px;
+                width: 32px;
+                height: 32px;
+            }
+        </style>
+
+        <input id="value" checked="{{value}}" on-change="{{handleValueChange}}" type="checkbox" />
+
+        <sr-wamp-subscribe
+            topic="org.srobo.io.digital_value"
+            on-handle="{{handleValue}}"></sr-wamp-subscribe>
+        <sr-wamp-publish
+            id="publishValue"
+            topic="org.srobo.io.digital_value"></sr-wamp-publish>
+    </template>
+
+    <script>
+        Polymer("sr-io-digital-pin-controller", {
+            board: 0,
+            pin: 0,
+            mode: undefined,
+            value: false,
+            handleValueChange: function() {
+                this.$.publishValue.go([this.board, this.pin, this.value]);
+            },
+            handleValue: function(e) {
+                if (e.detail.args[0] === this.board && e.detail.args[1] === this.pin) {
+                    this.value = e.detail.args[2];
+                }
+            }
+        });
+    </script>
+</polymer-element>

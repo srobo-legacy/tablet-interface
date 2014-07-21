@@ -1,8 +1,10 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../sr-io-pin-mode-controller/index.html" />
+<link rel="import" href="../sr-io-analogue-pin-controller/index.html" />
+<link rel="import" href="../sr-io-digital-pin-controller/index.html" />
 <link rel="import" href="../sr-wamp/index.html" />
 
-<polymer-element name="sr-io-pin-controller" attributes="board pin type">
+<polymer-element name="sr-io-pin-controller" attributes="board pin mode type">
     <template>
         <style>
             :host {
@@ -24,7 +26,8 @@
                 margin: 0 0 15px;
             }
 
-            input,
+            sr-io-analogue-pin-controller,
+            sr-io-digital-pin-controller,
             sr-io-pin-mode-controller {
                 margin: 5px;
             }
@@ -35,14 +38,21 @@
 
         <sr-io-pin-mode-controller
             board="{{board}}"
-            pin="{{pin}}"></sr-io-pin-mode-controller>
+            pin="{{pin}}"
+            value="{{mode}}"></sr-io-pin-mode-controller>
 
         <template bind if="{{ type == 'digital' }}">
-            <input type="checkbox" />
+            <sr-io-digital-pin-controller
+                board="{{board}}"
+                pin="{{pin}}"
+                mode="{{mode}}"></sr-io-digital-pin-controller>
         </template>
 
         <template bind if="{{ type == 'analogue' }}">
-            <input type="range" />
+            <sr-io-analogue-pin-controller
+                board="{{board}}"
+                pin="{{pin}}"
+                mode="{{mode}}"></sr-io-analogue-pin-controller>
         </template>
     </template>
 
@@ -50,6 +60,7 @@
         Polymer("sr-io-pin-controller", {
             board: 0,
             pin: 0,
+            mode: "unset",
             type: undefined
         });
     </script>
