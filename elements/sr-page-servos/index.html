@@ -19,7 +19,6 @@
 
         <sr-core-toolbar id="toolbar">
             <h1 flex>Servo controllers</h1>
-            <select id="boardSelection" on-change="{{boardSelectionChanged}}"></select>
         </sr-core-toolbar>
 
         <div id="controllers"></div>
@@ -33,19 +32,12 @@
     <script>
         Polymer("sr-page-servos", {
             name: "servos",
-            changeBoard: function(index) {
+            changeBoard: function(serialNumber) {
                 var divs = this.$.controllers.children;
                 for (var i = 0; i < divs.length; i++) {
                     divs[i].hidden = true;
                 }
-                this.shadowRoot.querySelector("#board_" + index).hidden = false;
-                this.$.boardSelection.selectedIndex = index;
-            },
-            createBoardOption: function(serialNumber) {
-                var option = document.createElement("option");
-                option.value = serialNumber;
-                option.textContent = "Board " + serialNumber;
-                return option;
+                this.shadowRoot.querySelector("#board_" + serialNumber).hidden = false;
             },
             createBoardButton: function(serialNumber) {
                 var button = document.createElement("button");
@@ -64,20 +56,14 @@
 
                 var boards = e.detail.result;
                 for (var serialNumber in boards) {
-                    var option = this.createBoardOption(serialNumber);
                     var button = this.createBoardButton(serialNumber);
-                    var div = this.createBoardDiv(serialNumber);
-
                     this.$.toolbar.appendChild(button);
+
+                    var div = this.createBoardDiv(serialNumber);
                     this.$.controllers.appendChild(div);
-                    this.$.boardSelection.appendChild(option);
                 }
 
                 this.changeBoard(Object.keys(boards)[0]);
-            },
-            boardSelectionChanged: function(e) {
-                var i = this.$.boardSelection.value;
-                this.changeBoard(i);
             }
         });
     </script>
