@@ -30,7 +30,7 @@
             },
             handleGetBoardSuccess: function(e) {
                 var motors = e.detail.result.motors;
-                motors.forEach(function(i) {
+                motors.forEach(function(motor, i) {
                     var element = document.createElement("sr-motors-motor-controller");
                     element.board = this.board;
                     element.motor = i;
