@@ -36,16 +36,15 @@
         <button data-zone="2" style="background: #ff00ff" class="{{ {selected: zone == 2} | tokenList }}"></button>
         <button data-zone="3" style="background: #ffff00" class="{{ {selected: zone == 3} | tokenList }}"></button>
 
-        <sr-wamp-core
-            on-open="{{handleOpen}}"></sr-wamp-core>
         <sr-wamp-subscribe
+            auto="wamp"
             topic="org.srobo.zone"
             on-handle="{{handleZone}}"></sr-wamp-subscribe>
         <sr-wamp-publish
             id="pub"
             topic="org.srobo.zone"></sr-wamp-publish>
         <sr-wamp-call
-            id="call"
+            auto="wamp"
             procedure="org.srobo.zone"
             on-success="{{handleZone}}"></sr-wamp-call>
     </template>
@@ -61,9 +60,6 @@
                         this.$.pub.go([parseInt(this.zone)]);
                     }.bind(this));
                 }
-            },
-            handleOpen: function() {
-                this.$.call.go();
             },
             handleZone: function(e) {
                 this.zone = e.detail.result !== undefined ? e.detail.result : e.detail.args[0];

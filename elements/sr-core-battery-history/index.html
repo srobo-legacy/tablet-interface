@@ -16,10 +16,8 @@
 
         <canvas id="canvas" width="660" height="300"></canvas>
 
-        <sr-wamp-core
-            on-open="{{ handleOpen }}"></sr-wamp-core>
         <sr-wamp-call
-            id="wampGetBatteryLevel"
+            auto="wamp"
             procedure="org.srobo.battery.level"
             on-success="{{ handleBatteryLevel }}"></sr-wamp-call>
         <sr-wamp-subscribe
@@ -32,9 +30,6 @@
     <script>
         Polymer("sr-core-battery-history", {
             _lastTime: new Date(),
-            handleOpen: function() {
-                this.$.wampGetBatteryLevel.go();
-            },
             levelChanged: function() {
                 var timeStr = moment().format("HH:mm:ss");
 

@@ -83,31 +83,35 @@
         </div>
 
         <sr-wamp-subscribe
+            auto="wamp"
             topic="org.srobo.state"
             on-handle="{{handleState}}"></sr-wamp-subscribe>
         <sr-wamp-subscribe
+            auto="wamp"
             topic="org.srobo.project.name"
             on-handle="{{handleProjectName}}"></sr-wamp-subscribe>
         <sr-wamp-subscribe
+            auto="wamp"
             topic="org.srobo.project.version"
             on-handle="{{handleProjectVersion}}"></sr-wamp-subscribe>
         <sr-wamp-subscribe
+            auto="wamp"
             topic="org.srobo.pyenv.version"
             on-handle="{{handlePyenvVersion}}"></sr-wamp-subscribe>
         <sr-wamp-call
-            id="stateCall"
+            auto="wamp"
             procedure="org.srobo.state"
             on-success="{{handleState}}"></sr-wamp-call>
         <sr-wamp-call
-            id="pyenvCall"
+            auto="wamp"
             procedure="org.srobo.pyenv.version"
             on-success="{{handlePyenvVersion}}"></sr-wamp-call>
         <sr-wamp-call
-            id="projectVersionCall"
+            auto="wamp"
             procedure="org.srobo.project.version"
             on-success="{{handleProjectVersion}}"></sr-wamp-call>
         <sr-wamp-call
-            id="projectNameCall"
+            auto="wamp"
             procedure="org.srobo.project.name"
             on-success="{{handleProjectName}}"></sr-wamp-call>
     </template>
@@ -119,12 +123,6 @@
             created: function() {
                 this.project = {}
                 this.pyenv = {};
-            },
-            onPageShow: function() {
-                this.$.stateCall.go();
-                this.$.pyenvCall.go();
-                this.$.projectVersionCall.go();
-                this.$.projectNameCall.go();
             },
             handleState: function(e) {
                 var state = e.detail.result || e.detail.args[0];

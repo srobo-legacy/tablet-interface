@@ -18,11 +18,11 @@
         <textarea id="log" readonly></textarea>
 
         <sr-wamp-subscribe
-            auto="page"
+            auto="wamp"
             topic="org.srobo.log"
             on-handle="{{ handleLog }}"></sr-wamp-subscribe>
         <sr-wamp-call
-            auto="page"
+            auto="wamp"
             procedure="org.srobo.log"
             on-success="{{ handleLog }}"></sr-wamp-call>
     </template>
