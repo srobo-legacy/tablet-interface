@@ -22,11 +22,12 @@
         </select>
 
         <sr-wamp-subscribe
-            topic="org.srobo.io.mode"
+            auto="wamp"
+            topic="org.srobo.ruggeduinos.pin_mode"
             on-handle="{{handleValue}}"></sr-wamp-subscribe>
         <sr-wamp-publish
             id="publishValue"
-            topic="org.srobo.io.mode"></sr-wamp-publish>
+            topic="org.srobo.ruggeduinos.pin_mode"></sr-wamp-publish>
     </template>
 
     <script>

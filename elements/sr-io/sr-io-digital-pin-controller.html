@@ -18,11 +18,12 @@
         <input id="value" checked="{{value}}" on-change="{{handleValueChange}}" type="checkbox" disabled?="{{ !isInput }}" />
 
         <sr-wamp-subscribe
-            topic="org.srobo.io.value"
+            auto="wamp"
+            topic="org.srobo.ruggeduinos.pin_value"
             on-handle="{{handleValue}}"></sr-wamp-subscribe>
         <sr-wamp-publish
             id="publishValue"
-            topic="org.srobo.io.value"></sr-wamp-publish>
+            topic="org.srobo.ruggeduinos.pin_value"></sr-wamp-publish>
     </template>
 
     <script>

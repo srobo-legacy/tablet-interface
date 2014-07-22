@@ -17,11 +17,12 @@
         <input id="value" type="range" value="{{value}}" on-change="{{handleValueChange}}" min="0" max="3.3" step="0.1" disabled?="{{ !isInput }}" />
 
         <sr-wamp-subscribe
-            topic="org.srobo.io.value"
+            auto="wamp"
+            topic="org.srobo.ruggeduinos.pin_value"
             on-handle="{{handleValue}}"></sr-wamp-subscribe>
         <sr-wamp-publish
             id="publishValue"
-            topic="org.srobo.io.value"></sr-wamp-publish>
+            topic="org.srobo.ruggeduinos.pin_value"></sr-wamp-publish>
     </template>
 
     <script>
