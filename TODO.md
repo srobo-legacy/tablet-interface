@@ -15,3 +15,4 @@
 - remove <select> board selection
 - use serial numbers for components
 - improve code formatting
+- add args to sr-wamp-call for use with auto
