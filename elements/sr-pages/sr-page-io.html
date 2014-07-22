@@ -24,7 +24,7 @@
             }
         </style>
 
-        <sr-core-toolbar>
+        <sr-core-toolbar id="toolbar">
             <h1 flex>I/O Control</h1>
         </sr-core-toolbar>
 
@@ -73,8 +73,8 @@
                     var button = this.createBoardButton(i, boards[i]);
                     var div = this.createBoardDiv(i, boards[i]);
 
-                    this.shadowRoot.querySelector("sr-core-toolbar").appendChild(button);
-                    this.shadowRoot.querySelector("#controllers").appendChild(div);
+                    this.$.toolbar.appendChild(button);
+                    this.$.controllers.appendChild(div);
                 }
 
                 this.changeBoard(0);
