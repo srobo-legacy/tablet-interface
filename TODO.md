@@ -12,3 +12,4 @@
 - fix duplicate component boards
 - remove -controller
 - remove <select> board selection
+- use serial numbers for components
