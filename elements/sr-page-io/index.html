@@ -1,7 +1,7 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../sr-core-pages/index.html" />
 <link rel="import" href="../sr-core-toolbar/index.html" />
-<link rel="import" href="../sr-io-pin-controller/index.html" />
+<link rel="import" href="../sr-io/index.html" />
 <link rel="import" href="../sr-wamp/index.html" />
 
 <polymer-element name="sr-page-io" extends="sr-core-page">
@@ -32,10 +32,8 @@
 
         <div id="controllers"></div>
 
-        <sr-wamp-core
-            on-open="{{handleOpen}}"></sr-wamp-core>
         <sr-wamp-call
-            id="call"
+            auto="wamp"
             procedure="org.srobo.ruggeduinos"
             on-success="{{handleCallSuccess}}"></sr-wamp-call>
     </template>
@@ -43,9 +41,6 @@
     <script>
         Polymer("sr-page-io", {
             name: "io",
-            handleOpen: function() {
-                this.$.call.go();
-            },
             changeBoard: function(index) {
                 var divs = this.shadowRoot.querySelectorAll(".controllersContainer");
                 for (var i = 0; i < divs.length; i++) {
