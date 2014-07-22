@@ -37,6 +37,7 @@
             procedure="org.srobo.motors.get_motor"
             on-success="{{handleGetMotorSuccess}}"></sr-wamp-call>
         <sr-wamp-subscribe
+            auto="wamp"
             topic="org.srobo.motors.motor_value"
             on-handle="{{handleValue}}"></sr-wamp-subscribe>
         <sr-wamp-publish
