@@ -32,6 +32,10 @@
         <input id="value" type="range" orient="vertical" min="0" max="100" step="0.01" value="{{value}}" on-change="{{handleValueChange}}" />
         <span>{{value | formatValue}}</span>
 
+        <sr-wamp-call
+            id="wampGetServo"
+            procedure="org.srobo.servos.get_servo"
+            on-success="{{handleGetServoSuccess}}"></sr-wamp-call>
         <sr-wamp-subscribe
             auto="wamp"
             topic="org.srobo.servos.servo_value"
@@ -47,6 +51,9 @@
             servo: 0,
             value: 50,
             state: false,
+            domReady: function() {
+                this.$.wampGetServo.go([this.board, this.servo]);
+            },
             handleValueChange: function() {
                 this.$.publishValue.go([this.board, this.servo, parseFloat(this.value)]);
             },
@@ -57,6 +64,9 @@
             },
             formatValue: function(v) {
                 return Number(v).toFixed(2);
+            },
+            handleGetServoSuccess: function(e) {
+                this.value = e.detail.result.value;
             }
         });
     </script>
