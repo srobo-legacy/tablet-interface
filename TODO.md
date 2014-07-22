@@ -9,3 +9,4 @@
 - rename elements sr-servo, sr-motor
 - rename IO to ruggeduino
 - add components to control entire motor boards
+- fix duplicate component boards
