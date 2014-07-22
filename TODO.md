@@ -10,3 +10,5 @@
 - rename IO to ruggeduino
 - add components to control entire motor boards
 - fix duplicate component boards
+- remove -controller
+- remove <select> board selection

@@ -1,0 +1,43 @@
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="../sr-wamp/index.html" />
+<link rel="import" href="sr-motors-motor-controller.html" />
+
+<polymer-element name="sr-motors-board-controller" attributes="board">
+    <template>
+        <style>
+            :host {
+                padding: 10px;
+                display: flex;
+                overflow-x: auto;
+            }
+
+            sr-motors-motor-controller {
+                flex: 1 1 auto;
+            }
+        </style>
+
+        <sr-wamp-call
+            id="wampGetBoard"
+            procedure="org.srobo.motors.get_board"
+            on-success="{{handleGetBoardSuccess}}"></sr-wamp-call>
+    </template>
+
+    <script>
+        Polymer("sr-motors-board-controller", {
+            board: 0,
+            domReady: function() {
+                this.$.wampGetBoard.go([this.board]);
+            },
+            handleGetBoardSuccess: function(e) {
+                var motors = e.detail.result.motors;
+                for (var i = 0; i < motors.length; i++) {
+                    var element = document.createElement("sr-motors-motor-controller");
+                    element.board = this.board;
+                    element.motor = i;
+                    element.value = motors[i].value;
+                    this.shadowRoot.appendChild(element);
+                }
+            }
+        });
+    </script>
+</polymer-element>

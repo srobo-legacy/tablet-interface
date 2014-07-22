@@ -1,7 +1,7 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../sr-core-pages/index.html" />
 <link rel="import" href="../sr-core-toolbar/index.html" />
-<link rel="import" href="../sr-motor-controller/index.html" />
+<link rel="import" href="../sr-motors/index.html" />
 <link rel="import" href="../sr-wamp/index.html" />
 
 <polymer-element name="sr-page-motors" extends="sr-core-page">
@@ -12,14 +12,7 @@
                 display: flex;
             }
 
-            .controllersContainer {
-                padding: 10px;
-                flex: 1 1 auto;
-                display: flex;
-                overflow-x: auto;
-            }
-
-            sr-motor-controller {
+            sr-motors-board-controller {
                 flex: 1 1 auto;
             }
         </style>
@@ -33,15 +26,15 @@
 
         <sr-wamp-call
             auto="page"
-            procedure="org.srobo.motor_boards"
-            on-success="{{handleCallSuccess}}"></sr-wamp-call>
+            procedure="org.srobo.motors.all_boards"
+            on-success="{{handleAllBoardsSuccess}}"></sr-wamp-call>
     </template>
 
     <script>
         Polymer("sr-page-motors", {
             name: "motors",
             changeBoard: function(index) {
-                var divs = this.shadowRoot.querySelectorAll(".controllersContainer");
+                var divs = this.$.controllers.children;
                 for (var i = 0; i < divs.length; i++) {
                     divs[i].hidden = true;
                 }
@@ -61,19 +54,12 @@
                 return button;
             },
             createBoardDiv: function(i, board) {
-                var div = document.createElement("div");
-                div.className = "controllersContainer";
+                var div = document.createElement("sr-motors-board-controller");
                 div.id = "board_" + i;
-                for (var j = 0; j < board.motors.length; j++) {
-                    var controller = document.createElement("sr-motor-controller");
-                    controller.board = i;
-                    controller.motor = j;
-                    controller.value = board.motors[j].value;
-                    div.appendChild(controller);
-                }
+                div.board = i;
                 return div;
             },
-            handleCallSuccess: function(e) {
+            handleAllBoardsSuccess: function(e) {
                 this.$.controllers.innerHTML = "";
 
                 var boards = e.detail.result;
