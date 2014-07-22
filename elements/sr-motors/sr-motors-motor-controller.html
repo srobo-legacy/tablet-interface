@@ -32,6 +32,10 @@
         <input id="value" type="range" orient="vertical" min="-100" max="100" step="0.01" value="{{value}}" on-change="{{handleValueChange}}" />
         <span>{{value | formatValue}}</span>
 
+        <sr-wamp-call
+            id="wampGetMotor"
+            procedure="org.srobo.motors.get_motor"
+            on-success="{{handleGetMotorSuccess}}"></sr-wamp-call>
         <sr-wamp-subscribe
             topic="org.srobo.motors.motor_value"
             on-handle="{{handleValue}}"></sr-wamp-subscribe>
@@ -45,6 +49,9 @@
             board: 0,
             motor: 0,
             value: 0,
+            domReady: function() {
+                this.$.wampGetMotor.go([this.board, this.motor]);
+            },
             handleValueChange: function() {
                 this.$.publishValue.go([this.board, this.motor, parseFloat(this.value)]);
             },
@@ -52,6 +59,9 @@
                 if (e.detail.args[0] === this.board && e.detail.args[1] === this.motor) {
                     this.value = parseFloat(e.detail.args[2]);
                 }
+            },
+            handleGetMotorSuccess: function(e) {
+                this.value = e.detail.result.value;
             },
             formatValue: function(v) {
                 return Number(v).toFixed(2);
