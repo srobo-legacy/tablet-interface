@@ -26,7 +26,6 @@
 
         <sr-core-toolbar>
             <h1 flex>I/O Control</h1>
-            <select id="boardSelection" on-change="{{boardSelectionChanged}}"></select>
         </sr-core-toolbar>
 
         <div id="controllers"></div>
@@ -46,13 +45,6 @@
                     divs[i].hidden = true;
                 }
                 this.shadowRoot.querySelector("#board_" + index).hidden = false;
-                this.$.boardSelection.selectedIndex = index;
-            },
-            createBoardOption: function(i, board) {
-                var option = document.createElement("option");
-                option.value = i;
-                option.textContent = "Board " + board.serial_number;
-                return option;
             },
             createBoardButton: function(i, board) {
                 var button = document.createElement("button");
@@ -78,13 +70,11 @@
             handleCallSuccess: function(e) {
                 var boards = e.detail.result;
                 for (var i = 0; i < boards.length; i++) {
-                    var option = this.createBoardOption(i, boards[i]);
                     var button = this.createBoardButton(i, boards[i]);
                     var div = this.createBoardDiv(i, boards[i]);
 
                     this.shadowRoot.querySelector("sr-core-toolbar").appendChild(button);
                     this.shadowRoot.querySelector("#controllers").appendChild(div);
-                    this.shadowRoot.querySelector("#boardSelection").appendChild(option);
                 }
 
                 this.changeBoard(0);

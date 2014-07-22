@@ -19,4 +19,3 @@
 
 - produce example pages which control individual motors or whatever
 - move UI stuff into separate UI "namespace"
-- remove sr-xxx- from files inside "namespace" directory
