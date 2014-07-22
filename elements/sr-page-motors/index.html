@@ -1,7 +1,7 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
-<link rel="import" href="../sr-core-motor-controller/index.html" />
 <link rel="import" href="../sr-core-pages/index.html" />
 <link rel="import" href="../sr-core-toolbar/index.html" />
+<link rel="import" href="../sr-motor-controller/index.html" />
 <link rel="import" href="../sr-wamp/index.html" />
 
 <polymer-element name="sr-page-motors" extends="sr-core-page">
@@ -19,7 +19,7 @@
                 overflow-x: auto;
             }
 
-            sr-core-motor-controller {
+            sr-motor-controller {
                 flex: 1 1 auto;
             }
         </style>
@@ -65,7 +65,7 @@
                 div.className = "controllersContainer";
                 div.id = "board_" + i;
                 for (var j = 0; j < board.motors.length; j++) {
-                    var controller = document.createElement("sr-core-motor-controller");
+                    var controller = document.createElement("sr-motor-controller");
                     controller.board = i;
                     controller.motor = j;
                     controller.value = board.motors[j].value;
