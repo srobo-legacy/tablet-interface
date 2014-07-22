@@ -1,7 +1,7 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../sr-wamp/index.html" />
 
-<polymer-element name="sr-core-servo-controller" attributes="board servo value state">
+<polymer-element name="sr-servos-servo-controller" attributes="board servo value state">
     <template>
         <style>
             :host {
@@ -41,7 +41,7 @@
     </template>
 
     <script>
-        Polymer("sr-core-servo-controller", {
+        Polymer("sr-servos-servo-controller", {
             board: 0,
             servo: 0,
             value: 50,
