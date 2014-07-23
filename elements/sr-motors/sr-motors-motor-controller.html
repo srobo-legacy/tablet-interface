@@ -15,7 +15,7 @@
                 flex: 1 1 auto;
                 -webkit-appearance: slider-vertical;
                 writing-mode: bt-lr;
-                margin: 32px 0;
+                margin: 16px 0;
             }
 
             h2 {
@@ -23,8 +23,15 @@
             }
 
             span {
-                margin: 2px 0;
+                margin: 2px 0 16px;
                 font-size: 1.2em;
+            }
+
+            button {
+                margin: 2px 0;
+                padding: 4px 8px;
+                font-weight: bold;
+                font-size: 1.1em;
             }
         </style>
 
@@ -33,6 +40,7 @@
             type="range" orient="vertical" min="-100" max="100" step="0.01"
             value="{{ value }}" on-change="{{ handleValueChange }}" />
         <span>{{ value | formatValue }}</span>
+        <button on-click="{{ handleStop }}">Stop</button>
 
         <sr-wamp-call
             id="wampGetMotor"
@@ -67,6 +75,10 @@
             },
             handleGetMotorSuccess: function(e) {
                 this.value = e.detail.result.value;
+            },
+            handleStop: function() {
+                this.value = 0;
+                this.$.publishValue.go([this.board, this.motor, 0]);
             },
             formatValue: function(v) {
                 return Number(v).toFixed(2);
