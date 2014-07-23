@@ -1,11 +1,12 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../sr-core/index.html" />
+<link rel="import" href="../sr-logs/index.html" />
 <link rel="import" href="../sr-wamp/index.html" />
 
 <polymer-element name="sr-page-log" extends="sr-core-page">
     <template>
         <style>
-            sr-core-log,
+            sr-logs-log,
             textarea {
                 flex: 1 1 auto;
                 font-family: "Inconsolate", monospace !important; /* :( */
@@ -32,7 +33,7 @@
         </sr-core-toolbar>
 
         <div id="logs">
-            <sr-core-log id="log_current"></sr-core-log>
+            <sr-logs-log id="log_current"></sr-logs-log>
         </div>
 
         <sr-wamp-call

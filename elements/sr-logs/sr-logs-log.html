@@ -1,7 +1,7 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../sr-wamp/index.html" />
 
-<polymer-element name="sr-core-log">
+<polymer-element name="sr-logs-log">
     <template>
         <style>
             :host {
@@ -28,7 +28,7 @@
     </template>
 
     <script>
-        Polymer("sr-core-log", {
+        Polymer("sr-logs-log", {
             isAtBottom: function() {
                 var log = this.$.log;
                 return Math.abs((log.scrollTop + log.clientHeight) - log.scrollHeight) <= 10;
