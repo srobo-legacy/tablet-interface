@@ -22,6 +22,5 @@
 - bulk factory reset
 - offline/online mode
 - WAMP server versioning
-- motor stop button
 - buzzer manual control page?
 - power board output controlling (current limiting?)
