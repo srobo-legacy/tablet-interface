@@ -8,7 +8,6 @@
 - add components to control entire boards
 - create components to control sets of boards
 - fix duplicate component boards
-- remove <select> board selection
 - use serial numbers for components
 - improve code formatting
 
