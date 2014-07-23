@@ -1,7 +1,7 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../sr-wamp/index.html" />
 
-<polymer-element name="sr-core-mini-battery" attributes="level">
+<polymer-element name="sr-battery-status" attributes="level">
     <template>
         <style>
             :host {
@@ -52,7 +52,7 @@
     </template>
 
     <script>
-        Polymer("sr-core-mini-battery", {
+        Polymer("sr-battery-status", {
             level: 1.0,
             handleBatteryLevel: function(e) {
                 this.level = e.detail.result !== undefined ? e.detail.result : e.detail.args[0];

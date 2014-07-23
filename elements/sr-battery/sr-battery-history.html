@@ -1,7 +1,7 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../sr-wamp/index.html" />
 
-<polymer-element name="sr-core-battery-history" attributes="level">
+<polymer-element name="sr-battery-history" attributes="level">
     <template>
         <style>
             :host {
@@ -28,7 +28,7 @@
     <script src="/bower_components/chartjs/Chart.js"></script>
 
     <script>
-        Polymer("sr-core-battery-history", {
+        Polymer("sr-battery-history", {
             _lastTime: new Date(),
             levelChanged: function() {
                 var timeStr = moment().format("HH:mm:ss");

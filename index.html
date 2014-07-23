@@ -18,6 +18,7 @@
         <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Lato:300,400,700/Inconsolata:500" />
         <link rel="stylesheet" href="styles/common.css" />
 
+        <link rel="import" href="elements/sr-battery/index.html" />
         <link rel="import" href="elements/sr-core/index.html" />
         <link rel="import" href="elements/sr-pages/index.html" />
     </head>
@@ -28,7 +29,7 @@
             <div style="height: 20px;"></div>
             <sr-core-fa-button action="play" icon="play"></sr-core-fa-button>
             <div flex></div>
-            <sr-core-mini-battery></sr-core-mini-battery>
+            <sr-battery-status></sr-battery-status>
         </sr-core-button-bar>
 
         <sr-core-navigation-drawer>
