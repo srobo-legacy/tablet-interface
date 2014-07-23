@@ -19,3 +19,11 @@
 
 - produce example pages which control individual motors or whatever
 - move UI stuff into separate UI "namespace"
+
+- saving camera images
+- bulk factory reset
+- offline/online mode
+- WAMP server versioning
+- motor stop button
+- buzzer manual control page?
+- power board output controlling (current limiting?)
