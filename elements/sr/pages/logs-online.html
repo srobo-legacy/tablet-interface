@@ -3,7 +3,7 @@
 <link rel="import" href="../ui/index.html" />
 <link rel="import" href="../wamp/index.html" />
 
-<polymer-element name="sr-pages-log-online">
+<polymer-element name="sr-pages-logs-online">
     <template>
         <style>
             :host {
@@ -49,7 +49,7 @@
     </template>
 
     <script>
-        Polymer("sr-pages-log-online", {
+        Polymer("sr-pages-logs-online", {
             domReady: function() {
                 this.$.btnBottom.addEventListener("click",
                     this.$.log_current.scrollToBottom.bind(this.$.log_current));
