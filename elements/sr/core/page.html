@@ -55,14 +55,14 @@
             },
             handleOpen: function() {
                 var element = this._createConnectedElement();
-                element.id = "content";
                 this.shadowRoot.replaceChild(element, this.$.content);
+                element.id = "content";
                 this.$.content = element;
             },
             handleClose: function() {
                 var element = this._createDisconnectedElement();
-                element.id = "content";
                 this.shadowRoot.replaceChild(element, this.$.content);
+                element.id = "content";
                 this.$.content = element;
             }
         });
