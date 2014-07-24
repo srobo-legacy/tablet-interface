@@ -37,15 +37,13 @@
             });
 
             Polymer("sr-wamp-core", {
-                connected: undefined,
+                connected: false,
                 created: function() {
                     window.addEventListener("sr-wamp-open", this.onOpen.bind(this));
                     window.addEventListener("sr-wamp-close", this.onClose.bind(this));
                 },
                 domReady: function() {
-                    if (_connection.isOpen) {
-                        this.onOpen();
-                    }
+                    this.connected = _connection.isOpen;
                 },
                 subscribe: function(topic, handler, options, callback) {
                     console.log("Subscribing to:", topic);
@@ -83,11 +81,16 @@
                 },
                 onOpen: function() {
                     this.connected = true;
-                    this.fire("open");
                 },
                 onClose: function() {
                     this.connected = false;
-                    this.fire("close");
+                },
+                connectedChanged: function() {
+                    if (this.connected) {
+                        this.fire("open");
+                    } else {
+                        this.fire("close");
+                    }
                 },
                 get connection() {
                     return _connection;
