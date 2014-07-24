@@ -86,7 +86,6 @@
                     return this.session.call(procedure, args, kwargs, options);
                 },
                 stateChanged: function(oldVal, newVal) {
-                    console.log("WAMP state changed:", oldVal, newVal);
                     if (newVal === "online") {
                         this.connected = true;
                         this.disconnected = false;
