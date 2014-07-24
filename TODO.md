@@ -14,7 +14,6 @@
 - refactor sr-wamp-{call,subscribe,publish} system to be more automatic
 
 - produce example pages which control individual motors or whatever
-- move UI stuff into separate UI "namespace"
 
 - saving camera images
 - bulk factory reset
