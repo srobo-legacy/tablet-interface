@@ -108,12 +108,25 @@
         <script>
             (function() {
                 var wamp = document.querySelector("sr-wamp-core");
+
                 wamp.addEventListener("open", function() {
                     wamp.call("org.srobo.hello", ["1.0.0"]).then(function(result) {
                         if (result) {
                             window.location.reload();
                         }
                     }.bind(this));
+
+                    var btns = document.querySelectorAll("[action='play']");
+                    for (var i = 0; i < btns.length; i++) {
+                        btns[i].hidden = false;
+                    }
+                });
+
+                wamp.addEventListener("close", function() {
+                    var btns = document.querySelectorAll("[action='play']");
+                    for (var i = 0; i < btns.length; i++) {
+                        btns[i].hidden = true;
+                    }
                 });
             }());
         </script>
