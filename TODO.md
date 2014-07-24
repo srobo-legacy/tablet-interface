@@ -21,4 +21,3 @@
 - offline/online mode
 - WAMP server versioning
 - buzzer manual control page?
-- power board output controlling (current limiting?)
