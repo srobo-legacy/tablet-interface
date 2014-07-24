@@ -30,11 +30,25 @@
 
         <!-- TODO fetch the colours from the competition API? -->
 
-        <button data-zone="0" style="background: #00ff00" class="{{ {selected: zone == 0} | tokenList }}"></button>
-        <button data-zone="1" style="background: #ff6600" class="{{ {selected: zone == 1} | tokenList }}"></button>
+        <button
+            data-zone="0"
+            style="background: #00ff00"
+            class="{{ {selected: zone == 0} | tokenList }}"></button>
+        <button
+            data-zone="1"
+            style="background: #ff6600"
+            class="{{ {selected: zone == 1} | tokenList }}"></button>
+
         <br />
-        <button data-zone="2" style="background: #ff00ff" class="{{ {selected: zone == 2} | tokenList }}"></button>
-        <button data-zone="3" style="background: #ffff00" class="{{ {selected: zone == 3} | tokenList }}"></button>
+
+        <button
+            data-zone="2"
+            style="background: #ff00ff"
+            class="{{ {selected: zone == 2} | tokenList }}"></button>
+        <button
+            data-zone="3"
+            style="background: #ffff00"
+            class="{{ {selected: zone == 3} | tokenList }}"></button>
 
         <sr-wamp-subscribe
             auto="wamp"
@@ -62,7 +76,11 @@
                 }
             },
             handleZone: function(e) {
-                this.zone = e.detail.result !== undefined ? e.detail.result : e.detail.args[0];
+                if (e.detail.result !== undefined) {
+                    this.zone = e.detail.result;
+                } else {
+                    this.zone = e.detail.args[0];
+                }
             }
         });
     </script>

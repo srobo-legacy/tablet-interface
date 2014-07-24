@@ -3,9 +3,9 @@
 
 <polymer-element name="sr-core-mode-picker" attributes="mode">
     <template>
-        <style>
-            @import "/bower_components/components-font-awesome/css/font-awesome.css";
+        <link rel="stylesheet" href="/bower_components/components-font-awesome/css/font-awesome.css" />
 
+        <style>
             :host {
                 display: flex;
                 flex-direction: column;
@@ -47,14 +47,14 @@
         <sr-wamp-subscribe
             auto="wamp"
             topic="org.srobo.mode"
-            on-handle="{{handleMode}}"></sr-wamp-subscribe>
+            on-handle="{{ handleMode }}"></sr-wamp-subscribe>
         <sr-wamp-publish
             id="pub"
             topic="org.srobo.mode"></sr-wamp-publish>
         <sr-wamp-call
             auto="wamp"
             procedure="org.srobo.mode"
-            on-success="{{handleMode}}"></sr-wamp-call>
+            on-success="{{ handleMode }}"></sr-wamp-call>
     </template>
 
     <script>

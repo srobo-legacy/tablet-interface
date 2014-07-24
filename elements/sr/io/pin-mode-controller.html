@@ -14,7 +14,7 @@
             }
         </style>
 
-        <select value="{{value}}" on-change="{{handleValueChange}}">
+        <select value="{{ value }}" on-change="{{ handleValueChange }}">
             <option value="">―</option>
             <option value="input">Input</option>
             <option value="output">Output</option>
@@ -24,7 +24,7 @@
         <sr-wamp-subscribe
             auto="wamp"
             topic="org.srobo.ruggeduinos.pin_mode"
-            on-handle="{{handleValue}}"></sr-wamp-subscribe>
+            on-handle="{{ handleValue }}"></sr-wamp-subscribe>
         <sr-wamp-publish
             id="publishValue"
             topic="org.srobo.ruggeduinos.pin_mode"></sr-wamp-publish>
@@ -39,8 +39,9 @@
                 this.$.publishValue.go([this.board, this.pin, this.value]);
             },
             handleValue: function(e) {
-                if (e.detail.args[0] === this.board && e.detail.args[1] === this.pin) {
-                    this.value = e.detail.args[2];
+                var args = e.detail.args;
+                if (args[0] === this.board && args[1] === this.pin) {
+                    this.value = args[2];
                 }
             }
         });

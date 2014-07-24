@@ -38,7 +38,11 @@
                 <path
                     d="M 9,0 C 7.338,0 6,1.338 6,3 L 6,5 3,5 C 1.338,5 0,6.338 0,8 l 0,55 c 0,1.662 1.338,3 3,3 l 19,0 c 1.662,0 3,-1.338 3,-3 L 25,8 C 25,6.338 23.630008,5 22,5 L 19,5 19,3 C 19,1.338 17.662,0 16,0 z m -4.5,7.5 1.90625,0 12.1875,0 1.90625,0 c 1.108,0 2,0.892 2,2 l 0,52 c 0,1.108 -0.892,2 -2,2 l -16,0 c -1.108,0 -2,-0.892 -2,-2 l 0,-52 c 0,-1.108 0.892,-2 2,-2 z"
                     style="fill: white" />
-                <text id="question" y="46" x="6" style="fill: white; font-size: 1.9em;">?</text>
+                <text
+                    id="questionMark"
+                    x="6"
+                    y="46"
+                    style="fill: white; font-size: 1.9em;">?</text>
             </g>
         </svg>
 
@@ -59,15 +63,19 @@
         Polymer("sr-battery-status", {
             level: 1.0,
             handleOpen: function() {
-                this.$.question.style.display = "none";
+                this.$.questionMark.style.display = "none";
                 this.$.progressRect.style.display = "block";
             },
             handleClose: function() {
-                this.$.question.style.display = "block";
+                this.$.questionMark.style.display = "block";
                 this.$.progressRect.style.display = "none";
             },
             handleBatteryLevel: function(e) {
-                this.level = e.detail.result !== undefined ? e.detail.result : e.detail.args[0];
+                if (e.detail.result !== undefined) {
+                    this.level = e.detail.result;
+                } else {
+                    this.level = e.detail.args[0];
+                }
             },
             floor: function(value) {
                 return Math.floor(value);

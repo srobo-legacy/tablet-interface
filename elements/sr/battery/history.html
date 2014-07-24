@@ -45,7 +45,7 @@
                                 pointStrokeColor: "#fff",
                                 pointHighlightFill: "#fff",
                                 pointHighlightStroke: "rgba(151,187,205,1)",
-                                data: [this.level, this.level] // FIXME Chart.js doesn't like not having initial values?
+                                data: [this.level, this.level]
                             }
                         ]
                     };
@@ -61,7 +61,11 @@
                 }
             },
             handleBatteryLevel: function(e) {
-                this.level = e.detail.result !== undefined ? e.detail.result : e.detail.args[0];
+                if (e.detail.result !== undefined) {
+                    this.level = e.detail.result;
+                } else {
+                    this.level = e.detail.args[0];
+                }
             }
         });
     </script>

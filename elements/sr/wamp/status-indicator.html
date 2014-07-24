@@ -1,7 +1,7 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="core.html" />
 
-<polymer-element name="sr-wamp-status-indicator">
+<polymer-element name="sr-wamp-status-indicator" noscript>
     <template>
         <link rel="stylesheet" href="/bower_components/components-font-awesome/css/font-awesome.css" />
 
@@ -27,10 +27,4 @@
         <sr-wamp-core id="wamp"></sr-wamp-core>
         <p><span class="fa fa-thumbs-o-{{ $.wamp.connected ? 'up' : 'down' }} fa-fw"></span> {{ $.wamp.connected ? 'Online' : 'Offline' }}</p>
     </template>
-
-    <script>
-        Polymer("sr-wamp-status-indicator", {
-
-        });
-    </script>
 </polymer-element>

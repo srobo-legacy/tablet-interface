@@ -14,12 +14,19 @@
             }
         </style>
 
-        <input id="value" type="range" value="{{value}}" on-change="{{handleValueChange}}" min="0" max="3.3" step="0.1" disabled?="{{ !isInput }}" />
+        <input
+            type="range"
+            value="{{value}}"
+            on-change="{{ handleValueChange }}"
+            min="0"
+            max="3.3"
+            step="0.1"
+            disabled?="{{ !isInput }}" />
 
         <sr-wamp-subscribe
             auto="wamp"
             topic="org.srobo.ruggeduinos.pin_value"
-            on-handle="{{handleValue}}"></sr-wamp-subscribe>
+            on-handle="{{ handleValue }}"></sr-wamp-subscribe>
         <sr-wamp-publish
             id="publishValue"
             topic="org.srobo.ruggeduinos.pin_value"></sr-wamp-publish>
@@ -40,11 +47,13 @@
                 }
             },
             handleValueChange: function() {
-                this.$.publishValue.go([this.board, this.pin, parseFloat(this.value)]);
+                var args = [this.board, this.pin, parseFloat(this.value)];
+                this.$.publishValue.go(args);
             },
             handleValue: function(e) {
-                if (e.detail.args[0] === this.board && e.detail.args[1] === this.pin) {
-                    this.value = parseFloat(e.detail.args[2]);
+                var args = e.detail.args;
+                if (args[0] === this.board && args[1] === this.pin) {
+                    this.value = parseFloat(args[2]);
                 }
             }
         });

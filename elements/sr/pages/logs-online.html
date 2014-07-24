@@ -27,7 +27,7 @@
 
         <sr-ui-toolbar>
             <h1 flex>View Robot Logs</h1>
-            <select id="logSelection" on-change="{{handleLogSelectionChanged}}">
+            <select id="logSelection" on-change="{{ handleLogSelectionChanged }}">
                 <optgroup label="Current Log">
                     <option value="current">Current</option>
                 </optgroup>
@@ -45,7 +45,7 @@
         <sr-wamp-call
             auto="wamp"
             procedure="org.srobo.old_logs"
-            on-success="{{handleOldLogs}}"></sr-wamp-call>
+            on-success="{{ handleOldLogs }}"></sr-wamp-call>
     </template>
 
     <script>

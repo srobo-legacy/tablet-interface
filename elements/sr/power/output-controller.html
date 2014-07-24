@@ -26,7 +26,8 @@
         <h2>{{ index }}</h2>
         <input type="checkbox" checked="{{ state }}" on-change="{{ handleStateChange }}" />
 
-        <sr-wamp-core on-open="{{ handleOpen }}"></sr-wamp-core>
+        <sr-wamp-core
+            on-open="{{ handleOpen }}"></sr-wamp-core>
         <sr-wamp-call
             id="wampGetState"
             procedure="org.srobo.power.get_output_state"
