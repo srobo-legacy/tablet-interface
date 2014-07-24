@@ -19,6 +19,5 @@
 - saving camera images
 - bulk factory reset
 - buzzer manual control page?
-- fix very mysterious bug in Firefox with navigating away from page
 - add HTML5 caching
 - reload custom components when server dies and comes back
