@@ -18,6 +18,5 @@
 
 - saving camera images
 - bulk factory reset
-- WAMP server versioning
 - buzzer manual control page?
 - fix very mysterious bug in Firefox with navigating away from page
