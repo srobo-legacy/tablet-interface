@@ -1,17 +1,68 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<polymer-element name="sr-core-page" attributes="name" noscript>
+<polymer-element name="sr-core-page" attributes="name online offline">
+    <link rel="import" href="../wamp/core.html" />
+
     <template>
         <style>
             :host {
+                flex: 1 1 auto;
                 display: flex;
-                flex-direction: column;
-                position: relative;
-                overflow: auto;
+            }
+
+            #content {
                 flex: 1 1 auto;
             }
         </style>
 
-        <content></content>
+        <sr-wamp-core
+            id="wamp"
+            on-open="{{ handleOpen }}"
+            on-close="{{ handleClose }}"></sr-wamp-core>
+
+        <div id="content"></div>
     </template>
+
+    <script>
+        Polymer("sr-core-page", {
+            _createDefaultElement: function(msg) {
+                var div = document.createElement("div");
+                div.style.display = "flex";
+                div.style.justifyContent = "center";
+                div.style.alignItems = "center";
+
+                var h1 = document.createElement("h1");
+                h1.textContent = msg;
+                div.appendChild(h1);
+
+                return div;
+            },
+            _createConnectedElement: function() {
+                if (this.online) {
+                    return document.createElement(this.online);
+                } else {
+                    return this._createDefaultElement("Please turn off the robot.");
+                }
+            },
+            _createDisconnectedElement: function() {
+                if (this.online) {
+                    return document.createElement(this.offline);
+                } else {
+                    return this._createDefaultElement("Please turn on the robot.");
+                }
+            },
+            handleOpen: function() {
+                var element = this._createConnectedElement();
+                element.id = "content";
+                this.shadowRoot.replaceChild(element, this.$.content);
+                this.$.content = element;
+            },
+            handleClose: function() {
+                var element = this._createDisconnectedElement();
+                element.id = "content";
+                this.shadowRoot.replaceChild(element, this.$.content);
+                this.$.content = element;
+            }
+        });
+    </script>
 </polymer-element>
