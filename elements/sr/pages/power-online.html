@@ -2,9 +2,15 @@
 <link rel="import" href="../core/index.html" />
 <link rel="import" href="../power/index.html" />
 
-<polymer-element name="sr-pages-power" extends="sr-core-page">
+<polymer-element name="sr-pages-power-online" extends="sr-core-page">
     <template>
         <style>
+            :host {
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: column;
+            }
+
             #controllers {
                 display: flex;
                 flex-wrap: wrap;
@@ -28,7 +34,7 @@
     </template>
 
     <script>
-        Polymer("sr-pages-power", {
+        Polymer("sr-pages-power-online", {
             name: "power"
         });
     </script>

@@ -3,9 +3,15 @@
 <link rel="import" href="../io/index.html" />
 <link rel="import" href="../wamp/index.html" />
 
-<polymer-element name="sr-pages-io" extends="sr-core-page">
+<polymer-element name="sr-pages-io-online" extends="sr-core-page">
     <template>
         <style>
+            :host {
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: column;
+            }
+
             #controllers {
                 flex: 1 1 auto;
                 display: flex;
@@ -37,7 +43,7 @@
     </template>
 
     <script>
-        Polymer("sr-pages-io", {
+        Polymer("sr-pages-io-online", {
             name: "io",
             changeBoard: function(index) {
                 var divs = this.shadowRoot.querySelectorAll(".controllersContainer");

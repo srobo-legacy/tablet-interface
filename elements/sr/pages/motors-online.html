@@ -1,36 +1,42 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../core/index.html" />
-<link rel="import" href="../servos/index.html" />
+<link rel="import" href="../motors/index.html" />
 <link rel="import" href="../wamp/index.html" />
 
-<polymer-element name="sr-pages-servos" extends="sr-core-page">
+<polymer-element name="sr-pages-motors-online" extends="sr-core-page">
     <template>
         <style>
+            :host {
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: column;
+            }
+
             #controllers {
                 flex: 1 1 auto;
                 display: flex;
             }
 
-            sr-servos-board-controller {
+            sr-motors-board-controller {
                 flex: 1 1 auto;
             }
         </style>
 
         <sr-core-toolbar id="toolbar">
-            <h1 flex>Servo controllers</h1>
+            <h1 flex>Motor Control</h1>
         </sr-core-toolbar>
 
         <div id="controllers"></div>
 
         <sr-wamp-call
             auto="page"
-            procedure="org.srobo.servos.all_boards"
-            on-success="{{handleAllBoardsSuccess}}"></sr-wamp-call>
+            procedure="org.srobo.motors.all_boards"
+            on-success="{{ handleAllBoardsSuccess }}"></sr-wamp-call>
     </template>
 
     <script>
-        Polymer("sr-pages-servos", {
-            name: "servos",
+        Polymer("sr-pages-motors-online", {
+            name: "motors",
             changeBoard: function(serialNumber) {
                 var divs = this.$.controllers.children;
                 for (var i = 0; i < divs.length; i++) {
@@ -45,7 +51,7 @@
                 return button;
             },
             createBoardDiv: function(serialNumber) {
-                var div = document.createElement("sr-servos-board-controller");
+                var div = document.createElement("sr-motors-board-controller");
                 div.id = "board_" + serialNumber;
                 div.board = serialNumber;
                 return div;

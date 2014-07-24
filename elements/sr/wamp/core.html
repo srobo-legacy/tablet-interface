@@ -84,8 +84,8 @@
                 onClose: function() {
                     this.connected = false;
                 },
-                connectedChanged: function() {
-                    if (this.connected) {
+                connectedChanged: function(oldVal, newVal) {
+                    if (newVal) {
                         this.fire("open");
                     } else {
                         this.fire("close");

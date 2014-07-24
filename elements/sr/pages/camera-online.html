@@ -2,11 +2,12 @@
 <link rel="import" href="../core/index.html" />
 <link rel="import" href="../wamp/index.html" />
 
-<polymer-element name="sr-pages-camera" extends="sr-core-page">
+<polymer-element name="sr-pages-camera-online" extends="sr-core-page">
     <template>
         <style>
             :host {
-                flex-direction: row;
+                flex: 1 1 auto;
+                display: flex;
             }
 
             #current {
@@ -53,7 +54,7 @@
     </template>
 
     <script>
-        Polymer("sr-pages-camera", {
+        Polymer("sr-pages-camera-online", {
             name: "camera",
             deselectAll: function() {
                 var imgs = this.$.old.children;
