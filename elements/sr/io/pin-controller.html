@@ -1,0 +1,70 @@
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="../wamp/index.html" />
+<link rel="import" href="analogue-pin-controller.html" />
+<link rel="import" href="digital-pin-controller.html" />
+<link rel="import" href="pin-mode-controller.html" />
+
+<polymer-element name="sr-io-pin-controller" attributes="board pin mode type">
+    <template>
+        <style>
+            :host {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                min-width: 100px;
+                padding: 10px;
+            }
+
+            h2 {
+                margin: 0;
+            }
+
+            h3 {
+                font-size: 0.8em;
+                font-weight: bold;
+                color: rgb(50, 50, 50);
+                margin: 0 0 15px;
+            }
+
+            sr-io-analogue-pin-controller,
+            sr-io-digital-pin-controller,
+            sr-io-pin-mode-controller {
+                margin: 5px;
+            }
+        </style>
+
+        <h2>{{pin}}</h2>
+        <h3>{{type}}</h3>
+
+        <sr-io-pin-mode-controller
+            board="{{board}}"
+            pin="{{pin}}"
+            value="{{mode}}"></sr-io-pin-mode-controller>
+
+        <template bind if="{{ type == 'digital' }}">
+            <sr-io-digital-pin-controller
+                board="{{board}}"
+                pin="{{pin}}"
+                mode="{{mode}}"
+                value="{{value}}"></sr-io-digital-pin-controller>
+        </template>
+
+        <template bind if="{{ type == 'analogue' }}">
+            <sr-io-analogue-pin-controller
+                board="{{board}}"
+                pin="{{pin}}"
+                mode="{{mode}}"
+                value="{{value}}"></sr-io-analogue-pin-controller>
+        </template>
+    </template>
+
+    <script>
+        Polymer("sr-io-pin-controller", {
+            board: 0,
+            pin: 0,
+            mode: null,
+            type: undefined,
+            value: 0
+        });
+    </script>
+</polymer-element>

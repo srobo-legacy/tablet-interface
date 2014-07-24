@@ -18,9 +18,9 @@
         <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Lato:300,400,700/Inconsolata:500" />
         <link rel="stylesheet" href="styles/common.css" />
 
-        <link rel="import" href="elements/sr-battery/index.html" />
-        <link rel="import" href="elements/sr-core/index.html" />
-        <link rel="import" href="elements/sr-pages/index.html" />
+        <link rel="import" href="elements/sr/battery/index.html" />
+        <link rel="import" href="elements/sr/core/index.html" />
+        <link rel="import" href="elements/sr/pages/index.html" />
     </head>
 
     <body fullbleed unresolved horizontal layout>
@@ -48,15 +48,15 @@
         </sr-core-navigation-drawer>
 
         <sr-core-pages flex>
-            <sr-page-buzzer hidden></sr-page-buzzer>
-            <sr-page-battery hidden></sr-page-battery>
-            <sr-page-camera hidden></sr-page-camera>
-            <sr-page-io hidden></sr-page-io>
-            <sr-page-log hidden></sr-page-log>
-            <sr-page-motors hidden></sr-page-motors>
-            <sr-page-power hidden></sr-page-power>
-            <sr-page-setup hidden></sr-page-setup>
-            <sr-page-servos hidden></sr-page-servos>
+            <sr-pages-buzzer hidden></sr-pages-buzzer>
+            <sr-pages-battery hidden></sr-pages-battery>
+            <sr-pages-camera hidden></sr-pages-camera>
+            <sr-pages-io hidden></sr-pages-io>
+            <sr-pages-log hidden></sr-pages-log>
+            <sr-pages-motors hidden></sr-pages-motors>
+            <sr-pages-power hidden></sr-pages-power>
+            <sr-pages-setup hidden></sr-pages-setup>
+            <sr-pages-servos hidden></sr-pages-servos>
         </sr-core-pages>
 
         <sr-wamp-core

@@ -1,0 +1,69 @@
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="../core/index.html" />
+<link rel="import" href="../motors/index.html" />
+<link rel="import" href="../wamp/index.html" />
+
+<polymer-element name="sr-pages-motors" extends="sr-core-page">
+    <template>
+        <style>
+            #controllers {
+                flex: 1 1 auto;
+                display: flex;
+            }
+
+            sr-motors-board-controller {
+                flex: 1 1 auto;
+            }
+        </style>
+
+        <sr-core-toolbar id="toolbar">
+            <h1 flex>Motor Control</h1>
+        </sr-core-toolbar>
+
+        <div id="controllers"></div>
+
+        <sr-wamp-call
+            auto="page"
+            procedure="org.srobo.motors.all_boards"
+            on-success="{{ handleAllBoardsSuccess }}"></sr-wamp-call>
+    </template>
+
+    <script>
+        Polymer("sr-pages-motors", {
+            name: "motors",
+            changeBoard: function(serialNumber) {
+                var divs = this.$.controllers.children;
+                for (var i = 0; i < divs.length; i++) {
+                    divs[i].hidden = true;
+                }
+                this.shadowRoot.querySelector("#board_" + serialNumber).hidden = false;
+            },
+            createBoardButton: function(serialNumber) {
+                var button = document.createElement("button");
+                button.textContent = "Board " + serialNumber;
+                button.onclick = this.changeBoard.bind(this, serialNumber);
+                return button;
+            },
+            createBoardDiv: function(serialNumber) {
+                var div = document.createElement("sr-motors-board-controller");
+                div.id = "board_" + serialNumber;
+                div.board = serialNumber;
+                return div;
+            },
+            handleAllBoardsSuccess: function(e) {
+                this.$.controllers.innerHTML = "";
+
+                var boards = e.detail.result;
+                for (var serialNumber in boards) {
+                    var button = this.createBoardButton(serialNumber);
+                    this.$.toolbar.appendChild(button);
+
+                    var div = this.createBoardDiv(serialNumber);
+                    this.$.controllers.appendChild(div);
+                }
+
+                this.changeBoard(Object.keys(boards)[0]);
+            }
+        });
+    </script>
+</polymer-element>

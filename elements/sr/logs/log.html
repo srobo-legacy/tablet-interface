@@ -1,0 +1,74 @@
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="../wamp/index.html" />
+
+<polymer-element name="sr-logs-log">
+    <template>
+        <style>
+            :host {
+                display: flex;
+            }
+
+            #log {
+                flex: 1 1 auto;
+                resize: none;
+                font-family: "Inconsolata", monospace;
+            }
+        </style>
+
+        <textarea id="log" readonly></textarea>
+
+        <sr-wamp-subscribe
+            auto="wamp"
+            topic="org.srobo.log"
+            on-handle="{{ handleLog }}"></sr-wamp-subscribe>
+        <sr-wamp-call
+            auto="wamp"
+            procedure="org.srobo.log"
+            on-success="{{ handleLog }}"></sr-wamp-call>
+    </template>
+
+    <script>
+        Polymer("sr-logs-log", {
+            isAtBottom: function() {
+                var log = this.$.log;
+                return Math.abs((log.scrollTop + log.clientHeight) - log.scrollHeight) <= 10;
+            },
+            scrollToBottom: function() {
+                var log = this.$.log;
+                log.scrollTop = log.scrollHeight;
+            },
+            addEntry: function(text, addDate) {
+                if (addDate === undefined) {
+                    addDate = true;
+                }
+
+                var isAtBottom = this.isAtBottom();
+
+                if (addDate) {
+                    var date = moment().format("HH:mm:ss");
+                    this.$.log.innerHTML += date + ": ";
+                }
+
+                this.$.log.innerHTML += text + "\n";
+
+                if (isAtBottom) {
+                    this.scrollToBottom();
+                }
+            },
+            handleLog: function(e) {
+                if (e.detail.result !== undefined) {
+                    this.$.log.innerHTML = "";
+                    var text = e.detail.result.trim();
+                    if (text.length > 0) {
+                        this.addEntry("-- Previous Log Starts Here --");
+                        this.addEntry(text, false);
+                        this.addEntry("-- Previous Log Ends Here --");
+                        this.scrollToBottom();
+                    }
+                } else {
+                    this.addEntry(e.detail.args[0]);
+                }
+            }
+        });
+    </script>
+</polymer-element>

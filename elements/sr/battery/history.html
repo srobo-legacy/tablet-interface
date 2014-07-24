@@ -1,0 +1,68 @@
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="../wamp/index.html" />
+
+<polymer-element name="sr-battery-history" attributes="level">
+    <template>
+        <style>
+            :host {
+                display: flex;
+                justify-content: center;
+            }
+
+            canvas {
+                align-self: center;
+            }
+        </style>
+
+        <canvas id="canvas" width="660" height="300"></canvas>
+
+        <sr-wamp-call
+            auto="wamp"
+            procedure="org.srobo.battery.level"
+            on-success="{{ handleBatteryLevel }}"></sr-wamp-call>
+        <sr-wamp-subscribe
+            topic="org.srobo.battery.level"
+            on-handle="{{ handleBatteryLevel }}"></sr-wamp-subscribe>
+    </template>
+
+    <script src="/bower_components/chartjs/Chart.js"></script>
+
+    <script>
+        Polymer("sr-battery-history", {
+            _lastTime: new Date(),
+            levelChanged: function() {
+                var timeStr = moment().format("HH:mm:ss");
+
+                if (!this.chart) {
+                    var data = {
+                        labels: [timeStr, timeStr],
+                        datasets: [
+                            {
+                                label: "Battery Level",
+                                fillColor: "rgba(151,187,205,0.2)",
+                                strokeColor: "rgba(151,187,205,1)",
+                                pointColor: "rgba(151,187,205,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: [this.level, this.level] // FIXME Chart.js doesn't like not having initial values?
+                            }
+                        ]
+                    };
+                    var options = {};
+                    this.ctx = this.$.canvas.getContext("2d");
+                    this.chart = new Chart(this.ctx).Line(data, options);
+                }
+
+                var diff = parseInt((new Date() - this._lastTime) / 1000);
+                if (diff >= 59) {
+                    this.chart.addData([this.level], timeStr);
+                    this._lastTime = new Date();
+                }
+            },
+            handleBatteryLevel: function(e) {
+                this.level = e.detail.result !== undefined ? e.detail.result : e.detail.args[0];
+            }
+        });
+    </script>
+</polymer-element>

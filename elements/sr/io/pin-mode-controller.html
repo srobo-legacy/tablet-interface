@@ -1,0 +1,48 @@
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="../wamp/index.html" />
+
+<polymer-element name="sr-io-pin-mode-controller" attributes="board pin value">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+
+            select {
+                padding: 2px;
+                width: 100%;
+            }
+        </style>
+
+        <select value="{{value}}" on-change="{{handleValueChange}}">
+            <option value="">―</option>
+            <option value="input">Input</option>
+            <option value="output">Output</option>
+            <option value="input_pullup">Input Pull-up</option>
+        </select>
+
+        <sr-wamp-subscribe
+            auto="wamp"
+            topic="org.srobo.ruggeduinos.pin_mode"
+            on-handle="{{handleValue}}"></sr-wamp-subscribe>
+        <sr-wamp-publish
+            id="publishValue"
+            topic="org.srobo.ruggeduinos.pin_mode"></sr-wamp-publish>
+    </template>
+
+    <script>
+        Polymer("sr-io-pin-mode-controller", {
+            board: 0,
+            pin: 0,
+            value: null,
+            handleValueChange: function() {
+                this.$.publishValue.go([this.board, this.pin, this.value]);
+            },
+            handleValue: function(e) {
+                if (e.detail.args[0] === this.board && e.detail.args[1] === this.pin) {
+                    this.value = e.detail.args[2];
+                }
+            }
+        });
+    </script>
+</polymer-element>
