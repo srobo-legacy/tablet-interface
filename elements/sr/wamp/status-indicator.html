@@ -24,7 +24,7 @@
         </style>
 
         <sr-wamp-core id="wamp"></sr-wamp-core>
-        <p><span class="fa fa-thumbs-o-{{ $.wamp.connected ? 'up' : 'down' }} fa-fw"></span> {{ $.wamp.connected ? 'Online' : 'Offline' }}</p>
+        <p><span class="fa fa-thumbs-o-{{ $.wamp.connected ? 'up' : 'down' }} fa-fw"></span> {{ $.wamp.state }}</p>
     </template>
 
     <script>
