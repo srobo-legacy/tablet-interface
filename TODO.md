@@ -8,7 +8,6 @@
 - add components to control entire boards
 - create components to control sets of boards
 - fix duplicate component boards
-- use serial numbers for components
 - improve code formatting
 
 - add args to sr-wamp-call for use with auto
