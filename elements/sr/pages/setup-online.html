@@ -3,9 +3,15 @@
 <link rel="import" href="../core/index.html" />
 <link rel="import" href="../wamp/index.html" />
 
-<polymer-element name="sr-pages-setup" attributes="disabled" extends="sr-core-page">
+<polymer-element name="sr-pages-setup-online" attributes="disabled">
     <template>
         <style>
+            :host {
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: column;
+            }
+
             #first {
                 margin: 10px;
                 flex: 1 1 auto;
@@ -114,8 +120,7 @@
     </template>
 
     <script>
-        Polymer("sr-pages-setup", {
-            name: "setup",
+        Polymer("sr-pages-setup-online", {
             disabled: false,
             created: function() {
                 this.project = {}
