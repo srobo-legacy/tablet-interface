@@ -156,13 +156,16 @@
                     pages.forEach(function(page) {
                         var link = document.createElement("link");
                         link.rel = "import";
-                        link.href = userCodeUrl + page.url;
-                        document.querySelector("head").appendChild(link);
+                        link.href = userCodeUrl + page.import_url;
+                        console.log(link.href);
 
                         link.addEventListener("load", function(e) {
-                            var element = document.createElement(page.name);
-                            element.hidden = true;
-                            document.querySelector("sr-core-pages").appendChild(element);
+                            var pageElement = document.createElement("sr-core-page");
+                            pageElement.name = page.name;
+                            pageElement.online = page.elements.online;
+                            pageElement.offline = page.elements.offline;
+                            pageElement.hidden = true;
+                            document.querySelector("sr-core-pages").appendChild(pageElement);
 
                             var btn = document.createElement("sr-core-fa-button");
                             btn.icon = page.icon;
@@ -171,6 +174,8 @@
                             btn.dataset.page = page.name;
                             document.querySelector("sr-core-navigation-drawer").appendChild(btn);
                         });
+
+                        document.querySelector("head").appendChild(link);
                     });
                 });
                 xhr.send();
