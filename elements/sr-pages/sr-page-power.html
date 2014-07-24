@@ -1,15 +1,30 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../sr-core/index.html" />
+<link rel="import" href="../sr-power/index.html" />
 
 <polymer-element name="sr-page-power" extends="sr-core-page">
     <template>
         <style>
-
+            #controllers {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+            }
         </style>
 
         <sr-core-toolbar>
             <h1>Power Outputs</h1>
         </sr-core-toolbar>
+
+        <div id="controllers">
+            <sr-power-output-controller index="0"></sr-power-output-controller>
+            <sr-power-output-controller index="1"></sr-power-output-controller>
+            <sr-power-output-controller index="2"></sr-power-output-controller>
+            <sr-power-output-controller index="3"></sr-power-output-controller>
+            <sr-power-output-controller index="5"></sr-power-output-controller>
+            <sr-power-output-controller index="4"></sr-power-output-controller>
+        </div>
     </template>
 
     <script>

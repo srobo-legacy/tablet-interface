@@ -12,7 +12,6 @@
 - improve code formatting
 
 - add args to sr-wamp-call for use with auto
-- cope with boards disappearing and appearing
 
 - produce example pages which control individual motors or whatever
 - move UI stuff into separate UI "namespace"
