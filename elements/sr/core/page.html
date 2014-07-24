@@ -25,6 +25,8 @@
 
     <script>
         Polymer("sr-core-page", {
+            online: undefined,
+            offline: undefined,
             _createDefaultElement: function(msg) {
                 var div = document.createElement("div");
                 div.style.display = "flex";
@@ -45,7 +47,7 @@
                 }
             },
             _createDisconnectedElement: function() {
-                if (this.online) {
+                if (this.offline) {
                     return document.createElement(this.offline);
                 } else {
                     return this._createDefaultElement("Please turn on the robot.");
