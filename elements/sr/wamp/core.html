@@ -1,6 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<polymer-element name="sr-wamp-core">
+<polymer-element name="sr-wamp-core" attributes="connected">
     <template>
         <style>
             :host {
@@ -37,6 +37,7 @@
             });
 
             Polymer("sr-wamp-core", {
+                connected: undefined,
                 created: function() {
                     window.addEventListener("sr-wamp-open", this.onOpen.bind(this));
                     window.addEventListener("sr-wamp-close", this.onClose.bind(this));
@@ -81,9 +82,11 @@
                     return this.session.call(procedure, args, kwargs, options);
                 },
                 onOpen: function() {
+                    this.connected = true;
                     this.fire("open");
                 },
                 onClose: function() {
+                    this.connected = false;
                     this.fire("close");
                 },
                 get connection() {
