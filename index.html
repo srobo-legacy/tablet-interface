@@ -21,31 +21,32 @@
         <link rel="import" href="elements/sr/battery/index.html" />
         <link rel="import" href="elements/sr/core/index.html" />
         <link rel="import" href="elements/sr/pages/index.html" />
+        <link rel="import" href="elements/sr/ui/index.html" />
     </head>
 
     <body fullbleed unresolved horizontal layout>
-        <sr-core-button-bar>
-            <sr-core-fa-button action="toggle-navigation-drawer" icon="bars"></sr-core-fa-button>
+        <sr-ui-button-bar>
+            <sr-ui-fa-button action="toggle-navigation-drawer" icon="bars"></sr-ui-fa-button>
             <div style="height: 20px;"></div>
-            <sr-core-fa-button action="play" icon="play"></sr-core-fa-button>
+            <sr-ui-fa-button action="play" icon="play"></sr-ui-fa-button>
             <div flex></div>
             <sr-battery-status></sr-battery-status>
-        </sr-core-button-bar>
+        </sr-ui-button-bar>
 
-        <sr-core-navigation-drawer>
-            <sr-core-fa-button action="play" icon="play">Start Robot</sr-core-fa-button>
+        <sr-ui-navigation-drawer>
+            <sr-ui-fa-button action="play" icon="play">Start Robot</sr-ui-fa-button>
             <div flex style="min-height: 20px;"></div>
-            <sr-core-fa-button action="change-page" data-page="setup" icon="cogs">Set up</sr-core-fa-button>
-            <sr-core-fa-button action="change-page" data-page="log" icon="file-text-o">Log</sr-core-fa-button>
+            <sr-ui-fa-button action="change-page" data-page="setup" icon="cogs">Set up</sr-ui-fa-button>
+            <sr-ui-fa-button action="change-page" data-page="log" icon="file-text-o">Log</sr-ui-fa-button>
             <div flex style="min-height: 20px;"></div>
-            <sr-core-fa-button action="change-page" data-page="battery" icon="bolt">Battery</sr-core-fa-button>
-            <sr-core-fa-button action="change-page" data-page="buzzer" icon="volume-up">Buzzer</sr-core-fa-button>
-            <sr-core-fa-button action="change-page" data-page="camera" icon="camera">Camera</sr-core-fa-button>
-            <sr-core-fa-button action="change-page" data-page="io" icon="file">I/O</sr-core-fa-button>
-            <sr-core-fa-button action="change-page" data-page="power" icon="power-off">Power Outputs</sr-core-fa-button>
-            <sr-core-fa-button action="change-page" data-page="motors" icon="arrows">Motors</sr-core-fa-button>
-            <sr-core-fa-button action="change-page" data-page="servos" icon="wrench">Servos</sr-core-fa-button>
-        </sr-core-navigation-drawer>
+            <sr-ui-fa-button action="change-page" data-page="battery" icon="bolt">Battery</sr-ui-fa-button>
+            <sr-ui-fa-button action="change-page" data-page="buzzer" icon="volume-up">Buzzer</sr-ui-fa-button>
+            <sr-ui-fa-button action="change-page" data-page="camera" icon="camera">Camera</sr-ui-fa-button>
+            <sr-ui-fa-button action="change-page" data-page="io" icon="file">I/O</sr-ui-fa-button>
+            <sr-ui-fa-button action="change-page" data-page="power" icon="power-off">Power Outputs</sr-ui-fa-button>
+            <sr-ui-fa-button action="change-page" data-page="motors" icon="arrows">Motors</sr-ui-fa-button>
+            <sr-ui-fa-button action="change-page" data-page="servos" icon="wrench">Servos</sr-ui-fa-button>
+        </sr-ui-navigation-drawer>
 
         <sr-core-pages flex>
             <sr-core-page name="buzzer" online="sr-pages-buzzer-online"></sr-core-page>
@@ -80,12 +81,12 @@
         <script>
             (function() {
                 window.addEventListener("toggle-navigation-drawer", function(e) {
-                    document.querySelector("sr-core-navigation-drawer").toggle();
+                    document.querySelector("sr-ui-navigation-drawer").toggle();
                 });
 
                 window.addEventListener("change-page", function(e) {
                     document.querySelector("sr-core-pages").changePage(e.detail.sender.dataset.page);
-                    document.querySelector("sr-core-navigation-drawer").close();
+                    document.querySelector("sr-ui-navigation-drawer").close();
                 });
             }());
         </script>
@@ -179,12 +180,12 @@
                             pageElement.hidden = true;
                             document.querySelector("sr-core-pages").appendChild(pageElement);
 
-                            var btn = document.createElement("sr-core-fa-button");
+                            var btn = document.createElement("sr-ui-fa-button");
                             btn.icon = page.icon;
                             btn.textContent = page.title;
                             btn.action = "change-page";
                             btn.dataset.page = page.name;
-                            document.querySelector("sr-core-navigation-drawer").appendChild(btn);
+                            document.querySelector("sr-ui-navigation-drawer").appendChild(btn);
                         });
 
                         document.querySelector("head").appendChild(link);

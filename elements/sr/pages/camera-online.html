@@ -1,5 +1,4 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
-<link rel="import" href="../core/index.html" />
 <link rel="import" href="../wamp/index.html" />
 
 <polymer-element name="sr-pages-camera-online">
@@ -55,7 +54,6 @@
 
     <script>
         Polymer("sr-pages-camera-online", {
-            name: "camera",
             deselectAll: function() {
                 var imgs = this.$.old.children;
                 for (var i = 0; i < imgs.length; i++) {

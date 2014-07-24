@@ -1,6 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
-<link rel="import" href="../core/index.html" />
 <link rel="import" href="../logs/index.html" />
+<link rel="import" href="../ui/index.html" />
 <link rel="import" href="../wamp/index.html" />
 
 <polymer-element name="sr-pages-log-online">
@@ -25,7 +25,7 @@
             }
         </style>
 
-        <sr-core-toolbar>
+        <sr-ui-toolbar>
             <h1 flex>View Robot Logs</h1>
             <select id="logSelection" on-change="{{handleLogSelectionChanged}}">
                 <optgroup label="Current Log">
@@ -36,7 +36,7 @@
                 </optgroup>
             </select>
             <button id="btnBottom">Jump to bottom</button>
-        </sr-core-toolbar>
+        </sr-ui-toolbar>
 
         <div id="logs">
             <sr-logs-log id="log_current"></sr-logs-log>
@@ -50,7 +50,6 @@
 
     <script>
         Polymer("sr-pages-log-online", {
-            name: "log",
             domReady: function() {
                 this.$.btnBottom.addEventListener("click",
                     this.$.log_current.scrollToBottom.bind(this.$.log_current));

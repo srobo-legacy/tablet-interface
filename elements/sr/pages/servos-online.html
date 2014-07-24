@@ -22,9 +22,9 @@
             }
         </style>
 
-        <sr-core-toolbar id="toolbar">
+        <sr-ui-toolbar id="toolbar">
             <h1 flex>Servo controllers</h1>
-        </sr-core-toolbar>
+        </sr-ui-toolbar>
 
         <div id="controllers"></div>
 
@@ -36,7 +36,6 @@
 
     <script>
         Polymer("sr-pages-servos-online", {
-            name: "servos",
             changeBoard: function(serialNumber) {
                 var divs = this.$.controllers.children;
                 for (var i = 0; i < divs.length; i++) {

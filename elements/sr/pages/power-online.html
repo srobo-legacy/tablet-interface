@@ -1,8 +1,8 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
-<link rel="import" href="../core/index.html" />
 <link rel="import" href="../power/index.html" />
+<link rel="import" href="../ui/index.html" />
 
-<polymer-element name="sr-pages-power-online">
+<polymer-element name="sr-pages-power-online" noscript>
     <template>
         <style>
             :host {
@@ -19,9 +19,9 @@
             }
         </style>
 
-        <sr-core-toolbar>
+        <sr-ui-toolbar>
             <h1>Power Outputs</h1>
-        </sr-core-toolbar>
+        </sr-ui-toolbar>
 
         <div id="controllers">
             <sr-power-output-controller index="0"></sr-power-output-controller>
@@ -32,10 +32,4 @@
             <sr-power-output-controller index="4"></sr-power-output-controller>
         </div>
     </template>
-
-    <script>
-        Polymer("sr-pages-power-online", {
-            name: "power"
-        });
-    </script>
 </polymer-element>

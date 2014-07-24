@@ -1,6 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
-<link rel="import" href="../core/index.html" />
 <link rel="import" href="../motors/index.html" />
+<link rel="import" href="../ui/index.html" />
 <link rel="import" href="../wamp/index.html" />
 
 <polymer-element name="sr-pages-motors-online">
@@ -22,9 +22,9 @@
             }
         </style>
 
-        <sr-core-toolbar id="toolbar">
+        <sr-ui-toolbar id="toolbar">
             <h1 flex>Motor Control</h1>
-        </sr-core-toolbar>
+        </sr-ui-toolbar>
 
         <div id="controllers"></div>
 
@@ -36,7 +36,6 @@
 
     <script>
         Polymer("sr-pages-motors-online", {
-            name: "motors",
             changeBoard: function(serialNumber) {
                 var divs = this.$.controllers.children;
                 for (var i = 0; i < divs.length; i++) {

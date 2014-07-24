@@ -1,6 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
-<link rel="import" href="../core/index.html" />
 <link rel="import" href="../io/index.html" />
+<link rel="import" href="../ui/index.html" />
 <link rel="import" href="../wamp/index.html" />
 
 <polymer-element name="sr-pages-io-online">
@@ -30,9 +30,9 @@
             }
         </style>
 
-        <sr-core-toolbar id="toolbar">
+        <sr-ui-toolbar id="toolbar">
             <h1 flex>I/O Control</h1>
-        </sr-core-toolbar>
+        </sr-ui-toolbar>
 
         <div id="controllers"></div>
 
@@ -44,7 +44,6 @@
 
     <script>
         Polymer("sr-pages-io-online", {
-            name: "io",
             changeBoard: function(index) {
                 var divs = this.shadowRoot.querySelectorAll(".controllersContainer");
                 for (var i = 0; i < divs.length; i++) {

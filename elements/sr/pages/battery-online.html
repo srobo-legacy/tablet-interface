@@ -1,8 +1,9 @@
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../battery/history.html" />
 <link rel="import" href="../core/index.html" />
+<link rel="import" href="../ui/index.html" />
 
-<polymer-element name="sr-pages-battery-online">
+<polymer-element name="sr-pages-battery-online" noscript>
     <template>
         <style>
             :host {
@@ -16,16 +17,10 @@
             }
         </style>
 
-        <sr-core-toolbar>
+        <sr-ui-toolbar>
             <h1>View Battery History</h1>
-        </sr-core-toolbar>
+        </sr-ui-toolbar>
 
         <sr-battery-history id="history"></sr-battery-history>
     </template>
-
-    <script>
-        Polymer("sr-pages-battery-online", {
-            name: "battery"
-        });
-    </script>
 </polymer-element>
