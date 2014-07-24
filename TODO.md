@@ -11,12 +11,13 @@
 - improve code formatting
 
 - add args to sr-wamp-call for use with auto
+- refactory sr-wamp-{call,subscribe,publish} system to be more automatic
 
 - produce example pages which control individual motors or whatever
 - move UI stuff into separate UI "namespace"
 
 - saving camera images
 - bulk factory reset
-- offline/online mode
 - WAMP server versioning
 - buzzer manual control page?
+- fix very mysterious bug in Firefox with navigating away from page
