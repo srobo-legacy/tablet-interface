@@ -56,15 +56,28 @@
                 mode="{{ mode }}"
                 value="{{ value }}"></sr-io-analogue-pin-controller>
         </template>
+
+        <sr-wamp-call
+            id="wampGetPin"
+            procedure="org.srobo.ruggeduinos.get_pin"
+            on-success="{{ handleGetPinSuccess }}"></sr-wamp-call>
     </template>
 
     <script>
         Polymer("sr-io-pin-controller", {
-            board: 0,
+            board: undefined,
             pin: 0,
             mode: null,
             type: undefined,
-            value: 0
+            value: 0,
+            domReady: function() {
+                this.$.wampGetPin.go([this.board, this.pin]);
+            },
+            handleGetPinSuccess: function(e) {
+                this.mode = e.detail.result.mode;
+                this.type = e.detail.result.type;
+                this.value = e.detail.result.value;
+            }
         });
     </script>
 </polymer-element>

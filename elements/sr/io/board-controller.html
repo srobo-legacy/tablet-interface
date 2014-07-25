@@ -1,0 +1,44 @@
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="../io/index.html" />
+<link rel="import" href="../ui/index.html" />
+<link rel="import" href="../wamp/index.html" />
+
+<polymer-element name="sr-io-board-controller" attributes="board">
+    <template>
+        <style>
+            :host {
+                flex: 1 1 auto;
+                flex-wrap: wrap;
+                display: flex;
+                overflow-x: auto;
+            }
+
+            sr-io-pin-controller {
+                flex: 1 1 auto;
+            }
+        </style>
+
+        <sr-wamp-call
+            id="wampGetBoard"
+            procedure="org.srobo.ruggeduinos.get_board"
+            on-success="{{ handleGetBoardSuccess }}"></sr-wamp-call>
+    </template>
+
+    <script>
+        Polymer("sr-io-board-controller", {
+            board: undefined,
+            domReady: function() {
+                this.$.wampGetBoard.go([this.board]);
+            },
+            handleGetBoardSuccess: function(e) {
+                var pins = e.detail.result.pins;
+                pins.forEach(function(pin, i) {
+                    var element = document.createElement("sr-io-pin-controller");
+                    element.board = this.board;
+                    element.pin = i;
+                    this.shadowRoot.appendChild(element);
+                }.bind(this));
+            }
+        });
+    </script>
+</polymer-element>

@@ -17,15 +17,7 @@
                 display: flex;
             }
 
-            .controllersContainer {
-                padding: 10px;
-                flex: 1 1 auto;
-                flex-wrap: wrap;
-                display: flex;
-                overflow-x: auto;
-            }
-
-            sr-io-pin-controller {
+            sr-io-board-controller {
                 flex: 1 1 auto;
             }
         </style>
@@ -45,7 +37,7 @@
     <script>
         Polymer("sr-pages-io-online", {
             changeBoard: function(index) {
-                var divs = this.shadowRoot.querySelectorAll(".controllersContainer");
+                var divs = this.shadowRoot.querySelectorAll("sr-io-board-controller");
                 for (var i = 0; i < divs.length; i++) {
                     divs[i].hidden = true;
                 }
@@ -57,26 +49,17 @@
                 button.onclick = this.changeBoard.bind(this, serialNumber);
                 return button;
             },
-            createBoardDiv: function(i, board) {
-                var div = document.createElement("div");
-                div.className = "controllersContainer";
-                div.id = "board_" + i;
-                for (var j = 0; j < board.pins.length; j++) {
-                    var controller = document.createElement("sr-io-pin-controller");
-                    controller.board = i;
-                    controller.pin = j;
-                    controller.type = board.pins[j].type;
-                    controller.mode = board.pins[j].mode;
-                    controller.value = board.pins[j].value;
-                    div.appendChild(controller);
-                }
+            createBoardDiv: function(serialNumber) {
+                var div = document.createElement("sr-io-board-controller");
+                div.id = "board_" + serialNumber;
+                div.board = serialNumber;
                 return div;
             },
             handleCallSuccess: function(e) {
                 var boards = e.detail.result;
                 for (var serialNumber in boards) {
                     var button = this.createBoardButton(serialNumber);
-                    var div = this.createBoardDiv(serialNumber, boards[serialNumber]);
+                    var div = this.createBoardDiv(serialNumber);
 
                     this.$.toolbar.appendChild(button);
                     this.$.controllers.appendChild(div);
