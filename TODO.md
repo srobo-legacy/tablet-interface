@@ -19,3 +19,4 @@
 - merge analogue and digital pin controllers
 - component boards won't work on their own
 - make sr-logs-log more generic (doesn't *have* to be the current log)
+- provide more two-way bindings for component controllers
