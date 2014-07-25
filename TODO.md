@@ -13,10 +13,12 @@
 
 - saving camera images
 - bulk factory reset
-- buzzer manual control page?
+- buzzer manual control page
 - add HTML5 caching
 - reload custom components when server dies and comes back
 - merge analogue and digital pin controllers
 - component boards won't work on their own
 - make sr-logs-log more generic (doesn't *have* to be the current log)
 - provide more two-way bindings for component controllers
+- split up camera page into individual components
+- add a 'running' state to sr-core-page?
