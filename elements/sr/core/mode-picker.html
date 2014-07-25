@@ -54,24 +54,28 @@
         <sr-wamp-call
             auto="wamp"
             procedure="org.srobo.mode"
-            on-success="{{ handleMode }}"></sr-wamp-call>
+            on-success="{{ handleGetModeSuccess }}"></sr-wamp-call>
     </template>
 
     <script>
         Polymer("sr-core-mode-picker", {
-            mode: "dev",
+            mode: undefined,
             domReady: function() {
                 var buttons = this.shadowRoot.querySelectorAll("button");
                 for (var i = 0; i < buttons.length; i++) {
                     (function(btn) {
                         btn.addEventListener("click", function(e) {
                             this.mode = btn.dataset.mode;
-                            this.$.pub.go([this.mode]);
                         }.bind(this));
                     }.bind(this)(buttons[i]));
                 }
             },
-            handleMode: function(e) {
+            modeChanged: function(oldVal, newVal) {
+                if (oldVal != null) {
+                    this.$.pub.go([this.mode]);
+                }
+            },
+            handleGetModeSuccess: function(e) {
                 this.mode = e.detail.result || e.detail.args[0];
             }
         });
