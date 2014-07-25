@@ -53,26 +53,30 @@
         <sr-wamp-subscribe
             auto="wamp"
             topic="org.srobo.zone"
-            on-handle="{{handleZone}}"></sr-wamp-subscribe>
+            on-handle="{{ handleZone }}"></sr-wamp-subscribe>
         <sr-wamp-publish
             id="pub"
             topic="org.srobo.zone"></sr-wamp-publish>
         <sr-wamp-call
             auto="wamp"
             procedure="org.srobo.zone"
-            on-success="{{handleZone}}"></sr-wamp-call>
+            on-success="{{ handleZone }}"></sr-wamp-call>
     </template>
 
     <script>
         Polymer("sr-core-zone-picker", {
-            zone: "0",
+            zone: undefined,
             domReady: function() {
                 var buttons = this.shadowRoot.querySelectorAll("button");
                 for (var i = 0; i < buttons.length; i++) {
                     buttons[i].addEventListener("click", function(e) {
                         this.zone = e.target.dataset.zone;
-                        this.$.pub.go([parseInt(this.zone)]);
                     }.bind(this));
+                }
+            },
+            zoneChanged: function(oldVal, newVal) {
+                if (oldVal != null) {
+                    this.$.pub.go([parseInt(newVal)]);
                 }
             },
             handleZone: function(e) {
