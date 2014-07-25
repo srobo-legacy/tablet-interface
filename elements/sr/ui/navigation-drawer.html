@@ -1,3 +1,24 @@
+<!--
+`sr-ui-navigation-drawer` provides a side navigation drawer which can be shown
+and hidden. It is designed to contain `sr-ui-fa-button`s with text.
+
+Example:
+
+    <sr-ui-navigation-drawer>
+        <sr-ui-fa-button
+            icon="cogs"
+            action="change-page"
+            data-page="settings">Settings</sr-ui-fa-button>
+    </sr-ui-navigation-drawer>
+
+You can show/hide the drawer by changing the `state` attribute to `opened` or
+`closed`. Alternatively, you can use the `close()`, `open()` or `toggle()`
+methods.
+
+@group SR Elements
+@element sr-ui-navigation-drawer
+-->
+
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
 <polymer-element name="sr-ui-navigation-drawer" attributes="state">
