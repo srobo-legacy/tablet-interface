@@ -1,3 +1,31 @@
+<!--
+`sr-battery-history` provides a graph containing the level of the battery
+compared with time.
+
+Example:
+
+    <sr-battery-history></sr-battery-history>
+
+You can force a new data point to be added to the graph by setting the
+write-only `level` attribute.
+
+Example:
+
+    var element = document.querySelector("sr-battery-history");
+    element.level = 1;
+    // ... wait 5 seconds ...
+    element.level = 0.5;
+    // ... wait 5 seconds ...
+    element.level = 0;
+
+**Note:** due to issues with the `chart.js` library, the graph itself is
+restricted to a size of 660x300 (which happens to fit nicely on the tablet
+screen) and will end up centred inside the element.
+
+@group SR Elements
+@element sr-battery-history
+-->
+
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../wamp/index.html" />
 
