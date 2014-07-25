@@ -1,7 +1,22 @@
+<!--
+`sr-servos-servo-controller` provides a controller for an individual servo.
+
+Example:
+
+    <sr-servos-servo-controller
+        board="abc"
+        motor="0"></sr-servos-servo-controller>
+
+You can get the current value and  with the `value` attribute.
+
+@group SR Elements
+@element sr-servos-servo-controller
+-->
+
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../wamp/index.html" />
 
-<polymer-element name="sr-servos-servo-controller" attributes="board servo value state">
+<polymer-element name="sr-servos-servo-controller" attributes="board servo value">
     <template>
         <style>
             :host {
