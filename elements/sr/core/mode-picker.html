@@ -68,7 +68,7 @@ of `dev` or `comp`.
         <sr-wamp-call
             auto="wamp"
             procedure="org.srobo.mode"
-            on-success="{{ handleGetModeSuccess }}"></sr-wamp-call>
+            on-success="{{ handleMode }}"></sr-wamp-call>
     </template>
 
     <script>
@@ -89,7 +89,7 @@ of `dev` or `comp`.
                     this.$.pub.go([this.mode]);
                 }
             },
-            handleGetModeSuccess: function(e) {
+            handleMode: function(e) {
                 this.mode = e.detail.result || e.detail.args[0];
             }
         });
