@@ -18,3 +18,4 @@
 - reload custom components when server dies and comes back
 - merge analogue and digital pin controllers
 - component boards won't work on their own
+- make sr-logs-log more generic (doesn't *have* to be the current log)
