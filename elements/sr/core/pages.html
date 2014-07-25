@@ -14,20 +14,20 @@
 
     <script>
         Polymer("sr-core-pages", {
-            propagateEvent: function(element, type) {
+            _propagateEvent: function(element, type) {
                 if (element[type]) {
                     element[type]();
                 }
 
                 if (element.children) {
                     for (var i = 0; i < element.children.length; i++) {
-                        this.propagateEvent(element.children[i], type);
+                        this._propagateEvent(element.children[i], type);
                     }
                 }
 
                 if (element.shadowRoot) {
                     for (var i = 0; i < element.shadowRoot.children.length; i++) {
-                        this.propagateEvent(element.shadowRoot.children[i], type);
+                        this._propagateEvent(element.shadowRoot.children[i], type);
                     }
                 }
             },
@@ -37,12 +37,12 @@
                 for (var i = 0; i < pages.length; i++) {
                     if (pages[i].name === name) {
                         if (pages[i].hidden) {
-                            this.propagateEvent(pages[i], "onPageShow");
+                            this._propagateEvent(pages[i], "onPageShow");
                         }
                         pages[i].hidden = false;
                     } else {
                         if (!pages[i].hidden) {
-                            this.propagateEvent(pages[i], "onPageHide");
+                            this._propagateEvent(pages[i], "onPageHide");
                         }
                         pages[i].hidden = true;
                     }
