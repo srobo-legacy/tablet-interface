@@ -5,7 +5,6 @@
 - add middle 50% thing to sliders
 
 - create components to control sets of boards
-- fix duplicate component boards
 
 - add args to sr-wamp-call for use with auto
 - refactor sr-wamp-{call,subscribe,publish} system to be more automatic
