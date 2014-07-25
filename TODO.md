@@ -16,3 +16,5 @@
 - buzzer manual control page?
 - add HTML5 caching
 - reload custom components when server dies and comes back
+- merge analogue and digital pin controllers
+- component boards won't work on their own
