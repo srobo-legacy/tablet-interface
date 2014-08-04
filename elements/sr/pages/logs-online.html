@@ -25,9 +25,8 @@ Example:
             }
 
             sr-logs-current,
-            textarea {
+            sr-logs-previous {
                 flex: 1 1 auto;
-                font-family: "Inconsolate", monospace !important; /* :( */
             }
 
             #logs {
@@ -77,10 +76,9 @@ Example:
                     option.textContent = i;
                     this.$.previousLogs.appendChild(option);
 
-                    var textarea = document.createElement("textarea");
+                    var textarea = document.createElement("sr-logs-previous");
                     textarea.id = "log_old_" + i;
-                    textarea.textContent = oldLogs[i];
-                    textarea.readOnly = true;
+                    textarea.index = i;
                     textarea.hidden = true;
                     this.$.logs.appendChild(textarea);
                 }

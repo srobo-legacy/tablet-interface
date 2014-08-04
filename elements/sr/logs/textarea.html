@@ -35,6 +35,9 @@ Example:
             clear: function() {
                 this.$.log.innerHTML = "";
             },
+            setContent: function(text) {
+                this.$.log.innerHTML = text;
+            },
             isAtBottom: function() {
                 var log = this.$.log;
                 return Math.abs((log.scrollTop + log.clientHeight) - log.scrollHeight) <= 10;

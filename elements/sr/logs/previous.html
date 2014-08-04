@@ -1,0 +1,44 @@
+<!--
+`sr-logs-previous` provides a view of a previous log.
+
+Example:
+
+    <sr-logs-previous></sr-logs-previous>
+
+@group SR Logs Elements
+@element sr-logs-previous
+-->
+
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="../wamp/index.html" />
+<link rel="import" href="textarea.html" />
+
+<polymer-element name="sr-logs-previous" attributes="index">
+    <template>
+        <style>
+            :host {
+                display: flex;
+            }
+        </style>
+
+        <sr-logs-textarea id="log"></sr-logs-textarea>
+
+        <sr-wamp-core
+            on-open="{{ handleOpen }}"></sr-wamp-core>
+        <sr-wamp-call
+            id="wampGetOld"
+            procedure="org.srobo.logs.get_old"
+            on-success="{{ handleLog }}"></sr-wamp-call>
+    </template>
+
+    <script>
+        Polymer("sr-logs-previous", {
+            handleOpen: function() {
+                this.$.wampGetOld.go([this.index]);
+            },
+            handleLog: function(e) {
+                this.$.log.setContent(e.detail.result);
+            }
+        });
+    </script>
+</polymer-element>
