@@ -10,6 +10,7 @@
 
 Return `true` if the client should reload the page before continuing, otherwise return `false`.
 
+
 ### RPC org.srobo.zone
 
 Return the current zone the robot is configured to be in.
@@ -25,6 +26,7 @@ Return the current mode the robot is configured as. Mode is one of `comp` or `de
 ### PUB/SUB org.srobo.mode(`mode`)
 
 When the mode changes.
+
 
 ### PUB/SUB org.srobo.log(`entry`)
 
@@ -42,6 +44,7 @@ Return a list of all the old logs.
 
 Return the contents of a single old log.
 
+
 ### RPC org.srobo.start
 
 Start the robot.
@@ -58,9 +61,11 @@ Return the state of the robot, which can be one of `booting`, `started`, `stoppi
 
 When the state changes.
 
+
 ### RPC org.srobo.pyenv.version
 
 Return the current pyenv version.
+
 
 ### RPC org.srobo.project.name
 
@@ -70,6 +75,7 @@ Return the current project name.
 
 Return the current project version.
 
+
 ### PUB/SUB org.srobo.power.output_state(`index`, `state`)
 
 When the state of a power output on the power board has changed.
@@ -77,6 +83,7 @@ When the state of a power output on the power board has changed.
 ### RPC org.srobo.power.get_output_state(`index`)
 
 Return the state of a power output on the power board.
+
 
 ### PUB/SUB org.srobo.servos.servo_value(`board`, `index`, `value`)
 
@@ -94,6 +101,7 @@ Return a servo board object (`{'servos': [<servo_object>, ...]}`) about the requ
 
 Return a dictionary of serial number to servo board objects.
 
+
 ### PUB/SUB org.srobo.motors.motor_value(`board`, `index`, `value`)
 
 When a value on a motor has changed.
@@ -109,3 +117,24 @@ Return a motor board object (`{'motors': [<motor_object>, ...]}`) about the requ
 ### RPC org.srobo.motors.all_boards
 
 Return a dictionary of serial number to motor board objects.
+
+
+### PUB/SUB org.srobo.ruggeduinos.pin_mode(`board`, `index`, `mode`)
+
+When a pin mode has changed. Mode is one of `input`, `output`, `input_pullup`.
+
+### PUB/SUB org.srobo.ruggeduinos.pin_value(`board`, `index`, `mode`)
+
+When a pin value has changed.
+
+### RPC org.srobo.ruggeduinos.get_pin(`board`, `index`)
+
+Return a pin object (`{'mode': mode, 'type': type, 'value': value}`) for the requested pin. Type is one of `digital` or `analogue`.
+
+### RPC org.srobo.ruggeduinos.get_board(`serial_number`)
+
+Return a ruggeduino board object (`{'pins': [<pin_object>, ...]}`) for the requested board.
+
+### RPC org.srobo.ruggeduinos.all_boards
+
+Return a dictionary mapping serial numbers to ruggeduino board objects.
