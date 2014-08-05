@@ -1,12 +1,14 @@
 # WAMP Specification
 
-## Handshake
+## General Information
+
+ - `board`s are referenced by their part code, not the index.
+
+## Definitions
 
 ### RPC org.srobo.hello(`client_version`)
 
 Return `true` if the client should reload the page before continuing, otherwise return `false`.
-
-## Set up
 
 ### RPC org.srobo.zone
 
@@ -24,8 +26,6 @@ Return the current mode the robot is configured as. Mode is one of `comp` or `de
 
 When the mode changes.
 
-## Logs
-
 ### PUB/SUB org.srobo.log(`entry`)
 
 When a single entry in the log has been added.
@@ -41,8 +41,6 @@ Return a list of all the old logs.
 ### RPC org.srobo.logs.get_old(`index`)
 
 Return the contents of a single old log.
-
-## Controls
 
 ### RPC org.srobo.start
 
@@ -60,13 +58,9 @@ Return the state of the robot, which can be one of `booting`, `started`, `stoppi
 
 When the state changes.
 
-## Pyenv
-
 ### RPC org.srobo.pyenv.version
 
 Return the current pyenv version.
-
-## Project
 
 ### RPC org.srobo.project.name
 
@@ -76,8 +70,6 @@ Return the current project name.
 
 Return the current project version.
 
-## Power
-
 ### PUB/SUB org.srobo.power.output_state(`index`, `state`)
 
 When the state of a power output on the power board has changed.
@@ -85,3 +77,19 @@ When the state of a power output on the power board has changed.
 ### RPC org.srobo.power.get_output_state(`index`)
 
 Return the state of a power output on the power board.
+
+### PUB/SUB org.srobo.servos.servo_value(`board`, `index`, `value`)
+
+When a value on a server has changed.
+
+### RPC org.srobo.servos.get_servo(`board`, `index`)
+
+Return a servo object (`{'value': value}`) about the requested servo.
+
+### RPC org.srobo.servos.get_board(`serial_number`)
+
+Return a servo board object (`{'servos': [<servo_object>, ...]}`) about the requested board.
+
+### RPC org.srobo.servos.all_boards
+
+Return a dictionary of serial number to servo board objects.
