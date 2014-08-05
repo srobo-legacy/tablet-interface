@@ -75,3 +75,13 @@ Return the current project name.
 ### RPC org.srobo.project.version
 
 Return the current project version.
+
+## Power
+
+### PUB/SUB org.srobo.power.output_state(`index`, `state`)
+
+When the state of a power output on the power board has changed.
+
+### RPC org.srobo.power.get_output_state(`index`)
+
+Return the state of a power output on the power board.
