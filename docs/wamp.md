@@ -80,7 +80,7 @@ Return the state of a power output on the power board.
 
 ### PUB/SUB org.srobo.servos.servo_value(`board`, `index`, `value`)
 
-When a value on a server has changed.
+When a value on a servo has changed.
 
 ### RPC org.srobo.servos.get_servo(`board`, `index`)
 
@@ -93,3 +93,19 @@ Return a servo board object (`{'servos': [<servo_object>, ...]}`) about the requ
 ### RPC org.srobo.servos.all_boards
 
 Return a dictionary of serial number to servo board objects.
+
+### PUB/SUB org.srobo.motors.motor_value(`board`, `index`, `value`)
+
+When a value on a motor has changed.
+
+### RPC org.srobo.motors.get_motor(`board`, `index`)
+
+Return a motor object (`{'value': value}`) about the requested motor.
+
+### RPC org.srobo.motors.get_board(`serial_number`)
+
+Return a motor board object (`{'motors': [<motor_object>, ...]}`) about the requested board.
+
+### RPC org.srobo.motors.all_boards
+
+Return a dictionary of serial number to motor board objects.
