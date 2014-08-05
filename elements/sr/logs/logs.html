@@ -1,0 +1,76 @@
+<!--
+`sr-logs-logs` provides an entire collection of logs.
+
+Example:
+
+    <sr-logs-logs></sr-logs-logs>
+
+@group SR Logs Elements
+@element sr-logs-logs
+-->
+
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="../ui/index.html" />
+<link rel="import" href="../wamp/index.html" />
+<link rel="import" href="index.html" />
+
+<polymer-element name="sr-logs-logs">
+    <template>
+        <style>
+            :host {
+                flex: 1 1 auto;
+                display: flex;
+            }
+
+            sr-logs-current,
+            sr-logs-previous {
+                flex: 1 1 auto;
+            }
+
+            #logs {
+                display: flex;
+                flex: 1 1 auto;
+            }
+        </style>
+
+        <div id="logs">
+            <sr-logs-current id="log_current"></sr-logs-current>
+        </div>
+
+        <sr-wamp-call
+            auto="wamp"
+            procedure="org.srobo.logs.all_old"
+            on-success="{{ handleOldLogs }}"></sr-wamp-call>
+    </template>
+
+    <script>
+        Polymer("sr-logs-logs", {
+            domReady: function() {
+                this.fire("add", {"type": "current", "id": "current"});
+            },
+            handleOldLogs: function(e) {
+                var oldLogs = e.detail.result || e.detail.args[0];
+
+                for (var i = 0; i < oldLogs.length; i++) {
+                    var textarea = document.createElement("sr-logs-previous");
+                    textarea.id = "log_old_" + i;
+                    textarea.index = i;
+                    textarea.hidden = true;
+                    this.$.logs.appendChild(textarea);
+
+                    this.fire("add", {"type": "previous", "index": i, "id": "old_" + i});
+                }
+            },
+            changeTo: function(log) {
+                console.log("Changing log:", log);
+
+                var logs = this.$.logs.children;
+                for (var i = 0; i < logs.length; i++) {
+                    logs[i].hidden = true;
+                }
+
+                this.shadowRoot.querySelector("#log_" + log).hidden = false;
+            }
+        });
+    </script>
+</polymer-element>
