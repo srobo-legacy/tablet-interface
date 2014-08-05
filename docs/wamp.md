@@ -23,3 +23,21 @@ Return the current mode the robot is configured as. Mode is one of `comp` or `de
 ### PUB/SUB org.srobo.mode(`mode`)
 
 When the mode changes.
+
+## Logs
+
+### PUB/SUB org.srobo.log(`entry`)
+
+When a single entry in the log has been added.
+
+### RPC org.srobo.logs.current
+
+Return the entire contents of the current log.
+
+### RPC org.srobo.logs.all_old
+
+Return a list of all the old logs.
+
+### RPC org.srobo.logs.get_old(`index`)
+
+Return the contents of a single old log.
