@@ -38,6 +38,9 @@ Example:
             },
             handleLog: function(e) {
                 this.$.log.setContent(e.detail.result);
+            },
+            scrollToBottom: function() {
+                this.$.log.scrollToBottom();
             }
         });
     </script>

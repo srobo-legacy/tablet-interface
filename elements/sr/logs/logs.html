@@ -47,6 +47,7 @@ Example:
         Polymer("sr-logs-logs", {
             domReady: function() {
                 this.fire("add", {"type": "current", "id": "current"});
+                this.changeTo("current");
             },
             handleOldLogs: function(e) {
                 var oldLogs = e.detail.result || e.detail.args[0];
@@ -69,7 +70,9 @@ Example:
                     logs[i].hidden = true;
                 }
 
-                this.shadowRoot.querySelector("#log_" + log).hidden = false;
+                var logElement = this.shadowRoot.querySelector("#log_" + log);
+                logElement.hidden = false;
+                this.currentLog = logElement;
             }
         });
     </script>

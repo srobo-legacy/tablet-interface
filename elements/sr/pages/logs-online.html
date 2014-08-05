@@ -37,7 +37,7 @@ Example:
                 <optgroup label="Previous Logs" id="previousLogs">
                 </optgroup>
             </select>
-            <button id="btnBottom">Jump to bottom</button>
+            <button id="btnBottom" on-click="{{ handleJumpToBottom }}">Jump to bottom</button>
         </sr-ui-toolbar>
 
         <sr-logs-logs id="logs" on-add="{{ handleAddLog }}"></sr-logs-logs>
@@ -45,9 +45,8 @@ Example:
 
     <script>
         Polymer("sr-pages-logs-online", {
-            domReady: function() {
-                /*this.$.btnBottom.addEventListener("click",
-                    this.$.log_current.scrollToBottom.bind(this.$.log_current));*/
+            handleJumpToBottom: function() {
+                this.$.logs.currentLog.scrollToBottom();
             },
             handleAddLog: function(e) {
                 var optgroup;
