@@ -59,3 +59,9 @@ Return the state of the robot, which can be one of `booting`, `started`, `stoppi
 ### PUB/SUB org.srobo.state(`state`)
 
 When the state changes.
+
+## Pyenv
+
+### RPC org.srobo.pyenv.version
+
+Get the current pyenv version.
