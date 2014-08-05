@@ -64,4 +64,14 @@ When the state changes.
 
 ### RPC org.srobo.pyenv.version
 
-Get the current pyenv version.
+Return the current pyenv version.
+
+## Project
+
+### RPC org.srobo.project.name
+
+Return the current project name.
+
+### RPC org.srobo.project.version
+
+Return the current project version.
