@@ -138,3 +138,16 @@ Return a ruggeduino board object (`{'pins': [<pin_object>, ...]}`) for the reque
 ### RPC org.srobo.ruggeduinos.all_boards
 
 Return a dictionary mapping serial numbers to ruggeduino board objects.
+
+
+### RPC org.srobo.battery
+
+Return a battery object (`{'level': level}`) for the robot battery.
+
+### RPC org.srobo.battery.level
+
+Return the batter level.
+
+### PUB/SUB org.srobo.battery.level
+
+When the robot battery level changes.
