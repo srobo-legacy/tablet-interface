@@ -41,3 +41,21 @@ Return a list of all the old logs.
 ### RPC org.srobo.logs.get_old(`index`)
 
 Return the contents of a single old log.
+
+## Controls
+
+### RPC org.srobo.start
+
+Start the robot.
+
+### RPC org.srobo.stop
+
+Stop the robot.
+
+### RPC org.srobo.state
+
+Return the state of the robot, which can be one of `booting`, `started`, `stopping`, `stopped`.
+
+### PUB/SUB org.srobo.state(`state`)
+
+When the state changes.
