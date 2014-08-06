@@ -37,8 +37,12 @@ Example:
             <sr-logs-current id="log_current"></sr-logs-current>
         </div>
 
+        <sr-wamp
+            id="wamp"
+            on-open="{{ handleWampOpen }}"
+            on-close="{{ handleWampClose }}"></sr-wamp>
         <sr-wamp-call
-            auto="wamp"
+            id="wampOldLogsCall"
             procedure="org.srobo.logs.all_old"
             on-success="{{ handleOldLogs }}"></sr-wamp-call>
     </template>
@@ -48,6 +52,12 @@ Example:
             domReady: function() {
                 this.fire("add", {"type": "current", "id": "current"});
                 this.changeTo("current");
+            },
+            handleWampOpen: function() {
+                this.$.wampOldLogsCall.go();
+            },
+            handleWampClose: function() {
+
             },
             handleOldLogs: function(e) {
                 var oldLogs = e.detail.result || e.detail.args[0];
