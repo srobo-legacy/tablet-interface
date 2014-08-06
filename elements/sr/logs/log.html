@@ -23,11 +23,11 @@ Example:
             }
         </style>
 
-        <sr-logs-textarea id="log"></sr-logs-textarea>
-
         <core-localstorage
             id="localStorage"
             name="log_{{ log }}"></core-localstorage>
+
+        <sr-logs-textarea id="log"></sr-logs-textarea>
 
         <sr-wamp-core
             on-open="{{ handleWampOpen }}"
@@ -50,7 +50,7 @@ Example:
                 this.$.wampCall.go([this.log]);
             },
             handleWampClose: function() {
-
+                this.$.log.content = this.$.localStorage.value;
             },
             handleLogGet: function(e) {
                 e.detail.result.contents.forEach(function(entry) {
