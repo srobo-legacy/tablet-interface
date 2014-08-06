@@ -34,7 +34,7 @@ When a single entry in the log has been added.
 
 ### RPC org.srobo.logs.all
 
-Return a list of log objects (`{'type': type, 'name': name, 'contents': ['...', ...]}`).
+Return a list of log objects (`{'type': type, 'title': title, 'name': name, 'contents': ['...', ...]}`).
 
 ### RPC org.srobo.logs.get(`name`)
 
