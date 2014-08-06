@@ -32,10 +32,8 @@ Example:
         <sr-ui-toolbar>
             <h1 flex>View Robot Logs</h1>
             <select id="logSelection" on-change="{{ handleLogSelectionChanged }}">
-                <optgroup label="Current Logs" id="currentLogs">
-                </optgroup>
-                <optgroup label="Previous Logs" id="previousLogs">
-                </optgroup>
+                <optgroup label="Current Logs" id="currentLogs"></optgroup>
+                <optgroup label="Old Logs" id="oldLogs"></optgroup>
             </select>
             <button id="btnBottom" on-click="{{ handleJumpToBottom }}">Jump to bottom</button>
         </sr-ui-toolbar>
@@ -58,7 +56,7 @@ Example:
                 if (e.detail.type === "current") {
                     optgroup = this.$.currentLogs;
                 } else if (e.detail.type === "old") {
-                    optgroup = this.$.previousLogs;
+                    optgroup = this.$.oldLogs;
                 }
 
                 option.textContent = e.detail.title;
