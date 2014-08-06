@@ -10,6 +10,7 @@ Example:
 -->
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="/bower_components/core-localstorage/core-localstorage.html" />
 <link rel="import" href="../ui/index.html" />
 <link rel="import" href="../wamp/index.html" />
 <link rel="import" href="index.html" />
@@ -32,6 +33,10 @@ Example:
 
         </div>
 
+        <core-localstorage
+            id="localStorage"
+            name="logs"></core-localstorage>
+
         <sr-wamp-core
             on-open="{{ handleWampOpen }}"
             on-close="{{ handleWampClose }}"></sr-wamp-core>
@@ -46,20 +51,39 @@ Example:
             handleWampOpen: function() {
                 this.$.wampOldLogsCall.go();
             },
+            _createLogElement: function(log) {
+                var element = document.createElement("sr-logs-log");
+                element.id = "log_" + log.name;
+                element.log = log.name;
+                element.hidden = true;
+                return element;
+            },
             handleWampClose: function() {
+                this.$.localStorage.value.forEach(function(log) {
+                    var element = this._createLogElement(log);
+                    this.$.logs.appendChild(element);
+                    this.fire("add", log);
+                }.bind(this));
 
+                this.changeTo("current");
             },
             handleAllLogs: function(e) {
+                this.$.localStorage.value = [];
+
                 e.detail.result.forEach(function(log) {
-                    var element = undefined;
-                    element = document.createElement("sr-logs-log");
-                    element.id = "log_" + log.name;
-                    element.log = log.name;
-                    element.hidden = true;
+                    var element = this._createLogElement(log);
                     this.$.logs.appendChild(element);
+
+                    this.$.localStorage.value.push({
+                        "type": log["type"],
+                        "name": log["name"],
+                        "title": log["title"]
+                    });
 
                     this.fire("add", log);
                 }.bind(this));
+
+                this.$.localStorage.save();
 
                 this.changeTo("current");
             },
