@@ -22,11 +22,6 @@ Example:
                 display: flex;
             }
 
-            sr-logs-current,
-            sr-logs-previous {
-                flex: 1 1 auto;
-            }
-
             #logs {
                 display: flex;
                 flex: 1 1 auto;
@@ -57,15 +52,9 @@ Example:
             handleAllLogs: function(e) {
                 e.detail.result.forEach(function(log) {
                     var element = undefined;
-                    if (log.type === "current") {
-                        element = document.createElement("sr-logs-current");
-                    } else if (log.type === "old") {
-                        element = document.createElement("sr-logs-previous");
-                    }
-
+                    element = document.createElement("sr-logs-log");
                     element.id = "log_" + log.name;
-                    element.log_title = log.title;
-                    element.log_name = log.name;
+                    element.log = log.name;
                     element.hidden = true;
                     this.$.logs.appendChild(element);
 

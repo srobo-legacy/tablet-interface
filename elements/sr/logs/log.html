@@ -1,0 +1,65 @@
+<!--
+`sr-logs-log` provides a view of a log.
+
+Example:
+
+    <sr-logs-log></sr-logs-log>
+
+@group SR Logs Elements
+@element sr-logs-log
+-->
+
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="../wamp/index.html" />
+<link rel="import" href="textarea.html" />
+
+<polymer-element name="sr-logs-log" attributes="log">
+    <template>
+        <style>
+            :host {
+                flex: 1 1 auto;
+                display: flex;
+            }
+        </style>
+
+        <sr-logs-textarea id="log"></sr-logs-textarea>
+
+        <sr-wamp-core
+            on-open="{{ handleWampOpen }}"
+            on-close="{{ handleWampClose }}"></sr-wamp-core>
+        <sr-wamp-subscribe
+            id="wampSub"
+            topic="org.srobo.logs.append"
+            on-handle="{{ handleLogAppend }}"></sr-wamp-subscribe>
+        <sr-wamp-call
+            id="wampCall"
+            procedure="org.srobo.logs.get"
+            on-success="{{ handleLogGet }}"></sr-wamp-call>
+    </template>
+
+    <script>
+        Polymer("sr-logs-log", {
+            log: undefined,
+            handleWampOpen: function() {
+                this.$.wampSub.subscribe();
+                this.$.wampCall.go([this.log]);
+            },
+            handleWampClose: function() {
+
+            },
+            handleLogGet: function(e) {
+                e.detail.result.contents.forEach(function(entry) {
+                    this.$.log.addEntry(entry, false);
+                }.bind(this));
+            },
+            handleLogAppend: function(e) {
+                if (e.detail.args[0] === this.log) {
+                    this.$.log.addEntry(e.detail.args[1]);
+                }
+            },
+            scrollToBottom: function() {
+                this.$.log.scrollToBottom();
+            }
+        });
+    </script>
+</polymer-element>
