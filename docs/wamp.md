@@ -8,7 +8,12 @@
 
 ### RPC org.srobo.hello(`client_version`)
 
-Return `true` if the client should reload the page before continuing, otherwise return `false`.
+Called by the client when it first loads and is used to check whether the
+server and the client are running on compatible versions.
+
+The server should return an object containing a `compatible` key with either
+`true` or `false` as the value. If the value is `false` the client will do
+something appropriate, usually just reloading the page.
 
 
 ### RPC org.srobo.zone
