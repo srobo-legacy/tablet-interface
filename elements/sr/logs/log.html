@@ -10,6 +10,7 @@ Example:
 -->
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="/bower_components/core-localstorage/core-localstorage.html" />
 <link rel="import" href="../wamp/index.html" />
 <link rel="import" href="textarea.html" />
 
@@ -23,6 +24,10 @@ Example:
         </style>
 
         <sr-logs-textarea id="log"></sr-logs-textarea>
+
+        <core-localstorage
+            id="localStorage"
+            name="log_{{ log }}"></core-localstorage>
 
         <sr-wamp-core
             on-open="{{ handleWampOpen }}"
@@ -49,13 +54,17 @@ Example:
             },
             handleLogGet: function(e) {
                 e.detail.result.contents.forEach(function(entry) {
-                    this.$.log.addEntry(entry, false);
+                    this.addEntry(entry, false);
                 }.bind(this));
             },
             handleLogAppend: function(e) {
                 if (e.detail.args[0] === this.log) {
-                    this.$.log.addEntry(e.detail.args[1]);
+                    this.addEntry(e.detail.args[1]);
                 }
+            },
+            addEntry: function(entry, includeDate) {
+                this.$.log.addEntry(entry, includeDate);
+                this.$.localStorage.value = this.$.log.content;
             },
             scrollToBottom: function() {
                 this.$.log.scrollToBottom();

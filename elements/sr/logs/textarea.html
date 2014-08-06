@@ -35,7 +35,10 @@ Example:
             clear: function() {
                 this.$.log.innerHTML = "";
             },
-            setContent: function(text) {
+            get content() {
+                return this.$.log.innerHTML;
+            },
+            set content(text) {
                 this.$.log.innerHTML = text;
             },
             isAtBottom: function() {
