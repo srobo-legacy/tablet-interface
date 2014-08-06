@@ -57,13 +57,12 @@ Example:
 
                 if (e.detail.type === "current") {
                     optgroup = this.$.currentLogs;
-                    option.textContent = "Current";
-                } else if (e.detail.type === "previous") {
+                } else if (e.detail.type === "old") {
                     optgroup = this.$.previousLogs;
-                    option.textContent = "#" + e.detail.index;
                 }
 
-                option.value = e.detail.id;
+                option.textContent = e.detail.title;
+                option.value = e.detail.name;
 
                 optgroup.appendChild(option);
             },

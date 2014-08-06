@@ -34,43 +34,45 @@ Example:
         </style>
 
         <div id="logs">
-            <sr-logs-current id="log_current"></sr-logs-current>
+
         </div>
 
-        <sr-wamp
-            id="wamp"
+        <sr-wamp-core
             on-open="{{ handleWampOpen }}"
-            on-close="{{ handleWampClose }}"></sr-wamp>
+            on-close="{{ handleWampClose }}"></sr-wamp-core>
         <sr-wamp-call
             id="wampOldLogsCall"
-            procedure="org.srobo.logs.all_old"
-            on-success="{{ handleOldLogs }}"></sr-wamp-call>
+            procedure="org.srobo.logs.all"
+            on-success="{{ handleAllLogs }}"></sr-wamp-call>
     </template>
 
     <script>
         Polymer("sr-logs-logs", {
-            domReady: function() {
-                this.fire("add", {"type": "current", "id": "current"});
-                this.changeTo("current");
-            },
             handleWampOpen: function() {
                 this.$.wampOldLogsCall.go();
             },
             handleWampClose: function() {
 
             },
-            handleOldLogs: function(e) {
-                var oldLogs = e.detail.result || e.detail.args[0];
+            handleAllLogs: function(e) {
+                e.detail.result.forEach(function(log) {
+                    var element = undefined;
+                    if (log.type === "current") {
+                        element = document.createElement("sr-logs-current");
+                    } else if (log.type === "old") {
+                        element = document.createElement("sr-logs-previous");
+                    }
 
-                for (var i = 0; i < oldLogs.length; i++) {
-                    var textarea = document.createElement("sr-logs-previous");
-                    textarea.id = "log_old_" + i;
-                    textarea.index = i;
-                    textarea.hidden = true;
-                    this.$.logs.appendChild(textarea);
+                    element.id = "log_" + log.name;
+                    element.log_title = log.title;
+                    element.log_name = log.name;
+                    element.hidden = true;
+                    this.$.logs.appendChild(element);
 
-                    this.fire("add", {"type": "previous", "index": i, "id": "old_" + i});
-                }
+                    this.fire("add", log);
+                }.bind(this));
+
+                this.changeTo("current");
             },
             changeTo: function(log) {
                 console.log("Changing log:", log);
