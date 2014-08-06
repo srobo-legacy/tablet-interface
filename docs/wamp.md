@@ -28,21 +28,17 @@ Return the current mode the robot is configured as. Mode is one of `comp` or `de
 When the mode changes.
 
 
-### PUB/SUB org.srobo.log(`entry`)
+### PUB/SUB org.srobo.logs.append(`log`, `entry`)
 
 When a single entry in the log has been added.
 
-### RPC org.srobo.logs.current
+### RPC org.srobo.logs.all
 
-Return the entire contents of the current log.
+Return a list of log objects (`{'type': type, 'name': name, 'contents': ['...', ...]}`).
 
-### RPC org.srobo.logs.all_old
+### RPC org.srobo.logs.get(`name`)
 
-Return a list of all the old logs.
-
-### RPC org.srobo.logs.get_old(`index`)
-
-Return the contents of a single old log.
+Return a single log object.
 
 
 ### RPC org.srobo.start
