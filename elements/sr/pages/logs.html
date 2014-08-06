@@ -15,7 +15,7 @@ Example:
 <link rel="import" href="../ui/index.html" />
 <link rel="import" href="../wamp/index.html" />
 
-<polymer-element name="sr-pages-logs-online">
+<polymer-element name="sr-pages-logs">
     <template>
         <style>
             :host {
@@ -47,7 +47,7 @@ Example:
     </template>
 
     <script>
-        Polymer("sr-pages-logs-online", {
+        Polymer("sr-pages-logs", {
             handleJumpToBottom: function() {
                 this.$.logs.currentLog.scrollToBottom();
             },
