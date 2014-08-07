@@ -32,15 +32,16 @@ Example:
             <h1>View Battery History</h1>
         </sr-ui-toolbar>
 
-        <sr-wamp-core
-            id="wamp"></sr-wamp-core>
+        <sr-wamp-core id="wamp"></sr-wamp-core>
 
         <template bind if="{{ $.wamp.connected }}">
             <sr-battery-history id="history"></sr-battery-history>
         </template>
 
         <template bind if="{{ $.wamp.disconnected }}">
-            <h1>You must be connected to the robot to view battery information.</h1>
+            <div flex horizontal center center-justified layout>
+                <h1>You must be connected to the robot to view battery information.</h1>
+            </div>
         </template>
     </template>
 </polymer-element>
