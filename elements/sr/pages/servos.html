@@ -38,18 +38,28 @@ Example:
             <h1 flex>Servo controllers</h1>
         </sr-ui-toolbar>
 
-        <div id="controllers"></div>
+        <sr-wamp-core id="wamp"></sr-wamp-core>
 
-        <sr-wamp-call
-            auto="wamp"
-            procedure="org.srobo.servos.all_boards"
-            on-success="{{ handleAllBoardsSuccess }}"></sr-wamp-call>
+        <template bind if="{{ $.wamp.connected }}">
+            <div id="controllers"></div>
+
+            <sr-wamp-call
+                auto="wamp"
+                procedure="org.srobo.servos.all_boards"
+                on-success="{{ handleAllBoardsSuccess }}"></sr-wamp-call>
+        </template>
+
+        <template bind if="{{ $.wamp.disconnected }}">
+            <div flex horizontal center center-justified layout>
+                <h1>You must be connected to the robot to control the servos.</h1>
+            </div>
+        </template>
     </template>
 
     <script>
         Polymer("sr-pages-servos", {
             changeBoard: function(serialNumber) {
-                var divs = this.$.controllers.children;
+                var divs = this.shadowRoot.querySelectorAll("sr-servos-board-controller");
                 for (var i = 0; i < divs.length; i++) {
                     divs[i].hidden = true;
                 }
@@ -67,28 +77,14 @@ Example:
                 button.onclick = this.changeBoard.bind(this, serialNumber);
                 return button;
             },
-            /*_removeControllers: function() {
-                var controllers = this.$.controllers.children;
-                for (var i = 0; i < controllers.length; i++) {
-                    this.$.controllers.removeChild(controllers[i]);
-                }
-            },
-            _removeButtons: function() {
-                var buttons = this.$.toolbar.querySelectorAll("button");
-                for (var i = 0; i < buttons.length; i++) {
-                    this.$.toolbar.removeChild(buttons[i]);
-                }
-            },*/
             handleAllBoardsSuccess: function(e) {
-                /*this._removeControllers();
-                this._removeButtons();*/
-
                 var boards = e.detail.result;
                 for (var serialNumber in boards) {
                     var button = this._createButton(serialNumber);
                     this.$.toolbar.appendChild(button);
                     var controller = this._createController(serialNumber);
-                    this.$.controllers.appendChild(controller);
+                    var controllers = this.shadowRoot.querySelector("#controllers");
+                    controllers.appendChild(controller);
                 }
 
                 this.changeBoard(Object.keys(boards)[0]);
