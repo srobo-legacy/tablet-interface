@@ -38,18 +38,28 @@ Example:
             <h1 flex>Motor Control</h1>
         </sr-ui-toolbar>
 
-        <div id="controllers"></div>
+        <sr-wamp-core id="wamp"></sr-wamp-core>
 
-        <sr-wamp-call
-            auto="wamp"
-            procedure="org.srobo.motors.all_boards"
-            on-success="{{ handleAllBoardsSuccess }}"></sr-wamp-call>
+        <template bind if="{{ $.wamp.connected }}">
+            <div id="controllers"></div>
+
+            <sr-wamp-call
+                auto="wamp"
+                procedure="org.srobo.motors.all_boards"
+                on-success="{{ handleAllBoardsSuccess }}"></sr-wamp-call>
+        </template>
+
+        <template bind if="{{ $.wamp.disconnected }}">
+            <div flex horizontal center center-justified layout>
+                <h1>You must be connected to the robot to control any motors.</h1>
+            </div>
+        </template>
     </template>
 
     <script>
         Polymer("sr-pages-motors", {
             changeBoard: function(serialNumber) {
-                var divs = this.$.controllers.children;
+                var divs = this.shadowRoot.querySelectorAll("sr-motors-board-controller");
                 for (var i = 0; i < divs.length; i++) {
                     divs[i].hidden = true;
                 }
@@ -68,15 +78,14 @@ Example:
                 return div;
             },
             handleAllBoardsSuccess: function(e) {
-                this.$.controllers.innerHTML = "";
-
                 var boards = e.detail.result;
                 for (var serialNumber in boards) {
                     var button = this.createBoardButton(serialNumber);
                     this.$.toolbar.appendChild(button);
 
                     var div = this.createBoardDiv(serialNumber);
-                    this.$.controllers.appendChild(div);
+                    var controllers = this.shadowRoot.querySelector("#controllers");
+                    controllers.appendChild(div);
                 }
 
                 this.changeBoard(Object.keys(boards)[0]);
