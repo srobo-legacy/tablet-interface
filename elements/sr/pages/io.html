@@ -38,12 +38,22 @@ Example:
             <h1 flex>I/O Control</h1>
         </sr-ui-toolbar>
 
-        <div id="controllers"></div>
+        <sr-wamp-core id="wamp"></sr-wamp-core>
 
-        <sr-wamp-call
-            auto="wamp"
-            procedure="org.srobo.ruggeduinos.all_boards"
-            on-success="{{handleCallSuccess}}"></sr-wamp-call>
+        <template bind if="{{ $.wamp.connected }}">
+            <div id="controllers"></div>
+
+            <sr-wamp-call
+                auto="wamp"
+                procedure="org.srobo.ruggeduinos.all_boards"
+                on-success="{{ handleCallSuccess }}"></sr-wamp-call>
+        </template>
+
+        <template bind if="{{ $.wamp.disconnected }}">
+            <div flex horizontal center center-justified layout>
+                <h1>You must be connected to the robot to control any I/O.</h1>
+            </div>
+        </template>
     </template>
 
     <script>
@@ -74,7 +84,8 @@ Example:
                     var div = this.createBoardDiv(serialNumber);
 
                     this.$.toolbar.appendChild(button);
-                    this.$.controllers.appendChild(div);
+                    var controllers = this.shadowRoot.querySelector("#controllers");
+                    controllers.appendChild(div);
                 }
 
                 this.changeBoard(Object.keys(boards)[0]);
