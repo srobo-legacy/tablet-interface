@@ -80,7 +80,8 @@
                 offline="sr-pages-power"></sr-core-page>
             <sr-core-page
                 name="repl"
-                online="sr-pages-repl"></sr-core-page>
+                online="sr-pages-repl"
+                offline="sr-pages-repl"></sr-core-page>
             <sr-core-page
                 name="setup"
                 online="sr-pages-setup"></sr-core-page>
@@ -131,7 +132,7 @@
             });
 
             window.addEventListener("polymer-ready", function(e) {
-                document.querySelector("sr-core-pages").changePage("power");
+                document.querySelector("sr-core-pages").changePage("repl");
             });
         </script>
 
