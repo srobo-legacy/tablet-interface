@@ -1,0 +1,66 @@
+<!--
+`sr-ui-elements-switcher` provides a means of switching between elements and
+only displaying a single element at a time.
+
+Example:
+
+    <sr-ui-elements-switcher>
+        <div></div>
+
+        <div hidden></div>
+    </sr-ui-elements-switcher>
+
+@group SR UI Elements
+@element sr-ui-elements-switcher
+-->
+
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+
+<polymer-element name="sr-ui-elements-switcher">
+    <template>
+        <style>
+            :host {
+                display: flex;
+            }
+
+            #elements {
+                display: flex;
+                flex: 1 1 auto;
+            }
+
+            #elements > * {
+                display: flex;
+                flex: 1 1 auto;
+            }
+        </style>
+
+        <div id="elements">
+            <content>
+            </content>
+        </div>
+    </template>
+
+    <script>
+        Polymer("sr-ui-elements-switcher", {
+            hideAll: function() {
+                this.$.elements.children.forEach(function(element) {
+                    element.hidden = true;
+                });
+            },
+            show: function(element) {
+                element.hidden = false;
+            },
+            changeTo: function(element) {
+                if (typeof(element) === "string" || element instanceof String) {
+                    element = this.$.elements.querySelector(element);
+                }
+
+                this.hideAll();
+                this.show(element);
+            },
+            add: function(element) {
+                this.$.elements.appendChild(element);
+            }
+        });
+    </script>
+</polymer-element>
