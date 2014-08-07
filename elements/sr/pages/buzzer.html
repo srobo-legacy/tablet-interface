@@ -26,6 +26,14 @@ Example:
         <sr-ui-toolbar>
             <h1>Control the Buzzer</h1>
         </sr-ui-toolbar>
+
+        <sr-wamp-core id="wamp"></sr-wamp-core>
+
+        <template bind if="{{ $.wamp.disconnected }}">
+            <div flex horizontal center center-justified layout>
+                <h1>You must be connected to the robot to control the buzzer.</h1>
+            </div>
+        </template>
     </template>
 
     <script>
