@@ -1,0 +1,35 @@
+<!--
+`sr-pages-repl-online` provides the online version of the REPL page.
+
+Example:
+
+    <sr-core-page online="sr-pages-repl-online"></sr-core-page>
+
+@group SR Pages Elements
+@element sr-pages-repl-online
+-->
+
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="../ui/index.html" />
+
+<polymer-element name="sr-pages-repl-online">
+    <template>
+        <style>
+            :host {
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: column;
+            }
+        </style>
+
+        <sr-ui-toolbar>
+            <h1>Interactive Console</h1>
+        </sr-ui-toolbar>
+    </template>
+
+    <script>
+        Polymer("sr-pages-repl-online", {
+
+        });
+    </script>
+</polymer-element>
