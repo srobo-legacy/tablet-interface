@@ -36,13 +36,23 @@ Example:
             <h1>Power Outputs</h1>
         </sr-ui-toolbar>
 
-        <div id="controllers">
-            <sr-power-output-controller index="0"></sr-power-output-controller>
-            <sr-power-output-controller index="1"></sr-power-output-controller>
-            <sr-power-output-controller index="2"></sr-power-output-controller>
-            <sr-power-output-controller index="3"></sr-power-output-controller>
-            <sr-power-output-controller index="5"></sr-power-output-controller>
-            <sr-power-output-controller index="4"></sr-power-output-controller>
-        </div>
+        <sr-wamp-core id="wamp"></sr-wamp-core>
+
+        <template bind if="{{ $.wamp.connected }}">
+            <div id="controllers">
+                <sr-power-output-controller index="0"></sr-power-output-controller>
+                <sr-power-output-controller index="1"></sr-power-output-controller>
+                <sr-power-output-controller index="2"></sr-power-output-controller>
+                <sr-power-output-controller index="3"></sr-power-output-controller>
+                <sr-power-output-controller index="5"></sr-power-output-controller>
+                <sr-power-output-controller index="4"></sr-power-output-controller>
+            </div>
+        </template>
+
+        <template bind if="{{ $.wamp.disconnected }}">
+            <div flex horizontal center center-justified layout>
+                <h1>You must be connected to the robot to control the power outlets.</h1>
+            </div>
+        </template>
     </template>
 </polymer-element>

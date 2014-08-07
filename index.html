@@ -76,7 +76,8 @@
                 offline="sr-pages-motors"></sr-core-page>
             <sr-core-page
                 name="power"
-                online="sr-pages-power"></sr-core-page>
+                online="sr-pages-power"
+                offline="sr-pages-power"></sr-core-page>
             <sr-core-page
                 name="repl"
                 online="sr-pages-repl"></sr-core-page>
@@ -130,7 +131,7 @@
             });
 
             window.addEventListener("polymer-ready", function(e) {
-                document.querySelector("sr-core-pages").changePage("motors");
+                document.querySelector("sr-core-pages").changePage("power");
             });
         </script>
 
