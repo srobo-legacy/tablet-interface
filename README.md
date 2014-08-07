@@ -9,10 +9,6 @@ The interface for the tablets contained in the SR 2015 kit.
     $ virtualenv -p /usr/bin/python2.7 venv
     $ source venv/bin/activate
     $ pip install -r requirements.txt
-    $ git clone https://github.com/tavendo/AutobahnPython.git
-    $ cd AutobahnPython/autobahn
-    $ python setup.py install
-    $ cd ../../
 
 ## Running
 
