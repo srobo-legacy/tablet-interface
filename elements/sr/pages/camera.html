@@ -52,22 +52,33 @@ Example:
             }
         </style>
 
-        <div id="current">
-            <img id="image"></img>
-        </div>
+        <sr-wamp-core id="wamp"></sr-wamp-core>
 
-        <div id="old"></div>
+        <template bind if="{{ $.wamp.connected }}">
+            <div id="current">
+                <img id="image"></img>
+            </div>
 
-        <sr-wamp-subscribe
-            auto="page"
-            topic="org.srobo.camera.image"
-            on-handle="{{handleImage}}"></sr-wamp-subscribe>
+            <div id="old"></div>
+
+            <sr-wamp-subscribe
+                auto="wamp"
+                topic="org.srobo.camera.image"
+                on-handle="{{handleImage}}"></sr-wamp-subscribe>
+        </template>
+
+        <template bind if="{{ $.wamp.disconnected }}">
+            <div flex horizontal center center-justified layout>
+                <h1>You must be connected to the robot to view the camera.</h1>
+            </div>
+        </template>
     </template>
 
     <script>
         Polymer("sr-pages-camera", {
             deselectAll: function() {
-                var imgs = this.$.old.children;
+                var old = this.shadowRoot.querySelector("#old");
+                var imgs = old.children;
                 for (var i = 0; i < imgs.length; i++) {
                     imgs[i].className = "";
                 }
@@ -75,16 +86,18 @@ Example:
             changeImage: function(img) {
                 this.deselectAll();
                 img.className = "selected";
-                this.$.image.src = img.src;
+                var image = this.shadowRoot.querySelector("#image");
+                image.src = img.src;
             },
             addOldImage: function(src) {
+                var old = this.shadowRoot.querySelector("#old");
                 var img = document.createElement("img");
                 img.src = src;
                 img.onclick = this.changeImage.bind(this, img);
-                if (this.$.old.children.length === 0) {
-                    this.$.old.appendChild(img);
+                if (old.children.length === 0) {
+                    old.appendChild(img);
                 } else {
-                    this.$.old.insertBefore(img, this.$.old.children[0]);
+                    old.insertBefore(img, old.children[0]);
                 }
                 return img;
             },

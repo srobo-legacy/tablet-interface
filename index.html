@@ -60,7 +60,8 @@
                 offline="sr-pages-buzzer"></sr-core-page>
             <sr-core-page
                 name="camera"
-                online="sr-pages-camera"></sr-core-page>
+                online="sr-pages-camera"
+                offline="sr-pages-camera"></sr-core-page>
             <sr-core-page
                 name="io"
                 online="sr-pages-io"></sr-core-page>
@@ -127,7 +128,7 @@
             });
 
             window.addEventListener("polymer-ready", function(e) {
-                document.querySelector("sr-core-pages").changePage("buzzer");
+                document.querySelector("sr-core-pages").changePage("camera");
             });
         </script>
 
