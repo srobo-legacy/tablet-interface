@@ -14,7 +14,7 @@ Example:
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../wamp/index.html" />
 
-<polymer-element name="sr-pages-camera-online">
+<polymer-element name="sr-pages-camera">
     <template>
         <style>
             :host {
@@ -66,7 +66,7 @@ Example:
     </template>
 
     <script>
-        Polymer("sr-pages-camera-online", {
+        Polymer("sr-pages-camera", {
             deselectAll: function() {
                 var imgs = this.$.old.children;
                 for (var i = 0; i < imgs.length; i++) {

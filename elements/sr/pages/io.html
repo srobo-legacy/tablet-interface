@@ -16,7 +16,7 @@ Example:
 <link rel="import" href="../ui/index.html" />
 <link rel="import" href="../wamp/index.html" />
 
-<polymer-element name="sr-pages-io-online">
+<polymer-element name="sr-pages-io">
     <template>
         <style>
             :host {
@@ -48,7 +48,7 @@ Example:
     </template>
 
     <script>
-        Polymer("sr-pages-io-online", {
+        Polymer("sr-pages-io", {
             changeBoard: function(index) {
                 var divs = this.shadowRoot.querySelectorAll("sr-io-board-controller");
                 for (var i = 0; i < divs.length; i++) {
