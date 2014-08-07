@@ -73,62 +73,72 @@ Example:
             <h1>Set up your robot</h1>
         </sr-ui-toolbar>
 
-        <div id="first" vertical center layout>
-            <div horizontal start layout>
-                <div vertical center layout style="margin: 0 20px;">
-                    <sr-core-zone-picker id="zonePicker"></sr-core-zone-picker>
-                    <h2>Zone</h2>
-                </div>
+        <sr-wamp-core id="wamp"></sr-wamp-core>
 
-                <div vertical center layout style="margin: 0 20px;">
-                    <sr-core-mode-picker id="modePicker"></sr-core-mode-picker>
-                    <h2>Mode</h2>
+        <template bind if="{{ $.wamp.connected }}">
+            <div id="first" vertical center layout>
+                <div horizontal start layout>
+                    <div vertical center layout style="margin: 0 20px;">
+                        <sr-core-zone-picker id="zonePicker"></sr-core-zone-picker>
+                        <h2>Zone</h2>
+                    </div>
+
+                    <div vertical center layout style="margin: 0 20px;">
+                        <sr-core-mode-picker id="modePicker"></sr-core-mode-picker>
+                        <h2>Mode</h2>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div id="overlay" class="{{ {disabled: disabled} | tokenList }}">
-            <h1>Project running…</h1>
-            <p>
-                <span class="col1">Mode</span><strong>{{$.modePicker.mode === "dev" ? "Development" : "Competition"}}</strong><br />
-                <span class="col1">Zone</span><strong>{{$.zonePicker.zone}}</strong><br />
-                <span class="col1">Project</span><strong>{{project.name}}</strong> @ <strong>{{project.version}}</strong><br />
-                <span class="col1">Pyenv</span><strong>v{{pyenv.version}}</strong>
-            </p>
-        </div>
+            <div id="overlay" class="{{ {disabled: disabled} | tokenList }}">
+                <h1>Project running…</h1>
+                <p>
+                    <span class="col1">Mode</span><strong>{{$.modePicker.mode === "dev" ? "Development" : "Competition"}}</strong><br />
+                    <span class="col1">Zone</span><strong>{{$.zonePicker.zone}}</strong><br />
+                    <span class="col1">Project</span><strong>{{project.name}}</strong> @ <strong>{{project.version}}</strong><br />
+                    <span class="col1">Pyenv</span><strong>v{{pyenv.version}}</strong>
+                </p>
+            </div>
 
-        <sr-wamp-subscribe
-            auto="wamp"
-            topic="org.srobo.state"
-            on-handle="{{ handleState }}"></sr-wamp-subscribe>
-        <sr-wamp-subscribe
-            auto="wamp"
-            topic="org.srobo.project.name"
-            on-handle="{{ handleProjectName }}"></sr-wamp-subscribe>
-        <sr-wamp-subscribe
-            auto="wamp"
-            topic="org.srobo.project.version"
-            on-handle="{{ handleProjectVersion }}"></sr-wamp-subscribe>
-        <sr-wamp-subscribe
-            auto="wamp"
-            topic="org.srobo.pyenv.version"
-            on-handle="{{ handlePyenvVersion }}"></sr-wamp-subscribe>
-        <sr-wamp-call
-            auto="wamp"
-            procedure="org.srobo.state"
-            on-success="{{ handleState }}"></sr-wamp-call>
-        <sr-wamp-call
-            auto="wamp"
-            procedure="org.srobo.pyenv.version"
-            on-success="{{ handlePyenvVersion }}"></sr-wamp-call>
-        <sr-wamp-call
-            auto="wamp"
-            procedure="org.srobo.project.version"
-            on-success="{{ handleProjectVersion }}"></sr-wamp-call>
-        <sr-wamp-call
-            auto="wamp"
-            procedure="org.srobo.project.name"
-            on-success="{{ handleProjectName }}"></sr-wamp-call>
+            <sr-wamp-subscribe
+                auto="wamp"
+                topic="org.srobo.state"
+                on-handle="{{ handleState }}"></sr-wamp-subscribe>
+            <sr-wamp-subscribe
+                auto="wamp"
+                topic="org.srobo.project.name"
+                on-handle="{{ handleProjectName }}"></sr-wamp-subscribe>
+            <sr-wamp-subscribe
+                auto="wamp"
+                topic="org.srobo.project.version"
+                on-handle="{{ handleProjectVersion }}"></sr-wamp-subscribe>
+            <sr-wamp-subscribe
+                auto="wamp"
+                topic="org.srobo.pyenv.version"
+                on-handle="{{ handlePyenvVersion }}"></sr-wamp-subscribe>
+            <sr-wamp-call
+                auto="wamp"
+                procedure="org.srobo.state"
+                on-success="{{ handleState }}"></sr-wamp-call>
+            <sr-wamp-call
+                auto="wamp"
+                procedure="org.srobo.pyenv.version"
+                on-success="{{ handlePyenvVersion }}"></sr-wamp-call>
+            <sr-wamp-call
+                auto="wamp"
+                procedure="org.srobo.project.version"
+                on-success="{{ handleProjectVersion }}"></sr-wamp-call>
+            <sr-wamp-call
+                auto="wamp"
+                procedure="org.srobo.project.name"
+                on-success="{{ handleProjectName }}"></sr-wamp-call>
+        </template>
+
+        <template bind if="{{ $.wamp.disconnected }}">
+            <div flex horizontal center center-justified layout>
+                <h1>You must be connected to the robot to set up the robot.</h1>
+            </div>
+        </template>
     </template>
 
     <script>
