@@ -52,7 +52,8 @@
         <sr-core-pages flex>
             <sr-core-page
                 name="buzzer"
-                online="sr-pages-buzzer"></sr-core-page>
+                online="sr-pages-buzzer"
+                offline="sr-pages-buzzer"></sr-core-page>
             <sr-core-page
                 name="battery"
                 online="sr-pages-battery"
@@ -126,7 +127,7 @@
             });
 
             window.addEventListener("polymer-ready", function(e) {
-                document.querySelector("sr-core-pages").changePage("battery");
+                document.querySelector("sr-core-pages").changePage("buzzer");
             });
         </script>
 
