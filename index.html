@@ -55,7 +55,8 @@
                 online="sr-pages-buzzer"></sr-core-page>
             <sr-core-page
                 name="battery"
-                online="sr-pages-battery"></sr-core-page>
+                online="sr-pages-battery"
+                offline="sr-pages-battery"></sr-core-page>
             <sr-core-page
                 name="camera"
                 online="sr-pages-camera"></sr-core-page>
@@ -125,7 +126,7 @@
             });
 
             window.addEventListener("polymer-ready", function(e) {
-                document.querySelector("sr-core-pages").changePage("setup");
+                document.querySelector("sr-core-pages").changePage("battery");
             });
         </script>
 
