@@ -62,7 +62,7 @@ Example:
                     }.bind(this));
                 },
                 domReady: function() {
-                    this.state = _connection.isOpen ? "online" : "offline";
+                    this.state = (_session && _session.isOpen) ? "online" : "offline";
                 },
                 subscribe: function(topic, handler, options, callback) {
                     console.log("Subscribing to:", topic);
