@@ -16,6 +16,7 @@ mode controller.
 -->
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="/bower_components/core-localstorage/core-localstorage.html" />
 <link rel="import" href="../wamp/index.html" />
 
 <polymer-element name="sr-io-pin-mode-controller" attributes="board pin value">
@@ -38,6 +39,14 @@ mode controller.
             <option value="input_pullup">Input Pull-up</option>
         </select>
 
+        <core-localstorage
+            id="localStorage"
+            name="io_{{ board }}_{{ pin }}_mode"></core-localstorage>
+
+        <sr-wamp-core
+            id="wamp"
+            on-open="{{ handleWampOpen }}"
+            on-close="{{ handleWampClose }}"></sr-wamp-core>
         <sr-wamp-subscribe
             auto="wamp"
             topic="org.srobo.ruggeduinos.pin_mode"
@@ -52,6 +61,12 @@ mode controller.
             board: 0,
             pin: 0,
             value: null,
+            handleWampOpen: function() {
+                // the 'auto' attributes will do this for me
+            },
+            handleWampClose: function() {
+                this.value = this.$.localStorage.value;
+            },
             handleValueChange: function() {
                 this.$.publishValue.go([this.board, this.pin, this.value]);
             },
@@ -60,6 +75,9 @@ mode controller.
                 if (args[0] === this.board && args[1] === this.pin) {
                     this.value = args[2];
                 }
+            },
+            valueChanged: function() {
+                this.$.localStorage.value = this.value;
             }
         });
     </script>
