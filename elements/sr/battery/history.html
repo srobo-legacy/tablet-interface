@@ -49,6 +49,7 @@ screen) and will end up centred inside the element.
             procedure="org.srobo.battery.level"
             on-success="{{ handleBatteryLevel }}"></sr-wamp-call>
         <sr-wamp-subscribe
+            auto="wamp"
             topic="org.srobo.battery.level"
             on-handle="{{ handleBatteryLevel }}"></sr-wamp-subscribe>
     </template>
