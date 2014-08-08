@@ -39,6 +39,14 @@ difference between an analogue and digital pin automatically.
             type="checkbox"
             disabled?="{{ !isInput }}" />
 
+        <core-localstorage
+            id="localStorage"
+            name="io_{{ board }}_{{ pin }}_digital"></core-localstorage>
+
+        <sr-wamp-core
+            id="wamp"
+            on-open="{{ handleWampOpen }}"
+            on-close="{{ handleWampClose }}"></sr-wamp-core>
         <sr-wamp-subscribe
             auto="wamp"
             topic="org.srobo.ruggeduinos.pin_value"
@@ -55,6 +63,12 @@ difference between an analogue and digital pin automatically.
             mode: undefined,
             value: false,
             isInput: false,
+            handleWampOpen: function() {
+                // nothing to do here since 'auto' attributes do the work
+            },
+            handleWampClose: function() {
+                this.value = this.$.localStorage.value;
+            },
             modeChanged: function() {
                 if (typeof(this.mode) === "string") {
                     this.isInput = this.mode.indexOf("input") === 0;
@@ -70,6 +84,9 @@ difference between an analogue and digital pin automatically.
                 if (args[0] === this.board && args[1] === this.pin) {
                     this.value = args[2];
                 }
+            },
+            valueChanged: function() {
+                this.$.localStorage.value = this.value;
             }
         });
     </script>
