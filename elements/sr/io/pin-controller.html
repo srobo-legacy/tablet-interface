@@ -12,6 +12,7 @@ Example:
 -->
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="/bower_components/core-localstorage/core-localstorage.html" />
 <link rel="import" href="../wamp/index.html" />
 <link rel="import" href="analogue-pin-controller.html" />
 <link rel="import" href="digital-pin-controller.html" />
@@ -70,6 +71,19 @@ Example:
                 value="{{ value }}"></sr-io-analogue-pin-controller>
         </template>
 
+        <core-localstorage
+            id="localStorageMode"
+            name="io_{{ board }}_{{ pin }}_mode"></core-localstorage>
+        <core-localstorage
+            id="localStorageType"
+            name="io_{{ board }}_{{ pin }}_type"></core-localstorage>
+        <core-localstorage
+            id="localStorageValue"
+            name="io_{{ board }}_{{ pin }}_value"></core-localstorage>
+
+        <sr-wamp-core
+            on-open="{{ handleWampOpen }}"
+            on-close="{{ handleWampClose }}"></sr-wamp-core>
         <sr-wamp-call
             id="wampGetPin"
             procedure="org.srobo.ruggeduinos.get_pin"
@@ -83,13 +97,27 @@ Example:
             mode: null,
             type: undefined,
             value: 0,
-            domReady: function() {
+            handleWampOpen: function() {
                 this.$.wampGetPin.go([this.board, this.pin]);
+            },
+            handleWampClose: function() {
+                this.mode = this.$.localStorageMode.value;
+                this.type = this.$.localStorageType.value;
+                this.value = this.$.localStorageValue.value;
             },
             handleGetPinSuccess: function(e) {
                 this.mode = e.detail.result.mode;
                 this.type = e.detail.result.type;
                 this.value = e.detail.result.value;
+            },
+            modeChanged: function() {
+                this.$.localStorageMode.value = this.mode;
+            },
+            typeChanged: function() {
+                this.$.localStorageType.value = this.type;
+            },
+            valueChanged: function() {
+                this.$.localStorageValue.value = this.value;
             }
         });
     </script>
