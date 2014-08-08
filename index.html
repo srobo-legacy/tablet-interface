@@ -52,44 +52,34 @@
         <sr-core-pages flex>
             <sr-core-page
                 name="battery"
-                online="sr-pages-battery"
-                offline="sr-pages-battery"></sr-core-page>
+                element="sr-pages-battery"></sr-core-page>
             <sr-core-page
                 name="buzzer"
-                online="sr-pages-buzzer"
-                offline="sr-pages-buzzer"></sr-core-page>
+                element="sr-pages-buzzer"></sr-core-page>
             <sr-core-page
                 name="camera"
-                online="sr-pages-camera"
-                offline="sr-pages-camera"></sr-core-page>
+                element="sr-pages-camera"></sr-core-page>
             <sr-core-page
                 name="io"
-                online="sr-pages-io"
-                offline="sr-pages-io"></sr-core-page>
+                element="sr-pages-io"></sr-core-page>
             <sr-core-page
                 name="logs"
-                online="sr-pages-logs"
-                offline="sr-pages-logs"></sr-core-page>
+                element="sr-pages-logs"></sr-core-page>
             <sr-core-page
                 name="motors"
-                online="sr-pages-motors"
-                offline="sr-pages-motors"></sr-core-page>
+                element="sr-pages-motors"></sr-core-page>
             <sr-core-page
                 name="power"
-                online="sr-pages-power"
-                offline="sr-pages-power"></sr-core-page>
+                element="sr-pages-power"></sr-core-page>
             <sr-core-page
                 name="repl"
-                online="sr-pages-repl"
-                offline="sr-pages-repl"></sr-core-page>
+                element="sr-pages-repl"></sr-core-page>
             <sr-core-page
                 name="servos"
-                online="sr-pages-servos"
-                offline="sr-pages-servos"></sr-core-page>
+                element="sr-pages-servos"></sr-core-page>
             <sr-core-page
                 name="setup"
-                online="sr-pages-setup"
-                offline="sr-pages-setup"></sr-core-page>
+                element="sr-pages-setup"></sr-core-page>
         </sr-core-pages>
 
         <sr-wamp-status-indicator
@@ -221,8 +211,7 @@
                         link.addEventListener("load", function(e) {
                             var pageElement = document.createElement("sr-core-page");
                             pageElement.name = page.name;
-                            pageElement.online = page.elements.online;
-                            pageElement.offline = page.elements.offline;
+                            pageElement.element = page.element;
                             pageElement.hidden = true;
                             document.querySelector("sr-core-pages").appendChild(pageElement);
 

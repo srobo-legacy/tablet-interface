@@ -14,7 +14,7 @@ If `online` or `offline` are omitted, a default message is displayed.
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../wamp/core.html" />
 
-<polymer-element name="sr-core-page" attributes="name online offline">
+<polymer-element name="sr-core-page" attributes="name element">
     <template>
         <style>
             :host {
@@ -27,52 +27,13 @@ If `online` or `offline` are omitted, a default message is displayed.
             }
         </style>
 
-        <sr-wamp-core
-            id="wamp"
-            on-open="{{ handleOpen }}"
-            on-close="{{ handleClose }}"></sr-wamp-core>
-
         <div id="content"></div>
     </template>
 
     <script>
         Polymer("sr-core-page", {
-            online: undefined,
-            offline: undefined,
-            _createDefaultElement: function(msg) {
-                var div = document.createElement("div");
-                div.style.display = "flex";
-                div.style.justifyContent = "center";
-                div.style.alignItems = "center";
-
-                var h1 = document.createElement("h1");
-                h1.textContent = msg;
-                div.appendChild(h1);
-
-                return div;
-            },
-            _createConnectedElement: function() {
-                if (this.online) {
-                    return document.createElement(this.online);
-                } else {
-                    return this._createDefaultElement("Please turn off the robot.");
-                }
-            },
-            _createDisconnectedElement: function() {
-                if (this.offline) {
-                    return document.createElement(this.offline);
-                } else {
-                    return this._createDefaultElement("Please turn on the robot.");
-                }
-            },
-            handleOpen: function() {
-                var element = this._createConnectedElement();
-                this.shadowRoot.replaceChild(element, this.$.content);
-                element.id = "content";
-                this.$.content = element;
-            },
-            handleClose: function() {
-                var element = this._createDisconnectedElement();
+            domReady: function() {
+                var element = document.createElement(this.element);
                 this.shadowRoot.replaceChild(element, this.$.content);
                 element.id = "content";
                 this.$.content = element;
