@@ -24,3 +24,8 @@ Run this to test custom components.
     $ source venv/bin/activate
     $ cd usercode
     $ ./server.py
+
+## Firefox
+
+Under Firefox, the application is very slow at the moment. This will be looked into and (hopefully) fixed. Do **not** be tempted to enable the `dom.webcomponents.enabled` property in `about:config` since it causes Firefox to segmentation fault. :unamused:
+
