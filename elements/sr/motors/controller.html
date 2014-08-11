@@ -1,0 +1,100 @@
+<!--
+`sr-motors-controller` provides an element for controlling all possible aspects
+of the motors on the robot.
+
+Example:
+
+    <sr-motors-controller></sr-motors-controller>
+
+@group SR Motors Elements
+@element sr-motors-controller
+-->
+
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="index.html" />
+<link rel="import" href="../wamp/index.html" />
+
+<polymer-element name="sr-motors-controller">
+    <template>
+        <style>
+            :host {
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: column;
+            }
+
+            #boards {
+                flex: 1 1 auto;
+                display: flex;
+            }
+
+            sr-motors-board-controller {
+                flex: 1 1 auto;
+            }
+        </style>
+
+        <div id="boards"></div>
+
+        <core-localstorage
+            id="localStorage"
+            name="motors"></core-localstorage>
+
+        <sr-wamp-core
+            on-open="{{ handleWampOpen }}"
+            on-close="{{ handleWampClose }}"></sr-wamp-core>
+        <sr-wamp-call
+            auto="wamp"
+            procedure="org.srobo.motors.all_boards"
+            on-success="{{ handleCallSuccess }}"></sr-wamp-call>
+    </template>
+
+    <script>
+        Polymer("sr-motors-controller", {
+            handleWampOpen: function() {
+                // done by the 'auto' attribute
+            },
+            handleWampClose: function() {
+                this._clearBoards();
+
+                var boards = this.$.localStorage.value;
+                if (boards) {
+                    boards.forEach(this._addBoard.bind(this));
+                    this.changeBoard(boards[0]);
+                }
+            },
+            handleCallSuccess: function(e) {
+                this._clearBoards();
+
+                var boards = Object.keys(e.detail.result);
+                boards.forEach(this._addBoard.bind(this));
+                this.$.localStorage.value = boards;
+
+                this.changeBoard(boards[0]);
+            },
+            changeBoard: function(board) {
+                console.log("Changing motor board to:", board);
+
+                var divs = this.shadowRoot.querySelectorAll("sr-motors-board-controller");
+                for (var i = 0; i < divs.length; i++) {
+                    divs[i].hidden = true;
+                }
+                this.shadowRoot.querySelector("#board_" + board).hidden = false;
+            },
+            _clearBoards: function() {
+                var boards = this.$.boards;
+                while (boards.lastChild) {
+                    this.fire("removed", {"serialNumber": boards.lastChild.board});
+                    boards.removeChild(boards.lastChild);
+                }
+            },
+            _addBoard: function(serialNumber) {
+                var element = document.createElement("sr-motors-board-controller");
+                element.id = "board_" + serialNumber;
+                element.board = serialNumber;
+                element.hidden = false;
+                this.$.boards.appendChild(element);
+                this.fire("added", {"serialNumber": serialNumber});
+            }
+        });
+    </script>
+</polymer-element>

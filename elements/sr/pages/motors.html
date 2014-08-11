@@ -24,12 +24,7 @@ Example:
                 flex-direction: column;
             }
 
-            #controllers {
-                flex: 1 1 auto;
-                display: flex;
-            }
-
-            sr-motors-board-controller {
+            sr-motors-controller {
                 flex: 1 1 auto;
             }
         </style>
@@ -38,57 +33,26 @@ Example:
             <h1 flex>Motor Control</h1>
         </sr-ui-toolbar>
 
-        <sr-wamp-core id="wamp"></sr-wamp-core>
-
-        <template bind if="{{ $.wamp.connected }}">
-            <div id="controllers"></div>
-
-            <sr-wamp-call
-                auto="wamp"
-                procedure="org.srobo.motors.all_boards"
-                on-success="{{ handleAllBoardsSuccess }}"></sr-wamp-call>
-        </template>
-
-        <template bind if="{{ $.wamp.disconnected }}">
-            <div flex horizontal center center-justified layout>
-                <h1>You must be connected to the robot to control any motors.</h1>
-            </div>
-        </template>
+        <sr-motors-controller
+            id="controller"
+            on-added="{{ handleBoardAdded }}"
+            on-removed="{{ handleBoardRemoved }}"></sr-motors-controller>
     </template>
 
     <script>
         Polymer("sr-pages-motors", {
-            changeBoard: function(serialNumber) {
-                var divs = this.shadowRoot.querySelectorAll("sr-motors-board-controller");
-                for (var i = 0; i < divs.length; i++) {
-                    divs[i].hidden = true;
-                }
-                this.shadowRoot.querySelector("#board_" + serialNumber).hidden = false;
-            },
-            createBoardButton: function(serialNumber) {
+            handleBoardAdded: function(e) {
+                var serialNumber = e.detail.serialNumber;
                 var button = document.createElement("button");
+                button.id = "button_" + serialNumber;
                 button.textContent = "Board " + serialNumber;
-                button.onclick = this.changeBoard.bind(this, serialNumber);
-                return button;
+                button.onclick = this.$.controller.changeBoard.bind(this.$.controller, serialNumber);
+                this.$.toolbar.appendChild(button);
             },
-            createBoardDiv: function(serialNumber) {
-                var div = document.createElement("sr-motors-board-controller");
-                div.id = "board_" + serialNumber;
-                div.board = serialNumber;
-                return div;
-            },
-            handleAllBoardsSuccess: function(e) {
-                var boards = e.detail.result;
-                for (var serialNumber in boards) {
-                    var button = this.createBoardButton(serialNumber);
-                    this.$.toolbar.appendChild(button);
-
-                    var div = this.createBoardDiv(serialNumber);
-                    var controllers = this.shadowRoot.querySelector("#controllers");
-                    controllers.appendChild(div);
-                }
-
-                this.changeBoard(Object.keys(boards)[0]);
+            handleBoardRemoved: function(e) {
+                var serialNumber = e.detail.serialNumber;
+                var button = this.$.toolbar.querySelector("#button_" + serialNumber);
+                button.parentNode.removeChild(button);
             }
         });
     </script>
