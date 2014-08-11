@@ -12,5 +12,4 @@
 - bulk factory reset
 - buzzer manual control page
 - add HTML5 caching
-- reload custom components when server dies and comes back
 - split up camera page into individual components

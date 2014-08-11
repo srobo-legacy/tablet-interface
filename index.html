@@ -194,7 +194,7 @@
         </script>
 
         <script>
-            window.addEventListener("polymer-ready", function(e) {
+            document.querySelector("sr-wamp-core").addEventListener("open", function() {
                 console.log("Loading custom components…");
                 var userCodeUrl = "http://" + location.hostname + ":10000";
                 var xhr = new XMLHttpRequest();
@@ -213,6 +213,7 @@
                             pageElement.name = page.name;
                             pageElement.element = page.element;
                             pageElement.hidden = true;
+                            pageElement.dataset.custom = true;
                             document.querySelector("sr-core-pages").appendChild(pageElement);
 
                             var btn = document.createElement("sr-ui-fa-button");
@@ -220,6 +221,7 @@
                             btn.textContent = page.title;
                             btn.action = "change-page";
                             btn.dataset.page = page.name;
+                            btn.dataset.custom = true;
                             document.querySelector("sr-ui-navigation-drawer").appendChild(btn);
                         });
 
@@ -227,6 +229,13 @@
                     });
                 });
                 xhr.send();
+            });
+
+            document.querySelector("sr-wamp-core").addEventListener("close", function() {
+                var customElements = document.querySelectorAll("[data-custom=true]");
+                for (var i = 0; i < customElements.length; i++) {
+                    customElements[i].parentNode.removeChild(customElements[i]);
+                }
             });
         </script>
     </body>
