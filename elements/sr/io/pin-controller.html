@@ -14,11 +14,10 @@ Example:
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="/bower_components/core-localstorage/core-localstorage.html" />
 <link rel="import" href="../wamp/index.html" />
-<link rel="import" href="analogue-pin-controller.html" />
-<link rel="import" href="digital-pin-controller.html" />
 <link rel="import" href="pin-mode-controller.html" />
+<link rel="import" href="pin-value-controller.html" />
 
-<polymer-element name="sr-io-pin-controller" attributes="board pin mode type">
+<polymer-element name="sr-io-pin-controller" attributes="board pin mode type value">
     <template>
         <style>
             :host {
@@ -55,21 +54,12 @@ Example:
             pin="{{ pin }}"
             value="{{ mode }}"></sr-io-pin-mode-controller>
 
-        <template bind if="{{ type == 'digital' }}">
-            <sr-io-digital-pin-controller
-                board="{{ board }}"
-                pin="{{ pin }}"
-                mode="{{ mode }}"
-                value="{{ value }}"></sr-io-digital-pin-controller>
-        </template>
-
-        <template bind if="{{ type == 'analogue' }}">
-            <sr-io-analogue-pin-controller
-                board="{{ board }}"
-                pin="{{ pin }}"
-                mode="{{ mode }}"
-                value="{{ value }}"></sr-io-analogue-pin-controller>
-        </template>
+        <sr-io-pin-value-controller
+            board="{{ board }}"
+            pin="{{ pin }}"
+            mode="{{ mode }}"
+            type="{{ type }}"
+            value="{{ value }}"></sr-io-pin-value-controller>
 
         <core-localstorage
             id="localStorageMode"

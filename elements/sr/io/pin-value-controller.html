@@ -1,26 +1,26 @@
 <!--
-`sr-io-digital-pin-controller` provides a pin controller for a digital pin.
+`sr-io-analogue-pin-controller` provides a pin controller for an analogue pin.
 
 Example:
 
-    <sr-io-digital-pin-controller
+    <sr-io-analogue-pin-controller
         board="abc"
         pin="0"
         mode="input"
-        value="1"></sr-io-digital-pin-controller>
+        value="0.5"></sr-io-analogue-pin-controller>
 
 Generally, you will want to use `sr-io-pin-controller` which handles the
 difference between an analogue and digital pin automatically.
 
 @group SR I/O Elements
-@element sr-io-digital-pin-controller
+@element sr-io-analogue-pin-controller
 -->
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="/bower_components/core-localstorage/core-localstorage.html" />
 <link rel="import" href="../wamp/index.html" />
 
-<polymer-element name="sr-io-digital-pin-controller" attributes="board pin mode value">
+<polymer-element name="sr-io-pin-value-controller" attributes="board pin mode type value">
     <template>
         <style>
             :host {
@@ -29,16 +29,36 @@ difference between an analogue and digital pin automatically.
 
             input {
                 padding: 2px;
+            }
+
+            input[type=range] {
+                width: 100%;
+            }
+
+            input[type=checkbox] {
                 width: 32px;
                 height: 32px;
             }
         </style>
 
-        <input
-            checked="{{ value }}"
-            on-change="{{ handleValueChange }}"
-            type="checkbox"
-            disabled?="{{ !isInput }}" />
+        <template bind if="{{ type === 'analogue' }}">
+            <input
+                type="range"
+                value="{{value}}"
+                on-change="{{ handleValueChange }}"
+                min="0"
+                max="3.3"
+                step="0.1"
+                disabled?="{{ !isInput }}" />
+        </template>
+
+        <template bind if="{{ type === 'digital' }}">
+            <input
+                checked="{{ value }}"
+                on-change="{{ handleValueChange }}"
+                type="checkbox"
+                disabled?="{{ !isInput }}" />
+        </template>
 
         <core-localstorage
             id="localStorage"
@@ -58,7 +78,7 @@ difference between an analogue and digital pin automatically.
     </template>
 
     <script>
-        Polymer("sr-io-digital-pin-controller", {
+        Polymer("sr-io-pin-value-controller", {
             board: 0,
             pin: 0,
             mode: undefined,
@@ -78,12 +98,13 @@ difference between an analogue and digital pin automatically.
                 }
             },
             handleValueChange: function() {
-                this.$.publishValue.go([this.board, this.pin, this.value]);
+                var args = [this.board, this.pin, parseFloat(this.value)];
+                this.$.publishValue.go(args);
             },
             handleValue: function(e) {
                 var args = e.detail.args;
                 if (args[0] === this.board && args[1] === this.pin) {
-                    this.value = args[2];
+                    this.value = parseFloat(args[2]);
                 }
             },
             valueChanged: function() {
