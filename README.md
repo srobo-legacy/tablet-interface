@@ -19,6 +19,8 @@ You can then go to `http://localhost:8000` in a browser.
 
 ## User-code
 
+Run this to test custom components.
+
     $ source venv/bin/activate
     $ cd usercode
     $ ./server.py
