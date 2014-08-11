@@ -17,6 +17,12 @@ Example:
     <template>
         <style>
             :host {
+                flex: 1 1 auto;
+                display: flex;
+            }
+
+            #controllers {
+                flex: 1 1 auto;
                 padding: 10px;
                 display: flex;
                 overflow-x: auto;
@@ -27,6 +33,15 @@ Example:
             }
         </style>
 
+        <div id="controllers"></div>
+
+        <core-localstorage
+            id="localStorage"
+            name="servos_{{ board }}"></core-localstorage>
+
+        <sr-wamp-core
+            on-open="{{ handleWampOpen }}"
+            on-close="{{ handleWampClose }}"></sr-wamp-core>
         <sr-wamp-call
             id="wampGetBoard"
             procedure="org.srobo.servos.get_board"
@@ -36,17 +51,40 @@ Example:
     <script>
         Polymer("sr-servos-board-controller", {
             board: 0,
-            domReady: function() {
+            handleWampOpen: function() {
                 this.$.wampGetBoard.go([this.board]);
             },
+            handleWampClose: function() {
+                this._clearControllers();
+                var noControllers = this.$.localStorage.value;
+                this._addAllServoControllers(noControllers);
+            },
             handleGetBoardSuccess: function(e) {
+                this._clearControllers();
                 var servos = e.detail.result.servos;
-                servos.forEach(function(motor, i) {
-                    var element = document.createElement("sr-servos-servo-controller");
-                    element.board = this.board;
-                    element.servo = i;
-                    this.shadowRoot.appendChild(element);
-                }.bind(this));
+                this._addAllServoControllers(servos.length);
+                this.$.localStorage.value = servos.length;
+            },
+            _createServoController: function(servo) {
+                var element = document.createElement("sr-servos-servo-controller");
+                element.board = this.board;
+                element.servo = servo;
+                return element;
+            },
+            _addServoController: function(servo) {
+                var element = this._createServoController(servo);
+                this.$.controllers.appendChild(element);
+            },
+            _addAllServoControllers: function(count) {
+                for (var i = 0; i < count; i++) {
+                    this._addServoController(i);
+                }
+            },
+            _clearControllers: function() {
+                var controllers = this.$.controllers;
+                while (controllers.lastChild) {
+                    controllers.removeChild(controllers.lastChild);
+                }
             }
         });
     </script>
