@@ -91,7 +91,7 @@ Example:
                 var element = document.createElement("sr-io-board-controller");
                 element.id = "board_" + serialNumber;
                 element.board = serialNumber;
-                element.hidden = false;
+                element.hidden = true;
                 this.$.boards.appendChild(element);
                 this.fire("added", {"serialNumber": serialNumber});
             }
