@@ -56,13 +56,12 @@ Example:
             },
             handleWampClose: function() {
                 this._clearControllers();
-                var noPins = this.$.localStorage.value;
-                this._addAllMotorControllers(noPins);
+                var noControllers = this.$.localStorage.value;
+                this._addAllMotorControllers(noControllers);
             },
             handleGetBoardSuccess: function(e) {
                 this._clearControllers();
                 var motors = e.detail.result.motors;
-                console.log(motors);
                 this._addAllMotorControllers(motors.length);
                 this.$.localStorage.value = motors.length;
             },
