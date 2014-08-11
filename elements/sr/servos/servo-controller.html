@@ -56,6 +56,13 @@ You can get the current value with the `value` attribute.
         <span>{{ value | formatValue }}</span>
         <button on-click="{{ handleReset }}">Reset</button>
 
+        <core-localstorage
+            id="localStorage"
+            name="servos_{{ board }}_{{ servo }}_value"></core-localstorage>
+
+        <sr-wamp-core
+            on-open="{{ handleWampOpen }}"
+            on-close="{{ handleWampClose }}"></sr-wamp-core>
         <sr-wamp-call
             id="wampGetServo"
             procedure="org.srobo.servos.get_servo"
@@ -74,8 +81,11 @@ You can get the current value with the `value` attribute.
             board: 0,
             servo: 0,
             value: 50,
-            domReady: function() {
+            handleWampOpen: function() {
                 this.$.wampGetServo.go([this.board, this.servo]);
+            },
+            handleWampClose: function() {
+                this.value = this.$.localStorage.value;
             },
             handleValueChange: function() {
                 var args = [this.board, this.servo, parseFloat(this.value)];
@@ -96,6 +106,9 @@ You can get the current value with the `value` attribute.
             handleReset: function() {
                 this.value = 50;
                 this.$.publishValue.go([this.board, this.servo, 50]);
+            },
+            valueChanged: function(oldVal, newVal) {
+                this.$.localStorage.value = newVal;
             }
         });
     </script>
