@@ -3,6 +3,12 @@
 - camera pause/play
 - camera zoom
 
+- no unlimited photos
+- no more battery
+- camera pausing on the server, not the client
+- markers list as well as camera photo
+- power output order
+
 - add args to sr-wamp-call for use with auto
 - refactor sr-wamp-{call,subscribe,publish} system to be more automatic
 
