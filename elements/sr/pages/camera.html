@@ -99,6 +99,11 @@ Example:
                 } else {
                     old.insertBefore(img, old.children[0]);
                 }
+
+                if (old.children.length >= 10) {
+                    old.removeChild(old.lastChild);
+                }
+
                 return img;
             },
             handleImage: function(e) {
