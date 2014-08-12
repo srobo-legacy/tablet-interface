@@ -18,7 +18,6 @@
         <link rel="stylesheet" href="styles/fonts.css" />
         <link rel="stylesheet" href="styles/common.css" />
 
-        <link rel="import" href="elements/sr/battery/index.html" />
         <link rel="import" href="elements/sr/core/index.html" />
         <link rel="import" href="elements/sr/pages/index.html" />
         <link rel="import" href="elements/sr/ui/index.html" />
@@ -29,8 +28,6 @@
             <sr-ui-fa-button action="toggle-navigation-drawer" icon="bars"></sr-ui-fa-button>
             <div style="height: 20px;"></div>
             <sr-ui-fa-button action="play" icon="play"></sr-ui-fa-button>
-            <div flex></div>
-            <sr-battery-status></sr-battery-status>
         </sr-ui-button-bar>
 
         <sr-ui-navigation-drawer>
@@ -40,7 +37,6 @@
             <sr-ui-fa-button action="change-page" data-page="logs" icon="file-text-o">Logs</sr-ui-fa-button>
             <sr-ui-fa-button action="change-page" data-page="repl" icon="terminal">Console</sr-ui-fa-button>
             <div flex style="min-height: 30px;"></div>
-            <sr-ui-fa-button action="change-page" data-page="battery" icon="bolt">Battery</sr-ui-fa-button>
             <sr-ui-fa-button action="change-page" data-page="buzzer" icon="volume-up">Buzzer</sr-ui-fa-button>
             <sr-ui-fa-button action="change-page" data-page="camera" icon="camera">Camera</sr-ui-fa-button>
             <sr-ui-fa-button action="change-page" data-page="io" icon="file">I/O</sr-ui-fa-button>
@@ -50,9 +46,6 @@
         </sr-ui-navigation-drawer>
 
         <sr-core-pages flex>
-            <sr-core-page
-                name="battery"
-                element="sr-pages-battery"></sr-core-page>
             <sr-core-page
                 name="buzzer"
                 element="sr-pages-buzzer"></sr-core-page>
