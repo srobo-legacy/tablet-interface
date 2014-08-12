@@ -12,11 +12,18 @@ Example:
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../wamp/index.html" />
+<link rel="import" href="../ui/index.html" />
 
 <polymer-element name="sr-pages-camera">
     <template>
         <style>
             :host {
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: column;
+            }
+
+            #content {
                 flex: 1 1 auto;
                 display: flex;
             }
@@ -52,26 +59,32 @@ Example:
             }
         </style>
 
+        <sr-ui-toolbar>
+            <h1>Camera</h1>
+        </sr-ui-toolbar>
+
         <sr-wamp-core id="wamp"></sr-wamp-core>
 
-        <template bind if="{{ $.wamp.connected }}">
-            <div id="current">
-                <img id="image"></img>
-            </div>
+        <div id="content">
+            <template bind if="{{ $.wamp.connected }}">
+                <div id="current">
+                    <img id="image"></img>
+                </div>
 
-            <div id="old"></div>
+                <div id="old"></div>
 
-            <sr-wamp-subscribe
-                auto="wamp"
-                topic="org.srobo.camera.image"
-                on-handle="{{handleImage}}"></sr-wamp-subscribe>
-        </template>
+                <sr-wamp-subscribe
+                    auto="wamp"
+                    topic="org.srobo.camera.image"
+                    on-handle="{{handleImage}}"></sr-wamp-subscribe>
+            </template>
 
-        <template bind if="{{ $.wamp.disconnected }}">
-            <div flex horizontal center center-justified layout>
-                <h1>You must be connected to the robot to view the camera.</h1>
-            </div>
-        </template>
+            <template bind if="{{ $.wamp.disconnected }}">
+                <div flex horizontal center center-justified layout>
+                    <h1>You must be connected to the robot to view the camera.</h1>
+                </div>
+            </template>
+        </div>
     </template>
 
     <script>
