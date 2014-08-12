@@ -60,10 +60,19 @@ Example:
         </style>
 
         <sr-ui-toolbar>
-            <h1>Camera</h1>
+            <h1 flex>Camera</h1>
+
+            <template bind if="{{ $.wamp.connected }}">
+                <button on-click="{{ handlePlayPauseClicked }}">Play</button>
+            </template>
         </sr-ui-toolbar>
 
         <sr-wamp-core id="wamp"></sr-wamp-core>
+
+        <sr-wamp-subscribe
+            id="wampImageSub"
+            topic="org.srobo.camera.image"
+            on-handle="{{ handleImage }}"></sr-wamp-subscribe>
 
         <div id="content">
             <template bind if="{{ $.wamp.connected }}">
@@ -72,11 +81,6 @@ Example:
                 </div>
 
                 <div id="old"></div>
-
-                <sr-wamp-subscribe
-                    auto="wamp"
-                    topic="org.srobo.camera.image"
-                    on-handle="{{handleImage}}"></sr-wamp-subscribe>
             </template>
 
             <template bind if="{{ $.wamp.disconnected }}">
@@ -89,6 +93,7 @@ Example:
 
     <script>
         Polymer("sr-pages-camera", {
+            isPlaying: false,
             deselectAll: function() {
                 var old = this.shadowRoot.querySelector("#old");
                 var imgs = old.children;
@@ -123,6 +128,17 @@ Example:
                 var src = e.detail.args[0];
                 var img = this.addOldImage(src);
                 this.changeImage(img);
+            },
+            handlePlayPauseClicked: function(e) {
+                this.isPlaying = !this.isPlaying;
+
+                if (this.isPlaying) {
+                    e.target.textContent = "Pause";
+                    this.$.wampImageSub.subscribe();
+                } else {
+                    e.target.textContent = "Play";
+                    this.$.wampImageSub.unsubscribe();
+                }
             }
         });
     </script>
