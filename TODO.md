@@ -13,6 +13,5 @@
 - saving camera images
 - bulk factory reset
 - buzzer manual control page
-- REPL page
 - add HTML5 caching
 - split up camera page into individual components

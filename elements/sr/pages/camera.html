@@ -11,6 +11,7 @@ Example:
 -->
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="../camera/index.html" />
 <link rel="import" href="../wamp/index.html" />
 <link rel="import" href="../ui/index.html" />
 
@@ -78,6 +79,9 @@ Example:
             <template bind if="{{ $.wamp.connected }}">
                 <div id="current">
                     <img id="image"></img>
+
+                    <sr-camera-annotation-button
+                        style="top: 100px; left: 100px;"></sr-camera-annotation-button>
                 </div>
 
                 <div id="old"></div>
