@@ -3,8 +3,6 @@
 - camera pause/play
 - camera zoom
 
-- no unlimited photos
-- camera pausing on the server, not the client
 - markers list as well as camera photo
 
 - add args to sr-wamp-call for use with auto
