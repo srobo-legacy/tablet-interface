@@ -31,7 +31,6 @@ Example:
 
             #current {
                 flex: 1 1 auto;
-                display: flex;
             }
 
             #old {
@@ -41,11 +40,6 @@ Example:
                 overflow: auto;
                 border-left: 1px solid black;
                 width: 20%;
-            }
-
-            #current img {
-                flex: 1 1 auto;
-                object-fit: contain;
             }
 
             #old img {
@@ -77,9 +71,7 @@ Example:
 
         <div id="content">
             <template bind if="{{ $.wamp.connected }}">
-                <div id="current">
-                    <img id="image"></img>
-                </div>
+                <sr-camera-frame id="current"></sr-camera-frame>
 
                 <div id="old"></div>
             </template>
@@ -105,8 +97,8 @@ Example:
             changeImage: function(img) {
                 this.deselectAll();
                 img.className = "selected";
-                var image = this.shadowRoot.querySelector("#image");
-                image.src = img.src;
+                var current = this.shadowRoot.querySelector("#current");
+                current.setImageSource(img.src);
             },
             addOldImage: function(src) {
                 var old = this.shadowRoot.querySelector("#old");

@@ -1,0 +1,37 @@
+<!--
+`sr-camera-frame` provides a container for a single frame from the camera.
+
+Example:
+
+    <sr-camera-frame></sr-camera-frame>
+
+@group SR Camera Elements
+@element sr-camera-frame
+-->
+
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+
+<polymer-element name="sr-camera-frame">
+    <template>
+        <style>
+            :host {
+                display: flex;
+            }
+
+            img {
+                flex: 1 1 auto;
+                object-fit: contain;
+            }
+        </style>
+
+        <img id="image" />
+    </template>
+
+    <script>
+        Polymer("sr-camera-frame", {
+            setImageSource: function(url) {
+                this.$.image.src = url;
+            }
+        });
+    </script>
+</polymer-element>
