@@ -144,16 +144,3 @@ Return a dictionary mapping serial numbers to ruggeduino board objects.
 ### PUB/SUB org.srobo.camera.image(`image_url`)
 
 When a new camera image is available.
-
-
-### RPC org.srobo.battery
-
-Return a battery object (`{'level': level}`) for the robot battery.
-
-### RPC org.srobo.battery.level
-
-Return the batter level.
-
-### PUB/SUB org.srobo.battery.level
-
-When the robot battery level changes.
