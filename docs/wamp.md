@@ -4,6 +4,11 @@
 
  - `board`s are referenced by their part code, not the index.
 
+## Pub/Sub
+
+When you subscribe to a message queue, you will receive the last message as the
+first publish event you will get.
+
 ## Definitions
 
 ### RPC org.srobo.hello(`client_version`)
