@@ -4,10 +4,15 @@
 
  - `board`s are referenced by their part code, not the index.
 
-## Pub/Sub
+## Pub/Sub "Last message"
 
-When you subscribe to a message queue, you will receive the last message as the
-first publish event you will get.
+As a proposal to solve race conditions between making a RPC and subscribing on
+a topic, when you subscribe the last message sent on that topic could be
+published to your client only.
+
+I have spent some time trying to get this to work, but unfortunately to no
+avail. However, it is probably simply due to lack of knowledge about how
+Autobahn works.
 
 ## Definitions
 
