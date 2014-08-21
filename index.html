@@ -114,7 +114,11 @@
             });
 
             window.addEventListener("fullscreen", function(e) {
-                document.body.webkitRequestFullscreen();
+                if (document.webkitFullscreenElement) {
+                    document.webkitExitFullscreen();
+                } else {
+                    document.body.webkitRequestFullscreen();
+                }
             });
 
             window.addEventListener("polymer-ready", function(e) {
