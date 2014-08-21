@@ -20,7 +20,6 @@
 - slow loading on tablet
   - create/destroy pages as they change
   - subscribe on page change
-- fullscreen mode
 - zone changes when mode changes
 
 - no manual override when running

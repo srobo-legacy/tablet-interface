@@ -27,6 +27,8 @@
             <sr-ui-fa-button action="toggle-navigation-drawer" icon="bars"></sr-ui-fa-button>
             <div style="height: 20px;"></div>
             <sr-ui-fa-button action="play" icon="play"></sr-ui-fa-button>
+            <div flex></div>
+            <sr-ui-fa-button action="fullscreen" icon="external-link-square"></sr-ui-fa-button>
         </sr-ui-button-bar>
 
         <sr-ui-navigation-drawer>
@@ -109,6 +111,10 @@
                 } else if (e.detail.sender.icon == "stop") {
                     document.querySelector("#wamp-stop").go();
                 }
+            });
+
+            window.addEventListener("fullscreen", function(e) {
+                document.body.webkitRequestFullscreen();
             });
 
             window.addEventListener("polymer-ready", function(e) {
