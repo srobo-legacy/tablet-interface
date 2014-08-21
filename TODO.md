@@ -27,5 +27,4 @@
 - power board diagram
 - current output on power board
 - motor board break/free wheel
-- change to logs page from set up
 - count up timer
