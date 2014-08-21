@@ -23,3 +23,13 @@
 - fullscreen mode
 - zone changes when mode changes
 - tablet + phone situation
+
+- no manual override when running
+- manual camera R.see when user code is running
+- swap input and output
+- tabbed UI
+- power board diagram
+- current output on power board
+- motor board break/free wheel
+- change to logs page from set up
+- count up timer
