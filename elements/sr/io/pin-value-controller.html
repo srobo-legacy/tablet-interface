@@ -98,7 +98,13 @@ difference between an analogue and digital pin automatically.
                 }
             },
             handleValueChange: function() {
-                var args = [this.board, this.pin, parseFloat(this.value)];
+                var args;
+                if (this.type === "digital") {
+                    args = [this.board, this.pin, this.value];
+                } else {
+                    args = [this.board, this.pin, parseFloat(this.value)];
+                }
+
                 this.$.publishValue.go(args);
             },
             handleValue: function(e) {
