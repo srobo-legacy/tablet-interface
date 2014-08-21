@@ -63,7 +63,7 @@ of `dev` or `comp`.
             topic="org.srobo.mode"
             on-handle="{{ handleMode }}"></sr-wamp-subscribe>
         <sr-wamp-publish
-            id="pub"
+            id="wampPublishMode"
             topic="org.srobo.mode"></sr-wamp-publish>
         <sr-wamp-call
             auto="wamp"
@@ -80,14 +80,17 @@ of `dev` or `comp`.
                     (function(btn) {
                         btn.addEventListener("click", function(e) {
                             this.mode = btn.dataset.mode;
+                            this.publishMode();
                         }.bind(this));
                     }.bind(this)(buttons[i]));
                 }
             },
-            modeChanged: function(oldVal, newVal) {
-                if (oldVal != null) {
-                    this.$.pub.go([this.mode]);
+            publishMode: function(mode) {
+                if (mode === undefined) {
+                    mode = this.mode;
                 }
+
+                this.$.wampPublishMode.go([mode]);
             },
             handleMode: function(e) {
                 this.mode = e.detail.result || e.detail.args[0];

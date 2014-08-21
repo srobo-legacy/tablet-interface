@@ -68,7 +68,7 @@ You can get/set the current zone using the `zone` attribute.
             topic="org.srobo.zone"
             on-handle="{{ handleZone }}"></sr-wamp-subscribe>
         <sr-wamp-publish
-            id="pub"
+            id="wampPublishZone"
             topic="org.srobo.zone"></sr-wamp-publish>
         <sr-wamp-call
             auto="wamp"
@@ -84,13 +84,16 @@ You can get/set the current zone using the `zone` attribute.
                 for (var i = 0; i < buttons.length; i++) {
                     buttons[i].addEventListener("click", function(e) {
                         this.zone = e.target.dataset.zone;
+                        this.publishZone();
                     }.bind(this));
                 }
             },
-            zoneChanged: function(oldVal, newVal) {
-                if (oldVal != null) {
-                    this.$.pub.go([parseInt(newVal)]);
+            publishZone: function(zone) {
+                if (zone === undefined) {
+                    zone = this.zone;
                 }
+
+                this.$.wampPublishZone.go([parseInt(zone)]);
             },
             handleZone: function(e) {
                 if (e.detail.result !== undefined) {
