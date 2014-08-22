@@ -115,7 +115,7 @@
                 if ((document.fullscreenElement || document.webkitFullscreenElement)) {
                     var exitFullscreen = document.exitFullscreen ||
                                          document.webkitExitFullscreen;
-                    exitFullscreen();
+                    exitFullscreen.bind(document)(); // Oh, come on...
                 } else {
                     var requestFullscreen = document.body.requestFullscreen ||
                                             document.body.webkitRequestFullscreen;
