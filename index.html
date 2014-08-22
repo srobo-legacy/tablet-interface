@@ -112,13 +112,15 @@
             });
 
             window.addEventListener("fullscreen", function(e) {
-                if ((document.fullscreenElement || document.webkitFullscreenElement)) {
+                if ((document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreen)) {
                     var exitFullscreen = document.exitFullscreen ||
-                                         document.webkitExitFullscreen;
+                                         document.webkitExitFullscreen ||
+                                         document.mozCancelFullScreen;
                     exitFullscreen.bind(document)(); // Oh, come on...
                 } else {
                     var requestFullscreen = document.body.requestFullscreen ||
-                                            document.body.webkitRequestFullscreen;
+                                            document.body.webkitRequestFullscreen ||
+                                            document.body.mozRequestFullScreen;
                     requestFullscreen.bind(document.body)(); // JAVASCRIPTTTTTTTTTTTTTTT!!!!
                 }
             });
