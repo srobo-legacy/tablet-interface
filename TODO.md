@@ -16,7 +16,6 @@
 - add HTML5 caching
 - split up camera page into individual components
 
-- fix log race condition using line numbers
 - slow loading on tablet
   - create/destroy pages as they change
   - subscribe on page change
