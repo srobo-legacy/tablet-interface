@@ -53,9 +53,10 @@ Example:
                 this.$.log.entries = this.$.localStorage.value;
             },
             handleLogGet: function(e) {
-                e.detail.result.contents.forEach(function(entry, i) {
-                    this.addEntry(entry, i, false);
-                }.bind(this));
+                var contents = e.detail.result.contents;
+                this.$.log.entries = contents.map(function(entry, i) {
+                    return {text: entry, lineNumber: i};
+                });
             },
             handleLogAppend: function(e) {
                 if (e.detail.args[0] === this.log) {
