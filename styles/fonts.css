@@ -18,10 +18,3 @@
     font-weight: 700;
     src: local("Lato Bold"), url("../fonts/lato/700.woff") format("woff");
 }
-
-@font-face {
-    font-family: "Inconsolata";
-    font-style: normal;
-    font-weight: 500;
-    src: local("Inconsolata"), url("../fonts/inconsolata/500.woff") format("woff");
-}
