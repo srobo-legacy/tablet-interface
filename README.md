@@ -17,7 +17,7 @@ The interface for the tablets contained in the SR 2015 kit.
 
 You can then go to `http://localhost:8000` in a browser.
 
-## User-code
+## User code
 
 Run this to test custom components.
 
@@ -29,7 +29,7 @@ Run this to test custom components.
 
 Under Firefox, the application is very slow at the moment. This will be looked into and (hopefully) fixed. Do **not** be tempted to enable the `dom.webcomponents.enabled` property in `about:config` since it causes Firefox to segmentation fault. :unamused:
 
-## Chrome/Chromium
+## Chrom(e|ium)
 
 Chrome runs much faster than Firefox on the tablets at the moment. The cause of which seems to be buried somewhere in Polymer since it is changing the prototype of objects using `__proto__` which is known to be slow in Firefox.
 
