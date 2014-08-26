@@ -23,14 +23,14 @@ Example:
             }
         </style>
 
-        <script src="paper.js"></script>
-
         <canvas id="canvas" resize></canvas>
     </template>
 
+    <script src="paper.js"></script>
+
     <script>
         Polymer("sr-camera-frame", {
-            ready: function() {
+            domReady: function() {
                 var canvas = this.$.canvas;
         		paper.setup(canvas);
         		var path = new paper.Path();
@@ -39,6 +39,9 @@ Example:
         		path.moveTo(start);
         		path.lineTo(start.add([ 200, -50 ]));
         		paper.view.draw();
+            },
+            setImageSource: function(src) {
+
             }
         });
     </script>
