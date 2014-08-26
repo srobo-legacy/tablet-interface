@@ -18,21 +18,27 @@ Example:
                 display: flex;
             }
 
-            img {
+            canvas {
                 flex: 1 1 auto;
-                object-fit: contain;
             }
         </style>
 
-        <script src="bonsai-0.4.1.min.js"></script>
+        <script src="paper.js"></script>
 
-        <img id="image" />
+        <canvas id="canvas" resize></canvas>
     </template>
 
     <script>
         Polymer("sr-camera-frame", {
-            setImageSource: function(url) {
-                this.$.image.src = url;
+            ready: function() {
+                var canvas = this.$.canvas;
+        		paper.setup(canvas);
+        		var path = new paper.Path();
+        		path.strokeColor = 'black';
+        		var start = new paper.Point(100, 100);
+        		path.moveTo(start);
+        		path.lineTo(start.add([ 200, -50 ]));
+        		paper.view.draw();
             }
         });
     </script>
