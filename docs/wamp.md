@@ -33,7 +33,7 @@ Return the current mode the robot is configured as. Mode is one of `comp` or `de
 When the mode changes.
 
 
-### PUB/SUB org.srobo.logs.append(`log`, `entry`)
+### PUB/SUB org.srobo.logs.append(`log`, `entry`, `line_no`)
 
 When a single entry in the log has been added.
 
