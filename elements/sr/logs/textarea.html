@@ -34,14 +34,9 @@ Example:
 
     <script>
         Polymer("sr-logs-textarea", {
+            entries: [],
             clear: function() {
-                this.$.log.innerHTML = "";
-            },
-            get content() {
-                return this.$.log.innerHTML;
-            },
-            set content(text) {
-                this.$.log.innerHTML = text;
+                this.entries = [];
             },
             isAtBottom: function() {
                 var log = this.$.log;
@@ -51,23 +46,55 @@ Example:
                 var log = this.$.log;
                 log.scrollTop = log.scrollHeight;
             },
-            addEntry: function(text, addDate) {
+            findEntry: function(lineNumber) {
+                for (var i = 0; i < this.entries.length; i++) {
+                    if (this.entries[i].lineNumber === lineNumber) {
+                        return this.entries[i];
+                    }
+                }
+            },
+            addEntry: function(text, lineNumber, addDate) {
+                if (this.findEntry(lineNumber)) {
+                    // the line is already in the text area
+                    return;
+                }
+
                 if (addDate === undefined) {
                     addDate = true;
                 }
 
                 var isAtBottom = this.isAtBottom();
+                var entry = {text: text, lineNumber: lineNumber};
 
                 if (addDate) {
-                    var date = moment().format("HH:mm:ss");
-                    this.$.log.innerHTML += date + ": ";
+                    entry.date = moment().format("HH:mm:ss");
                 }
 
-                this.$.log.innerHTML += text + "\n";
+                this.entries.push(entry);
+                this.$.log.textContent = this._getTextareaContents();
 
                 if (isAtBottom) {
                     this.scrollToBottom();
                 }
+            },
+            _getTextareaContents: function() {
+                var text = "";
+
+                this.entries.forEach(function(entry) {
+                    text += "[" + entry.lineNumber + "] ";
+
+                    if (entry.date) {
+                        text += entry.date + ": ";
+                    }
+
+                    text += entry.text;
+                    text += "\n";
+                });
+
+                return text;
+            },
+            contentChanged: function() {
+                this.$.log.textContent = this._getTextareaContents();
             }
         });
     </script>

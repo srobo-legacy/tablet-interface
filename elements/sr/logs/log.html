@@ -50,21 +50,21 @@ Example:
                 this.$.wampCall.go([this.log]);
             },
             handleWampClose: function() {
-                this.$.log.content = this.$.localStorage.value;
+                this.$.log.entries = this.$.localStorage.value;
             },
             handleLogGet: function(e) {
-                e.detail.result.contents.forEach(function(entry) {
-                    this.addEntry(entry, false);
+                e.detail.result.contents.forEach(function(entry, i) {
+                    this.addEntry(entry, i, false);
                 }.bind(this));
             },
             handleLogAppend: function(e) {
                 if (e.detail.args[0] === this.log) {
-                    this.addEntry(e.detail.args[1]);
+                    this.addEntry(e.detail.args[1], e.detail.args[2]);
                 }
             },
-            addEntry: function(entry, includeDate) {
-                this.$.log.addEntry(entry, includeDate);
-                this.$.localStorage.value = this.$.log.content;
+            addEntry: function(entry, lineNumber, includeDate) {
+                this.$.log.addEntry(entry, lineNumber, includeDate);
+                this.$.localStorage.value = this.$.log.entries;
             },
             scrollToBottom: function() {
                 this.$.log.scrollToBottom();
