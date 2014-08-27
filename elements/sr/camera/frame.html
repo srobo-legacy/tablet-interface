@@ -41,7 +41,8 @@ Example:
                 paper.view.draw();
             },
             setImageSource: function(src) {
-
+                var raster = new paper.Raster(src);
+                paper.view.draw();
             }
         });
     </script>
