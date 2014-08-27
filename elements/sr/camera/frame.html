@@ -33,15 +33,12 @@ Example:
             domReady: function() {
                 var canvas = this.$.canvas;
                 paper.setup(canvas);
-                var path = new paper.Path();
-                path.strokeColor = "black";
-                var start = new paper.Point(100, 100);
-                path.moveTo(start);
-                path.lineTo(start.add([ 200, -50 ]));
+
+                this.raster = new paper.Raster();
                 paper.view.draw();
             },
             setImageSource: function(src) {
-                var raster = new paper.Raster(src);
+                this.raster.source = src;
                 paper.view.draw();
             }
         });
