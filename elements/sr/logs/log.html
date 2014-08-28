@@ -57,6 +57,7 @@ Example:
                 this.$.log.entries = contents.map(function(entry, i) {
                     return {text: entry, lineNumber: i};
                 });
+                this.$.localStorage.value = this.$.log.entries;
             },
             handleLogAppend: function(e) {
                 if (e.detail.args[0] === this.log) {

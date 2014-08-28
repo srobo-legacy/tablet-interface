@@ -34,7 +34,9 @@ Example:
 
     <script>
         Polymer("sr-logs-textarea", {
-            entries: [],
+            created: function() {
+                this.entries = [];
+            },
             clear: function() {
                 this.entries = [];
             },
