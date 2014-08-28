@@ -23,23 +23,26 @@ Example:
             }
         </style>
 
-        <canvas id="canvas" resize></canvas>
+        <div id="paper"></div>
     </template>
 
-    <script src="paper.js"></script>
+    <script src="raphael-min.js"></script>
 
     <script>
         Polymer("sr-camera-frame", {
             domReady: function() {
-                var canvas = this.$.canvas;
-                paper.setup(canvas);
-
-                this.raster = new paper.Raster();
-                paper.view.draw();
+                this.paper = Raphael(this.$.paper, 320, 320);
+                this._oldImage = undefined;
             },
             setImageSource: function(src) {
-                this.raster.source = src;
-                paper.view.draw();
+                var img = document.createElement("img");
+                img.src = src;
+                img.onload = function() {
+                    if (this._oldImage) {
+                        this._oldImage.remove();
+                    }
+                    this._oldImage = this.paper.image(img.src, 0, 0, img.width, img.height);
+                }.bind(this);
             }
         });
     </script>
