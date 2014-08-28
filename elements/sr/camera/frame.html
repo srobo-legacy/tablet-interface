@@ -32,16 +32,14 @@ Example:
         Polymer("sr-camera-frame", {
             domReady: function() {
                 this.paper = Raphael(this.$.paper, 320, 320);
-                this._oldImage = undefined;
             },
             setImage: function(src, markers) {
+                this.paper.clear();
+
                 var img = document.createElement("img");
                 img.src = src;
                 img.onload = function() {
-                    if (this._oldImage) {
-                        this._oldImage.remove();
-                    }
-                    this._oldImage = this.paper.image(img.src, 0, 0, img.width, img.height);
+                    this.paper.image(img.src, 0, 0, img.width, img.height);
                 }.bind(this);
             }
         });
