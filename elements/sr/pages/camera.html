@@ -87,6 +87,9 @@ Example:
     <script>
         Polymer("sr-pages-camera", {
             isPlaying: false,
+            created: function() {
+                this._markerInfo = {};
+            },
             deselectAll: function() {
                 var old = this.shadowRoot.querySelector("#old");
                 var imgs = old.children;
@@ -98,7 +101,7 @@ Example:
                 this.deselectAll();
                 img.className = "selected";
                 var current = this.shadowRoot.querySelector("#current");
-                current.setImageSource(img.src);
+                current.setImage(img.src, this._markerInfo[img.src]);
             },
             addOldImage: function(src) {
                 var old = this.shadowRoot.querySelector("#old");
@@ -120,6 +123,7 @@ Example:
             handleImage: function(e) {
                 var src = e.detail.args[0];
                 var img = this.addOldImage(src);
+                this._markerInfo[img.src] = e.detail.args[1];
                 this.changeImage(img);
             },
             handlePlayPauseClicked: function(e) {

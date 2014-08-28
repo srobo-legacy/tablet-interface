@@ -34,7 +34,7 @@ Example:
                 this.paper = Raphael(this.$.paper, 320, 320);
                 this._oldImage = undefined;
             },
-            setImageSource: function(src) {
+            setImage: function(src, markers) {
                 var img = document.createElement("img");
                 img.src = src;
                 img.onload = function() {
