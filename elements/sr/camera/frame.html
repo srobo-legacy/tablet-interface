@@ -61,8 +61,12 @@ Example:
                     this.paper.setViewBox(0, 0, img.width, img.height);
 
                     markers.forEach(function(marker) {
-                        this.paper.rect(marker.x, marker.y, marker.width,
-                                        marker.height, 2);
+                        var rect = this.paper.rect(marker.x, marker.y,
+                                                   marker.width, marker.height);
+                        rect.attr({
+                            fill: "rgb(44, 62, 80)",
+                            stroke: "none"
+                        });
                     }.bind(this));
 
                     // Make the view in the middle of the element rather than
