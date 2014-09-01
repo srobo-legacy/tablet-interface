@@ -67,6 +67,10 @@ Example:
                             fill: "rgb(44, 62, 80)",
                             stroke: "none"
                         });
+
+                        rect.click(function() {
+                            alert(marker.code);
+                        })
                     }.bind(this));
 
                     // Make the view in the middle of the element rather than
