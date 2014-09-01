@@ -18,7 +18,12 @@ Example:
                 display: flex;
             }
 
-            canvas {
+            #paper {
+                flex: 1 1 auto;
+                display: flex;
+            }
+
+            #paper svg {
                 flex: 1 1 auto;
             }
         </style>
@@ -31,7 +36,14 @@ Example:
     <script>
         Polymer("sr-camera-frame", {
             domReady: function() {
-                this.paper = Raphael(this.$.paper, 320, 320);
+                this.paper = Raphael(this.$.paper);
+
+                // Raphael.js insists on having absolute width and height
+                // values. We need to remove them so the `svg` element fits
+                // into the element whatever size it is.
+                var svg = this.shadowRoot.querySelector("#paper svg");
+                svg.removeAttribute("width");
+                svg.removeAttribute("height");
             },
             setImage: function(src, markers) {
                 this.paper.clear();
