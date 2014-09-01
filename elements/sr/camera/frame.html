@@ -31,7 +31,8 @@ Example:
         <div id="paper"></div>
     </template>
 
-    <script src="raphael-min.js"></script>
+    <script src="raphael.min.js"></script>
+    <script src="raphael.pan-zoom.min.js"></script>
 
     <script>
         Polymer("sr-camera-frame", {
@@ -44,6 +45,11 @@ Example:
                 var svg = this.shadowRoot.querySelector("#paper svg");
                 svg.removeAttribute("width");
                 svg.removeAttribute("height");
+
+                // Add the `pan-zoom` plugin.
+                /*var panZoom = this.paper.panzoom({initialZoom: 6, initialPosition: {x: 120, y: 70}});
+                panZoom.enable();*/
+
             },
             setImage: function(src, markers) {
                 this.paper.clear();
@@ -52,11 +58,17 @@ Example:
                 img.src = src;
                 img.onload = function() {
                     this.paper.image(img.src, 0, 0, img.width, img.height);
+                    this.paper.setViewBox(0, 0, img.width, img.height);
 
                     markers.forEach(function(marker) {
                         this.paper.rect(marker.x, marker.y, marker.width,
                                         marker.height, 2);
                     }.bind(this));
+
+                    // Make the view in the middle of the element rather than
+                    // on the left, purely for cosmetic reasons.
+                    var svg = this.shadowRoot.querySelector("#paper svg");
+                    svg.setAttribute("preserveAspectRatio", "xMidYMid");
                 }.bind(this);
             }
         });
