@@ -1,29 +1,37 @@
-- camera annotations
-- camera custom images
-- camera pause/play
-- camera zoom
+# Various ‘to do’ items
 
-- markers list as well as camera photo
+## Camera
 
-- add args to sr-wamp-call for use with auto
-- refactor sr-wamp-{call,subscribe,publish} system to be more automatic
+ - Zooming and Panning
+ - List of markers
+ - Saving camera images
 
-- produce example pages which control individual motors or whatever
+## WAMP
 
-- saving camera images
-- bulk factory reset
-- buzzer manual control page
-- add HTML5 caching
-- split up camera page into individual components
+ - Add args to sr-wamp-call for use with auto.
+ - Refactor sr-wamp-{call,subscribe,publish} system to be more automatic.
 
-- slow loading on tablet
-  - create/destroy pages as they change
-  - subscribe on page change
+## Docs
 
-- no manual override when running
-- manual camera R.see when user code is running
-- tabbed UI
-- power board diagram
-- current output on power board
-- motor board break/free wheel
-- count up timer
+ - Produce example pages which control individual motors or whatever.
+
+## Pages
+
+ - Buzzer manual control page
+
+## Technical
+
+ - HTML5 caching
+ - Slow loading on tablet
+   - Create/destroy pages as they change
+   - Subscribe on page change
+
+## Misc
+
+ - no manual override when running
+ - manual camera R.see when user code is running
+ - tabbed UI
+ - power board diagram
+ - current output on power board
+ - motor board break/free wheel
+ - count up timer
