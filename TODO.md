@@ -5,6 +5,7 @@
  - Zooming and Panning
  - List of markers
  - Saving camera images
+ - Fix issue when disconnecting and reconnecting to server
 
 ## WAMP
 
