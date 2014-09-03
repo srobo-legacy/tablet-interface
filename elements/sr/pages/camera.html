@@ -62,7 +62,9 @@ Example:
             </template>
         </sr-ui-toolbar>
 
-        <sr-wamp-core id="wamp"></sr-wamp-core>
+        <sr-wamp-core
+            id="wamp"
+            on-close="{{ handleWampClose }}"></sr-wamp-core>
 
         <sr-wamp-subscribe
             id="wampImageSub"
@@ -136,6 +138,9 @@ Example:
                     e.target.textContent = "Play";
                     this.$.wampImageSub.unsubscribe();
                 }
+            },
+            handleWampClose: function() {
+                this.isPlaying = false;
             }
         });
     </script>
