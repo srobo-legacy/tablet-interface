@@ -83,6 +83,16 @@ Example:
                             "font-weight": "bold",
                             "fill": "black"
                         });
+
+                        text.hide();
+
+                        rect.click(function() {
+                            if (text.node.style.display === "none") {
+                                text.show();
+                            } else {
+                                text.hide();
+                            }
+                        });
                     }.bind(this));
 
                     // Make the view in the middle of the element rather than
