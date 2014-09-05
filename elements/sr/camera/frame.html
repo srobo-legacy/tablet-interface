@@ -74,9 +74,15 @@ Example:
                             stroke: "none"
                         });
 
-                        rect.click(function() {
-                            alert("Code: " + marker.code + "\nDistance: " + marker.distance);
-                        })
+                        var text = "Code: " + marker.code + "\nDistance: " + marker.distance;
+                        var text = this.paper.text(lastVertex[0], lastVertex[1], text);
+
+                        text.attr({
+                            "font-size": "52pt",
+                            "font-family": "Lato",
+                            "font-weight": "bold",
+                            "fill": "black"
+                        });
                     }.bind(this));
 
                     // Make the view in the middle of the element rather than
