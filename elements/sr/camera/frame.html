@@ -59,7 +59,8 @@ Example:
                 var text = this.paper.text(centreX, centreY, text);
                 text.attr({
                     "font-family": "sans-serif",
-                    "font-size": "48pt"
+                    "font-size": "48pt",
+                    "fill": "black"
                 });
 
                 var textBox = text.getBBox();
@@ -77,6 +78,13 @@ Example:
                                            textBox.width + margin * 2,
                                            textBox.height + margin * 2,
                                            margin);
+
+                rect.attr({
+                    "fill": "white",
+                    "stroke": "rgb(200, 200, 200)"
+                });
+
+                text.toFront();
             },
             setImage: function(src, markers) {
                 this.paper.clear();
