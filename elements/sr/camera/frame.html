@@ -62,6 +62,14 @@ Example:
                     "font-size": "60pt"
                 });
 
+                var textBox = text.getBBox();
+                var margin = 20;
+                var rect = this.paper.rect(textBox.x - margin,
+                                           textBox.y - margin,
+                                           textBox.width + margin * 2,
+                                           textBox.height + margin * 2,
+                                           margin);
+
                 console.log(text.getBBox());
             },
             setImage: function(src, markers) {
