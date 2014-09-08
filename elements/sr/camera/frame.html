@@ -67,8 +67,8 @@ Example:
 
                 // move text away from the marker
                 text.attr("y", centreY - markerBox.height/2 - textBox.height/2 - margin*2);
-                if (text.attr("y") <= margin) {
-                    text.attr("y", centreY + markerBox.height/2 + margin*2);
+                if (text.attr("y") <= textBox.height + margin) {
+                    text.attr("y", centreY + markerBox.height/2 + textBox.height/2 + margin*2);
                 }
 
                 textBox = text.getBBox();
