@@ -51,6 +51,14 @@ Example:
                 panZoom.enable();*/
 
             },
+            _createCloseButton: function(x, y) {
+                var text = this.paper.text(x, y, "✖");
+                text.attr({
+                    "font-size": "48pt",
+                    "fill": "rgb(200, 200, 200)"
+                });
+                return text;
+            },
             showBalloon: function(markerBox, text) {
                 var centreX = markerBox.x + markerBox.width / 2;
                 var centreY = markerBox.y + markerBox.height / 2;
@@ -72,6 +80,7 @@ Example:
                     text.attr("y", centreY + markerBox.height/2 + textBox.height/2 + margin*2);
                 }
 
+                // add balloon background to the text
                 textBox = text.getBBox();
                 var rect = this.paper.rect(textBox.x - margin,
                                            textBox.y - margin,
@@ -81,10 +90,19 @@ Example:
 
                 rect.attr({
                     "fill": "white",
-                    "stroke": "rgb(200, 200, 200)"
+                    "stroke": "rgb(150, 150, 150)"
                 });
 
                 text.toFront();
+
+                var rectBox = rect.getBBox();
+                var closeBtn = this._createCloseButton(rectBox.x2 - margin/1.2,
+                                                       rectBox.y + margin/1.2);
+                closeBtn.click(function() {
+                    closeBtn.remove();
+                    text.remove();
+                    rect.remove();
+                });
             },
             setImage: function(src, markers) {
                 this.paper.clear();
