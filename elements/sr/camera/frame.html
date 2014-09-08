@@ -81,8 +81,16 @@ Example:
                     text.attr("y", centreY + markerBox.height/2 + textBox.height/2 + margin*2);
                 }
 
-                // add balloon background to the text
                 textBox = text.getBBox();
+
+                // add mark from balloon to marker
+                var pathString = "M" + (centreX - margin) + "," + (textBox.y + textBox.height/2) + "L" + centreX + "," + centreY + "L" + (centreX + margin) + "," + (textBox.y + textBox.height/2);
+                var path = this.paper.path(pathString);
+                path.attr({
+                    "fill": "white"
+                });
+
+                // add balloon background to the text
                 var rect = this.paper.rect(textBox.x - margin,
                                            textBox.y - margin,
                                            textBox.width + margin * 2,
@@ -96,6 +104,7 @@ Example:
 
                 text.toFront();
 
+                // create close button
                 var rectBox = rect.getBBox();
                 var closeBtn = this._createCloseButton(rectBox.x2 - margin/1.2,
                                                        rectBox.y + margin/1.2);
@@ -103,6 +112,7 @@ Example:
                     closeBtn.remove();
                     text.remove();
                     rect.remove();
+                    path.remove();
                 });
             },
             setImage: function(src, markers) {
