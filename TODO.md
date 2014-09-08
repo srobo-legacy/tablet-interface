@@ -3,8 +3,6 @@
 ## Camera
 
  - Zooming and Panning
- - List of markers
- - Saving camera images
 
 ## WAMP
 
