@@ -7,7 +7,6 @@
 ## WAMP
 
  - Add args to sr-wamp-call for use with auto.
- - Refactor sr-wamp-{call,subscribe,publish} system to be more automatic.
 
 ## Docs
 
