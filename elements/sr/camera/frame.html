@@ -66,10 +66,10 @@ Example:
                 var margin = 50;
 
                 // move text away from the marker
-                text.attr({
-                    "x": centreX,
-                    "y": centreY - markerBox.height/2 - textBox.height/2 - margin*2
-                });
+                text.attr("y", centreY - markerBox.height/2 - textBox.height/2 - margin*2);
+                if (text.attr("y") <= margin) {
+                    text.attr("y", centreY + markerBox.height/2 + margin*2);
+                }
 
                 textBox = text.getBBox();
                 var rect = this.paper.rect(textBox.x - margin,
