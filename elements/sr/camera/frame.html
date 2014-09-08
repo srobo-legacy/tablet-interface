@@ -51,11 +51,15 @@ Example:
                 panZoom.enable();*/
 
             },
-            showBalloon: function(x, y, text) {
-                var text = this.paper.text(x, y, text);
+            showBalloon: function(markerBox, text) {
+                var centreX = markerBox.x + markerBox.width / 2;
+                var centreY = markerBox.y + markerBox.height / 2;
+
+                // calculate bounding box of text
+                var text = this.paper.text(centreX, centreY, text);
                 text.attr({
                     "font-family": "sans-serif",
-                    "font-size": "48pt"
+                    "font-size": "60pt"
                 });
 
                 console.log(text.getBBox());
@@ -84,10 +88,7 @@ Example:
                         });
 
                         var balloonText = "Code: " + marker.code + "\nDistance: " + marker.distance;
-                        var balloonX = rect.getBBox().x + rect.getBBox().width / 2;
-                        var balloonY = rect.getBBox().y + rect.getBBox().height / 2;
-                        rect.click(this.showBalloon.bind(this, balloonX,
-                                                         balloonY,
+                        rect.click(this.showBalloon.bind(this, rect.getBBox(),
                                                          balloonText));
                     }.bind(this));
 
