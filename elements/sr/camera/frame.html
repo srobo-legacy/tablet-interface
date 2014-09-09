@@ -60,7 +60,7 @@ Example:
                 });
                 return text;
             },
-            showBalloon: function(markerBox, text) {
+            _createBalloon: function(markerBox, text) {
                 var set = this.paper.set();
 
                 var centreX = markerBox.x + markerBox.width / 2;
@@ -114,6 +114,10 @@ Example:
                 set.push(closeBtn, text, rect, path);
 
                 closeBtn.click(set.remove.bind(set));
+                return set;
+            },
+            showBalloon: function(markerBox, text) {
+                var balloon = this._createBalloon(markerBox, text);
             },
             setImage: function(src, markers) {
                 this.paper.clear();
