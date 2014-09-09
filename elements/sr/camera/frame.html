@@ -36,6 +36,9 @@ Example:
 
     <script>
         Polymer("sr-camera-frame", {
+            created: function() {
+                this._balloons = {};
+            },
             domReady: function() {
                 this.paper = Raphael(this.$.paper);
 
@@ -49,7 +52,6 @@ Example:
                 // Add the `pan-zoom` plugin.
                 /*var panZoom = this.paper.panzoom({initialZoom: 6, initialPosition: {x: 120, y: 70}});
                 panZoom.enable();*/
-
             },
             _createCloseButton: function(x, y) {
                 var text = this.paper.text(x, y, "✖");
@@ -113,14 +115,17 @@ Example:
 
                 set.push(closeBtn, text, rect, path);
 
-                closeBtn.click(set.remove.bind(set));
+                closeBtn.click(set.hide.bind(set));
                 return set;
             },
-            showBalloon: function(markerBox, text) {
-                var balloon = this._createBalloon(markerBox, text);
+            showBalloon: function(markerBox, text, index) {
+                var balloon = this._balloons[index] || this._createBalloon(markerBox, text);
+                this._balloons[index] = balloon;
+                balloon.show();
             },
             setImage: function(src, markers) {
                 this.paper.clear();
+                this._balloons = {};
 
                 var img = document.createElement("img");
                 img.src = src;
@@ -128,7 +133,7 @@ Example:
                     this.paper.image(img.src, 0, 0, img.width, img.height);
                     this.paper.setViewBox(0, 0, img.width, img.height);
 
-                    markers.forEach(function(marker) {
+                    markers.forEach(function(marker, index) {
                         var lastVertex = marker.vertices[marker.vertices.length-1];
                         var pathString = "M" + lastVertex[0] + "," + lastVertex[1];
                         marker.vertices.forEach(function(vertex) {
@@ -144,7 +149,7 @@ Example:
 
                         var balloonText = "Code: " + marker.code + "\nDistance: " + marker.distance;
                         rect.click(this.showBalloon.bind(this, rect.getBBox(),
-                                                         balloonText));
+                                                         balloonText, index));
                     }.bind(this));
 
                     // Make the view in the middle of the element rather than
