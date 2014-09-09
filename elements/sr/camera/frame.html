@@ -61,6 +61,8 @@ Example:
                 return text;
             },
             showBalloon: function(markerBox, text) {
+                var set = this.paper.set();
+
                 var centreX = markerBox.x + markerBox.width / 2;
                 var centreY = markerBox.y + markerBox.height / 2;
 
@@ -108,12 +110,10 @@ Example:
                 var rectBox = rect.getBBox();
                 var closeBtn = this._createCloseButton(rectBox.x2 - margin/1.2,
                                                        rectBox.y + margin/1.2);
-                closeBtn.click(function() {
-                    closeBtn.remove();
-                    text.remove();
-                    rect.remove();
-                    path.remove();
-                });
+
+                set.push(closeBtn, text, rect, path);
+
+                closeBtn.click(set.remove.bind(set));
             },
             setImage: function(src, markers) {
                 this.paper.clear();
