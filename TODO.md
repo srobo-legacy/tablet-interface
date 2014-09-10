@@ -8,6 +8,10 @@
 
  - Add args to sr-wamp-call for use with auto.
 
+## Logs
+
+ - Byte ranges instead of lines
+
 ## Docs
 
  - Produce example pages which control individual motors or whatever.
@@ -32,3 +36,4 @@
  - current output on power board
  - motor board break/free wheel
  - count up timer
+ - script to rebuild tablet situation
