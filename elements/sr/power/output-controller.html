@@ -22,7 +22,16 @@ You can get the current state with the `state` attribute.
                 flex-direction: column;
                 align-items: center;
                 min-width: 100px;
+
+				margin: 5px;
+				border-radius: 10px;
             }
+
+			:host(.checked) {
+				background-color: rgb(13, 31, 97);
+				color: white;
+				font-weight: bold;
+			}
 
             h2 {
                 margin: 2px 0;
@@ -63,6 +72,7 @@ You can get the current state with the `state` attribute.
             },
             handleStateChange: function() {
                 this.$.publishValue.go([this.index, this.state]);
+				this.updateClass();
             },
             handleState: function(e) {
                 var args = e.detail.args;
@@ -72,7 +82,15 @@ You can get the current state with the `state` attribute.
             },
             handleGetStateSuccess: function(e) {
                 this.state = e.detail.result;
-            }
+				this.updateClass();
+            },
+			updateClass: function() {
+				if (this.state === true) {
+					this.classList.add('checked');
+				} else {
+					this.classList.remove('checked');
+				}
+			},
         });
     </script>
 </polymer-element>
