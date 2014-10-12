@@ -22,8 +22,9 @@ You can then go to `http://localhost:8000` in a browser.
 Run this to test custom components.
 
     $ source venv/bin/activate
+    $ pip install -r requirements.txt
     $ cd usercode
-    $ ./server.py
+    $ ./app.py
 
 ## Firefox
 
