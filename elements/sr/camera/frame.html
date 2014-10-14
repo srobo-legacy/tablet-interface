@@ -32,7 +32,6 @@ Example:
     </template>
 
     <script src="raphael.min.js"></script>
-    <script src="raphael.pan-zoom.min.js"></script>
 
     <script>
         Polymer("sr-camera-frame", {
@@ -48,10 +47,6 @@ Example:
                 var svg = this.shadowRoot.querySelector("#paper svg");
                 svg.removeAttribute("width");
                 svg.removeAttribute("height");
-
-                // Add the `pan-zoom` plugin.
-                /*var panZoom = this.paper.panzoom({initialZoom: 6, initialPosition: {x: 120, y: 70}});
-                panZoom.enable();*/
             },
             _createCloseButton: function(x, y) {
                 var text = this.paper.text(x, y, "✖");
