@@ -1,5 +1,5 @@
 html /deep/ * {
-    font-family: "Lato", sans-serif;
+    font-family: sans-serif;
     line-height: 1.3;
 }
 
@@ -8,9 +8,9 @@ html /deep/ h2 {
     font-weight: 300;
 }
 
-/* for browsers which don't support CSS ecapsulation */
+/* for browsers that don't support CSS ecapsulation */
 html {
-    font-family: "Lato", sans-serif;
+    font-family: sans-serif;
     line-height: 1.3;
 }
 
