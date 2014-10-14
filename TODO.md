@@ -12,10 +12,6 @@
 
  - Produce example pages which control individual motors or whatever.
 
-## Pages
-
- - Buzzer manual control page
-
 ## Technical
 
  - HTML5 caching
