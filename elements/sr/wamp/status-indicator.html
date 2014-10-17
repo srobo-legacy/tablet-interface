@@ -44,16 +44,16 @@ Example:
     <script>
         Polymer({
             handleOpen: function() {
-                this.showAndThenHide();
+                this.timeout = setTimeout(function() {
+                    this.style.display = "none";
+                    this.timeout = undefined;
+                }.bind(this), 5000);
             },
             handleClose: function() {
-                this.showAndThenHide();
-            },
-            showAndThenHide: function() {
+                if (this.timeout !== undefined) {
+                    clearTimeout(this.timeout);
+                }
                 this.style.display = "block";
-                setTimeout(function() {
-                    this.style.display = "none";
-                }.bind(this), 5000);
             }
         });
     </script>
