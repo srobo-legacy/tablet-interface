@@ -16,7 +16,7 @@ You can get the current value with the `value` attribute.
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../wamp/index.html" />
 
-<polymer-element name="sr-servos-servo-controller" attributes="board servo value">
+<polymer-element name="sr-servos-servo-controller" attributes="board servo value readonly">
     <template>
         <style>
             :host {
@@ -51,10 +51,12 @@ You can get the current value with the `value` attribute.
         </style>
 
         <h2>{{ servo }}</h2>
-        <input type="range" orient="vertical" min="0" max="100" step="0.01"
-            value="{{ value }}" on-change="{{ handleValueChange }}" />
+        <input
+            type="range" orient="vertical" min="0" max="100" step="0.01"
+            value="{{ value }}" on-change="{{ handleValueChange }}"
+            readonly?="{{ readonly }}" />
         <span>{{ value | formatValue }}</span>
-        <button on-click="{{ handleReset }}">Reset</button>
+        <button disabled?="{{ readonly }}" on-click="{{ handleReset }}">Reset</button>
 
         <core-localstorage
             id="localStorage"
@@ -74,6 +76,15 @@ You can get the current value with the `value` attribute.
         <sr-wamp-publish
             id="publishValue"
             topic="org.srobo.servos.servo_value"></sr-wamp-publish>
+        <sr-wamp-subscribe
+            id="wampSubState"
+            auto="wamp"
+            topic="org.srobo.state"
+            on-handle="{{ handleState }}"></sr-wamp-subscribe>
+        <sr-wamp-call
+            id="wampGetState"
+            procedure="org.srobo.state"
+            on-success="{{ handleState }}"></sr-wamp-call>
     </template>
 
     <script>
@@ -82,14 +93,25 @@ You can get the current value with the `value` attribute.
             servo: 0,
             value: 50,
             handleWampOpen: function() {
+                this.readonly = false;
                 this.$.wampGetServo.go([this.board, this.servo]);
+                this.$.wampGetState.go();
             },
             handleWampClose: function() {
+                this.readonly = true;
                 this.value = this.$.localStorage.value;
             },
             handleValueChange: function() {
                 var args = [this.board, this.servo, parseFloat(this.value)];
                 this.$.publishValue.go(args);
+            },
+            handleState: function(e) {
+                var state = e.detail.result || e.detail.args[0];
+                if (state === "stopped") {
+                    this.readonly = false;
+                } else {
+                    this.readonly = true;
+                }
             },
             handleValue: function(e) {
                 var args = e.detail.args;
