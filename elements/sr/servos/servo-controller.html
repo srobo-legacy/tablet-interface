@@ -98,7 +98,7 @@ You can get the current value with the `value` attribute.
                 }
             },
             formatValue: function(v) {
-                return Number(v).toFixed(2);
+                return Math.round(v);
             },
             handleGetServoSuccess: function(e) {
                 this.value = e.detail.result.value;
