@@ -52,6 +52,8 @@ Example:
                 this.$.logs.currentLog.scrollToBottom();
             },
             handleAddLog: function(e) {
+                console.log("Adding a new log: ", e.detail.name);
+
                 var optgroup;
                 var option = document.createElement("option");
 
@@ -67,7 +69,9 @@ Example:
                 optgroup.appendChild(option);
             },
             handleRemoveLog: function(e) {
-                var option = this.$.logSelection.querySelector("[value=" + e.detail.id + "]");
+                console.log("Removing log:", e.detail.name);
+
+                var option = this.$.logSelection.querySelector("[value=" + e.detail.name + "]");
                 option.parentNode.removeChild(option);
             },
             handleLogSelectionChanged: function(e) {

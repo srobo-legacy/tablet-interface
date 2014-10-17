@@ -59,6 +59,8 @@ Example:
                 return element;
             },
             handleWampClose: function() {
+                this.clearLogs();
+
                 this.$.localStorage.value.forEach(function(log) {
                     var element = this._createLogElement(log);
                     this.$.logs.appendChild(element);
@@ -69,6 +71,8 @@ Example:
             },
             handleAllLogs: function(e) {
                 this.$.localStorage.value = [];
+
+                this.clearLogs();
 
                 e.detail.result.forEach(function(log) {
                     var element = this._createLogElement(log);
@@ -98,6 +102,13 @@ Example:
                 var logElement = this.shadowRoot.querySelector("#log_" + log);
                 logElement.hidden = false;
                 this.currentLog = logElement;
+            },
+            clearLogs: function() {
+                var logs = this.$.logs.children;
+                for (var i = logs.length - 1; i >= 0; i--) {
+                    this.fire("remove", {name: logs[i].log});
+                    logs[i].parentNode.removeChild(logs[i]);
+                }
             }
         });
     </script>
