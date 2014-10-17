@@ -59,6 +59,13 @@ Example:
                 justify-content: center;
             }
 
+            @media (orientation: portrait) {
+                #overlay span {
+                    display: block;
+                    text-align: center;
+                }
+            }
+
             #overlay.disabled {
                 display: flex;
             }
@@ -106,10 +113,10 @@ Example:
             <div id="overlay" class="{{ {disabled: disabled} | tokenList }}">
                 <h1>Project running…</h1>
                 <p>
-                    <span class="col1">Mode</span><strong>{{ mode === "dev" ? "Development" : "Competition" }}</strong><br />
-                    <span class="col1">Zone</span><strong>{{ zone }}</strong><br />
-                    <span class="col1">Project</span><strong>{{ project.name }}</strong> @ <strong>{{ project.version }}</strong><br />
-                    <span class="col1">Environment</span><strong>v{{ environment.version }}</strong>
+                    <span class="col1">Mode</span><span class="col2"><strong>{{ mode === "dev" ? "Development" : "Competition" }}</strong></span><br />
+                    <span class="col1">Zone</span><span class="col2"><strong>{{ zone }}</strong></span><br />
+                    <span class="col1">Project</span><span class="col2"><strong>{{ project.name }}</strong> @ <strong>{{ project.version }}</strong></span><br />
+                    <span class="col1">Environment</span><span class="col2"><strong>v{{ environment.version }}</strong></span>
                 </p>
             </div>
 
