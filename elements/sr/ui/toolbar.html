@@ -28,6 +28,24 @@ The toolbar provides styles for any child h1, button or select element.
                 min-height: 44px;
             }
 
+            ::content h1 {
+                font-size: 2em;
+            }
+
+            sr-ui-toolbar h1 {
+                font-size: 2em;
+            }
+
+            @media (orientation: portrait) {
+                ::content h1 {
+                    font-size: 1.2em;
+                }
+
+                sr-ui-toolbar h1 {
+                    font-size: 1.2em;
+                }
+            }
+
             ::content h1,
             ::content select,
             ::content button {
