@@ -31,6 +31,19 @@ Example:
                 justify-content: center;
             }
 
+            #container {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+            }
+
+            @media (orientation: portrait) {
+                #container {
+                    flex-direction: column;
+                    align-items: center;
+                }
+            }
+
             #overlay {
                 position: absolute;
                 top: 0;
@@ -77,7 +90,7 @@ Example:
 
         <template bind if="{{ $.wamp.connected }}">
             <div id="first" vertical center layout>
-                <div horizontal start layout>
+                <div id="container">
                     <div vertical center layout style="margin: 0 20px;">
                         <sr-core-zone-picker id="zonePicker" zone="{{ zone }}"></sr-core-zone-picker>
                         <h2>Zone</h2>
