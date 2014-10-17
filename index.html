@@ -111,11 +111,21 @@
                                          document.webkitExitFullscreen ||
                                          document.mozCancelFullScreen;
                     exitFullscreen.bind(document)(); // Oh, come on...
+
+                    var btns = document.querySelectorAll("[action=fullscreen]");
+                    for (var i = 0; i < btns.length; i++) {
+                        btns[i].className = "";
+                    }
                 } else {
                     var requestFullscreen = document.body.requestFullscreen ||
                                             document.body.webkitRequestFullscreen ||
                                             document.body.mozRequestFullScreen;
                     requestFullscreen.bind(document.body)(); // JAVASCRIPTTTTTTTTTTTTTTT!!!!
+
+                    var btns = document.querySelectorAll("[action=fullscreen]");
+                    for (var i = 0; i < btns.length; i++) {
+                        btns[i].className = "fa-rotate-180";
+                    }
                 }
             });
 
