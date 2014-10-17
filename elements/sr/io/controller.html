@@ -79,6 +79,7 @@ Example:
                     divs[i].hidden = true;
                 }
                 this.shadowRoot.querySelector("#board_" + board).hidden = false;
+                this.fire("changed", {"serialNumber": board});
             },
             _clearBoards: function() {
                 var boards = this.$.boards;

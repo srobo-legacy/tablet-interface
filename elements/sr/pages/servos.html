@@ -36,7 +36,8 @@ Example:
         <sr-servos-controller
             id="controller"
             on-added="{{ handleBoardAdded }}"
-            on-removed="{{ handleBoardRemoved }}"></sr-servos-controller>
+            on-removed="{{ handleBoardRemoved }}"
+            on-changed="{{ handleBoardChanged }}"></sr-servos-controller>
     </template>
 
     <script>
@@ -45,6 +46,7 @@ Example:
                 var serialNumber = e.detail.serialNumber;
                 var button = document.createElement("button");
                 button.id = "button_" + serialNumber;
+                button.className = "tab";
                 button.textContent = "Board " + serialNumber;
                 button.onclick = this.$.controller.changeBoard.bind(this.$.controller, serialNumber);
                 this.$.toolbar.appendChild(button);
@@ -53,6 +55,16 @@ Example:
                 var serialNumber = e.detail.serialNumber;
                 var button = this.$.toolbar.querySelector("#button_" + serialNumber);
                 button.parentNode.removeChild(button);
+            },
+            handleBoardChanged: function(e) {
+                var buttons = this.shadowRoot.querySelectorAll("button.tab");
+                for (var i = 0; i < buttons.length; i++) {
+                    if (buttons[i].id == "button_" + e.detail.serialNumber) {
+                        buttons[i].style.fontWeight = "bold";
+                    } else {
+                        buttons[i].style.fontWeight = "normal";
+                    }
+                }
             }
         });
     </script>
