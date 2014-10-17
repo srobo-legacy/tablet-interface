@@ -63,9 +63,9 @@ Return the state of the robot, which can be one of `booting`, `started`, `stoppi
 When the state changes.
 
 
-### RPC org.srobo.pyenv.version
+### RPC org.srobo.environment.version
 
-Return the current pyenv version.
+Return the current environment version.
 
 
 ### RPC org.srobo.project.name

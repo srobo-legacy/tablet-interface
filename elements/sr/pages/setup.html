@@ -96,7 +96,7 @@ Example:
                     <span class="col1">Mode</span><strong>{{ mode === "dev" ? "Development" : "Competition" }}</strong><br />
                     <span class="col1">Zone</span><strong>{{ zone }}</strong><br />
                     <span class="col1">Project</span><strong>{{ project.name }}</strong> @ <strong>{{ project.version }}</strong><br />
-                    <span class="col1">Pyenv</span><strong>v{{ pyenv.version }}</strong>
+                    <span class="col1">Environment</span><strong>v{{ environment.version }}</strong>
                 </p>
             </div>
 
@@ -114,16 +114,16 @@ Example:
                 on-handle="{{ handleProjectVersion }}"></sr-wamp-subscribe>
             <sr-wamp-subscribe
                 auto="wamp"
-                topic="org.srobo.pyenv.version"
-                on-handle="{{ handlePyenvVersion }}"></sr-wamp-subscribe>
+                topic="org.srobo.environment.version"
+                on-handle="{{ handleEnvironmentVersion }}"></sr-wamp-subscribe>
             <sr-wamp-call
                 auto="wamp"
                 procedure="org.srobo.state"
                 on-success="{{ handleState }}"></sr-wamp-call>
             <sr-wamp-call
                 auto="wamp"
-                procedure="org.srobo.pyenv.version"
-                on-success="{{ handlePyenvVersion }}"></sr-wamp-call>
+                procedure="org.srobo.environment.version"
+                on-success="{{ handleEnvironmentVersion }}"></sr-wamp-call>
             <sr-wamp-call
                 auto="wamp"
                 procedure="org.srobo.project.version"
@@ -146,7 +146,7 @@ Example:
             disabled: false,
             created: function() {
                 this.project = {};
-                this.pyenv = {};
+                this.environment = {};
             },
             handleState: function(e) {
                 var state = e.detail.result || e.detail.args[0];
@@ -158,8 +158,8 @@ Example:
             handleProjectVersion: function(e) {
                 this.project.version = e.detail.result || e.detail.args[0];
             },
-            handlePyenvVersion: function(e) {
-                this.pyenv.version = e.detail.result || e.detail.args[0];
+            handleEnvironmentVersion: function(e) {
+                this.environment.version = e.detail.result || e.detail.args[0];
             }
         });
     </script>
