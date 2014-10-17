@@ -25,8 +25,6 @@
             <sr-ui-fa-button action="toggle-navigation-drawer" icon="bars"></sr-ui-fa-button>
             <div style="height: 20px;"></div>
             <sr-ui-fa-button action="play" icon="play"></sr-ui-fa-button>
-            <div flex></div>
-            <sr-ui-fa-button action="fullscreen" icon="external-link-square"></sr-ui-fa-button>
         </sr-ui-button-bar>
 
         <sr-ui-navigation-drawer>
@@ -102,30 +100,6 @@
                     document.querySelector("#wamp-start").go();
                 } else if (e.detail.sender.icon == "stop") {
                     document.querySelector("#wamp-stop").go();
-                }
-            });
-
-            window.addEventListener("fullscreen", function(e) {
-                if ((document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreen)) {
-                    var exitFullscreen = document.exitFullscreen ||
-                                         document.webkitExitFullscreen ||
-                                         document.mozCancelFullScreen;
-                    exitFullscreen.bind(document)(); // Oh, come on...
-
-                    var btns = document.querySelectorAll("[action=fullscreen]");
-                    for (var i = 0; i < btns.length; i++) {
-                        btns[i].className = "";
-                    }
-                } else {
-                    var requestFullscreen = document.body.requestFullscreen ||
-                                            document.body.webkitRequestFullscreen ||
-                                            document.body.mozRequestFullScreen;
-                    requestFullscreen.bind(document.body)(); // JAVASCRIPTTTTTTTTTTTTTTT!!!!
-
-                    var btns = document.querySelectorAll("[action=fullscreen]");
-                    for (var i = 0; i < btns.length; i++) {
-                        btns[i].className = "fa-rotate-180";
-                    }
                 }
             });
 
