@@ -5,7 +5,6 @@
  - Slow loading on tablet
    - Create/destroy pages as they change
    - Subscribe on page change
- - no manual override when running
  - manual camera R.see when user code is running
  - tabbed UI
  - power board diagram
