@@ -11,16 +11,14 @@
  - power board diagram
  - motor board break/free wheel
  - count up timer
- - user sr-elements-switcher element
+ - use sr-elements-switcher element
  - all analogue pins don't do output
  - power output voltage and current
  - multi touch tablet controls
- - braking styles on the motor control page
  - stop button where the 0 thing on the motor slider is
  - servo board default value not necessarily default
  - servo board gives out current information
  - dbs check for tablets at the end
  - cope with firmware updating
- - tabs for board selection
  - manually take photo
  - run button on set up page
