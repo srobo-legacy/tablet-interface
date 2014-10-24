@@ -52,7 +52,7 @@ You can get the current value with the `value` attribute.
 
         <h2>{{ servo }}</h2>
         <input
-            type="range" orient="vertical" min="0" max="100" step="0.01"
+            type="range" orient="vertical" min="-100" max="100" step="1"
             value="{{ value }}" on-change="{{ handleValueChange }}"
             readonly?="{{ readonly }}" />
         <span>{{ value | formatValue }}</span>
@@ -91,7 +91,7 @@ You can get the current value with the `value` attribute.
         Polymer("sr-servos-servo-controller", {
             board: 0,
             servo: 0,
-            value: 50,
+            value: 0,
             handleWampOpen: function() {
                 this.readonly = false;
                 this.$.wampGetServo.go([this.board, this.servo]);
@@ -126,8 +126,8 @@ You can get the current value with the `value` attribute.
                 this.value = e.detail.result.value;
             },
             handleReset: function() {
-                this.value = 50;
-                this.$.publishValue.go([this.board, this.servo, 50]);
+                this.value = 0;
+                this.$.publishValue.go([this.board, this.servo, 0]);
             },
             valueChanged: function(oldVal, newVal) {
                 this.$.localStorage.value = newVal;
