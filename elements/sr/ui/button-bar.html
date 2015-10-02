@@ -15,26 +15,37 @@ It is designed to hold buttons that do not contain text.
 -->
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="/bower_components/iron-flex-layout/iron-flex-layout.html" />
 
-<polymer-element name="sr-ui-button-bar" noscript>
-    <template>
-        <style>
-            :host {
-                display: block;
-                height: 100%;
-                position: relative;
-                z-index: 2000;
-            }
+<dom-module id="sr-ui-button-bar">
+  <template>
+    <style>
+      :host {
+          display: block;
+          height: 100%;
+          position: relative;
+          z-index: 2000;
+      }
 
-            div {
-                height: 100%;
-                background: rgb(13, 31, 97);
-                color: white;
-            }
-        </style>
+      div {
+          height: 100%;
+          background: rgb(13, 31, 97);
+          color: white;
 
-        <div vertical center layout>
-            <content></content>
-        </div>
-    </template>
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+      }
+    </style>
+
+    <div>
+      <content></content>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'sr-ui-button-bar',
+    });
+  </script>
 </polymer-element>

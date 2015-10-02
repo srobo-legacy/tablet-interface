@@ -19,8 +19,18 @@ html h2 {
     font-weight: 300;
 }
 
-html body {
+/* Actual Styles */
+body {
+    margin: 0;
+
+    background: white;
+
+    display: flex;
+    flex-direction: row;
+}
+
+html,
+body {
     width: 100%;
     height: 100%;
-    background: white;
 }
