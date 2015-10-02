@@ -12,7 +12,7 @@ Example:
 -->
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
-<link rel="import" href="/bower_components/core-localstorage/core-localstorage.html" />
+<link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html" />
 <link rel="import" href="../wamp/index.html" />
 <link rel="import" href="pin-mode-controller.html" />
 <link rel="import" href="pin-value-controller.html" />
@@ -61,15 +61,15 @@ Example:
             type="{{ type }}"
             value="{{ value }}"></sr-io-pin-value-controller>
 
-        <core-localstorage
+        <iron-localstorage
             id="localStorageMode"
-            name="io_{{ board }}_{{ pin }}_mode"></core-localstorage>
-        <core-localstorage
+            name="io_{{ board }}_{{ pin }}_mode"></iron-localstorage>
+        <iron-localstorage
             id="localStorageType"
-            name="io_{{ board }}_{{ pin }}_type"></core-localstorage>
-        <core-localstorage
+            name="io_{{ board }}_{{ pin }}_type"></iron-localstorage>
+        <iron-localstorage
             id="localStorageValue"
-            name="io_{{ board }}_{{ pin }}_value"></core-localstorage>
+            name="io_{{ board }}_{{ pin }}_value"></iron-localstorage>
 
         <sr-wamp-core
             on-open="{{ handleWampOpen }}"

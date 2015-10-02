@@ -10,7 +10,7 @@ Example:
 -->
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
-<link rel="import" href="/bower_components/core-localstorage/core-localstorage.html" />
+<link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html" />
 <link rel="import" href="../ui/index.html" />
 <link rel="import" href="../wamp/index.html" />
 <link rel="import" href="log.html" />
@@ -33,9 +33,9 @@ Example:
 
         </div>
 
-        <core-localstorage
+        <iron-localstorage
             id="localStorage"
-            name="logs"></core-localstorage>
+            name="logs"></iron-localstorage>
 
         <sr-wamp-core
             on-open="{{ handleWampOpen }}"

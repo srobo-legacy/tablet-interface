@@ -58,9 +58,9 @@ You can get the current value with the `value` attribute.
         <span>{{ value | formatValue }}</span>
         <button disabled?="{{ readonly }}" on-click="{{ handleReset }}">Reset</button>
 
-        <core-localstorage
+        <iron-localstorage
             id="localStorage"
-            name="servos_{{ board }}_{{ servo }}_value"></core-localstorage>
+            name="servos_{{ board }}_{{ servo }}_value"></iron-localstorage>
 
         <sr-wamp-core
             on-open="{{ handleWampOpen }}"

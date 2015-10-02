@@ -51,9 +51,9 @@ You can get the current state with the `state` attribute.
             type="checkbox" checked="{{ state }}"
             on-change="{{ handleStateChange }}" disabled?="{{ readonly }}" />
 
-        <core-localstorage
+        <iron-localstorage
             id="localStorage"
-            name="power_output_{{ index }}_state"></core-localstorage>
+            name="power_output_{{ index }}_state"></iron-localstorage>
 
         <sr-wamp-core
             on-open="{{ handleWampOpen }}"
