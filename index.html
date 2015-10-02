@@ -20,7 +20,7 @@
         <link rel="import" href="elements/sr/ui/index.html" />
     </head>
 
-    <body fullbleed unresolved horizontal layout>
+    <body>
         <sr-ui-button-bar>
             <sr-ui-fa-button action="toggle-navigation-drawer" icon="bars"></sr-ui-fa-button>
             <div style="height: 20px;"></div>
@@ -30,14 +30,12 @@
         <sr-ui-navigation-drawer>
             <sr-ui-fa-button action="change-page" data-page="setup" icon="cogs">Set up</sr-ui-fa-button>
             <sr-ui-fa-button action="change-page" data-page="logs" icon="file-text-o">Logs</sr-ui-fa-button>
-            <!--
             <div style="height: 30px;"></div>
             <sr-ui-fa-button action="change-page" data-page="camera" icon="camera">Camera</sr-ui-fa-button>
             <sr-ui-fa-button action="change-page" data-page="io" icon="file">I/O</sr-ui-fa-button>
             <sr-ui-fa-button action="change-page" data-page="power" icon="power-off">Power Outputs</sr-ui-fa-button>
             <sr-ui-fa-button action="change-page" data-page="motors" icon="arrows">Motors</sr-ui-fa-button>
             <sr-ui-fa-button action="change-page" data-page="servos" icon="wrench">Servos</sr-ui-fa-button>
-            -->
             <div flex></div>
         </sr-ui-navigation-drawer>
 
@@ -48,8 +46,6 @@
             <sr-core-page
                 name="logs"
                 element="sr-pages-logs"></sr-core-page>
-
-            <!--
             <sr-core-page
                 name="camera"
                 element="sr-pages-camera"></sr-core-page>
@@ -65,7 +61,6 @@
             <sr-core-page
                 name="servos"
                 element="sr-pages-servos"></sr-core-page>
-            -->
         </sr-core-pages>
 
         <sr-wamp-status-indicator
@@ -88,16 +83,16 @@
             procedure="org.srobo.state"></sr-wamp-call>
 
         <script>
-            (function() {
-                window.addEventListener("toggle-navigation-drawer", function(e) {
-                    document.querySelector("sr-ui-navigation-drawer").toggle();
-                });
+          (function() {
+            window.addEventListener("toggle-navigation-drawer", function(e) {
+              document.querySelector("sr-ui-navigation-drawer").toggle();
+            });
 
-                window.addEventListener("change-page", function(e) {
-                    document.querySelector("sr-core-pages").changePage(e.detail.sender.dataset.page);
-                    document.querySelector("sr-ui-navigation-drawer").close();
-                });
-            }());
+            window.addEventListener("change-page", function(e) {
+              document.querySelector("sr-core-pages").changePage(e.detail.sender.dataset.page);
+              document.querySelector("sr-ui-navigation-drawer").close();
+            });
+          }());
         </script>
 
         <script>

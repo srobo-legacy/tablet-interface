@@ -21,78 +21,86 @@ methods.
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<polymer-element name="sr-ui-navigation-drawer" attributes="state">
-    <template>
-        <style>
-            :host {
-                display: block;
-            }
+<dom-module id="sr-ui-navigation-drawer">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
 
-            #background {
-                position: fixed;
-                z-index: 5;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.75);
-                transition: all 0.5s;
-            }
+      #background {
+        position: fixed;
+        z-index: 5;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.75);
+        transition: all 0.5s;
+      }
 
-            #background.closed {
-                background: none;
-                visibility: hidden;
-            }
+      #background.closed {
+        background: none;
+        visibility: hidden;
+      }
 
-            #drawer {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                z-index: 10;
-                top: 0;
-                height: 100%;
-                background: rgb(13, 31, 97);
-                transition: transform 0.5s;
-                padding: 10px;
-                color: white;
-                box-sizing: border-box;
-                border-left: 1px solid rgb(10, 25, 80);
-                border-right: 1px solid white;
-                box-shadow: 0 0 3px rgb(10, 10, 10);
-                overflow: auto;
-                min-width: 33%;
-            }
+      #drawer {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        height: 100%;
+        background: rgb(13, 31, 97);
+        transition: transform 0.5s;
+        padding: 10px;
+        color: white;
+        box-sizing: border-box;
+        border-left: 1px solid rgb(10, 25, 80);
+        border-right: 1px solid white;
+        box-shadow: 0 0 3px rgb(10, 10, 10);
+        overflow: auto;
+        min-width: 33%;
+      }
 
-            #drawer.closed {
-                transform: translateX(-110%);
-            }
-        </style>
+      #drawer.closed {
+        transform: translateX(-110%);
+      }
+    </style>
 
-        <div id="background" class="{{ state }}" on-click="{{ close }}"></div>
-        <div id="drawer" class="{{ state }}">
-            <content></content>
-        </div>
-    </template>
+    <div id="background" class$="{{ state }}" on-click="close"></div>
+    <div id="drawer" class$="{{ state }}">
+      <content></content>
+    </div>
+  </template>
 
-    <script>
-        Polymer("sr-ui-navigation-drawer", {
-            state: "closed",
-            open: function() {
-                this.state = "opened";
-            },
-            close: function() {
-                this.state = "closed";
-            },
-            isOpen: function() {
-                return this.state === "opened";
-            },
-            toggle: function() {
-                if (this.isOpen()) {
-                    this.close();
-                } else {
-                    this.open();
-                }
-            }
-        });
-    </script>
-</polymer-element>
+  <script>
+    Polymer({
+      is: 'sr-ui-navigation-drawer',
+
+      properties: {
+        state: {
+          type: String,
+          value: 'closed'
+        }
+      },
+
+      open: function() {
+        this.state = "opened";
+      },
+      close: function() {
+        this.state = "closed";
+      },
+      isOpen: function() {
+        return this.state === "opened";
+      },
+      toggle: function() {
+        if (this.isOpen()) {
+          this.close();
+        } else {
+          this.open();
+        }
+      }
+    });
+  </script>
+</dom-module>

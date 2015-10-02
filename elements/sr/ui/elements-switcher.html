@@ -16,51 +16,50 @@ Example:
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<polymer-element name="sr-ui-elements-switcher">
-    <template>
-        <style>
-            :host {
-                display: flex;
-            }
+<dom-module id="sr-ui-elements-switcher">
+  <template>
+    <style>
+      :host {
+        display: flex;
+      }
 
-            #elements {
-                display: flex;
-                flex: 1 1 auto;
-            }
+      #elements {
+        display: flex;
+        flex: 1 1 auto;
+      }
 
-            #elements > * {
-                display: flex;
-                flex: 1 1 auto;
-            }
-        </style>
+      #elements > * {
+        display: flex;
+        flex: 1 1 auto;
+      }
+    </style>
 
-        <div id="elements">
-            <content>
-            </content>
-        </div>
-    </template>
+    <div id="elements">
+      <content></content>
+    </div>
+  </template>
 
-    <script>
-        Polymer("sr-ui-elements-switcher", {
-            hideAll: function() {
-                this.$.elements.children.forEach(function(element) {
-                    element.hidden = true;
-                });
-            },
-            show: function(element) {
-                element.hidden = false;
-            },
-            changeTo: function(element) {
-                if (typeof(element) === "string" || element instanceof String) {
-                    element = this.$.elements.querySelector(element);
-                }
-
-                this.hideAll();
-                this.show(element);
-            },
-            add: function(element) {
-                this.$.elements.appendChild(element);
-            }
+  <script>
+    Polymer("sr-ui-elements-switcher", {
+      hideAll: function() {
+        this.$.elements.children.forEach(function(element) {
+          element.hidden = true;
         });
-    </script>
+      },
+      show: function(element) {
+        element.hidden = false;
+      },
+      changeTo: function(element) {
+        if (typeof(element) === "string" || element instanceof String) {
+          element = this.$.elements.querySelector(element);
+        }
+
+        this.hideAll();
+        this.show(element);
+      },
+      add: function(element) {
+        this.$.elements.appendChild(element);
+      }
+    });
+  </script>
 </polymer-element>

@@ -15,62 +15,68 @@ The toolbar provides styles for any child h1, button or select element.
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<polymer-element name="sr-ui-toolbar" noscript>
-    <template>
-        <style>
-            :host {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
+<dom-module id="sr-ui-toolbar">
+  <template>
+    <style>
+        :host {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
 
-                padding: 6px 8px;
-                background: rgb(245, 245, 245);
-                min-height: 44px;
-            }
+            padding: 6px 8px;
+            background: rgb(245, 245, 245);
+            min-height: 44px;
+        }
 
+        ::content h1 {
+            font-size: 2em;
+        }
+
+        sr-ui-toolbar h1 {
+            font-size: 2em;
+        }
+
+        @media (orientation: portrait) {
             ::content h1 {
-                font-size: 2em;
+                font-size: 1.2em;
             }
 
             sr-ui-toolbar h1 {
-                font-size: 2em;
+                font-size: 1.2em;
             }
+        }
 
-            @media (orientation: portrait) {
-                ::content h1 {
-                    font-size: 1.2em;
-                }
+        ::content h1,
+        ::content select,
+        ::content button {
+            margin: 0 4px;
+        }
 
-                sr-ui-toolbar h1 {
-                    font-size: 1.2em;
-                }
-            }
+        ::content select,
+        ::content button {
+            padding: 4px 8px;
+        }
 
-            ::content h1,
-            ::content select,
-            ::content button {
-                margin: 0 4px;
-            }
+        /* for older browsers not supporting the native shadow DOM */
 
-            ::content select,
-            ::content button {
-                padding: 4px 8px;
-            }
+        sr-ui-toolbar select,
+        sr-ui-toolbar button {
+            padding: 4px 8px;
+        }
 
-            /* for older browsers not supporting the native shadow DOM */
+        sr-ui-toolbar h1,
+        sr-ui-toolbar select,
+        sr-ui-toolbar button {
+            margin: 0 4px;
+        }
+    </style>
 
-            sr-ui-toolbar select,
-            sr-ui-toolbar button {
-                padding: 4px 8px;
-            }
+    <content></content>
+  </template>
 
-            sr-ui-toolbar h1,
-            sr-ui-toolbar select,
-            sr-ui-toolbar button {
-                margin: 0 4px;
-            }
-        </style>
-
-        <content></content>
-    </template>
-</polymer-element>
+  <script>
+    Polymer({
+      is: 'sr-ui-toolbar'
+    });
+  </script>
+</dom-module>
