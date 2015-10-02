@@ -17,66 +17,66 @@ Example:
 <link rel="import" href="../ui/index.html" />
 <link rel="import" href="../wamp/index.html" />
 
-<polymer-element name="sr-pages-logs">
-    <template>
-        <style>
-            :host {
-                flex: 1 1 auto;
-                display: flex;
-                flex-direction: column;
-            }
+<dom-module id="sr-pages-logs">
+  <template>
+    <style>
+      :host {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+      }
 
-            sr-logs-logs {
-                margin: 10px;
-            }
-        </style>
+      sr-logs-logs {
+        margin: 10px;
+      }
+    </style>
 
-        <sr-ui-toolbar>
-            <h1 flex>View Robot Logs</h1>
-            <select id="logSelection" on-change="{{ handleLogSelectionChanged }}">
-                <optgroup label="Current Logs" id="currentLogs"></optgroup>
-                <optgroup label="Old Logs" id="oldLogs"></optgroup>
-            </select>
-            <button id="btnBottom" on-click="{{ handleJumpToBottom }}">Jump to bottom</button>
-        </sr-ui-toolbar>
+    <sr-ui-toolbar>
+      <h1 flex>View Robot Logs</h1>
+      <select id="logSelection" on-change="{{ handleLogSelectionChanged }}">
+        <optgroup label="Current Logs" id="currentLogs"></optgroup>
+        <optgroup label="Old Logs" id="oldLogs"></optgroup>
+      </select>
+      <button id="btnBottom" on-click="{{ handleJumpToBottom }}">Jump to bottom</button>
+    </sr-ui-toolbar>
 
-        <sr-logs-logs
-            id="logs"
-            on-add="{{ handleAddLog }}"
-            on-remove="{{ handleRemoveLog }}"></sr-logs-logs>
-    </template>
+    <sr-logs-logs id="logs" on-add="{{ handleAddLog }}"
+        on-remove="{{ handleRemoveLog }}"></sr-logs-logs>
+  </template>
 
-    <script>
-        Polymer("sr-pages-logs", {
-            handleJumpToBottom: function() {
-                this.$.logs.currentLog.scrollToBottom();
-            },
-            handleAddLog: function(e) {
-                console.log("Adding a new log: ", e.detail.name);
+  <script>
+    Polymer({
+      is: "sr-pages-logs",
 
-                var optgroup;
-                var option = document.createElement("option");
+      handleJumpToBottom: function() {
+        this.$.logs.currentLog.scrollToBottom();
+      },
+      handleAddLog: function(e) {
+        console.log("Adding a new log: ", e.detail.name);
 
-                if (e.detail.type === "current") {
-                    optgroup = this.$.currentLogs;
-                } else if (e.detail.type === "old") {
-                    optgroup = this.$.oldLogs;
-                }
+        var optgroup;
+        var option = document.createElement("option");
 
-                option.textContent = e.detail.title;
-                option.value = e.detail.name;
+        if (e.detail.type === "current") {
+          optgroup = this.$.currentLogs;
+        } else if (e.detail.type === "old") {
+          optgroup = this.$.oldLogs;
+        }
 
-                optgroup.appendChild(option);
-            },
-            handleRemoveLog: function(e) {
-                console.log("Removing log:", e.detail.name);
+        option.textContent = e.detail.title;
+        option.value = e.detail.name;
 
-                var option = this.$.logSelection.querySelector("[value=" + e.detail.name + "]");
-                option.parentNode.removeChild(option);
-            },
-            handleLogSelectionChanged: function(e) {
-                this.$.logs.changeTo(e.target.value);
-            }
-        });
-    </script>
-</polymer-element>
+        optgroup.appendChild(option);
+      },
+      handleRemoveLog: function(e) {
+        console.log("Removing log:", e.detail.name);
+
+        var option = this.$.logSelection.querySelector("[value=" + e.detail.name + "]");
+        option.parentNode.removeChild(option);
+      },
+      handleLogSelectionChanged: function(e) {
+        this.$.logs.changeTo(e.target.value);
+      }
+    });
+  </script>
+</dom-module>

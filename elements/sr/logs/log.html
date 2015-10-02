@@ -14,63 +14,61 @@ Example:
 <link rel="import" href="../wamp/index.html" />
 <link rel="import" href="textarea.html" />
 
-<polymer-element name="sr-logs-log" attributes="log">
-    <template>
-        <style>
-            :host {
-                flex: 1 1 auto;
-                display: flex;
-            }
-        </style>
+<dom-module id="sr-logs-log">
+  <template>
+    <style>
+      :host {
+        flex: 1 1 auto;
+        display: flex;
+      }
+    </style>
 
-        <iron-localstorage
-            id="localStorage"
-            name="log_{{ log }}"></iron-localstorage>
+    <iron-localstorage id="localStorage" name="log_{{ log }}"></iron-localstorage>
 
-        <sr-logs-textarea id="log"></sr-logs-textarea>
+    <sr-logs-textarea id="log"></sr-logs-textarea>
 
-        <sr-wamp-core
-            on-open="{{ handleWampOpen }}"
-            on-close="{{ handleWampClose }}"></sr-wamp-core>
-        <sr-wamp-subscribe
-            id="wampSub"
-            topic="org.srobo.logs.append"
-            on-handle="{{ handleLogAppend }}"></sr-wamp-subscribe>
-        <sr-wamp-call
-            id="wampCall"
-            procedure="org.srobo.logs.get"
-            on-success="{{ handleLogGet }}"></sr-wamp-call>
-    </template>
+    <sr-wamp-core on-open="{{ handleWampOpen }}"
+      on-close="{{ handleWampClose }}"></sr-wamp-core>
+    <sr-wamp-subscribe id="wampSub" topic="org.srobo.logs.append"
+      on-handle="{{ handleLogAppend }}"></sr-wamp-subscribe>
+    <sr-wamp-call id="wampCall" procedure="org.srobo.logs.get"
+      on-success="{{ handleLogGet }}"></sr-wamp-call>
+  </template>
 
-    <script>
-        Polymer("sr-logs-log", {
-            log: undefined,
-            handleWampOpen: function() {
-                this.$.wampSub.subscribe();
-                this.$.wampCall.go([this.log]);
-            },
-            handleWampClose: function() {
-                this.$.log.entries = this.$.localStorage.value;
-            },
-            handleLogGet: function(e) {
-                var contents = e.detail.result.contents;
-                this.$.log.entries = contents.map(function(entry, i) {
-                    return {text: entry, lineNumber: i};
-                });
-                this.$.localStorage.value = this.$.log.entries;
-            },
-            handleLogAppend: function(e) {
-                if (e.detail.args[0] === this.log) {
-                    this.addEntry(e.detail.args[1], e.detail.args[2]);
-                }
-            },
-            addEntry: function(entry, lineNumber, includeDate) {
-                this.$.log.addEntry(entry, lineNumber, includeDate);
-                this.$.localStorage.value = this.$.log.entries;
-            },
-            scrollToBottom: function() {
-                this.$.log.scrollToBottom();
-            }
+  <script>
+    Polymer({
+      is: "sr-logs-log",
+
+      properties: {
+        log: String,
+      },
+
+      handleWampOpen: function() {
+        this.$.wampSub.subscribe();
+        this.$.wampCall.go([this.log]);
+      },
+      handleWampClose: function() {
+        this.$.log.entries = this.$.localStorage.value;
+      },
+      handleLogGet: function(e) {
+        var contents = e.detail.result.contents;
+        this.$.log.entries = contents.map(function(entry, i) {
+          return {text: entry, lineNumber: i};
         });
-    </script>
-</polymer-element>
+        this.$.localStorage.value = this.$.log.entries;
+      },
+      handleLogAppend: function(e) {
+        if (e.detail.args[0] === this.log) {
+          this.addEntry(e.detail.args[1], e.detail.args[2]);
+        }
+      },
+      addEntry: function(entry, lineNumber, includeDate) {
+        this.$.log.addEntry(entry, lineNumber, includeDate);
+        this.$.localStorage.value = this.$.log.entries;
+      },
+      scrollToBottom: function() {
+        this.$.log.scrollToBottom();
+      }
+    });
+  </script>
+</dom-module>

@@ -19,84 +19,88 @@ mode controller.
 <link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html" />
 <link rel="import" href="../wamp/index.html" />
 
-<polymer-element name="sr-io-pin-mode-controller" attributes="board pin value readonly">
-    <template>
-        <style>
-            :host {
-                display: block;
-            }
+<dom-module id="sr-io-pin-mode-controller">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
 
-            select {
-                padding: 2px;
-                width: 100%;
-            }
-        </style>
+      select {
+        padding: 2px;
+        width: 100%;
+      }
+    </style>
 
-        <select value="{{ value }}" on-change="{{ handleValueChange }}" disabled?="{{ readonly }}">
-            <option value="input" selected>Input</option>
-            <option value="output">Output</option>
-            <option value="input_pullup">Input Pull-up</option>
-        </select>
+    <select value="{{ value }}" on-change="{{ handleValueChange }}" disabled?="{{ readonly }}">
+      <option value="input" selected>Input</option>
+      <option value="output">Output</option>
+      <option value="input_pullup">Input Pull-up</option>
+    </select>
 
-        <iron-localstorage
-            id="localStorage"
-            name="io_{{ board }}_{{ pin }}_mode"></iron-localstorage>
+    <iron-localstorage id="localStorage"
+      name="io_{{ board }}_{{ pin }}_mode"></iron-localstorage>
 
-        <sr-wamp-core
-            id="wamp"
-            on-open="{{ handleWampOpen }}"
-            on-close="{{ handleWampClose }}"></sr-wamp-core>
-        <sr-wamp-subscribe
-            auto="wamp"
-            topic="org.srobo.ruggeduinos.pin_mode"
-            on-handle="{{ handleValue }}"></sr-wamp-subscribe>
-        <sr-wamp-publish
-            id="publishValue"
-            topic="org.srobo.ruggeduinos.pin_mode"></sr-wamp-publish>
-        <sr-wamp-subscribe
-            id="wampSubRobotState"
-            auto="wamp"
-            topic="org.srobo.state"
-            on-handle="{{ handleRobotState }}"></sr-wamp-subscribe>
-        <sr-wamp-call
-            id="wampGetRobotState"
-            procedure="org.srobo.state"
-            on-success="{{ handleRobotState }}"></sr-wamp-call>
-    </template>
+    <sr-wamp-core id="wamp" on-open="{{ handleWampOpen }}"
+      on-close="{{ handleWampClose }}"></sr-wamp-core>
+    <sr-wamp-subscribe auto="wamp" topic="org.srobo.ruggeduinos.pin_mode"
+      on-handle="{{ handleValue }}"></sr-wamp-subscribe>
+    <sr-wamp-publish id="publishValue"
+      topic="org.srobo.ruggeduinos.pin_mode"></sr-wamp-publish>
+    <sr-wamp-subscribe id="wampSubRobotState" auto="wamp"
+      topic="org.srobo.state" on-handle="{{ handleRobotState }}"></sr-wamp-subscribe>
+    <sr-wamp-call id="wampGetRobotState" procedure="org.srobo.state"
+        on-success="{{ handleRobotState }}"></sr-wamp-call>
+  </template>
 
-    <script>
-        Polymer("sr-io-pin-mode-controller", {
-            board: 0,
-            pin: 0,
-            value: null,
-            handleWampOpen: function() {
-                this.readonly = false;
-                this.$.wampGetRobotState.go();
-            },
-            handleWampClose: function() {
-                this.readonly = true;
-                this.value = this.$.localStorage.value;
-            },
-            handleValueChange: function() {
-                this.$.publishValue.go([this.board, this.pin, this.value]);
-            },
-            handleValue: function(e) {
-                var args = e.detail.args;
-                if (args[0] === this.board && args[1] === this.pin) {
-                    this.value = args[2];
-                }
-            },
-            valueChanged: function() {
-                this.$.localStorage.value = this.value;
-            },
-            handleRobotState: function(e) {
-                var state = e.detail.result || e.detail.args[0];
-                if (state === "stopped") {
-                    this.readonly = false;
-                } else {
-                    this.readonly = true;
-                }
-            },
-        });
-    </script>
-</polymer-element>
+  <script>
+    Polymer({
+      is: "sr-io-pin-mode-controller",
+
+      properties: {
+        board: {
+          type: Number,
+          value: 0,
+        },
+        pin: {
+          type: Number,
+          value: 0,
+        },
+        value: String,
+        readonly: {
+          type: Boolean,
+          value: false
+        }
+      },
+
+      handleWampOpen: function() {
+        this.readonly = false;
+        this.$.wampGetRobotState.go();
+      },
+      handleWampClose: function() {
+        this.readonly = true;
+        this.value = this.$.localStorage.value;
+      },
+      handleValueChange: function() {
+        this.$.publishValue.go([this.board, this.pin, this.value]);
+      },
+      handleValue: function(e) {
+        var args = e.detail.args;
+        if (args[0] === this.board && args[1] === this.pin) {
+          this.value = args[2];
+        }
+      },
+      valueChanged: function() {
+        this.$.localStorage.value = this.value;
+      },
+      handleRobotState: function(e) {
+        var state = e.detail.result || e.detail.args[0];
+        if (state === "stopped") {
+          this.readonly = false;
+        } else {
+          this.readonly = true;
+        }
+      },
+    });
+  </script>
+</dom-module>

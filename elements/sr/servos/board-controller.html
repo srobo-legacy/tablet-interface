@@ -13,79 +13,81 @@ Example:
 <link rel="import" href="../wamp/index.html" />
 <link rel="import" href="servo-controller.html" />
 
-<polymer-element name="sr-servos-board-controller" attributes="board">
-    <template>
-        <style>
-            :host {
-                flex: 1 1 auto;
-                display: flex;
-            }
+<dom-module id="sr-servos-board-controller">
+  <template>
+    <style>
+      :host {
+        flex: 1 1 auto;
+        display: flex;
+      }
 
-            #controllers {
-                flex: 1 1 auto;
-                padding: 10px;
-                display: flex;
-                overflow-x: auto;
-            }
+      #controllers {
+        flex: 1 1 auto;
+        padding: 10px;
+        display: flex;
+        overflow-x: auto;
+      }
 
-            sr-servos-servo-controller {
-                flex: 1 1 auto;
-            }
-        </style>
+      sr-servos-servo-controller {
+        flex: 1 1 auto;
+      }
+    </style>
 
-        <div id="controllers"></div>
+    <div id="controllers"></div>
 
-        <iron-localstorage
-            id="localStorage"
-            name="servos_{{ board }}"></iron-localstorage>
+    <iron-localstorage id="localStorage"
+      name="servos_{{ board }}"></iron-localstorage>
 
-        <sr-wamp-core
-            on-open="{{ handleWampOpen }}"
-            on-close="{{ handleWampClose }}"></sr-wamp-core>
-        <sr-wamp-call
-            id="wampGetBoard"
-            procedure="org.srobo.servos.get_board"
-            on-success="{{ handleGetBoardSuccess }}"></sr-wamp-call>
-    </template>
+    <sr-wamp-core on-open="{{ handleWampOpen }}"
+      on-close="{{ handleWampClose }}"></sr-wamp-core>
+    <sr-wamp-call id="wampGetBoard"
+      procedure="org.srobo.servos.get_board"
+      on-success="{{ handleGetBoardSuccess }}"></sr-wamp-call>
+  </template>
 
-    <script>
-        Polymer("sr-servos-board-controller", {
-            board: 0,
-            handleWampOpen: function() {
-                this.$.wampGetBoard.go([this.board]);
-            },
-            handleWampClose: function() {
-                this._clearControllers();
-                var noControllers = this.$.localStorage.value;
-                this._addAllServoControllers(noControllers);
-            },
-            handleGetBoardSuccess: function(e) {
-                this._clearControllers();
-                var servos = e.detail.result.servos;
-                this._addAllServoControllers(servos.length);
-                this.$.localStorage.value = servos.length;
-            },
-            _createServoController: function(servo) {
-                var element = document.createElement("sr-servos-servo-controller");
-                element.board = this.board;
-                element.servo = servo;
-                return element;
-            },
-            _addServoController: function(servo) {
-                var element = this._createServoController(servo);
-                this.$.controllers.appendChild(element);
-            },
-            _addAllServoControllers: function(count) {
-                for (var i = 0; i < count; i++) {
-                    this._addServoController(i);
-                }
-            },
-            _clearControllers: function() {
-                var controllers = this.$.controllers;
-                while (controllers.lastChild) {
-                    controllers.removeChild(controllers.lastChild);
-                }
-            }
-        });
-    </script>
-</polymer-element>
+  <script>
+    Polymer({
+      is: "sr-servos-board-controller",
+
+      properties: {
+        board: Number,
+      },
+
+      handleWampOpen: function() {
+        this.$.wampGetBoard.go([this.board]);
+      },
+      handleWampClose: function() {
+        this._clearControllers();
+        var noControllers = this.$.localStorage.value;
+        this._addAllServoControllers(noControllers);
+      },
+      handleGetBoardSuccess: function(e) {
+        this._clearControllers();
+        var servos = e.detail.result.servos;
+        this._addAllServoControllers(servos.length);
+        this.$.localStorage.value = servos.length;
+      },
+      _createServoController: function(servo) {
+        var element = document.createElement("sr-servos-servo-controller");
+        element.board = this.board;
+        element.servo = servo;
+        return element;
+      },
+      _addServoController: function(servo) {
+        var element = this._createServoController(servo);
+        this.$.controllers.appendChild(element);
+      },
+      _addAllServoControllers: function(count) {
+        for (var i = 0; i < count; i++) {
+          this._addServoController(i);
+        }
+      },
+      _clearControllers: function() {
+        var controllers = this.$.controllers;
+        while (controllers.lastChild) {
+          controllers.removeChild(controllers.lastChild);
+        }
+      }
+    });
+  </script>
+</dom-module>

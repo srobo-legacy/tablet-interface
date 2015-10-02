@@ -12,92 +12,94 @@ Example:
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../wamp/index.html" />
 
-<polymer-element name="sr-logs-textarea">
-    <template>
-        <style>
-            :host {
-                display: flex;
-                flex: 1 1 auto;
-            }
+<dom-module name="sr-logs-textarea">
+  <template>
+    <style>
+      :host {
+        display: flex;
+        flex: 1 1 auto;
+      }
 
-            #log {
-                flex: 1 1 auto;
-                resize: none;
-                font-family: monospace;
-            }
-        </style>
+      #log {
+        flex: 1 1 auto;
+        resize: none;
+        font-family: monospace;
+      }
+    </style>
 
-        <textarea id="log" readonly></textarea>
-    </template>
+    <textarea id="log" readonly></textarea>
+  </template>
 
-    <script src="moment.js"></script>
+  <script src="moment.js"></script>
 
-    <script>
-        Polymer("sr-logs-textarea", {
-            created: function() {
-                this.entries = [];
-            },
-            clear: function() {
-                this.entries = [];
-            },
-            isAtBottom: function() {
-                var log = this.$.log;
-                return Math.abs((log.scrollTop + log.clientHeight) - log.scrollHeight) <= 10;
-            },
-            scrollToBottom: function() {
-                var log = this.$.log;
-                log.scrollTop = log.scrollHeight;
-            },
-            findEntry: function(lineNumber) {
-                for (var i = 0; i < this.entries.length; i++) {
-                    if (this.entries[i].lineNumber === lineNumber) {
-                        return this.entries[i];
-                    }
-                }
-            },
-            addEntry: function(text, lineNumber, addDate) {
-                if (this.findEntry(lineNumber)) {
-                    // the line is already in the text area
-                    return;
-                }
+  <script>
+    Polymer({
+      is: 'sr-logs-textarea',
 
-                if (addDate === undefined) {
-                    addDate = true;
-                }
+      created: function() {
+        this.entries = [];
+      },
+      clear: function() {
+        this.entries = [];
+      },
+      isAtBottom: function() {
+        var log = this.$.log;
+        return Math.abs((log.scrollTop + log.clientHeight) - log.scrollHeight) <= 10;
+      },
+      scrollToBottom: function() {
+        var log = this.$.log;
+        log.scrollTop = log.scrollHeight;
+      },
+      findEntry: function(lineNumber) {
+        for (var i = 0; i < this.entries.length; i++) {
+          if (this.entries[i].lineNumber === lineNumber) {
+            return this.entries[i];
+          }
+        }
+      },
+      addEntry: function(text, lineNumber, addDate) {
+        if (this.findEntry(lineNumber)) {
+          // the line is already in the text area
+          return;
+        }
 
-                var isAtBottom = this.isAtBottom();
-                var entry = {text: text, lineNumber: lineNumber};
+        if (addDate === undefined) {
+          addDate = true;
+        }
 
-                if (addDate) {
-                    entry.date = moment().format("HH:mm:ss");
-                }
+        var isAtBottom = this.isAtBottom();
+        var entry = {text: text, lineNumber: lineNumber};
 
-                this.entries.push(entry);
-                this.$.log.textContent = this._getTextareaContents();
+        if (addDate) {
+          entry.date = moment().format("HH:mm:ss");
+        }
 
-                if (isAtBottom) {
-                    this.scrollToBottom();
-                }
-            },
-            _getTextareaContents: function() {
-                var text = "";
+        this.entries.push(entry);
+        this.$.log.textContent = this._getTextareaContents();
 
-                this.entries.forEach(function(entry) {
-                    text += "[" + entry.lineNumber + "] ";
+        if (isAtBottom) {
+          this.scrollToBottom();
+        }
+      },
+      _getTextareaContents: function() {
+        var text = "";
 
-                    if (entry.date) {
-                        text += entry.date + ": ";
-                    }
+        this.entries.forEach(function(entry) {
+          text += "[" + entry.lineNumber + "] ";
 
-                    text += entry.text;
-                    text += "\n";
-                });
+          if (entry.date) {
+            text += entry.date + ": ";
+          }
 
-                return text;
-            },
-            entriesChanged: function() {
-                this.$.log.textContent = this._getTextareaContents();
-            }
+          text += entry.text;
+          text += "\n";
         });
-    </script>
-</polymer-element>
+
+        return text;
+      },
+      entriesChanged: function() {
+        this.$.log.textContent = this._getTextareaContents();
+      }
+    });
+  </script>
+</dom-module>

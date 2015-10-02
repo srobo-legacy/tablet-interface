@@ -17,98 +17,98 @@ Example:
 <link rel="import" href="pin-mode-controller.html" />
 <link rel="import" href="pin-value-controller.html" />
 
-<polymer-element name="sr-io-pin-controller" attributes="board pin mode type value">
-    <template>
-        <style>
-            :host {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                min-width: 100px;
-                padding: 10px;
-            }
+<dom-module id="sr-io-pin-controller">
+  <template>
+    <style>
+      :host {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 100px;
+        padding: 10px;
+      }
 
-            h2 {
-                margin: 0;
-            }
+      h2 {
+        margin: 0;
+      }
 
-            h3 {
-                font-size: 0.8em;
-                font-weight: bold;
-                color: rgb(50, 50, 50);
-                margin: 0 0 15px;
-            }
+      h3 {
+        font-size: 0.8em;
+        font-weight: bold;
+        color: rgb(50, 50, 50);
+        margin: 0 0 15px;
+      }
 
-            sr-io-analogue-pin-controller,
-            sr-io-digital-pin-controller,
-            sr-io-pin-mode-controller {
-                margin: 5px;
-            }
-        </style>
+      sr-io-analogue-pin-controller,
+      sr-io-digital-pin-controller,
+      sr-io-pin-mode-controller {
+        margin: 5px;
+      }
+    </style>
 
-        <h2>{{ pin }}</h2>
-        <h3>{{ type }}</h3>
+    <h2>{{ pin }}</h2>
+    <h3>{{ type }}</h3>
 
-        <sr-io-pin-mode-controller
-            board="{{ board }}"
-            pin="{{ pin }}"
-            value="{{ mode }}"></sr-io-pin-mode-controller>
+    <sr-io-pin-mode-controller board="{{ board }}" pin="{{ pin }}"
+        value="{{ mode }}"></sr-io-pin-mode-controller>
 
-        <sr-io-pin-value-controller
-            board="{{ board }}"
-            pin="{{ pin }}"
-            mode="{{ mode }}"
-            type="{{ type }}"
-            value="{{ value }}"></sr-io-pin-value-controller>
+    <sr-io-pin-value-controller board="{{ board }}" pin="{{ pin }}"
+        mode="{{ mode }}" type="{{ type }}"
+        value="{{ value }}"></sr-io-pin-value-controller>
 
-        <iron-localstorage
-            id="localStorageMode"
-            name="io_{{ board }}_{{ pin }}_mode"></iron-localstorage>
-        <iron-localstorage
-            id="localStorageType"
-            name="io_{{ board }}_{{ pin }}_type"></iron-localstorage>
-        <iron-localstorage
-            id="localStorageValue"
-            name="io_{{ board }}_{{ pin }}_value"></iron-localstorage>
+    <iron-localstorage id="localStorageMode"
+        name="io_{{ board }}_{{ pin }}_mode"></iron-localstorage>
+    <iron-localstorage id="localStorageType"
+        name="io_{{ board }}_{{ pin }}_type"></iron-localstorage>
+    <iron-localstorage id="localStorageValue"
+        name="io_{{ board }}_{{ pin }}_value"></iron-localstorage>
 
-        <sr-wamp-core
-            on-open="{{ handleWampOpen }}"
-            on-close="{{ handleWampClose }}"></sr-wamp-core>
-        <sr-wamp-call
-            id="wampGetPin"
-            procedure="org.srobo.ruggeduinos.get_pin"
-            on-success="{{ handleGetPinSuccess }}"></sr-wamp-call>
-    </template>
+    <sr-wamp-core on-open="{{ handleWampOpen }}"
+        on-close="{{ handleWampClose }}"></sr-wamp-core>
+    <sr-wamp-call id="wampGetPin" procedure="org.srobo.ruggeduinos.get_pin"
+        on-success="{{ handleGetPinSuccess }}"></sr-wamp-call>
+  </template>
 
-    <script>
-        Polymer("sr-io-pin-controller", {
-            board: undefined,
-            pin: 0,
-            mode: undefined,
-            type: undefined,
-            value: 0,
-            handleWampOpen: function() {
-                this.$.wampGetPin.go([this.board, this.pin]);
-            },
-            handleWampClose: function() {
-                this.mode = this.$.localStorageMode.value;
-                this.type = this.$.localStorageType.value;
-                this.value = this.$.localStorageValue.value;
-            },
-            handleGetPinSuccess: function(e) {
-                this.mode = e.detail.result.mode;
-                this.type = e.detail.result.type;
-                this.value = e.detail.result.value;
-            },
-            modeChanged: function() {
-                this.$.localStorageMode.value = this.mode;
-            },
-            typeChanged: function() {
-                this.$.localStorageType.value = this.type;
-            },
-            valueChanged: function() {
-                this.$.localStorageValue.value = this.value;
-            }
-        });
-    </script>
-</polymer-element>
+  <script>
+    Polymer({
+      is: "sr-io-pin-controller",
+
+      properties: {
+        board: String,
+        pin: {
+          type: Number,
+          value: 0,
+        },
+        mode: String,
+        type: String,
+        value: {
+          type: String,
+          value: 0,
+        }
+      },
+
+      handleWampOpen: function() {
+        this.$.wampGetPin.go([this.board, this.pin]);
+      },
+      handleWampClose: function() {
+        this.mode = this.$.localStorageMode.value;
+        this.type = this.$.localStorageType.value;
+        this.value = this.$.localStorageValue.value;
+      },
+      handleGetPinSuccess: function(e) {
+        this.mode = e.detail.result.mode;
+        this.type = e.detail.result.type;
+        this.value = e.detail.result.value;
+      },
+      modeChanged: function() {
+        this.$.localStorageMode.value = this.mode;
+      },
+      typeChanged: function() {
+        this.$.localStorageType.value = this.type;
+      },
+      valueChanged: function() {
+        this.$.localStorageValue.value = this.value;
+      }
+    });
+  </script>
+</dom-module>

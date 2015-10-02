@@ -14,54 +14,58 @@ Example:
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="core.html" />
 
-<polymer-element name="sr-wamp-subscribe" attributes="topic auto">
-    <template>
-        <style>
-            :host {
-                display: none;
-            }
-        </style>
+<dom-module id="sr-wamp-subscribe">
+  <template>
+    <style>
+      :host {
+        display: none;
+      }
+    </style>
 
-        <sr-wamp-core
-            id="wamp"
-            on-open="{{ handleOpen }}"></sr-wamp-core>
-    </template>
+    <sr-wamp-core id="wamp" on-open="{{ handleOpen }}"></sr-wamp-core>
+  </template>
 
-    <script>
-        Polymer("sr-wamp-subscribe", {
-            auto: null,
-            subscribe: function() {
-                this.$.wamp.subscribe(
-                    this.topic,
-                    function(args, kwargs, details) {
-                        this.fire("handle", {
-                            args: args, kwargs: kwargs, details: details
-                        });
-                    }.bind(this),
-                    undefined,
-                    function(subscription) {
-                        this._subscription = subscription;
-                    }.bind(this)
-                );
-            },
-            unsubscribe: function() {
-                this.$.wamp.unsubscribe(this._subscription);
-            },
-            handleOpen: function() {
-                if (this.auto === "wamp") {
-                    this.subscribe();
-                }
-            },
-            onPageShow: function() {
-                if (this.auto === "page") {
-                    this.subscribe();
-                }
-            },
-            onPageHide: function() {
-                if (this.auto === "page") {
-                    this.unsubscribe();
-                }
-            }
-        });
-    </script>
-</polymer-element>
+  <script>
+    Polymer({
+      is: "sr-wamp-subscribe",
+
+      properties: {
+        topic: String,
+        auto: String
+      },
+
+      subscribe: function() {
+        this.$.wamp.subscribe(
+          this.topic,
+          function(args, kwargs, details) {
+              this.fire("handle", {
+                args: args, kwargs: kwargs, details: details
+              });
+          }.bind(this),
+          undefined,
+          function(subscription) {
+            this._subscription = subscription;
+          }.bind(this)
+        );
+      },
+      unsubscribe: function() {
+        this.$.wamp.unsubscribe(this._subscription);
+      },
+      handleOpen: function() {
+        if (this.auto === "wamp") {
+          this.subscribe();
+        }
+      },
+      onPageShow: function() {
+        if (this.auto === "page") {
+          this.subscribe();
+        }
+      },
+      onPageHide: function() {
+        if (this.auto === "page") {
+          this.unsubscribe();
+        }
+      }
+    });
+  </script>
+</dom-module>

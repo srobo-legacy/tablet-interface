@@ -14,37 +14,41 @@ Example:
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="core.html" />
 
-<polymer-element name="sr-wamp-call" attributes="procedure auto">
-    <template>
-        <style>
-            :host {
-                display: none;
-            }
-        </style>
+<dom-module id="sr-wamp-call">
+  <template>
+    <style>
+      :host {
+        display: none;
+      }
+    </style>
 
-        <sr-wamp-core
-            id="wamp"
-            on-open="{{ handleOpen }}"></sr-wamp-core>
-    </template>
+    <sr-wamp-core id="wamp" on-open="{{ handleOpen }}"></sr-wamp-core>
+  </template>
 
-    <script>
-        Polymer("sr-wamp-call", {
-            auto: null,
-            handleOpen: function() {
-                if (this.auto === "wamp") {
-                    this.go();
-                }
-            },
-            onPageShow: function() {
-                if (this.auto === "page") {
-                    this.go();
-                }
-            },
-            go: function(args, kwargs, options) {
-                this.$.wamp.call(this.procedure, args, kwargs, options).then(function(result) {
-                    this.fire("success", {result: result});
-                }.bind(this));
-            }
-        });
-    </script>
-</polymer-element>
+  <script>
+    Polymer({
+      is: "sr-wamp-call",
+
+      properties: {
+        procedure: String,
+        auto: String,
+      },
+
+      handleOpen: function() {
+        if (this.auto === "wamp") {
+          this.go();
+        }
+      },
+      onPageShow: function() {
+        if (this.auto === "page") {
+          this.go();
+        }
+      },
+      go: function(args, kwargs, options) {
+        this.$.wamp.call(this.procedure, args, kwargs, options).then(function(result) {
+          this.fire("success", {result: result});
+        }.bind(this));
+      }
+    });
+  </script>
+</dom-module>

@@ -15,57 +15,57 @@ Example:
 <link rel="import" href="../ui/index.html" />
 <link rel="import" href="../wamp/index.html" />
 
-<polymer-element name="sr-pages-motors">
-    <template>
-        <style>
-            :host {
-                flex: 1 1 auto;
-                display: flex;
-                flex-direction: column;
-            }
+<dom-module id="sr-pages-motors">
+  <template>
+    <style>
+      :host {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+      }
 
-            sr-motors-controller {
-                flex: 1 1 auto;
-            }
-        </style>
+      sr-motors-controller {
+        flex: 1 1 auto;
+      }
+    </style>
 
-        <sr-ui-toolbar id="toolbar">
-            <h1 flex>Motor Control</h1>
-        </sr-ui-toolbar>
+    <sr-ui-toolbar id="toolbar">
+      <h1 flex>Motor Control</h1>
+    </sr-ui-toolbar>
 
-        <sr-motors-controller
-            id="controller"
-            on-added="{{ handleBoardAdded }}"
-            on-removed="{{ handleBoardRemoved }}"
-            on-changed="{{ handleBoardChanged }}"></sr-motors-controller>
-    </template>
+    <sr-motors-controller id="controller" on-added="{{ handleBoardAdded }}"
+      on-removed="{{ handleBoardRemoved }}"
+      on-changed="{{ handleBoardChanged }}"></sr-motors-controller>
+  </template>
 
-    <script>
-        Polymer("sr-pages-motors", {
-            handleBoardAdded: function(e) {
-                var serialNumber = e.detail.serialNumber;
-                var button = document.createElement("button");
-                button.id = "button_" + serialNumber;
-                button.className = "tab";
-                button.textContent = "Board " + serialNumber;
-                button.onclick = this.$.controller.changeBoard.bind(this.$.controller, serialNumber);
-                this.$.toolbar.appendChild(button);
-            },
-            handleBoardRemoved: function(e) {
-                var serialNumber = e.detail.serialNumber;
-                var button = this.$.toolbar.querySelector("#button_" + serialNumber);
-                button.parentNode.removeChild(button);
-            },
-            handleBoardChanged: function(e) {
-                var buttons = this.shadowRoot.querySelectorAll("button.tab");
-                for (var i = 0; i < buttons.length; i++) {
-                    if (buttons[i].id == "button_" + e.detail.serialNumber) {
-                        buttons[i].style.fontWeight = "bold";
-                    } else {
-                        buttons[i].style.fontWeight = "normal";
-                    }
-                }
-            }
-        });
-    </script>
-</polymer-element>
+  <script>
+    Polymer({
+      is: "sr-pages-motors",
+
+      handleBoardAdded: function(e) {
+        var serialNumber = e.detail.serialNumber;
+        var button = document.createElement("button");
+        button.id = "button_" + serialNumber;
+        button.className = "tab";
+        button.textContent = "Board " + serialNumber;
+        button.onclick = this.$.controller.changeBoard.bind(this.$.controller, serialNumber);
+        this.$.toolbar.appendChild(button);
+      },
+      handleBoardRemoved: function(e) {
+        var serialNumber = e.detail.serialNumber;
+        var button = this.$.toolbar.querySelector("#button_" + serialNumber);
+        button.parentNode.removeChild(button);
+      },
+      handleBoardChanged: function(e) {
+        var buttons = this.shadowRoot.querySelectorAll("button.tab");
+        for (var i = 0; i < buttons.length; i++) {
+          if (buttons[i].id == "button_" + e.detail.serialNumber) {
+            buttons[i].style.fontWeight = "bold";
+          } else {
+            buttons[i].style.fontWeight = "normal";
+          }
+        }
+      }
+    });
+  </script>
+</dom-module>

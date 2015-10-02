@@ -13,48 +13,50 @@ Example:
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="core.html" />
 
-<polymer-element name="sr-wamp-status-indicator">
-    <template>
-        <link rel="stylesheet" href="/bower_components/components-font-awesome/css/font-awesome.css" />
+<dom-module id="sr-wamp-status-indicator">
+  <template>
+      <link rel="import" type="css" href="/bower_components/components-font-awesome/css/font-awesome.css" />
 
-        <style>
-            :host {
-                display: block;
-                padding: 4px 8px;
-                background: black;
-                color: white;
-                opacity: 0.3;
-                border-top-left-radius: 3px;
-            }
+      <style>
+        :host {
+          display: block;
+          padding: 4px 8px;
+          background: black;
+          color: white;
+          opacity: 0.3;
+          border-top-left-radius: 3px;
+        }
 
-            p {
-                margin: 0;
-            }
+        p {
+          margin: 0;
+        }
 
-            .fa {
-                vertical-align: middle;
-            }
-        </style>
+        .fa {
+          vertical-align: middle;
+        }
+      </style>
 
-        <sr-wamp-core id="wamp" on-open="{{ handleOpen }}" on-close="{{ handleClose }}"></sr-wamp-core>
+      <sr-wamp-core id="wamp" on-open="{{ handleOpen }}" on-close="{{ handleClose }}"></sr-wamp-core>
 
-        <p><span class="fa fa-thumbs-o-{{ $.wamp.connected ? 'up' : 'down' }} fa-fw"></span> {{ $.wamp.connected ? 'Online' : 'Offline' }}</p>
-    </template>
+      <p><span class="fa fa-thumbs-o-{{ $.wamp.connected ? 'up' : 'down' }} fa-fw"></span> {{ $.wamp.connected ? 'Online' : 'Offline' }}</p>
+  </template>
 
-    <script>
-        Polymer({
-            handleOpen: function() {
-                this.timeout = setTimeout(function() {
-                    this.style.display = "none";
-                    this.timeout = undefined;
-                }.bind(this), 5000);
-            },
-            handleClose: function() {
-                if (this.timeout !== undefined) {
-                    clearTimeout(this.timeout);
-                }
-                this.style.display = "block";
-            }
-        });
-    </script>
-</polymer-element>
+  <script>
+    Polymer({
+      is: 'sr-wamp-status-indicator',
+
+      handleOpen: function() {
+        this.timeout = setTimeout(function() {
+          this.style.display = "none";
+          this.timeout = undefined;
+        }.bind(this), 5000);
+      },
+      handleClose: function() {
+        if (this.timeout !== undefined) {
+          clearTimeout(this.timeout);
+        }
+        this.style.display = "block";
+      }
+    });
+  </script>
+</dom-module>

@@ -13,79 +13,81 @@ Example:
 <link rel="import" href="../wamp/index.html" />
 <link rel="import" href="motor-controller.html" />
 
-<polymer-element name="sr-motors-board-controller" attributes="board">
-    <template>
-        <style>
-            :host {
-                display: flex;
-                flex: 1 1 auto;
-            }
+<dom-module id="sr-motors-board-controller">
+  <template>
+    <style>
+      :host {
+        display: flex;
+        flex: 1 1 auto;
+      }
 
-            #controllers {
-                flex: 1 1 auto;
-                padding: 10px;
-                overflow-x: auto;
-                display: flex;
-            }
+      #controllers {
+        flex: 1 1 auto;
+        padding: 10px;
+        overflow-x: auto;
+        display: flex;
+      }
 
-            sr-motors-motor-controller {
-                flex: 1 1 auto;
-            }
-        </style>
+      sr-motors-motor-controller {
+        flex: 1 1 auto;
+      }
+    </style>
 
-        <div id="controllers"></div>
+    <div id="controllers"></div>
 
-        <iron-localstorage
-            id="localStorage"
-            name="motors_{{ board }}"></iron-localstorage>
+    <iron-localstorage id="localStorage"
+      name="motors_{{ board }}"></iron-localstorage>
 
-        <sr-wamp-core
-            on-open="{{ handleWampOpen }}"
-            on-close="{{ handleWampClose }}"></sr-wamp-core>
-        <sr-wamp-call
-            id="wampGetBoard"
-            procedure="org.srobo.motors.get_board"
-            on-success="{{ handleGetBoardSuccess }}"></sr-wamp-call>
-    </template>
+    <sr-wamp-core on-open="{{ handleWampOpen }}"
+      on-close="{{ handleWampClose }}"></sr-wamp-core>
+    <sr-wamp-call id="wampGetBoard"
+      procedure="org.srobo.motors.get_board"
+      on-success="{{ handleGetBoardSuccess }}"></sr-wamp-call>
+  </template>
 
-    <script>
-        Polymer("sr-motors-board-controller", {
-            board: undefined,
-            handleWampOpen: function() {
-                this.$.wampGetBoard.go([this.board]);
-            },
-            handleWampClose: function() {
-                this._clearControllers();
-                var noControllers = this.$.localStorage.value;
-                this._addAllMotorControllers(noControllers);
-            },
-            handleGetBoardSuccess: function(e) {
-                this._clearControllers();
-                var motors = e.detail.result.motors;
-                this._addAllMotorControllers(motors.length);
-                this.$.localStorage.value = motors.length;
-            },
-            _createMotorController: function(motor) {
-                var element = document.createElement("sr-motors-motor-controller");
-                element.board = this.board;
-                element.motor = motor;
-                return element;
-            },
-            _addMotorController: function(motor) {
-                var element = this._createMotorController(motor);
-                this.$.controllers.appendChild(element);
-            },
-            _addAllMotorControllers: function(count) {
-                for (var i = 0; i < count; i++) {
-                    this._addMotorController(i);
-                }
-            },
-            _clearControllers: function() {
-                var controllers = this.$.controllers;
-                while (controllers.lastChild) {
-                    controllers.removeChild(controllers.lastChild);
-                }
-            }
-        });
-    </script>
-</polymer-element>
+  <script>
+    Polymer({
+      is: "sr-motors-board-controller",
+
+      properties: {
+        board: Number
+      },
+
+      handleWampOpen: function() {
+        this.$.wampGetBoard.go([this.board]);
+      },
+      handleWampClose: function() {
+        this._clearControllers();
+        var noControllers = this.$.localStorage.value;
+        this._addAllMotorControllers(noControllers);
+      },
+      handleGetBoardSuccess: function(e) {
+        this._clearControllers();
+        var motors = e.detail.result.motors;
+        this._addAllMotorControllers(motors.length);
+        this.$.localStorage.value = motors.length;
+      },
+      _createMotorController: function(motor) {
+        var element = document.createElement("sr-motors-motor-controller");
+        element.board = this.board;
+        element.motor = motor;
+        return element;
+      },
+      _addMotorController: function(motor) {
+        var element = this._createMotorController(motor);
+        this.$.controllers.appendChild(element);
+      },
+      _addAllMotorControllers: function(count) {
+        for (var i = 0; i < count; i++) {
+          this._addMotorController(i);
+        }
+      },
+      _clearControllers: function() {
+        var controllers = this.$.controllers;
+        while (controllers.lastChild) {
+          controllers.removeChild(controllers.lastChild);
+        }
+      }
+    });
+  </script>
+</dom-module>

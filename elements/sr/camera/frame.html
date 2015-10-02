@@ -11,148 +11,151 @@ Example:
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<polymer-element name="sr-camera-frame">
-    <template>
-        <style>
-            :host {
-                display: flex;
-            }
+<dom-module id="sr-camera-frame">
+  <template>
+    <style>
+      :host {
+        display: flex;
+      }
 
-            #paper {
-                flex: 1 1 auto;
-                display: flex;
-            }
+      #paper {
+        flex: 1 1 auto;
+        display: flex;
+      }
 
-            #paper svg {
-                flex: 1 1 auto;
-            }
-        </style>
+      #paper svg {
+        flex: 1 1 auto;
+      }
+    </style>
 
-        <div id="paper"></div>
-    </template>
+    <div id="paper"></div>
+  </template>
 
-    <script src="raphael.min.js"></script>
+  <script src="raphael.min.js"></script>
 
-    <script>
-        Polymer("sr-camera-frame", {
-            created: function() {
-                this._balloons = {};
-            },
-            domReady: function() {
-                this.paper = Raphael(this.$.paper);
+  <script>
+    Polymer({
+      is: "sr-camera-frame",
 
-                // Raphael.js insists on having absolute width and height
-                // values. We need to remove them so the `svg` element fits
-                // into the element whatever size it is.
-                var svg = this.shadowRoot.querySelector("#paper svg");
-                svg.removeAttribute("width");
-                svg.removeAttribute("height");
-            },
-            _createCloseButton: function(x, y) {
-                var text = this.paper.text(x, y, "✖");
-                text.attr({
-                    "font-size": "48pt",
-                    "fill": "rgb(200, 200, 200)",
-                    "cursor": "pointer"
-                });
-                return text;
-            },
-            _createBalloon: function(markerBox, text) {
-                var set = this.paper.set();
+      created: function() {
+        this._balloons = {};
+      },
+      ready: function() {
+        this.paper = Raphael(this.$.paper);
 
-                var centreX = markerBox.x + markerBox.width / 2;
-                var centreY = markerBox.y + markerBox.height / 2;
+        // Raphael.js insists on having absolute width and height
+        // values. We need to remove them so the `svg` element fits
+        // into the element whatever size it is.
+        var svg = this.shadowRoot.querySelector("#paper svg");
+        svg.removeAttribute("width");
+        svg.removeAttribute("height");
+      },
 
-                // calculate bounding box of text
-                var text = this.paper.text(centreX, centreY, text);
-                text.attr({
-                    "font-family": "sans-serif",
-                    "font-size": "48pt",
-                    "fill": "black"
-                });
-
-                var textBox = text.getBBox();
-                var margin = 50;
-
-                // move text away from the marker
-                text.attr("y", centreY - markerBox.height/2 - textBox.height/2 - margin*2);
-                if (text.attr("y") <= textBox.height + margin) {
-                    text.attr("y", centreY + markerBox.height/2 + textBox.height/2 + margin*2);
-                }
-
-                textBox = text.getBBox();
-
-                // add mark from balloon to marker
-                var pathString = "M" + (centreX - margin) + "," + (textBox.y + textBox.height/2) + "L" + centreX + "," + centreY + "L" + (centreX + margin) + "," + (textBox.y + textBox.height/2);
-                var path = this.paper.path(pathString);
-                path.attr({
-                    "fill": "white"
-                });
-
-                // add balloon background to the text
-                var rect = this.paper.rect(textBox.x - margin,
-                                           textBox.y - margin,
-                                           textBox.width + margin * 2,
-                                           textBox.height + margin * 2,
-                                           margin);
-
-                rect.attr({
-                    "fill": "white",
-                    "stroke": "rgb(150, 150, 150)"
-                });
-
-                text.toFront();
-
-                // create close button
-                var rectBox = rect.getBBox();
-                var closeBtn = this._createCloseButton(rectBox.x2 - margin/1.2,
-                                                       rectBox.y + margin/1.2);
-
-                set.push(closeBtn, text, rect, path);
-
-                closeBtn.click(set.hide.bind(set));
-                return set;
-            },
-            showBalloon: function(markerBox, text, index) {
-                var balloon = this._balloons[index] || this._createBalloon(markerBox, text);
-                this._balloons[index] = balloon;
-                balloon.show();
-            },
-            setImage: function(src, markers) {
-                this.paper.clear();
-                this._balloons = {};
-
-                var img = document.createElement("img");
-                img.src = src;
-                img.onload = function() {
-                    this.paper.image(img.src, 0, 0, img.width, img.height);
-                    this.paper.setViewBox(0, 0, img.width, img.height);
-
-                    markers.forEach(function(marker, index) {
-                        var lastVertex = marker.vertices[marker.vertices.length-1];
-                        var pathString = "M" + lastVertex[0] + "," + lastVertex[1];
-                        marker.vertices.forEach(function(vertex) {
-                            pathString += "L" + vertex[0] + "," + vertex[1];
-                        });
-
-                        var rect = this.paper.path(pathString);
-
-                        rect.attr({
-                            fill: "rgb(34, 167, 240)",
-                            stroke: "none"
-                        });
-
-                        var balloonText = "Code: " + marker.code + "\nDistance: " + marker.distance;
-                        rect.click(this.showBalloon.bind(this, rect.getBBox(),
-                                                         balloonText, index));
-                    }.bind(this));
-
-                    // Make the view in the middle of the element rather than
-                    // on the left, purely for cosmetic reasons.
-                    var svg = this.shadowRoot.querySelector("#paper svg");
-                    svg.setAttribute("preserveAspectRatio", "xMidYMid");
-                }.bind(this);
-            }
+      _createCloseButton: function(x, y) {
+        var text = this.paper.text(x, y, "✖");
+        text.attr({
+          "font-size": "48pt",
+          "fill": "rgb(200, 200, 200)",
+          "cursor": "pointer"
         });
-    </script>
-</polymer-element>
+        return text;
+      },
+      _createBalloon: function(markerBox, text) {
+        var set = this.paper.set();
+
+        var centreX = markerBox.x + markerBox.width / 2;
+        var centreY = markerBox.y + markerBox.height / 2;
+
+        // calculate bounding box of text
+        var text = this.paper.text(centreX, centreY, text);
+        text.attr({
+          "font-family": "sans-serif",
+          "font-size": "48pt",
+          "fill": "black"
+        });
+
+        var textBox = text.getBBox();
+        var margin = 50;
+
+        // move text away from the marker
+        text.attr("y", centreY - markerBox.height/2 - textBox.height/2 - margin*2);
+        if (text.attr("y") <= textBox.height + margin) {
+          text.attr("y", centreY + markerBox.height/2 + textBox.height/2 + margin*2);
+        }
+
+        textBox = text.getBBox();
+
+        // add mark from balloon to marker
+        var pathString = "M" + (centreX - margin) + "," + (textBox.y + textBox.height/2) + "L" + centreX + "," + centreY + "L" + (centreX + margin) + "," + (textBox.y + textBox.height/2);
+        var path = this.paper.path(pathString);
+        path.attr({
+          "fill": "white"
+        });
+
+        // add balloon background to the text
+        var rect = this.paper.rect(textBox.x - margin,
+                                   textBox.y - margin,
+                                   textBox.width + margin * 2,
+                                   textBox.height + margin * 2,
+                                   margin);
+
+        rect.attr({
+          "fill": "white",
+          "stroke": "rgb(150, 150, 150)"
+        });
+
+        text.toFront();
+
+        // create close button
+        var rectBox = rect.getBBox();
+        var closeBtn = this._createCloseButton(rectBox.x2 - margin/1.2,
+                                               rectBox.y + margin/1.2);
+
+        set.push(closeBtn, text, rect, path);
+
+        closeBtn.click(set.hide.bind(set));
+        return set;
+      },
+      showBalloon: function(markerBox, text, index) {
+        var balloon = this._balloons[index] || this._createBalloon(markerBox, text);
+        this._balloons[index] = balloon;
+        balloon.show();
+      },
+      setImage: function(src, markers) {
+        this.paper.clear();
+        this._balloons = {};
+
+        var img = document.createElement("img");
+        img.src = src;
+        img.onload = function() {
+          this.paper.image(img.src, 0, 0, img.width, img.height);
+          this.paper.setViewBox(0, 0, img.width, img.height);
+
+          markers.forEach(function(marker, index) {
+            var lastVertex = marker.vertices[marker.vertices.length-1];
+            var pathString = "M" + lastVertex[0] + "," + lastVertex[1];
+            marker.vertices.forEach(function(vertex) {
+              pathString += "L" + vertex[0] + "," + vertex[1];
+            });
+
+            var rect = this.paper.path(pathString);
+
+            rect.attr({
+              fill: "rgb(34, 167, 240)",
+              stroke: "none"
+            });
+
+            var balloonText = "Code: " + marker.code + "\nDistance: " + marker.distance;
+            rect.click(this.showBalloon.bind(this, rect.getBBox(),
+                                             balloonText, index));
+          }.bind(this));
+
+          // Make the view in the middle of the element rather than
+          // on the left, purely for cosmetic reasons.
+          var svg = this.shadowRoot.querySelector("#paper svg");
+          svg.setAttribute("preserveAspectRatio", "xMidYMid");
+        }.bind(this);
+      }
+    });
+  </script>
+</dom-module>

@@ -20,79 +20,78 @@ difference between an analogue and digital pin automatically.
 <link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html" />
 <link rel="import" href="../wamp/index.html" />
 
-<polymer-element name="sr-io-pin-value-controller" attributes="board pin mode type value readonly">
-    <template>
-        <style>
-            :host {
-                display: block;
-            }
+<dom-module id="sr-io-pin-value-controller">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
 
-            input {
-                padding: 2px;
-            }
+      input {
+        padding: 2px;
+      }
 
-            input[type=range] {
-                width: 100%;
-            }
+      input[type=range] {
+        width: 100%;
+      }
 
-            input[type=checkbox] {
-                width: 32px;
-                height: 32px;
-            }
-        </style>
+      input[type=checkbox] {
+        width: 32px;
+        height: 32px;
+      }
+    </style>
 
-        <template bind if="{{ type === 'analogue' }}">
-            <input
-                type="range"
-                value="{{value}}"
-                on-change="{{ handleValueChange }}"
-                min="0"
-                max="3.3"
-                step="0.1"
-                disabled?="{{ isInput || readonly }}" />
-        </template>
-
-        <template bind if="{{ type === 'digital' }}">
-            <input
-                checked="{{ value }}"
-                on-change="{{ handleValueChange }}"
-                type="checkbox"
-                disabled?="{{ isInput || readonly }}" />
-        </template>
-
-        <iron-localstorage
-            id="localStorage"
-            name="io_{{ board }}_{{ pin }}_value"></iron-localstorage>
-
-        <sr-wamp-core
-            id="wamp"
-            on-open="{{ handleWampOpen }}"
-            on-close="{{ handleWampClose }}"></sr-wamp-core>
-        <sr-wamp-subscribe
-            auto="wamp"
-            topic="org.srobo.ruggeduinos.pin_value"
-            on-handle="{{ handleValue }}"></sr-wamp-subscribe>
-        <sr-wamp-publish
-            id="publishValue"
-            topic="org.srobo.ruggeduinos.pin_value"></sr-wamp-publish>
-        <sr-wamp-subscribe
-            id="wampSubRobotState"
-            auto="wamp"
-            topic="org.srobo.state"
-            on-handle="{{ handleRobotState }}"></sr-wamp-subscribe>
-        <sr-wamp-call
-            id="wampGetRobotState"
-            procedure="org.srobo.state"
-            on-success="{{ handleRobotState }}"></sr-wamp-call>
+    <template bind if="{{ type === 'analogue' }}">
+      <input type="range" value="{{value}}" on-change="{{ handleValueChange }}"
+        min="0" max="3.3" step="0.1" disabled?="{{ isInput || readonly }}" />
     </template>
 
+    <template bind if="{{ type === 'digital' }}">
+      <input checked="{{ value }}" on-change="{{ handleValueChange }}"
+        type="checkbox" disabled?="{{ isInput || readonly }}" />
+    </template>
+
+    <iron-localstorage id="localStorage"
+      name="io_{{ board }}_{{ pin }}_value"></iron-localstorage>
+
+    <sr-wamp-core id="wamp" on-open="{{ handleWampOpen }}"
+      on-close="{{ handleWampClose }}"></sr-wamp-core>
+    <sr-wamp-subscribe auto="wamp" topic="org.srobo.ruggeduinos.pin_value"
+      on-handle="{{ handleValue }}"></sr-wamp-subscribe>
+    <sr-wamp-publish id="publishValue"
+      topic="org.srobo.ruggeduinos.pin_value"></sr-wamp-publish>
+    <sr-wamp-subscribe id="wampSubRobotState" auto="wamp"
+      topic="org.srobo.state" on-handle="{{ handleRobotState }}"></sr-wamp-subscribe>
+    <sr-wamp-call id="wampGetRobotState" procedure="org.srobo.state"
+      on-success="{{ handleRobotState }}"></sr-wamp-call>
+  </template>
+
     <script>
-        Polymer("sr-io-pin-value-controller", {
-            board: 0,
-            pin: 0,
-            mode: undefined,
-            value: false,
-            isInput: false,
+        Polymer({
+          is: "sr-io-pin-value-controller",
+
+          properties: {
+            board: {
+              type: Number,
+              value: 0
+            },
+            pin: {
+              type: Number,
+              value: 0
+            },
+            mode: String,
+            type: String,
+            value: String,
+            readonly: {
+              type: Boolean,
+              value: false
+            }
+          },
+
+          ready: function() {
+            this.isInput = false;
+          },
+
             handleWampOpen: function() {
                 this.readonly = false;
                 this.$.wampGetRobotState.go();

@@ -15,133 +15,131 @@ Example:
 <link rel="import" href="../wamp/index.html" />
 <link rel="import" href="../ui/index.html" />
 
-<polymer-element name="sr-pages-camera">
-    <template>
-        <style>
-            :host {
-                flex: 1 1 auto;
-                display: flex;
-                flex-direction: column;
-            }
+<dom-module id="sr-pages-camera">
+  <template>
+    <style>
+      :host {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+      }
 
-            #content {
-                flex: 1 1 auto;
-                display: flex;
-            }
+      #content {
+        flex: 1 1 auto;
+        display: flex;
+      }
 
-            #current {
-                flex: 1 1 auto;
-            }
+      #current {
+        flex: 1 1 auto;
+      }
 
-            #old {
-                flex: 0 0 auto;
-                display: flex;
-                flex-direction: column;
-                overflow: auto;
-                border-left: 1px solid black;
-                width: 20%;
-            }
+      #old {
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        border-left: 1px solid black;
+        width: 20%;
+      }
 
-            #old img {
-                flex: 0 0 auto;
-                margin-bottom: 1px;
-                width: 100%;
-                opacity: 0.5;
-            }
+      #old img {
+        flex: 0 0 auto;
+        margin-bottom: 1px;
+        width: 100%;
+        opacity: 0.5;
+      }
 
-            #old img.selected {
-                opacity: 1;
-            }
-        </style>
+      #old img.selected {
+        opacity: 1;
+      }
+    </style>
 
-        <sr-ui-toolbar>
-            <h1 flex>Camera</h1>
+    <sr-ui-toolbar>
+      <h1 flex>Camera</h1>
 
-            <template bind if="{{ $.wamp.connected }}">
-                <button on-click="{{ handlePlayPauseClicked }}">Play</button>
-            </template>
-        </sr-ui-toolbar>
+      <template bind if="{{ $.wamp.connected }}">
+        <button on-click="{{ handlePlayPauseClicked }}">Play</button>
+      </template>
+    </sr-ui-toolbar>
 
-        <sr-wamp-core
-            id="wamp"
-            on-close="{{ handleWampClose }}"></sr-wamp-core>
+    <sr-wamp-core id="wamp" on-close="{{ handleWampClose }}"></sr-wamp-core>
 
-        <sr-wamp-subscribe
-            id="wampImageSub"
-            topic="org.srobo.camera.image"
-            on-handle="{{ handleImage }}"></sr-wamp-subscribe>
+    <sr-wamp-subscribe id="wampImageSub" topic="org.srobo.camera.image"
+      on-handle="{{ handleImage }}"></sr-wamp-subscribe>
 
-        <div id="content">
-            <template bind if="{{ $.wamp.connected }}">
-                <sr-camera-frame id="current"></sr-camera-frame>
+    <div id="content">
+      <template bind if="{{ $.wamp.connected }}">
+        <sr-camera-frame id="current"></sr-camera-frame>
 
-                <div id="old"></div>
-            </template>
+        <div id="old"></div>
+      </template>
 
-            <template bind if="{{ $.wamp.disconnected }}">
-                <div flex horizontal center center-justified layout>
-                    <h1>You must be connected to the robot to view the camera.</h1>
-                </div>
-            </template>
+      <template bind if="{{ $.wamp.disconnected }}">
+        <div flex horizontal center center-justified layout>
+          <h1>You must be connected to the robot to view the camera.</h1>
         </div>
-    </template>
+      </template>
+    </div>
+  </template>
 
-    <script>
-        Polymer("sr-pages-camera", {
-            isPlaying: false,
-            created: function() {
-                this._markerInfo = {};
-            },
-            deselectAll: function() {
-                var old = this.shadowRoot.querySelector("#old");
-                var imgs = old.children;
-                for (var i = 0; i < imgs.length; i++) {
-                    imgs[i].className = "";
-                }
-            },
-            changeImage: function(img) {
-                this.deselectAll();
-                img.className = "selected";
-                var current = this.shadowRoot.querySelector("#current");
-                current.setImage(img.src, this._markerInfo[img.src]);
-            },
-            addOldImage: function(src) {
-                var old = this.shadowRoot.querySelector("#old");
-                var img = document.createElement("img");
-                img.src = src;
-                img.onclick = this.changeImage.bind(this, img);
-                if (old.children.length === 0) {
-                    old.appendChild(img);
-                } else {
-                    old.insertBefore(img, old.children[0]);
-                }
+  <script>
+    Polymer({
+      is: "sr-pages-camera",
 
-                if (old.children.length >= 10) {
-                    old.removeChild(old.lastChild);
-                }
+      created: function() {
+        this._markerInfo = {};
+        this.isPlaying = false;
+      },
+      deselectAll: function() {
+        var old = this.shadowRoot.querySelector("#old");
+        var imgs = old.children;
+        for (var i = 0; i < imgs.length; i++) {
+          imgs[i].className = "";
+        }
+      },
+      changeImage: function(img) {
+        this.deselectAll();
+        img.className = "selected";
+        var current = this.shadowRoot.querySelector("#current");
+        current.setImage(img.src, this._markerInfo[img.src]);
+      },
+      addOldImage: function(src) {
+        var old = this.shadowRoot.querySelector("#old");
+        var img = document.createElement("img");
+        img.src = src;
+        img.onclick = this.changeImage.bind(this, img);
+        if (old.children.length === 0) {
+          old.appendChild(img);
+        } else {
+          old.insertBefore(img, old.children[0]);
+        }
 
-                return img;
-            },
-            handleImage: function(e) {
-                var src = e.detail.args[0];
-                var img = this.addOldImage(src);
-                this._markerInfo[img.src] = e.detail.args[1];
-                this.changeImage(img);
-            },
-            handlePlayPauseClicked: function(e) {
-                this.isPlaying = !this.isPlaying;
+        if (old.children.length >= 10) {
+          old.removeChild(old.lastChild);
+        }
 
-                if (this.isPlaying) {
-                    e.target.textContent = "Pause";
-                    this.$.wampImageSub.subscribe();
-                } else {
-                    e.target.textContent = "Play";
-                    this.$.wampImageSub.unsubscribe();
-                }
-            },
-            handleWampClose: function() {
-                this.isPlaying = false;
-            }
-        });
-    </script>
-</polymer-element>
+        return img;
+      },
+      handleImage: function(e) {
+        var src = e.detail.args[0];
+        var img = this.addOldImage(src);
+        this._markerInfo[img.src] = e.detail.args[1];
+        this.changeImage(img);
+      },
+      handlePlayPauseClicked: function(e) {
+        this.isPlaying = !this.isPlaying;
+
+        if (this.isPlaying) {
+          e.target.textContent = "Pause";
+          this.$.wampImageSub.subscribe();
+        } else {
+          e.target.textContent = "Play";
+          this.$.wampImageSub.unsubscribe();
+        }
+      },
+      handleWampClose: function() {
+        this.isPlaying = false;
+      }
+    });
+  </script>
+</dom-module>

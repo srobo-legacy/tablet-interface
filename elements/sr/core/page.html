@@ -14,30 +14,37 @@ If `online` or `offline` are omitted, a default message is displayed.
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../wamp/core.html" />
 
-<polymer-element name="sr-core-page" attributes="name element">
-    <template>
-        <style>
-            :host {
-                flex: 1 1 auto;
-                display: flex;
-            }
+<dom-module id="sr-core-page">
+  <template>
+    <style>
+      :host {
+        flex: 1 1 auto;
+        display: flex;
+      }
 
-            #content {
-                flex: 1 1 auto;
-            }
-        </style>
+      #content {
+        flex: 1 1 auto;
+      }
+    </style>
 
-        <div id="content"></div>
-    </template>
+    <div id="content"></div>
+  </template>
 
-    <script>
-        Polymer("sr-core-page", {
-            domReady: function() {
-                var element = document.createElement(this.element);
-                this.shadowRoot.replaceChild(element, this.$.content);
-                element.id = "content";
-                this.$.content = element;
-            }
-        });
-    </script>
-</polymer-element>
+  <script>
+    Polymer({
+      is: "sr-core-page",
+
+      properties: {
+        name: String,
+        element: String,
+      },
+
+      ready: function() {
+        var element = document.createElement(this.element);
+        this.shadowRoot.replaceChild(element, this.$.content);
+        element.id = "content";
+        this.$.content = element;
+      }
+    });
+  </script>
+</dom-module>
