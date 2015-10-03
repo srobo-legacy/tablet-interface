@@ -36,12 +36,15 @@ If `online` or `offline` are omitted, a default message is displayed.
 
       properties: {
         name: String,
-        element: String,
+        element: {
+          type: String,
+          observer: '_handleElementChanged',
+        }
       },
 
-      ready: function() {
-        var element = document.createElement(this.element);
-        this.shadowRoot.replaceChild(element, this.$.content);
+      _handleElementChanged: function(newValue) {
+        var element = document.createElement(newValue);
+        Polymer.dom(this.root).replaceChild(element, this.$.content);
         element.id = "content";
         this.$.content = element;
       }

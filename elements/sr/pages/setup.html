@@ -94,7 +94,7 @@ Example:
 
     <sr-wamp-core id="wamp"></sr-wamp-core>
 
-    <template bind if="{{ $.wamp.connected }}">
+    <template is="dom-if" if="{{ wamp.connected }}">
       <div id="first" vertical center layout>
         <div id="container">
           <div vertical center layout style="margin: 0 20px;">
@@ -119,41 +119,25 @@ Example:
         </p>
       </div>
 
-      <sr-wamp-subscribe
-          auto="wamp"
-          topic="org.srobo.state"
-          on-handle="{{ handleState }}"></sr-wamp-subscribe>
-      <sr-wamp-subscribe
-          auto="wamp"
-          topic="org.srobo.project.name"
-          on-handle="{{ handleProjectName }}"></sr-wamp-subscribe>
-      <sr-wamp-subscribe
-          auto="wamp"
-          topic="org.srobo.project.version"
-          on-handle="{{ handleProjectVersion }}"></sr-wamp-subscribe>
-      <sr-wamp-subscribe
-          auto="wamp"
-          topic="org.srobo.environment.version"
-          on-handle="{{ handleEnvironmentVersion }}"></sr-wamp-subscribe>
-      <sr-wamp-call
-          auto="wamp"
-          procedure="org.srobo.state"
-          on-success="{{ handleState }}"></sr-wamp-call>
-      <sr-wamp-call
-          auto="wamp"
-          procedure="org.srobo.environment.version"
-          on-success="{{ handleEnvironmentVersion }}"></sr-wamp-call>
-      <sr-wamp-call
-          auto="wamp"
-          procedure="org.srobo.project.version"
-          on-success="{{ handleProjectVersion }}"></sr-wamp-call>
-      <sr-wamp-call
-          auto="wamp"
-          procedure="org.srobo.project.name"
-          on-success="{{ handleProjectName }}"></sr-wamp-call>
+      <sr-wamp-subscribe auto="wamp" topic="org.srobo.state"
+          on-handle="handleState"></sr-wamp-subscribe>
+      <sr-wamp-subscribe auto="wamp" topic="org.srobo.project.name"
+          on-handle="handleProjectName"></sr-wamp-subscribe>
+      <sr-wamp-subscribe auto="wamp" topic="org.srobo.project.version"
+          on-handle="handleProjectVersion"></sr-wamp-subscribe>
+      <sr-wamp-subscribe auto="wamp" topic="org.srobo.environment.version"
+          on-handle="handleEnvironmentVersion"></sr-wamp-subscribe>
+      <sr-wamp-call auto="wamp" procedure="org.srobo.state"
+          on-success="handleState"></sr-wamp-call>
+      <sr-wamp-call auto="wamp" procedure="org.srobo.environment.version"
+          on-success="handleEnvironmentVersion"></sr-wamp-call>
+      <sr-wamp-call auto="wamp" procedure="org.srobo.project.version"
+          on-success="handleProjectVersion"></sr-wamp-call>
+      <sr-wamp-call auto="wamp" procedure="org.srobo.project.name"
+          on-success="handleProjectName"></sr-wamp-call>
     </template>
 
-    <template bind if="{{ $.wamp.disconnected }}">
+    <template is="dom-if" if="{{ !wamp.connected }}">
       <div flex horizontal center center-justified layout>
         <h1>You must be connected to the robot to set up the robot.</h1>
       </div>
@@ -171,7 +155,7 @@ Example:
         }
       },
 
-      created: function() {
+      ready: function() {
         this.project = {};
         this.environment = {};
       },
