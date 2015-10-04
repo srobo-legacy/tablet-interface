@@ -28,6 +28,10 @@ Example:
         flex: 1 1 auto;
         align-self: center;
         justify-content: center;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
 
       #container {
@@ -41,6 +45,12 @@ Example:
           flex-direction: column;
           align-items: center;
         }
+      }
+
+      #container > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
 
       #overlay {
@@ -86,23 +96,31 @@ Example:
         text-align: right;
         margin-right: 12px;
       }
+
+      #not-connected {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+      }
     </style>
 
     <sr-ui-toolbar>
       <h1>Set up your robot</h1>
     </sr-ui-toolbar>
 
-    <sr-wamp-core id="wamp"></sr-wamp-core>
+    <sr-wamp-core id="wamp" on-open="_handleWampOpen" on-close="_handleWampClose"></sr-wamp-core>
 
-    <template is="dom-if" if="{{ wamp.connected }}">
-      <div id="first" vertical center layout>
+    <template is="dom-if" if="{{ connected }}">
+      <div id="first">
         <div id="container">
-          <div vertical center layout style="margin: 0 20px;">
+          <div style="margin: 0 20px;">
             <sr-core-zone-picker id="zonePicker" zone="{{ zone }}"></sr-core-zone-picker>
             <h2>Zone</h2>
           </div>
 
-          <div vertical center layout style="margin: 0 20px;">
+          <div style="margin: 0 20px;">
             <sr-core-mode-picker id="modePicker" mode="{{ mode }}"></sr-core-mode-picker>
             <h2>Mode</h2>
           </div>
@@ -137,8 +155,8 @@ Example:
           on-success="handleProjectName"></sr-wamp-call>
     </template>
 
-    <template is="dom-if" if="{{ !wamp.connected }}">
-      <div flex horizontal center center-justified layout>
+    <template is="dom-if" if="{{ !connected }}">
+      <div id="not-connected">
         <h1>You must be connected to the robot to set up the robot.</h1>
       </div>
     </template>
@@ -171,6 +189,12 @@ Example:
       },
       handleEnvironmentVersion: function(e) {
         this.environment.version = e.detail.result || e.detail.args[0];
+      },
+      _handleWampOpen: function() {
+        this.connected = true;
+      },
+      _handleWampClose: function() {
+        this.connected = false;
       }
     });
   </script>

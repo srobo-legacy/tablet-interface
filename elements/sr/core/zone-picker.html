@@ -44,16 +44,16 @@ You can get/set the current zone using the `zone` attribute.
       <!-- TODO fetch the colours from the competition API? -->
 
       <button data-zone="0" style="background: #00ff00"
-          class="{{ {selected: zone == 0} | tokenList }}"></button>
+          class$="[[ _buttonClass(0, zone) ]]"></button>
       <button data-zone="1" style="background: #ff6600"
-          class="{{ {selected: zone == 1} | tokenList }}"></button>
+          class$="[[ _buttonClass(1, zone) ]]"></button>
 
       <br />
 
       <button data-zone="2" style="background: #ff00ff"
-          class="{{ {selected: zone == 2} | tokenList }}"></button>
+          class$="[[ _buttonClass(2, zone) ]]"></button>
       <button data-zone="3" style="background: #ffff00"
-          class="{{ {selected: zone == 3} | tokenList }}"></button>
+          class$="[[ _buttonClass(3, zone) ]]"></button>
 
       <sr-wamp-subscribe auto="wamp" topic="org.srobo.zone"
           on-handle="handleZone"></sr-wamp-subscribe>
@@ -65,14 +65,14 @@ You can get/set the current zone using the `zone` attribute.
 
   <script>
     Polymer({
-      is: "sr-core-zone-picker",
+      is: 'sr-core-zone-picker',
 
       properties: {
         zone: Number,
       },
 
       ready: function() {
-        var buttons = this.shadowRoot.querySelectorAll("button");
+        var buttons = Polymer.dom(this.root).querySelectorAll("button");
         for (var i = 0; i < buttons.length; i++) {
           buttons[i].addEventListener("click", function(e) {
             this.zone = e.target.dataset.zone;
@@ -93,6 +93,10 @@ You can get/set the current zone using the `zone` attribute.
         } else {
           this.zone = e.detail.args[0];
         }
+      },
+
+      _buttonClass: function(zone, selectedZone) {
+        return zone === selectedZone ? 'selected' : '';
       }
     });
   </script>

@@ -15,7 +15,7 @@ of `dev` or `comp`.
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="../wamp/index.html" />
 
-<dom-element id="sr-core-mode-picker">
+<dom-module id="sr-core-mode-picker">
   <template>
     <link rel="stylesheet" href="/bower_components/components-font-awesome/css/font-awesome.css" />
 
@@ -50,32 +50,32 @@ of `dev` or `comp`.
       }
     </style>
 
-    <button data-mode="dev" class="{{ {selected: mode == 'dev'} | tokenList }}">
+    <button data-mode="dev" class$="[[ _buttonClass('dev', mode) ]]">
       <span class="fa fa-code"></span> Development
     </button>
 
-    <button data-mode="comp" class="{{ {selected: mode == 'comp'} | tokenList }}">
+    <button data-mode="comp" class$="[[ _buttonClass('comp', mode) ]]">
       <span class="fa fa-trophy"></span> Competition
     </button>
 
     <sr-wamp-subscribe auto="wamp" topic="org.srobo.mode"
-                       on-handle="handleMode"></sr-wamp-subscribe>
+      on-handle="handleMode"></sr-wamp-subscribe>
     <sr-wamp-publish id="wampPublishMode"
-                     topic="org.srobo.mode"></sr-wamp-publish>
+      topic="org.srobo.mode"></sr-wamp-publish>
     <sr-wamp-call auto="wamp" procedure="org.srobo.mode"
-                  on-success="handleMode"></sr-wamp-call>
+      on-success="handleMode"></sr-wamp-call>
   </template>
 
   <script>
     Polymer({
-      is: "sr-core-mode-picker",
+      is: 'sr-core-mode-picker',
 
       properties: {
         mode: String,
       },
 
       ready: function() {
-        var buttons = this.shadowRoot.querySelectorAll("button");
+        var buttons = Polymer.dom(this.root).querySelectorAll("button");
         for (var i = 0; i < buttons.length; i++) {
           (function(btn) {
               btn.addEventListener("click", function(e) {
@@ -95,6 +95,10 @@ of `dev` or `comp`.
       },
       handleMode: function(e) {
         this.mode = e.detail.result || e.detail.args[0];
+      },
+
+      _buttonClass: function(mode, selectedMode) {
+        return mode === selectedMode ? 'selected' : '';
       }
     });
   </script>
