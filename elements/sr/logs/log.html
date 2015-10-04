@@ -28,12 +28,12 @@ Example:
 
     <sr-logs-textarea id="log"></sr-logs-textarea>
 
-    <sr-wamp-core on-open="handleWampOpen"
-      on-close="handleWampClose"></sr-wamp-core>
     <sr-wamp-subscribe id="wampSub" topic="org.srobo.logs.append"
       on-handle="handleLogAppend"></sr-wamp-subscribe>
     <sr-wamp-call id="wampCall" procedure="org.srobo.logs.get"
       on-success="handleLogGet"></sr-wamp-call>
+    <sr-wamp-core on-open="handleWampOpen"
+      on-close="handleWampClose"></sr-wamp-core>
   </template>
 
   <script>
@@ -44,6 +44,9 @@ Example:
         log: String,
       },
 
+      ready: function() {
+
+      },
       handleWampOpen: function() {
         this.$.wampSub.subscribe();
         this.$.wampCall.go([this.log]);

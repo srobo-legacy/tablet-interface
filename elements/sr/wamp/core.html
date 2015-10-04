@@ -58,7 +58,7 @@ Example:
           },
         },
 
-        ready: function() {
+        attached: function() {
           this.connected = (_session && _session.isOpen);
 
           window.addEventListener('sr-wamp-open', function() {

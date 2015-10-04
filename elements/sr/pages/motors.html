@@ -57,7 +57,7 @@ Example:
         button.parentNode.removeChild(button);
       },
       handleBoardChanged: function(e) {
-        var buttons = this.shadowRoot.querySelectorAll("button.tab");
+        var buttons = Polymer.dom(this.root).querySelectorAll("button.tab");
         for (var i = 0; i < buttons.length; i++) {
           if (buttons[i].id == "button_" + e.detail.serialNumber) {
             buttons[i].style.fontWeight = "bold";

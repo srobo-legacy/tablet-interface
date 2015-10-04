@@ -71,11 +71,11 @@ Example:
       changeBoard: function(board) {
         console.log("Changing motor board to:", board);
 
-        var divs = this.shadowRoot.querySelectorAll("sr-motors-board-controller");
+        var divs = Polymer.dom(this.root).querySelectorAll("sr-motors-board-controller");
         for (var i = 0; i < divs.length; i++) {
           divs[i].hidden = true;
         }
-        this.shadowRoot.querySelector("#board_" + board).hidden = false;
+        Polymer.dom(this.root).querySelector("#board_" + board).hidden = false;
         this.fire("changed", {"serialNumber": board});
       },
       _clearBoards: function() {

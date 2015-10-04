@@ -90,7 +90,7 @@ Example:
           logs[i].hidden = true;
         }
 
-        var logElement = this.shadowRoot.querySelector("#log_" + log);
+        var logElement = Polymer.dom(this.root).querySelector("#log_" + log);
         logElement.hidden = false;
         this.currentLog = logElement;
       },

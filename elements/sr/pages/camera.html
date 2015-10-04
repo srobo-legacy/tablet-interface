@@ -57,24 +57,24 @@ Example:
     <sr-ui-toolbar>
       <h1 flex>Camera</h1>
 
-      <template bind if="{{ $.wamp.connected }}">
+      <template is="dom-if" if="{{ connected }}">
         <button on-click="handlePlayPauseClicked">Play</button>
       </template>
     </sr-ui-toolbar>
 
-    <sr-wamp-core id="wamp" on-close="handleWampClose"></sr-wamp-core>
+    <sr-wamp-core id="wamp" on-open="handleWampOpen" on-close="handleWampClose"></sr-wamp-core>
 
     <sr-wamp-subscribe id="wampImageSub" topic="org.srobo.camera.image"
       on-handle="handleImage"></sr-wamp-subscribe>
 
     <div id="content">
-      <template bind if="{{ $.wamp.connected }}">
+      <template is="dom-if" if="{{ connected }}">
         <sr-camera-frame id="current"></sr-camera-frame>
 
         <div id="old"></div>
       </template>
 
-      <template bind if="{{ $.wamp.disconnected }}">
+      <template is="dom-if" if="{{ !connected }}">
         <div flex horizontal center center-justified layout>
           <h1>You must be connected to the robot to view the camera.</h1>
         </div>
@@ -91,7 +91,7 @@ Example:
         this.isPlaying = false;
       },
       deselectAll: function() {
-        var old = this.shadowRoot.querySelector("#old");
+        var old = Polymer.dom(this.root).querySelector("#old");
         var imgs = old.children;
         for (var i = 0; i < imgs.length; i++) {
           imgs[i].className = "";
@@ -100,11 +100,11 @@ Example:
       changeImage: function(img) {
         this.deselectAll();
         img.className = "selected";
-        var current = this.shadowRoot.querySelector("#current");
+        var current = Polymer.dom(this.root).querySelector("#current");
         current.setImage(img.src, this._markerInfo[img.src]);
       },
       addOldImage: function(src) {
-        var old = this.shadowRoot.querySelector("#old");
+        var old = Polymer.dom(this.root).querySelector("#old");
         var img = document.createElement("img");
         img.src = src;
         img.onclick = this.changeImage.bind(this, img);
@@ -137,7 +137,11 @@ Example:
           this.$.wampImageSub.unsubscribe();
         }
       },
+      handleWampOpen: function() {
+        this.connected = true;
+      },
       handleWampClose: function() {
+        this.connected = false;
         this.isPlaying = false;
       }
     });

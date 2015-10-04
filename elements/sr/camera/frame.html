@@ -46,7 +46,7 @@ Example:
         // Raphael.js insists on having absolute width and height
         // values. We need to remove them so the `svg` element fits
         // into the element whatever size it is.
-        var svg = this.shadowRoot.querySelector("#paper svg");
+        var svg = Polymer.dom(this.root).querySelector("#paper svg");
         svg.removeAttribute("width");
         svg.removeAttribute("height");
       },
@@ -152,7 +152,7 @@ Example:
 
           // Make the view in the middle of the element rather than
           // on the left, purely for cosmetic reasons.
-          var svg = this.shadowRoot.querySelector("#paper svg");
+          var svg = Polymer.dom(this.root).querySelector("#paper svg");
           svg.setAttribute("preserveAspectRatio", "xMidYMid");
         }.bind(this);
       }
