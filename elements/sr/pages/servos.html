@@ -33,9 +33,9 @@ Example:
       <h1 flex>Servo Control</h1>
     </sr-ui-toolbar>
 
-    <sr-servos-controller id="controller" on-added="{{ handleBoardAdded }}"
-      on-removed="{{ handleBoardRemoved }}"
-      on-changed="{{ handleBoardChanged }}"></sr-servos-controller>
+    <sr-servos-controller id="controller" on-added="handleBoardAdded"
+      on-removed="handleBoardRemoved"
+      on-changed="handleBoardChanged"></sr-servos-controller>
   </template>
 
   <script>

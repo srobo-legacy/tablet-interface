@@ -58,14 +58,14 @@ Example:
       <h1 flex>Camera</h1>
 
       <template bind if="{{ $.wamp.connected }}">
-        <button on-click="{{ handlePlayPauseClicked }}">Play</button>
+        <button on-click="handlePlayPauseClicked">Play</button>
       </template>
     </sr-ui-toolbar>
 
-    <sr-wamp-core id="wamp" on-close="{{ handleWampClose }}"></sr-wamp-core>
+    <sr-wamp-core id="wamp" on-close="handleWampClose"></sr-wamp-core>
 
     <sr-wamp-subscribe id="wampImageSub" topic="org.srobo.camera.image"
-      on-handle="{{ handleImage }}"></sr-wamp-subscribe>
+      on-handle="handleImage"></sr-wamp-subscribe>
 
     <div id="content">
       <template bind if="{{ $.wamp.connected }}">

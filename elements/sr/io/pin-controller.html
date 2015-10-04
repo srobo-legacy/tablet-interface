@@ -57,21 +57,21 @@ Example:
         value="{{ value }}"></sr-io-pin-value-controller>
 
     <iron-localstorage id="localStorageMode"
-        name="io_{{ board }}_{{ pin }}_mode"></iron-localstorage>
+        name="[[ _localStorageName(board, pin, 'mode') ]]"></iron-localstorage>
     <iron-localstorage id="localStorageType"
-        name="io_{{ board }}_{{ pin }}_type"></iron-localstorage>
+        name="[[ _localStorageName(board, pin, 'type') ]]"></iron-localstorage>
     <iron-localstorage id="localStorageValue"
-        name="io_{{ board }}_{{ pin }}_value"></iron-localstorage>
+        name="[[ _localStorageName(board, pin, 'value') ]]"></iron-localstorage>
 
-    <sr-wamp-core on-open="{{ handleWampOpen }}"
-        on-close="{{ handleWampClose }}"></sr-wamp-core>
+    <sr-wamp-core on-open="handleWampOpen"
+        on-close="handleWampClose"></sr-wamp-core>
     <sr-wamp-call id="wampGetPin" procedure="org.srobo.ruggeduinos.get_pin"
-        on-success="{{ handleGetPinSuccess }}"></sr-wamp-call>
+        on-success="handleGetPinSuccess"></sr-wamp-call>
   </template>
 
   <script>
     Polymer({
-      is: "sr-io-pin-controller",
+      is: 'sr-io-pin-controller',
 
       properties: {
         board: String,
@@ -108,6 +108,10 @@ Example:
       },
       valueChanged: function() {
         this.$.localStorageValue.value = this.value;
+      },
+
+      _localStorageName: function(board, pin, section) {
+        return 'io.' + board + '.' + pin + '.' + section;
       }
     });
   </script>

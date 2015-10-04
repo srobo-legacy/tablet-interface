@@ -37,10 +37,10 @@ Example:
 
     <iron-localstorage id="localStorage" name="servos"></iron-localstorage>
 
-    <sr-wamp-core on-open="{{ handleWampOpen }}"
-      on-close="{{ handleWampClose }}"></sr-wamp-core>
+    <sr-wamp-core on-open="handleWampOpen"
+      on-close="handleWampClose"></sr-wamp-core>
     <sr-wamp-call auto="wamp" procedure="org.srobo.servos.all_boards"
-      on-success="{{ handleCallSuccess }}"></sr-wamp-call>
+      on-success="handleCallSuccess"></sr-wamp-call>
   </template>
 
   <script>

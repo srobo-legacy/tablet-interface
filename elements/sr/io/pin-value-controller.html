@@ -42,28 +42,28 @@ difference between an analogue and digital pin automatically.
     </style>
 
     <template bind if="{{ type === 'analogue' }}">
-      <input type="range" value="{{value}}" on-change="{{ handleValueChange }}"
+      <input type="range" value="{{value}}" on-change="handleValueChange"
         min="0" max="3.3" step="0.1" disabled?="{{ isInput || readonly }}" />
     </template>
 
     <template bind if="{{ type === 'digital' }}">
-      <input checked="{{ value }}" on-change="{{ handleValueChange }}"
+      <input checked="{{ value }}" on-change="handleValueChange"
         type="checkbox" disabled?="{{ isInput || readonly }}" />
     </template>
 
     <iron-localstorage id="localStorage"
       name="io_{{ board }}_{{ pin }}_value"></iron-localstorage>
 
-    <sr-wamp-core id="wamp" on-open="{{ handleWampOpen }}"
-      on-close="{{ handleWampClose }}"></sr-wamp-core>
+    <sr-wamp-core id="wamp" on-open="handleWampOpen"
+      on-close="handleWampClose"></sr-wamp-core>
     <sr-wamp-subscribe auto="wamp" topic="org.srobo.ruggeduinos.pin_value"
-      on-handle="{{ handleValue }}"></sr-wamp-subscribe>
+      on-handle="handleValue"></sr-wamp-subscribe>
     <sr-wamp-publish id="publishValue"
       topic="org.srobo.ruggeduinos.pin_value"></sr-wamp-publish>
     <sr-wamp-subscribe id="wampSubRobotState" auto="wamp"
-      topic="org.srobo.state" on-handle="{{ handleRobotState }}"></sr-wamp-subscribe>
+      topic="org.srobo.state" on-handle="handleRobotState"></sr-wamp-subscribe>
     <sr-wamp-call id="wampGetRobotState" procedure="org.srobo.state"
-      on-success="{{ handleRobotState }}"></sr-wamp-call>
+      on-success="handleRobotState"></sr-wamp-call>
   </template>
 
     <script>

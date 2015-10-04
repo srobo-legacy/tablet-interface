@@ -26,22 +26,26 @@ Example:
         flex-direction: column;
       }
 
+      h1 {
+        flex: 1 1 auto;
+      }
+
       sr-logs-logs {
         margin: 10px;
       }
     </style>
 
     <sr-ui-toolbar>
-      <h1 flex>View Robot Logs</h1>
-      <select id="logSelection" on-change="{{ handleLogSelectionChanged }}">
+      <h1>View Robot Logs</h1>
+      <select id="logSelection" on-change="handleLogSelectionChanged">
         <optgroup label="Current Logs" id="currentLogs"></optgroup>
         <optgroup label="Old Logs" id="oldLogs"></optgroup>
       </select>
-      <button id="btnBottom" on-click="{{ handleJumpToBottom }}">Jump to bottom</button>
+      <button id="btnBottom" on-click="handleJumpToBottom">Jump to bottom</button>
     </sr-ui-toolbar>
 
-    <sr-logs-logs id="logs" on-add="{{ handleAddLog }}"
-        on-remove="{{ handleRemoveLog }}"></sr-logs-logs>
+    <sr-logs-logs id="logs" on-add="handleAddLog"
+        on-remove="handleRemoveLog"></sr-logs-logs>
   </template>
 
   <script>

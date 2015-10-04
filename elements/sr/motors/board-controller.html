@@ -38,11 +38,10 @@ Example:
     <iron-localstorage id="localStorage"
       name="motors_{{ board }}"></iron-localstorage>
 
-    <sr-wamp-core on-open="{{ handleWampOpen }}"
-      on-close="{{ handleWampClose }}"></sr-wamp-core>
-    <sr-wamp-call id="wampGetBoard"
-      procedure="org.srobo.motors.get_board"
-      on-success="{{ handleGetBoardSuccess }}"></sr-wamp-call>
+    <sr-wamp-core on-open="handleWampOpen"
+      on-close="handleWampClose"></sr-wamp-core>
+    <sr-wamp-call id="wampGetBoard" procedure="org.srobo.motors.get_board"
+      on-success="handleGetBoardSuccess"></sr-wamp-call>
   </template>
 
   <script>

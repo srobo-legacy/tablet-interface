@@ -49,25 +49,25 @@ You can get the current state with the `state` attribute.
     <h2>{{ index }}</h2>
 
     <input type="checkbox" checked="{{ state }}"
-      on-change="{{ handleStateChange }}" disabled?="{{ readonly }}" />
+      on-change="handleStateChange" disabled?="{{ readonly }}" />
 
     <iron-localstorage id="localStorage"
       name="power_output_{{ index }}_state"></iron-localstorage>
 
-    <sr-wamp-core on-open="{{ handleWampOpen }}"
-      on-close="{{ handleWampClose }}"></sr-wamp-core>
+    <sr-wamp-core on-open="handleWampOpen"
+      on-close="handleWampClose"></sr-wamp-core>
     <sr-wamp-call id="wampGetState"
       procedure="org.srobo.power.get_output_state"
-      on-success="{{ handleGetStateSuccess }}"></sr-wamp-call>
+      on-success="handleGetStateSuccess"></sr-wamp-call>
     <sr-wamp-subscribe auto="wamp" topic="org.srobo.power.output_state"
-      on-handle="{{ handleState }}"></sr-wamp-subscribe>
+      on-handle="handleState"></sr-wamp-subscribe>
     <sr-wamp-publish id="publishValue"
       topic="org.srobo.power.output_state"></sr-wamp-publish>
     <sr-wamp-subscribe id="wampSubRobotState" auto="wamp"
       topic="org.srobo.state"
-      on-handle="{{ handleRobotState }}"></sr-wamp-subscribe>
+      on-handle="handleRobotState"></sr-wamp-subscribe>
     <sr-wamp-call id="wampGetRobotState" procedure="org.srobo.state"
-      on-success="{{ handleRobotState }}"></sr-wamp-call>
+      on-success="handleRobotState"></sr-wamp-call>
   </template>
 
   <script>

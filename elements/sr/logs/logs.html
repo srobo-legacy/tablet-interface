@@ -29,10 +29,10 @@ Example:
 
     <iron-localstorage id="localStorage" name="logs"></iron-localstorage>
 
-    <sr-wamp-core on-open="{{ handleWampOpen }}"
-      on-close="{{ handleWampClose }}"></sr-wamp-core>
+    <sr-wamp-core on-open="handleWampOpen"
+      on-close="handleWampClose"></sr-wamp-core>
     <sr-wamp-call id="wampOldLogsCall" procedure="org.srobo.logs.all"
-      on-success="{{ handleAllLogs }}"></sr-wamp-call>
+      on-success="handleAllLogs"></sr-wamp-call>
   </template>
 
   <script>
@@ -43,7 +43,7 @@ Example:
         this.$.wampOldLogsCall.go();
       },
       _createLogElement: function(log) {
-        var element = document.createElement("sr-logs-log");
+        var element = document.createElement('sr-logs-log');
         element.id = "log_" + log.name;
         element.log = log.name;
         element.hidden = true;

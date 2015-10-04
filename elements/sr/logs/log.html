@@ -23,16 +23,17 @@ Example:
       }
     </style>
 
-    <iron-localstorage id="localStorage" name="log_{{ log }}"></iron-localstorage>
+    <iron-localstorage id="localStorage"
+      name$="[[ _localStorageName(log) ]]"></iron-localstorage>
 
     <sr-logs-textarea id="log"></sr-logs-textarea>
 
-    <sr-wamp-core on-open="{{ handleWampOpen }}"
-      on-close="{{ handleWampClose }}"></sr-wamp-core>
+    <sr-wamp-core on-open="handleWampOpen"
+      on-close="handleWampClose"></sr-wamp-core>
     <sr-wamp-subscribe id="wampSub" topic="org.srobo.logs.append"
-      on-handle="{{ handleLogAppend }}"></sr-wamp-subscribe>
+      on-handle="handleLogAppend"></sr-wamp-subscribe>
     <sr-wamp-call id="wampCall" procedure="org.srobo.logs.get"
-      on-success="{{ handleLogGet }}"></sr-wamp-call>
+      on-success="handleLogGet"></sr-wamp-call>
   </template>
 
   <script>
@@ -68,6 +69,10 @@ Example:
       },
       scrollToBottom: function() {
         this.$.log.scrollToBottom();
+      },
+
+      _localStorageName: function(name) {
+        return 'logs.' + name;
       }
     });
   </script>

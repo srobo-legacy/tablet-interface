@@ -35,14 +35,11 @@ Example:
 
     <div id="controllers"></div>
 
-    <iron-localstorage id="localStorage"
-      name="servos_{{ board }}"></iron-localstorage>
+    <iron-localstorage id="localStorage" name="[[ _localStorageName(board) ]]"></iron-localstorage>
 
-    <sr-wamp-core on-open="{{ handleWampOpen }}"
-      on-close="{{ handleWampClose }}"></sr-wamp-core>
-    <sr-wamp-call id="wampGetBoard"
-      procedure="org.srobo.servos.get_board"
-      on-success="{{ handleGetBoardSuccess }}"></sr-wamp-call>
+    <sr-wamp-core on-open="handleWampOpen" on-close="handleWampClose"></sr-wamp-core>
+    <sr-wamp-call id="wampGetBoard" procedure="org.srobo.servos.get_board"
+      on-success="handleGetBoardSuccess"></sr-wamp-call>
   </template>
 
   <script>
@@ -87,6 +84,10 @@ Example:
         while (controllers.lastChild) {
           controllers.removeChild(controllers.lastChild);
         }
+      },
+
+      _localStorageName: function(board) {
+        return 'servos.' + board;
       }
     });
   </script>

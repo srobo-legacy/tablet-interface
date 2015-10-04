@@ -52,26 +52,26 @@ You can get the current value with the `value` attribute.
 
     <h2>{{ servo }}</h2>
     <input type="range" orient="vertical" min="-100" max="100" step="1"
-        value="{{ value }}" on-change="{{ handleValueChange }}"
+        value="{{ value }}" on-change="handleValueChange"
         readonly?="{{ readonly }}" />
     <span>{{ value | formatValue }}</span>
-    <button disabled?="{{ readonly }}" on-click="{{ handleReset }}">Reset</button>
+    <button disabled?="{{ readonly }}" on-click="handleReset">Reset</button>
 
     <iron-localstorage id="localStorage"
       name="servos_{{ board }}_{{ servo }}_value"></iron-localstorage>
 
-    <sr-wamp-core on-open="{{ handleWampOpen }}"
-      on-close="{{ handleWampClose }}"></sr-wamp-core>
+    <sr-wamp-core on-open="handleWampOpen"
+      on-close="handleWampClose"></sr-wamp-core>
     <sr-wamp-call id="wampGetServo" procedure="org.srobo.servos.get_servo"
-      on-success="{{ handleGetServoSuccess }}"></sr-wamp-call>
+      on-success="handleGetServoSuccess"></sr-wamp-call>
     <sr-wamp-subscribe auto="wamp" topic="org.srobo.servos.servo_value"
-      on-handle="{{ handleValue }}"></sr-wamp-subscribe>
+      on-handle="handleValue"></sr-wamp-subscribe>
     <sr-wamp-publish id="publishValue"
       topic="org.srobo.servos.servo_value"></sr-wamp-publish>
     <sr-wamp-subscribe id="wampSubState" auto="wamp" topic="org.srobo.state"
-      on-handle="{{ handleState }}"></sr-wamp-subscribe>
+      on-handle="handleState"></sr-wamp-subscribe>
     <sr-wamp-call id="wampGetState" procedure="org.srobo.state"
-      on-success="{{ handleState }}"></sr-wamp-call>
+      on-success="handleState"></sr-wamp-call>
   </template>
 
   <script>
