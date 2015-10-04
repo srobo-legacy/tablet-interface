@@ -1,0 +1,56 @@
+<!--
+`sr-core-page` provides a generic page with an online and an offline mode.
+
+Example:
+
+    <sr-core-page name="my-page" online="my-page-online"></sr-core-page>
+
+If `online` or `offline` are omitted, a default message is displayed.
+
+@group SR Core Elements
+@element sr-core-page
+-->
+
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+
+<dom-module id="sr-core-page">
+  <template>
+    <style>
+      :host {
+        flex: 1 1 auto;
+        display: flex;
+      }
+
+      :host[hidden] {
+        display: none;
+      }
+
+      #content {
+        flex: 1 1 auto;
+      }
+    </style>
+
+    <div id="content"></div>
+  </template>
+
+  <script>
+    Polymer({
+      is: "sr-core-page",
+
+      properties: {
+        name: String,
+        element: {
+          type: String,
+          observer: '_handleElementChanged',
+        }
+      },
+
+      _handleElementChanged: function(newValue) {
+        var element = document.createElement(newValue);
+        Polymer.dom(this.root).replaceChild(element, this.$.content);
+        element.id = "content";
+        this.$.content = element;
+      }
+    });
+  </script>
+</dom-module>

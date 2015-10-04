@@ -1,0 +1,100 @@
+<!--
+`sr-servos-controller` provides an element for controlling all possible aspects
+of the servos on the robot.
+
+Example:
+
+    <sr-servos-controller></sr-servos-controller>
+
+@group SR Servos Elements
+@element sr-servos-controller
+-->
+
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+
+<link rel="import" href="../sr-wamp-core/sr-wamp-core.html" />
+<link rel="import" href="../sr-wamp-call/sr-wamp-call.html" />
+<link rel="import" href="../sr-servos-board-controller/sr-servos-board-controller.html" />
+
+<dom-module id="sr-servos-controller">
+  <template>
+    <style>
+      :host {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+      }
+
+      #boards {
+        flex: 1 1 auto;
+        display: flex;
+      }
+
+      sr-servos-board-controller {
+        flex: 1 1 auto;
+      }
+    </style>
+
+    <div id="boards"></div>
+
+    <iron-localstorage id="localStorage" name="servos"></iron-localstorage>
+
+    <sr-wamp-core on-open="handleWampOpen"
+      on-close="handleWampClose"></sr-wamp-core>
+    <sr-wamp-call auto="wamp" procedure="org.srobo.servos.all_boards"
+      on-success="handleCallSuccess"></sr-wamp-call>
+  </template>
+
+  <script>
+    Polymer({
+      is: "sr-servos-controller",
+
+      handleWampOpen: function() {
+        // done by the 'auto' attribute
+      },
+      handleWampClose: function() {
+        this._clearBoards();
+
+        var boards = this.$.localStorage.value;
+        if (boards) {
+          boards.forEach(this._addBoard.bind(this));
+          this.changeBoard(boards[0]);
+        }
+      },
+      handleCallSuccess: function(e) {
+        this._clearBoards();
+
+        var boards = Object.keys(e.detail.result);
+        boards.forEach(this._addBoard.bind(this));
+        this.$.localStorage.value = boards;
+
+        this.changeBoard(boards[0]);
+      },
+      changeBoard: function(board) {
+        console.log("Changing servo board to:", board);
+
+        var divs = Polymer.dom(this.root).querySelectorAll("sr-servos-board-controller");
+        for (var i = 0; i < divs.length; i++) {
+          divs[i].hidden = true;
+        }
+        Polymer.dom(this.root).querySelector("#board_" + board).hidden = false;
+        this.fire("changed", {"serialNumber": board});
+      },
+      _clearBoards: function() {
+        var boards = this.$.boards;
+        while (boards.lastChild) {
+          this.fire("removed", {"serialNumber": boards.lastChild.board});
+          boards.removeChild(boards.lastChild);
+        }
+      },
+      _addBoard: function(serialNumber) {
+        var element = document.createElement("sr-servos-board-controller");
+        element.id = "board_" + serialNumber;
+        element.board = serialNumber;
+        element.hidden = true;
+        this.$.boards.appendChild(element);
+        this.fire("added", {"serialNumber": serialNumber});
+      }
+    });
+  </script>
+</dom-module>

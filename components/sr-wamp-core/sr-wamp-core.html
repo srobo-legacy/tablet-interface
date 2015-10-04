@@ -1,0 +1,120 @@
+<!--
+`sr-wamp-core` provides a connection to the WAMP server. The element itself
+uses a single static connection available to all elements rather than opening
+a new one.
+
+Example:
+
+    <sr-wamp-core></sr-wamp-core>
+
+@group SR WAMP Elements
+@element sr-wamp-core
+-->
+
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+
+<dom-module id="sr-wamp-core">
+  <template>
+    <style>
+      :host {
+        display: none;
+      }
+    </style>
+  </template>
+
+  <script src="/bower_components/autobahnjs/autobahn.min.js"></script>
+
+  <script>
+    (function() {
+      var _session;
+      var _connection = new autobahn.Connection({
+        url: "ws://" + location.hostname + ":9000",
+        realm: "srobo"
+      });
+
+      _connection.onopen = function(session) {
+        _session = session;
+        console.log("Opened connection to WAMP server.");
+        window.dispatchEvent(new CustomEvent("sr-wamp-open"));
+      };
+
+      _connection.onclose = function(e) {
+        console.log("Closed connection to WAMP server.", e);
+        window.dispatchEvent(new CustomEvent("sr-wamp-close"));
+      };
+
+      window.addEventListener("WebComponentsReady", function() {
+        console.log("Connecting to WAMP server.");
+        _connection.open();
+      });
+
+      Polymer({
+        is: "sr-wamp-core",
+
+        properties: {
+          connected: {
+            type: Boolean,
+            observer: 'connectedChanged',
+          },
+        },
+
+        attached: function() {
+          this.connected = (_session && _session.isOpen);
+
+          window.addEventListener('sr-wamp-open', function() {
+            this.connected = true;
+          }.bind(this));
+
+          window.addEventListener('sr-wamp-close', function() {
+            this.connected = false;
+          }.bind(this));
+        },
+        subscribe: function(topic, handler, options, callback) {
+          console.log("Subscribing to:", topic);
+          this.session.subscribe(topic, handler, options).then(
+            function(subscription) {
+              if (callback !== undefined) {
+                  callback(subscription);
+              }
+            },
+            function(error) {
+              console.log("Subscription failed!", error);
+            });
+        },
+        unsubscribe: function(subscription, callback) {
+          console.log("Unsubscribing from:", subscription.topic);
+          this.session.unsubscribe(subscription).then(
+            function() {
+              if (callback !== undefined) {
+                callback(subscription);
+              }
+            },
+            function(error) {
+              console.log("Unsubscription failed!", error);
+            });
+        },
+        publish: function(topic, args, kwargs, options) {
+          console.log("Publishing:", topic, args, kwargs, options);
+          return this.session.publish(topic, args, kwargs, options);
+        },
+        call: function(procedure, args, kwargs, options) {
+          console.log("Calling:", procedure, args, kwargs, options);
+          return this.session.call(procedure, args, kwargs, options);
+        },
+        connectedChanged: function(newValue) {
+          if (newValue) {
+            this.fire('open');
+          } else {
+            this.fire('close');
+          }
+        },
+        get connection() {
+          return _connection;
+        },
+        get session() {
+          return _session;
+        }
+      });
+    }());
+  </script>
+</dom-module>
