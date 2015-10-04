@@ -7,6 +7,9 @@
     "polymer": "~1.1.3",
     "components-font-awesome": "~4.1.0",
     "iron-ajax": "PolymerElements/iron-ajax#~1.0.5",
-    "iron-localstorage": "PolymerElements/iron-localstorage#~1.0.4"
+    "iron-localstorage": "PolymerElements/iron-localstorage#~1.0.4",
+    "moment": "~2.10.6",
+    "raphael": "~2.1.4",
+    "autobahnjs": "autobahn#~0.9.6"
   }
 }
