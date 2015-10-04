@@ -1,0 +1,107 @@
+<!--
+`sr-logs-logs` provides an entire collection of logs.
+
+Example:
+
+    <sr-logs-logs></sr-logs-logs>
+
+@group SR Logs Elements
+@element sr-logs-logs
+-->
+
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+<link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html" />
+
+<link rel="import" href="../sr-wamp-core/sr-wamp-core.html" />
+<link rel="import" href="../sr-wamp-call/sr-wamp-call.html" />
+<link rel="import" href="../sr-logs-log/sr-logs-log.html" />
+
+<dom-module id="sr-logs-logs">
+  <template>
+    <style>
+      :host,
+      #logs {
+        flex: 1 1 auto;
+        display: flex;
+      }
+    </style>
+
+    <div id="logs"></div>
+
+    <iron-localstorage id="localStorage" name="logs"></iron-localstorage>
+
+    <sr-wamp-core on-open="handleWampOpen"
+      on-close="handleWampClose"></sr-wamp-core>
+    <sr-wamp-call id="wampOldLogsCall" procedure="org.srobo.logs.all"
+      on-success="handleAllLogs"></sr-wamp-call>
+  </template>
+
+  <script>
+    Polymer({
+      is: "sr-logs-logs",
+
+      handleWampOpen: function() {
+        this.$.wampOldLogsCall.go();
+      },
+      _createLogElement: function(log) {
+        var element = document.createElement('sr-logs-log');
+        element.id = "log_" + log.name;
+        element.log = log.name;
+        element.hidden = true;
+        return element;
+      },
+      handleWampClose: function() {
+        this.clearLogs();
+
+        this.$.localStorage.value.forEach(function(log) {
+          var element = this._createLogElement(log);
+          this.$.logs.appendChild(element);
+          this.fire("add", log);
+        }.bind(this));
+
+        this.changeTo("current");
+      },
+      handleAllLogs: function(e) {
+        this.$.localStorage.value = [];
+
+        this.clearLogs();
+
+        e.detail.result.forEach(function(log) {
+          var element = this._createLogElement(log);
+          this.$.logs.appendChild(element);
+
+          this.$.localStorage.value.push({
+            "type": log["type"],
+            "name": log["name"],
+            "title": log["title"]
+          });
+
+          this.fire("add", log);
+        }.bind(this));
+
+        this.$.localStorage.save();
+
+        this.changeTo("current");
+      },
+      changeTo: function(log) {
+        console.log("Changing log:", log);
+
+        var logs = this.$.logs.children;
+        for (var i = 0; i < logs.length; i++) {
+          logs[i].hidden = true;
+        }
+
+        var logElement = Polymer.dom(this.root).querySelector("#log_" + log);
+        logElement.hidden = false;
+        this.currentLog = logElement;
+      },
+      clearLogs: function() {
+        var logs = this.$.logs.children;
+        for (var i = logs.length - 1; i >= 0; i--) {
+          this.fire("remove", {name: logs[i].log});
+          logs[i].parentNode.removeChild(logs[i]);
+        }
+      }
+    });
+  </script>
+</dom-module>

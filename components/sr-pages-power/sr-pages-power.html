@@ -1,0 +1,58 @@
+<!--
+`sr-pages-power` provides a page allowing you to control any power outlet on
+the board.
+
+Example:
+
+    <sr-core-page online="sr-pages-power" offline="sr-pages-power"></sr-core-page>
+
+@group SR Pages Elements
+@element sr-pages-power
+-->
+
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+
+<link rel="import" href="../sr-power-output-controller/sr-power-output-controller.html" />
+<link rel="import" href="../sr-ui-toolbar/sr-ui-toolbar.html" />
+<link rel="import" href="../sr-wamp-core/sr-wamp-core.html" />
+
+<dom-module id="sr-pages-power">
+  <template>
+    <style>
+      :host {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+      }
+
+      #controllers {
+        flex: 1 1 auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+
+    <sr-ui-toolbar>
+      <h1>Power Outputs</h1>
+    </sr-ui-toolbar>
+
+    <sr-wamp-core id="wamp"></sr-wamp-core>
+
+    <div id="controllers">
+      <sr-power-output-controller index="0"></sr-power-output-controller>
+      <sr-power-output-controller index="1"></sr-power-output-controller>
+      <sr-power-output-controller index="2"></sr-power-output-controller>
+      <sr-power-output-controller index="3"></sr-power-output-controller>
+      <sr-power-output-controller index="4"></sr-power-output-controller>
+      <sr-power-output-controller index="5"></sr-power-output-controller>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'sr-pages-power'
+    });
+  </script>
+</dom-module>

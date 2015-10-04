@@ -1,0 +1,82 @@
+<!--
+`sr-ui-toolbar` provides a bar along the top of a page to add any element.
+
+Example:
+
+    <sr-ui-toolbar>
+        <button>Do something</button>
+    </sr-ui-toolbar>
+
+The toolbar provides styles for any child h1, button or select element.
+
+@group SR UI Elements
+@element sr-ui-toolbar
+-->
+
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+
+<dom-module id="sr-ui-toolbar">
+  <template>
+    <style>
+      :host {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        padding: 6px 8px;
+        background: rgb(245, 245, 245);
+        min-height: 44px;
+      }
+
+      ::content h1 {
+        font-size: 2em;
+      }
+
+      sr-ui-toolbar h1 {
+        font-size: 2em;
+      }
+
+      @media (orientation: portrait) {
+        ::content h1 {
+          font-size: 1.2em;
+        }
+
+        sr-ui-toolbar h1 {
+          font-size: 1.2em;
+        }
+      }
+
+      ::content h1,
+      ::content select,
+      ::content button {
+        margin: 0 4px;
+      }
+
+      ::content select,
+      ::content button {
+        padding: 4px 8px;
+      }
+
+      /* for older browsers not supporting the native shadow DOM */
+
+      sr-ui-toolbar select,
+      sr-ui-toolbar button {
+        padding: 4px 8px;
+      }
+
+      sr-ui-toolbar h1,
+      sr-ui-toolbar select,
+      sr-ui-toolbar button {
+        margin: 0 4px;
+      }
+    </style>
+
+    <content></content>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'sr-ui-toolbar'
+    });
+  </script>
+</dom-module>
