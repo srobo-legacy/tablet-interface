@@ -35,9 +35,15 @@ Example:
     Polymer({
       is: 'sr-logs-textarea',
 
-      created: function() {
-        this.entries = [];
+      properties: {
+        entries: {
+          type: Array,
+          reflectToAttribute: true,
+          value: function() { return []; },
+          observer: '_handleEntriesChanged',
+        },
       },
+
       clear: function() {
         this.entries = [];
       },
@@ -96,7 +102,7 @@ Example:
 
         return text;
       },
-      entriesChanged: function() {
+      _handleEntriesChanged: function() {
         this.$.log.textContent = this._getTextareaContents();
       }
     });

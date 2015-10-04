@@ -77,10 +77,12 @@ You can get/set the current zone using the `zone` attribute.
       ready: function() {
         var buttons = Polymer.dom(this.root).querySelectorAll("button");
         for (var i = 0; i < buttons.length; i++) {
-          buttons[i].addEventListener("click", function(e) {
-            this.zone = e.target.dataset.zone;
-            this.publishZone();
-          }.bind(this));
+          (function(btn) {
+            btn.addEventListener("click", function(e) {
+              this.zone = parseInt(btn.dataset.zone);
+              this.publishZone();
+            }.bind(this));
+          }.bind(this)(buttons[i]));
         }
       },
       publishZone: function(zone) {
@@ -88,7 +90,7 @@ You can get/set the current zone using the `zone` attribute.
           zone = this.zone;
         }
 
-        this.$.wampPublishZone.go([parseInt(zone)]);
+        this.$.wampPublishZone.go([zone]);
       },
       handleZone: function(e) {
         if (e.detail.result !== undefined) {
