@@ -1,210 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8" />
+  <head>
+    <meta charset="UTF-8" />
 
-        <title>Student Robotics Robot Interface</title>
+    <title>Student Robotics Robot Interface</title>
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 
-        <link rel="icon" href="images/icon.png" />
+    <link rel="icon" href="images/icon.png" />
 
-        <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
-        <link rel="stylesheet" href="styles/common.css" />
+    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="styles/common.css" />
 
-        <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
 
-        <link rel="import" href="elements/sr/core/index.html" />
-        <link rel="import" href="elements/sr/pages/index.html" />
-        <link rel="import" href="elements/sr/ui/index.html" />
-    </head>
+    <link rel="import" href="elements/sr/core/index.html" />
+    <link rel="import" href="elements/sr/pages/index.html" />
+    <link rel="import" href="elements/sr/ui/index.html" />
+  </head>
 
-    <body>
-        <sr-ui-button-bar>
-            <sr-ui-fa-button action="toggle-navigation-drawer" icon="bars"></sr-ui-fa-button>
-            <div style="height: 20px;"></div>
-            <sr-ui-fa-button action="play" icon="play"></sr-ui-fa-button>
-        </sr-ui-button-bar>
+  <body>
+    <sr-ui-button-bar>
+      <sr-ui-fa-button action="toggle-navigation-drawer" icon="bars"></sr-ui-fa-button>
+      <div style="height: 20px;"></div>
+      <sr-ui-fa-button action="play" icon="play"></sr-ui-fa-button>
+    </sr-ui-button-bar>
 
-        <sr-ui-navigation-drawer>
-            <sr-ui-fa-button action="change-page" data-page="setup" icon="cogs">Set up</sr-ui-fa-button>
-            <sr-ui-fa-button action="change-page" data-page="logs" icon="file-text-o">Logs</sr-ui-fa-button>
-            <div style="height: 30px;"></div>
-            <sr-ui-fa-button action="change-page" data-page="camera" icon="camera">Camera</sr-ui-fa-button>
-            <sr-ui-fa-button action="change-page" data-page="io" icon="file">I/O</sr-ui-fa-button>
-            <sr-ui-fa-button action="change-page" data-page="power" icon="power-off">Power Outputs</sr-ui-fa-button>
-            <sr-ui-fa-button action="change-page" data-page="motors" icon="arrows">Motors</sr-ui-fa-button>
-            <sr-ui-fa-button action="change-page" data-page="servos" icon="wrench">Servos</sr-ui-fa-button>
-            <div flex></div>
-        </sr-ui-navigation-drawer>
+    <sr-ui-navigation-drawer>
+      <sr-ui-fa-button action="change-page" data-page="setup" icon="cogs">Set up</sr-ui-fa-button>
+      <sr-ui-fa-button action="change-page" data-page="logs" icon="file-text-o">Logs</sr-ui-fa-button>
+      <div style="height: 30px;"></div>
+      <sr-ui-fa-button action="change-page" data-page="camera" icon="camera">Camera</sr-ui-fa-button>
+      <sr-ui-fa-button action="change-page" data-page="io" icon="file">I/O</sr-ui-fa-button>
+      <sr-ui-fa-button action="change-page" data-page="power" icon="power-off">Power Outputs</sr-ui-fa-button>
+      <sr-ui-fa-button action="change-page" data-page="motors" icon="arrows">Motors</sr-ui-fa-button>
+      <sr-ui-fa-button action="change-page" data-page="servos" icon="wrench">Servos</sr-ui-fa-button>
+      <div style="flex: 1 1 auto;"></div>
+    </sr-ui-navigation-drawer>
 
-        <sr-core-pages style="flex: 1 1 auto;">
-          <sr-core-page name="setup" element="sr-pages-setup"></sr-core-page>
-          <sr-core-page name="logs" element="sr-pages-logs"></sr-core-page>
-          <sr-core-page name="camera" element="sr-pages-camera"></sr-core-page>
-          <sr-core-page name="io" element="sr-pages-io"></sr-core-page>
-          <sr-core-page name="motors" element="sr-pages-motors"></sr-core-page>
-          <sr-core-page name="power" element="sr-pages-power"></sr-core-page>
-          <sr-core-page name="servos" element="sr-pages-servos"></sr-core-page>
-        </sr-core-pages>
+    <sr-core-pages style="flex: 1 1 auto;">
+      <sr-core-page name="setup" element="sr-pages-setup"></sr-core-page>
+      <sr-core-page name="logs" element="sr-pages-logs"></sr-core-page>
+      <sr-core-page name="camera" element="sr-pages-camera"></sr-core-page>
+      <sr-core-page name="io" element="sr-pages-io"></sr-core-page>
+      <sr-core-page name="motors" element="sr-pages-motors"></sr-core-page>
+      <sr-core-page name="power" element="sr-pages-power"></sr-core-page>
+      <sr-core-page name="servos" element="sr-pages-servos"></sr-core-page>
+    </sr-core-pages>
 
-        <sr-wamp-status-indicator
-            style="position: fixed; right: 0; bottom: 0;"></sr-wamp-status-indicator>
+    <sr-wamp-status-indicator style="position: fixed; right: 0; bottom: 0;"></sr-wamp-status-indicator>
 
-        <sr-wamp-core
-            id="wamp"></sr-wamp-core>
-        <sr-wamp-call
-            id="wamp-start"
-            procedure="org.srobo.start"></sr-wamp-call>
-        <sr-wamp-call
-            id="wamp-stop"
-            procedure="org.srobo.stop"></sr-wamp-call>
-        <sr-wamp-subscribe
-            id="wamp-sub-state"
-            auto="wamp"
-            topic="org.srobo.state"></sr-wamp-subscribe>
-        <sr-wamp-call
-            id="wamp-call-state"
-            procedure="org.srobo.state"></sr-wamp-call>
+    <sr-wamp-core id="wamp"></sr-wamp-core>
+    <sr-wamp-call id="wamp-start" procedure="org.srobo.start"></sr-wamp-call>
+    <sr-wamp-call id="wamp-stop" procedure="org.srobo.stop"></sr-wamp-call>
+    <sr-wamp-subscribe id="wamp-sub-state" auto="wamp" topic="org.srobo.state"></sr-wamp-subscribe>
+    <sr-wamp-call id="wamp-call-state" procedure="org.srobo.state"></sr-wamp-call>
 
-        <script>
-          (function() {
-            window.addEventListener("toggle-navigation-drawer", function(e) {
-              document.querySelector("sr-ui-navigation-drawer").toggle();
+    <script>
+      (function() {
+        window.addEventListener("toggle-navigation-drawer", function(e) {
+          document.querySelector("sr-ui-navigation-drawer").toggle();
+        });
+
+        window.addEventListener("change-page", function(e) {
+          document.querySelector("sr-core-pages").changePage(e.detail.sender.dataset.page);
+          document.querySelector("sr-ui-navigation-drawer").close();
+        });
+      }());
+    </script>
+
+    <script>
+      window.addEventListener("play", function(e) {
+        if (e.detail.sender.icon == "play") {
+          document.querySelector("#wamp-start").go();
+        } else if (e.detail.sender.icon == "stop") {
+          document.querySelector("#wamp-stop").go();
+        }
+      });
+
+      window.addEventListener("WebComponentsReady", function(e) {
+        document.querySelector("sr-core-pages").changePage("setup");
+      });
+    </script>
+
+    <script>
+      (function() {
+        var wamp = document.querySelector("sr-wamp-core");
+
+        wamp.addEventListener("open", function() {
+          wamp.call("org.srobo.hello", ["1.0.0"]).then(function(result) {
+            if (!result["compatible"]) {
+              window.location.reload();
+            }
+          }.bind(this));
+
+          var btns = document.querySelectorAll("[action='play']");
+          for (var i = 0; i < btns.length; i++) {
+            btns[i].hidden = false;
+          }
+        });
+
+        wamp.addEventListener("close", function() {
+          var btns = document.querySelectorAll("[action='play']");
+          for (var i = 0; i < btns.length; i++) {
+            btns[i].hidden = true;
+          }
+        });
+      }());
+    </script>
+
+    <script>
+      var btns = document.querySelectorAll("[action='play']");
+      var changeIcon = function(icon) {
+        for (var i = 0; i < btns.length; i++) {
+          btns[i].icon = icon;
+        }
+      };
+      var changeText = function(text) {
+        for (var i = 0; i < btns.length; i++) {
+          if (btns[i].textContent.length !== 0) {
+            btns[i].textContent = text;
+          }
+        }
+      };
+
+      var handleState = function(e) {
+        var state = e.detail.result || e.detail.args[0];
+        if (state === "started") {
+          changeIcon("stop");
+          changeText("Stop Robot");
+        } else if (state === "stopped") {
+          changeIcon("play");
+          changeText("Start Robot");
+        } else if (state === "booting") {
+          changeIcon("cog fa-spin");
+          changeText("Starting…");
+        } else if (state === "stopping") {
+          changeIcon("cog fa-spin");
+          changeText("Stopping…");
+        }
+      };
+
+      document.querySelector("sr-wamp-core").addEventListener("open", function() {
+        document.querySelector("#wamp-call-state").go();
+      });
+      document.querySelector("#wamp-sub-state").addEventListener("handle", handleState);
+      document.querySelector("#wamp-call-state").addEventListener("success", handleState);
+    </script>
+
+    <script>
+      document.querySelector("sr-wamp-core").addEventListener("open", function() {
+        console.log("Loading custom components…");
+        var userCodeUrl = "http://" + location.hostname + ":10000";
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", userCodeUrl + "/custom_pages");
+        xhr.responseType = "json";
+        xhr.addEventListener("load", function(e) {
+          var pages = e.target.response.pages;
+          console.log("Got some custom components:", pages);
+          pages.forEach(function(page) {
+            var link = document.createElement("link");
+            link.rel = "import";
+            link.href = userCodeUrl + page.import_url;
+
+            link.addEventListener("load", function(e) {
+              var pageElement = document.createElement("sr-core-page");
+              pageElement.name = page.name;
+              pageElement.element = page.element;
+              pageElement.hidden = true;
+              pageElement.dataset.custom = true;
+              document.querySelector("sr-core-pages").appendChild(pageElement);
+
+              var btn = document.createElement("sr-ui-fa-button");
+              btn.icon = page.icon;
+              btn.textContent = page.title;
+              btn.action = "change-page";
+              btn.dataset.page = page.name;
+              btn.dataset.custom = true;
+              document.querySelector("sr-ui-navigation-drawer").appendChild(btn);
             });
 
-            window.addEventListener("change-page", function(e) {
-              document.querySelector("sr-core-pages").changePage(e.detail.sender.dataset.page);
-              document.querySelector("sr-ui-navigation-drawer").close();
-            });
-          }());
-        </script>
+            document.querySelector("head").appendChild(link);
+          });
+        });
+        xhr.send();
+      });
 
-        <script>
-            window.addEventListener("play", function(e) {
-                if (e.detail.sender.icon == "play") {
-                    document.querySelector("#wamp-start").go();
-                } else if (e.detail.sender.icon == "stop") {
-                    document.querySelector("#wamp-stop").go();
-                }
-            });
-
-            window.addEventListener("polymer-ready", function(e) {
-                document.querySelector("sr-core-pages").changePage("setup");
-            });
-        </script>
-
-        <script>
-            (function() {
-                var wamp = document.querySelector("sr-wamp-core");
-
-                wamp.addEventListener("open", function() {
-                    wamp.call("org.srobo.hello", ["1.0.0"]).then(function(result) {
-                        if (!result["compatible"]) {
-                            window.location.reload();
-                        }
-                    }.bind(this));
-
-                    var btns = document.querySelectorAll("[action='play']");
-                    for (var i = 0; i < btns.length; i++) {
-                        btns[i].hidden = false;
-                    }
-                });
-
-                wamp.addEventListener("close", function() {
-                    var btns = document.querySelectorAll("[action='play']");
-                    for (var i = 0; i < btns.length; i++) {
-                        btns[i].hidden = true;
-                    }
-                });
-            }());
-        </script>
-
-        <script>
-            var btns = document.querySelectorAll("[action='play']");
-            var changeIcon = function(icon) {
-                for (var i = 0; i < btns.length; i++) {
-                    btns[i].icon = icon;
-                }
-            };
-            var changeText = function(text) {
-                for (var i = 0; i < btns.length; i++) {
-                    if (btns[i].textContent.length !== 0) {
-                        btns[i].textContent = text;
-                    }
-                }
-            };
-
-            var handleState = function(e) {
-                var state = e.detail.result || e.detail.args[0];
-                if (state === "started") {
-                    changeIcon("stop");
-                    changeText("Stop Robot");
-                } else if (state === "stopped") {
-                    changeIcon("play");
-                    changeText("Start Robot");
-                } else if (state === "booting") {
-                    changeIcon("cog fa-spin");
-                    changeText("Starting…");
-                } else if (state === "stopping") {
-                    changeIcon("cog fa-spin");
-                    changeText("Stopping…");
-                }
-            };
-
-            document.querySelector("sr-wamp-core").addEventListener("open", function() {
-                document.querySelector("#wamp-call-state").go();
-            });
-            document.querySelector("#wamp-sub-state").addEventListener("handle", handleState);
-            document.querySelector("#wamp-call-state").addEventListener("success", handleState);
-        </script>
-
-        <script>
-            document.querySelector("sr-wamp-core").addEventListener("open", function() {
-                console.log("Loading custom components…");
-                var userCodeUrl = "http://" + location.hostname + ":10000";
-                var xhr = new XMLHttpRequest();
-                xhr.open("GET", userCodeUrl + "/custom_pages");
-                xhr.responseType = "json";
-                xhr.addEventListener("load", function(e) {
-                    var pages = e.target.response.pages;
-                    console.log("Got some custom components:", pages);
-                    pages.forEach(function(page) {
-                        var link = document.createElement("link");
-                        link.rel = "import";
-                        link.href = userCodeUrl + page.import_url;
-
-                        link.addEventListener("load", function(e) {
-                            var pageElement = document.createElement("sr-core-page");
-                            pageElement.name = page.name;
-                            pageElement.element = page.element;
-                            pageElement.hidden = true;
-                            pageElement.dataset.custom = true;
-                            document.querySelector("sr-core-pages").appendChild(pageElement);
-
-                            var btn = document.createElement("sr-ui-fa-button");
-                            btn.icon = page.icon;
-                            btn.textContent = page.title;
-                            btn.action = "change-page";
-                            btn.dataset.page = page.name;
-                            btn.dataset.custom = true;
-                            document.querySelector("sr-ui-navigation-drawer").appendChild(btn);
-                        });
-
-                        document.querySelector("head").appendChild(link);
-                    });
-                });
-                xhr.send();
-            });
-
-            document.querySelector("sr-wamp-core").addEventListener("close", function() {
-                var customElements = document.querySelectorAll("[data-custom=true]");
-                for (var i = 0; i < customElements.length; i++) {
-                    customElements[i].parentNode.removeChild(customElements[i]);
-                }
-            });
-        </script>
-    </body>
+      document.querySelector("sr-wamp-core").addEventListener("close", function() {
+        var customElements = document.querySelectorAll("[data-custom=true]");
+        for (var i = 0; i < customElements.length; i++) {
+          customElements[i].parentNode.removeChild(customElements[i]);
+        }
+      });
+    </script>
+  </body>
 
 </html>
