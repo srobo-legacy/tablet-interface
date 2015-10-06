@@ -131,28 +131,17 @@
           btns[i].icon = icon;
         }
       };
-      var changeText = function(text) {
-        for (var i = 0; i < btns.length; i++) {
-          if (btns[i].textContent.length !== 0) {
-            btns[i].textContent = text;
-          }
-        }
-      };
 
       var handleState = function(e) {
         var state = e.detail.result || e.detail.args[0];
         if (state === "started") {
           changeIcon("stop");
-          changeText("Stop Robot");
         } else if (state === "stopped") {
           changeIcon("play");
-          changeText("Start Robot");
         } else if (state === "booting") {
           changeIcon("cog fa-spin");
-          changeText("Starting…");
         } else if (state === "stopping") {
           changeIcon("cog fa-spin");
-          changeText("Stopping…");
         }
       };
 
