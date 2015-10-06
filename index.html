@@ -41,16 +41,15 @@
       <sr-ui-fa-button action="play" icon="play"></sr-ui-fa-button>
     </sr-ui-button-bar>
 
-    <sr-ui-navigation-drawer>
+    <sr-ui-navigation-drawer id="drawer">
       <sr-ui-fa-button action="change-page" data-page="0" icon="cogs">Set up</sr-ui-fa-button>
       <sr-ui-fa-button action="change-page" data-page="1" icon="file-text-o">Logs</sr-ui-fa-button>
-      <!-- <div style="height: 30px;"></div>
-      <sr-ui-fa-button action="change-page" data-page="camera" icon="camera">Camera</sr-ui-fa-button>
+      <div style="height: 30px;"></div>
+      <!-- <sr-ui-fa-button action="change-page" data-page="camera" icon="camera">Camera</sr-ui-fa-button>
       <sr-ui-fa-button action="change-page" data-page="io" icon="file">I/O</sr-ui-fa-button>
       <sr-ui-fa-button action="change-page" data-page="power" icon="power-off">Power Outputs</sr-ui-fa-button>
       <sr-ui-fa-button action="change-page" data-page="motors" icon="arrows">Motors</sr-ui-fa-button>
       <sr-ui-fa-button action="change-page" data-page="servos" icon="wrench">Servos</sr-ui-fa-button> -->
-      <div style="flex: 1 1 auto;"></div>
     </sr-ui-navigation-drawer>
 
     <iron-pages id="pages" style="display: flex; flex: 1 1 auto;">
@@ -132,16 +131,64 @@
         }
       };
 
+      var loadCustomPages = function() {
+        console.log("Loading custom pages…");
+        var userCodeUrl = "http://" + location.hostname + ":5080/user";
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", userCodeUrl + "/pages");
+        xhr.responseType = "json";
+        xhr.addEventListener("load", function(e) {
+          var pages = e.target.response.pages;
+          console.log("Got some custom pages:", pages);
+
+          var currentPageIndex = 2;  // number of built-in pages
+          pages.forEach(function(page) {
+            Polymer.Base.importHref(userCodeUrl + page.import_url, function(e) {
+              // success
+              var pageElement = document.createElement(page.name);
+              pageElement.dataset.custom = true;
+              Polymer.dom(document.querySelector("#pages")).appendChild(pageElement);
+
+              var btn = document.createElement('sr-ui-fa-button');
+              btn.setAttribute('icon', 'cubes');
+              Polymer.dom(btn).textContent = page.title;
+              btn.setAttribute('action', 'change-page');
+              btn.dataset.page = currentPageIndex;
+              btn.dataset.custom = true;
+              Polymer.dom(document.querySelector("#drawer")).appendChild(btn);
+
+              currentPageIndex += 1;
+            }, function(e) {
+              // error
+            });
+          });
+        });
+        xhr.send();
+      };
+
+      var removeCustomPages = function() {
+        var customElements = document.querySelectorAll("[data-custom=true]");
+        for (var i = 0; i < customElements.length; i++) {
+          customElements[i].parentNode.removeChild(customElements[i]);
+        }
+      };
+
       var handleState = function(e) {
         var state = e.detail.result || e.detail.args[0];
         if (state === "started") {
           changeIcon("stop");
+
+          setTimeout(function() {
+            loadCustomPages();
+          }, 1000);  // time for HTTP server to start
         } else if (state === "stopped") {
           changeIcon("play");
+          removeCustomPages();
         } else if (state === "booting") {
           changeIcon("cog fa-spin");
         } else if (state === "stopping") {
           changeIcon("cog fa-spin");
+          removeCustomPages();
         }
       };
 
@@ -150,51 +197,6 @@
       });
       document.querySelector("#wamp-sub-state").addEventListener("handle", handleState);
       document.querySelector("#wamp-call-state").addEventListener("success", handleState);
-    </script>
-
-    <script>
-      document.querySelector("sr-wamp").addEventListener("open", function() {
-        console.log("Loading custom components…");
-        var userCodeUrl = "http://" + location.hostname + ":5080";
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", userCodeUrl + "/user/pages");
-        xhr.responseType = "json";
-        xhr.addEventListener("load", function(e) {
-          var pages = e.target.response.pages;
-          console.log("Got some custom components:", pages);
-          pages.forEach(function(page, index) {
-            var link = document.createElement("link");
-            link.rel = "import";
-            link.href = userCodeUrl + page.import_url;
-
-            link.addEventListener("load", function(e) {
-              var pageElement = document.createElement(page.element);
-              pageElement.element = page.element;
-              pageElement.hidden = true;
-              pageElement.dataset.custom = true;
-              document.querySelector("#pages").appendChild(pageElement);
-
-              var btn = document.createElement("sr-ui-fa-button");
-              btn.icon = page.icon;
-              btn.textContent = page.title;
-              btn.action = "change-page";
-              btn.dataset.page = index;
-              btn.dataset.custom = true;
-              document.querySelector("sr-ui-navigation-drawer").appendChild(btn);
-            });
-
-            document.querySelector("head").appendChild(link);
-          });
-        });
-        xhr.send();
-      });
-
-      document.querySelector("sr-wamp").addEventListener("close", function() {
-        var customElements = document.querySelectorAll("[data-custom=true]");
-        for (var i = 0; i < customElements.length; i++) {
-          customElements[i].parentNode.removeChild(customElements[i]);
-        }
-      });
     </script>
   </body>
 
