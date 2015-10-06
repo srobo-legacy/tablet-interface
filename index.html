@@ -21,8 +21,8 @@
     <link rel="import" href="components/sr-core-pages/sr-core-pages.html" />
     <link rel="import" href="components/sr-core-page/sr-core-page.html" />
     <link rel="import" href="components/sr-wamp-status-indicator/sr-wamp-status-indicator.html" />
-    <link rel="import" href="components/sr-wamp-core/sr-wamp-core.html" />
-    <link rel="import" href="components/sr-wamp-call/sr-wamp-call.html" />
+    <link rel="import" href="components/sr-wamp/sr-wamp.html" />
+    <link rel="import" href="components/sr-wamp-procedure/sr-wamp-procedure.html" />
     <link rel="import" href="components/sr-wamp-subscribe/sr-wamp-subscribe.html" />
 
     <link rel="import" href="components/sr-pages-camera/sr-pages-camera.html" />
@@ -65,11 +65,11 @@
 
     <sr-wamp-status-indicator style="position: fixed; right: 0; bottom: 0;"></sr-wamp-status-indicator>
 
-    <sr-wamp-core id="wamp"></sr-wamp-core>
-    <sr-wamp-call id="wamp-start" procedure="org.srobo.start"></sr-wamp-call>
-    <sr-wamp-call id="wamp-stop" procedure="org.srobo.stop"></sr-wamp-call>
+    <sr-wamp id="wamp"></sr-wamp>
+    <sr-wamp-procedure id="wamp-start" name="org.srobo.start"></sr-wamp-procedure>
+    <sr-wamp-procedure id="wamp-stop" name="org.srobo.stop"></sr-wamp-procedure>
     <sr-wamp-subscribe id="wamp-sub-state" auto="wamp" topic="org.srobo.state"></sr-wamp-subscribe>
-    <sr-wamp-call id="wamp-call-state" procedure="org.srobo.state"></sr-wamp-call>
+    <sr-wamp-procedure id="wamp-call-state" name="org.srobo.state"></sr-wamp-procedure>
 
     <script>
       (function() {
@@ -100,7 +100,7 @@
 
     <script>
       (function() {
-        var wamp = document.querySelector("sr-wamp-core");
+        var wamp = document.querySelector("sr-wamp");
 
         wamp.addEventListener("open", function() {
           wamp.call("org.srobo.hello", ["1.0.0"]).then(function(result) {
@@ -156,7 +156,7 @@
         }
       };
 
-      document.querySelector("sr-wamp-core").addEventListener("open", function() {
+      document.querySelector("sr-wamp").addEventListener("open", function() {
         document.querySelector("#wamp-call-state").go();
       });
       document.querySelector("#wamp-sub-state").addEventListener("handle", handleState);
@@ -164,7 +164,7 @@
     </script>
 
     <script>
-      document.querySelector("sr-wamp-core").addEventListener("open", function() {
+      document.querySelector("sr-wamp").addEventListener("open", function() {
         console.log("Loading custom components…");
         var userCodeUrl = "http://" + location.hostname + ":10000";
         var xhr = new XMLHttpRequest();
@@ -201,7 +201,7 @@
         xhr.send();
       });
 
-      document.querySelector("sr-wamp-core").addEventListener("close", function() {
+      document.querySelector("sr-wamp").addEventListener("close", function() {
         var customElements = document.querySelectorAll("[data-custom=true]");
         for (var i = 0; i < customElements.length; i++) {
           customElements[i].parentNode.removeChild(customElements[i]);

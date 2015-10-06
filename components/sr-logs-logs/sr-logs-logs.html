@@ -12,8 +12,8 @@ Example:
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html" />
 
-<link rel="import" href="../sr-wamp-core/sr-wamp-core.html" />
-<link rel="import" href="../sr-wamp-call/sr-wamp-call.html" />
+<link rel="import" href="../sr-wamp/sr-wamp.html" />
+<link rel="import" href="../sr-wamp-procedure/sr-wamp-procedure.html" />
 <link rel="import" href="../sr-logs-log/sr-logs-log.html" />
 
 <dom-module id="sr-logs-logs">
@@ -30,10 +30,10 @@ Example:
 
     <iron-localstorage id="localStorage" name="logs"></iron-localstorage>
 
-    <sr-wamp-core on-open="handleWampOpen"
-      on-close="handleWampClose"></sr-wamp-core>
-    <sr-wamp-call id="wampOldLogsCall" procedure="org.srobo.logs.all"
-      on-success="handleAllLogs"></sr-wamp-call>
+    <sr-wamp on-open="handleWampOpen"
+      on-close="handleWampClose"></sr-wamp>
+    <sr-wamp-procedure id="wampOldLogsCall" name="org.srobo.logs.all"
+      on-success="handleAllLogs"></sr-wamp-procedure>
   </template>
 
   <script>

@@ -18,8 +18,8 @@ mode controller.
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html" />
 
-<link rel="import" href="../sr-wamp-core/sr-wamp-core.html" />
-<link rel="import" href="../sr-wamp-call/sr-wamp-call.html" />
+<link rel="import" href="../sr-wamp/sr-wamp.html" />
+<link rel="import" href="../sr-wamp-procedure/sr-wamp-procedure.html" />
 <link rel="import" href="../sr-wamp-publish/sr-wamp-publish.html" />
 <link rel="import" href="../sr-wamp-subscribe/sr-wamp-subscribe.html" />
 
@@ -44,16 +44,16 @@ mode controller.
 
     <iron-localstorage id="localStorage" name="[[ _localStorageName(board, pin) ]]"></iron-localstorage>
 
-    <sr-wamp-core id="wamp" on-open="handleWampOpen"
-      on-close="handleWampClose"></sr-wamp-core>
+    <sr-wamp id="wamp" on-open="handleWampOpen"
+      on-close="handleWampClose"></sr-wamp>
     <sr-wamp-subscribe auto="wamp" topic="org.srobo.ruggeduinos.pin_mode"
       on-handle="handleValue"></sr-wamp-subscribe>
     <sr-wamp-publish id="publishValue"
       topic="org.srobo.ruggeduinos.pin_mode"></sr-wamp-publish>
     <sr-wamp-subscribe id="wampSubRobotState" auto="wamp"
       topic="org.srobo.state" on-handle="handleRobotState"></sr-wamp-subscribe>
-    <sr-wamp-call id="wampGetRobotState" procedure="org.srobo.state"
-        on-success="handleRobotState"></sr-wamp-call>
+    <sr-wamp-procedure id="wampGetRobotState" name="org.srobo.state"
+        on-success="handleRobotState"></sr-wamp-procedure>
   </template>
 
   <script>

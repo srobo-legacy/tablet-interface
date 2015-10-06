@@ -14,8 +14,8 @@ Example:
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html" />
 
-<link rel="import" href="../sr-wamp-core/sr-wamp-core.html" />
-<link rel="import" href="../sr-wamp-call/sr-wamp-call.html" />
+<link rel="import" href="../sr-wamp/sr-wamp.html" />
+<link rel="import" href="../sr-wamp-procedure/sr-wamp-procedure.html" />
 <link rel="import" href="../sr-io-pin-mode-controller/sr-io-pin-mode-controller.html" />
 <link rel="import" href="../sr-io-pin-value-controller/sr-io-pin-value-controller.html" />
 
@@ -65,10 +65,10 @@ Example:
     <iron-localstorage id="localStorageValue"
         name="[[ _localStorageName(board, pin, 'value') ]]"></iron-localstorage>
 
-    <sr-wamp-core on-open="handleWampOpen"
-        on-close="handleWampClose"></sr-wamp-core>
-    <sr-wamp-call id="wampGetPin" procedure="org.srobo.ruggeduinos.get_pin"
-        on-success="handleGetPinSuccess"></sr-wamp-call>
+    <sr-wamp on-open="handleWampOpen"
+        on-close="handleWampClose"></sr-wamp>
+    <sr-wamp-procedure id="wampGetPin" name="org.srobo.ruggeduinos.get_pin"
+        on-success="handleGetPinSuccess"></sr-wamp-procedure>
   </template>
 
   <script>

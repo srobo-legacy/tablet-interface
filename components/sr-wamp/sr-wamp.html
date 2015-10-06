@@ -1,19 +1,19 @@
 <!--
-`sr-wamp-core` provides a connection to the WAMP server. The element itself
+`sr-wamp` provides a connection to the WAMP server. The element itself
 uses a single static connection available to all elements rather than opening
 a new one.
 
 Example:
 
-    <sr-wamp-core></sr-wamp-core>
+    <sr-wamp></sr-wamp>
 
 @group SR WAMP Elements
-@element sr-wamp-core
+@element sr-wamp
 -->
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<dom-module id="sr-wamp-core">
+<dom-module id="sr-wamp">
   <template>
     <style>
       :host {
@@ -49,7 +49,7 @@ Example:
       });
 
       Polymer({
-        is: "sr-wamp-core",
+        is: 'sr-wamp',
 
         properties: {
           connected: {
@@ -74,7 +74,7 @@ Example:
           this.session.subscribe(topic, handler, options).then(
             function(subscription) {
               if (callback !== undefined) {
-                  callback(subscription);
+                callback(subscription);
               }
             },
             function(error) {

@@ -13,8 +13,8 @@ Example:
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html" />
 
-<link rel="import" href="../sr-wamp-core/sr-wamp-core.html" />
-<link rel="import" href="../sr-wamp-call/sr-wamp-call.html" />
+<link rel="import" href="../sr-wamp/sr-wamp.html" />
+<link rel="import" href="../sr-wamp-procedure/sr-wamp-procedure.html" />
 <link rel="import" href="../sr-io-board-controller/sr-io-board-controller.html" />
 
 <dom-module id="sr-io-controller">
@@ -40,10 +40,10 @@ Example:
 
     <iron-localstorage id="localStorage" name="io"></iron-localstorage>
 
-    <sr-wamp-core on-open="handleWampOpen"
-        on-close="handleWampClose"></sr-wamp-core>
-    <sr-wamp-call auto="wamp" procedure="org.srobo.ruggeduinos.all_boards"
-        on-success="handleCallSuccess"></sr-wamp-call>
+    <sr-wamp on-open="handleWampOpen"
+        on-close="handleWampClose"></sr-wamp>
+    <sr-wamp-procedure auto="wamp" name="org.srobo.ruggeduinos.all_boards"
+        on-success="handleCallSuccess"></sr-wamp-procedure>
   </template>
 
   <script>

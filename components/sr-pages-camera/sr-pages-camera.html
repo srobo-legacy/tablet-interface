@@ -12,8 +12,8 @@ Example:
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<link rel="import" href="../sr-wamp-core/sr-wamp-core.html" />
-<link rel="import" href="../sr-wamp-call/sr-wamp-call.html" />
+<link rel="import" href="../sr-wamp/sr-wamp.html" />
+<link rel="import" href="../sr-wamp-procedure/sr-wamp-procedure.html" />
 <link rel="import" href="../sr-wamp-publish/sr-wamp-publish.html" />
 <link rel="import" href="../sr-wamp-subscribe/sr-wamp-subscribe.html" />
 <link rel="import" href="../sr-camera-frame/sr-camera-frame.html" />
@@ -66,7 +66,7 @@ Example:
       </template>
     </sr-ui-toolbar>
 
-    <sr-wamp-core id="wamp" on-open="handleWampOpen" on-close="handleWampClose"></sr-wamp-core>
+    <sr-wamp id="wamp" on-open="handleWampOpen" on-close="handleWampClose"></sr-wamp>
 
     <sr-wamp-subscribe id="wampImageSub" topic="org.srobo.camera.image"
       on-handle="handleImage"></sr-wamp-subscribe>

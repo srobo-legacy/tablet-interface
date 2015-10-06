@@ -13,8 +13,8 @@ Example:
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
 <link rel="import" href="../sr-ui-toolbar/sr-ui-toolbar.html" />
-<link rel="import" href="../sr-wamp-core/sr-wamp-core.html" />
-<link rel="import" href="../sr-wamp-call/sr-wamp-call.html" />
+<link rel="import" href="../sr-wamp/sr-wamp.html" />
+<link rel="import" href="../sr-wamp-procedure/sr-wamp-procedure.html" />
 <link rel="import" href="../sr-wamp-publish/sr-wamp-publish.html" />
 <link rel="import" href="../sr-wamp-subscribe/sr-wamp-subscribe.html" />
 <link rel="import" href="../sr-mode-picker/sr-mode-picker.html" />
@@ -116,7 +116,7 @@ Example:
       <h1>Set up your robot</h1>
     </sr-ui-toolbar>
 
-    <sr-wamp-core id="wamp" on-open="_handleWampOpen" on-close="_handleWampClose"></sr-wamp-core>
+    <sr-wamp id="wamp" on-open="_handleWampOpen" on-close="_handleWampClose"></sr-wamp>
 
     <template is="dom-if" if="{{ connected }}">
       <div id="first">
@@ -151,14 +151,14 @@ Example:
           on-handle="handleProjectVersion"></sr-wamp-subscribe>
       <sr-wamp-subscribe auto="wamp" topic="org.srobo.environment.version"
           on-handle="handleEnvironmentVersion"></sr-wamp-subscribe>
-      <sr-wamp-call auto="wamp" procedure="org.srobo.state"
-          on-success="handleState"></sr-wamp-call>
-      <sr-wamp-call auto="wamp" procedure="org.srobo.environment.version"
-          on-success="handleEnvironmentVersion"></sr-wamp-call>
-      <sr-wamp-call auto="wamp" procedure="org.srobo.project.version"
-          on-success="handleProjectVersion"></sr-wamp-call>
-      <sr-wamp-call auto="wamp" procedure="org.srobo.project.name"
-          on-success="handleProjectName"></sr-wamp-call>
+      <sr-wamp-procedure auto="wamp" name="org.srobo.state"
+          on-success="handleState"></sr-wamp-procedure>
+      <sr-wamp-procedure auto="wamp" name="org.srobo.environment.version"
+          on-success="handleEnvironmentVersion"></sr-wamp-procedure>
+      <sr-wamp-procedure auto="wamp" name="org.srobo.project.version"
+          on-success="handleProjectVersion"></sr-wamp-procedure>
+      <sr-wamp-procedure auto="wamp" name="org.srobo.project.name"
+          on-success="handleProjectName"></sr-wamp-procedure>
     </template>
 
     <template is="dom-if" if="{{ !connected }}">

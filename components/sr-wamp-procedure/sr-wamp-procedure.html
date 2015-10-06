@@ -1,21 +1,21 @@
 <!--
-`sr-wamp-call` provides a convenient way of making a WAMP call.
+`sr-wamp-procedure` provides a convenient way of making a WAMP call.
 
 Example:
 
-    <sr-wamp-call
+    <sr-wamp-procedure
         auto="wamp"
-        procedure="my.rpc.call"></sr-wamp-call>
+        procedure="my.rpc.call"></sr-wamp-procedure>
 
 @group SR WAMP Elements
-@element sr-wamp-call
+@element sr-wamp-procedure
 -->
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<link rel="import" href="../sr-wamp-core/sr-wamp-core.html" />
+<link rel="import" href="../sr-wamp/sr-wamp.html" />
 
-<dom-module id="sr-wamp-call">
+<dom-module id="sr-wamp-procedure">
   <template>
     <style>
       :host {
@@ -23,15 +23,15 @@ Example:
       }
     </style>
 
-    <sr-wamp-core id="wamp" on-open="handleOpen"></sr-wamp-core>
+    <sr-wamp id="wamp" on-open="handleOpen"></sr-wamp>
   </template>
 
   <script>
     Polymer({
-      is: "sr-wamp-call",
+      is: 'sr-wamp-procedure',
 
       properties: {
-        procedure: String,
+        name: String,
         auto: String,
       },
 
@@ -46,7 +46,7 @@ Example:
         }
       },
       go: function(args, kwargs, options) {
-        this.$.wamp.call(this.procedure, args, kwargs, options).then(function(result) {
+        this.$.wamp.call(this.name, args, kwargs, options).then(function(result) {
           this.fire("success", {result: result});
         }.bind(this));
       }

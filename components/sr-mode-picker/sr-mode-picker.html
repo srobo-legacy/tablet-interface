@@ -14,7 +14,7 @@ of `dev` or `comp`.
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<link rel="import" href="../sr-wamp-call/sr-wamp-call.html" />
+<link rel="import" href="../sr-wamp-procedure/sr-wamp-procedure.html" />
 <link rel="import" href="../sr-wamp-publish/sr-wamp-publish.html" />
 <link rel="import" href="../sr-wamp-subscribe/sr-wamp-subscribe.html" />
 
@@ -65,8 +65,8 @@ of `dev` or `comp`.
       on-handle="handleMode"></sr-wamp-subscribe>
     <sr-wamp-publish id="wampPublishMode"
       topic="org.srobo.mode"></sr-wamp-publish>
-    <sr-wamp-call auto="wamp" procedure="org.srobo.mode"
-      on-success="handleMode"></sr-wamp-call>
+    <sr-wamp-procedure auto="wamp" name="org.srobo.mode"
+      on-success="handleMode"></sr-wamp-procedure>
   </template>
 
   <script>

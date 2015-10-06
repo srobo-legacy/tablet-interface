@@ -13,7 +13,7 @@ Example:
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<link rel="import" href="../sr-wamp-core/sr-wamp-core.html" />
+<link rel="import" href="../sr-wamp/sr-wamp.html" />
 
 <dom-module id="sr-wamp-subscribe">
   <template>
@@ -23,12 +23,12 @@ Example:
       }
     </style>
 
-    <sr-wamp-core id="wamp" on-open="handleOpen"></sr-wamp-core>
+    <sr-wamp id="wamp" on-open="handleOpen"></sr-wamp>
   </template>
 
   <script>
     Polymer({
-      is: "sr-wamp-subscribe",
+      is: 'sr-wamp-subscribe',
 
       properties: {
         topic: String,

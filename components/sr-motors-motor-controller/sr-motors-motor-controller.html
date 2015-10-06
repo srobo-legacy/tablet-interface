@@ -17,8 +17,8 @@ You can get the current value with the `value` attribute.
 
 <link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html" />
 
-<link rel="import" href="../sr-wamp-core/sr-wamp-core.html" />
-<link rel="import" href="../sr-wamp-call/sr-wamp-call.html" />
+<link rel="import" href="../sr-wamp/sr-wamp.html" />
+<link rel="import" href="../sr-wamp-procedure/sr-wamp-procedure.html" />
 <link rel="import" href="../sr-wamp-publish/sr-wamp-publish.html" />
 <link rel="import" href="../sr-wamp-subscribe/sr-wamp-subscribe.html" />
 
@@ -65,18 +65,18 @@ You can get the current value with the `value` attribute.
     <iron-localstorage id="localStorage"
       name="motors_{{ board }}_{{ motor }}_value"></iron-localstorage>
 
-    <sr-wamp-core on-open="handleWampOpen"
-      on-close="handleWampClose"></sr-wamp-core>
-    <sr-wamp-call id="wampGetMotor" procedure="org.srobo.motors.get_motor"
-      on-success="handleGetMotorSuccess"></sr-wamp-call>
+    <sr-wamp on-open="handleWampOpen"
+      on-close="handleWampClose"></sr-wamp>
+    <sr-wamp-procedure id="wampGetMotor" name="org.srobo.motors.get_motor"
+      on-success="handleGetMotorSuccess"></sr-wamp-procedure>
     <sr-wamp-subscribe auto="wamp" topic="org.srobo.motors.motor_value"
       on-handle="handleValuePublished"></sr-wamp-subscribe>
     <sr-wamp-publish id="publishValue"
       topic="org.srobo.motors.motor_value"></sr-wamp-publish>
     <sr-wamp-subscribe id="wampSubState" auto="wamp" topic="org.srobo.state"
       on-handle="handleState"></sr-wamp-subscribe>
-    <sr-wamp-call id="wampGetState" procedure="org.srobo.state"
-      on-success="handleState"></sr-wamp-call>
+    <sr-wamp-procedure id="wampGetState" name="org.srobo.state"
+      on-success="handleState"></sr-wamp-procedure>
   </template>
 
   <script>

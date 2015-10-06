@@ -1,6 +1,6 @@
 # Various ‘to do’ items
 
- - Add args to sr-wamp-call for use with auto.
+ - Add args to sr-wamp-procedure for use with auto.
  - Byte ranges instead of lines in log
  - Slow loading on tablet
    - Create/destroy pages as they change

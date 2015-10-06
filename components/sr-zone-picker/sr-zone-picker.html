@@ -13,7 +13,7 @@ You can get/set the current zone using the `zone` attribute.
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<link rel="import" href="../sr-wamp-call/sr-wamp-call.html" />
+<link rel="import" href="../sr-wamp-procedure/sr-wamp-procedure.html" />
 <link rel="import" href="../sr-wamp-publish/sr-wamp-publish.html" />
 <link rel="import" href="../sr-wamp-subscribe/sr-wamp-subscribe.html" />
 
@@ -62,8 +62,8 @@ You can get/set the current zone using the `zone` attribute.
           on-handle="handleZone"></sr-wamp-subscribe>
       <sr-wamp-publish id="wampPublishZone"
           topic="org.srobo.zone"></sr-wamp-publish>
-      <sr-wamp-call auto="wamp" procedure="org.srobo.zone"
-          on-success="handleZone"></sr-wamp-call>
+      <sr-wamp-procedure auto="wamp" name="org.srobo.zone"
+          on-success="handleZone"></sr-wamp-procedure>
   </template>
 
   <script>

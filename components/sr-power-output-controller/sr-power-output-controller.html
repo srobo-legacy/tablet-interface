@@ -14,8 +14,8 @@ You can get the current state with the `state` attribute.
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html" />
 
-<link rel="import" href="../sr-wamp-core/sr-wamp-core.html" />
-<link rel="import" href="../sr-wamp-call/sr-wamp-call.html" />
+<link rel="import" href="../sr-wamp/sr-wamp.html" />
+<link rel="import" href="../sr-wamp-procedure/sr-wamp-procedure.html" />
 <link rel="import" href="../sr-wamp-publish/sr-wamp-publish.html" />
 <link rel="import" href="../sr-wamp-subscribe/sr-wamp-subscribe.html" />
 
@@ -59,11 +59,11 @@ You can get the current state with the `state` attribute.
     <iron-localstorage id="localStorage"
       name="power_output_{{ index }}_state"></iron-localstorage>
 
-    <sr-wamp-core on-open="handleWampOpen"
-      on-close="handleWampClose"></sr-wamp-core>
-    <sr-wamp-call id="wampGetState"
+    <sr-wamp on-open="handleWampOpen"
+      on-close="handleWampClose"></sr-wamp>
+    <sr-wamp-procedure id="wampGetState"
       procedure="org.srobo.power.get_output_state"
-      on-success="handleGetStateSuccess"></sr-wamp-call>
+      on-success="handleGetStateSuccess"></sr-wamp-procedure>
     <sr-wamp-subscribe auto="wamp" topic="org.srobo.power.output_state"
       on-handle="handleState"></sr-wamp-subscribe>
     <sr-wamp-publish id="publishValue"
@@ -71,8 +71,8 @@ You can get the current state with the `state` attribute.
     <sr-wamp-subscribe id="wampSubRobotState" auto="wamp"
       topic="org.srobo.state"
       on-handle="handleRobotState"></sr-wamp-subscribe>
-    <sr-wamp-call id="wampGetRobotState" procedure="org.srobo.state"
-      on-success="handleRobotState"></sr-wamp-call>
+    <sr-wamp-procedure id="wampGetRobotState" name="org.srobo.state"
+      on-success="handleRobotState"></sr-wamp-procedure>
   </template>
 
   <script>

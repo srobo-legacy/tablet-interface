@@ -12,7 +12,7 @@ Example:
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<link rel="import" href="../sr-wamp-core/sr-wamp-core.html" />
+<link rel="import" href="../sr-wamp/sr-wamp.html" />
 
 <dom-module id="sr-wamp-status-indicator">
   <template>
@@ -37,7 +37,7 @@ Example:
         }
       </style>
 
-      <sr-wamp-core id="wamp" on-open="handleOpen" on-close="handleClose"></sr-wamp-core>
+      <sr-wamp on-open="handleOpen" on-close="handleClose"></sr-wamp>
 
       <p><span class$="[[ _iconClass(connected) ]]"></span> <span>[[ _statusText(connected) ]]</span></p>
   </template>
@@ -45,10 +45,6 @@ Example:
   <script>
     Polymer({
       is: 'sr-wamp-status-indicator',
-
-      properties: {
-        connected: Boolean,
-      },
 
       handleOpen: function() {
         this.connected = true;

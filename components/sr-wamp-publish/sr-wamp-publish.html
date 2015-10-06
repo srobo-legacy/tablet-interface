@@ -14,7 +14,7 @@ You can call `go(args, kwargs, options)` to perform the publish.
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 
-<link rel="import" href="../sr-wamp-core/sr-wamp-core.html" />
+<link rel="import" href="../sr-wamp/sr-wamp.html" />
 
 <dom-module id="sr-wamp-publish">
   <template>
@@ -24,12 +24,12 @@ You can call `go(args, kwargs, options)` to perform the publish.
       }
     </style>
 
-    <sr-wamp-core id="wamp"></sr-wamp-core>
+    <sr-wamp id="wamp"></sr-wamp>
   </template>
 
   <script>
     Polymer({
-      is: "sr-wamp-publish",
+      is: 'sr-wamp-publish',
 
       properties: {
         topic: String,

@@ -12,8 +12,8 @@ Example:
 <link rel="import" href="/bower_components/polymer/polymer.html" />
 <link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html" />
 
-<link rel="import" href="../sr-wamp-core/sr-wamp-core.html" />
-<link rel="import" href="../sr-wamp-call/sr-wamp-call.html" />
+<link rel="import" href="../sr-wamp/sr-wamp.html" />
+<link rel="import" href="../sr-wamp-procedure/sr-wamp-procedure.html" />
 <link rel="import" href="../sr-servos-servo-controller/sr-servos-servo-controller.html" />
 
 <dom-module id="sr-servos-board-controller">
@@ -40,9 +40,9 @@ Example:
 
     <iron-localstorage id="localStorage" name="[[ _localStorageName(board) ]]"></iron-localstorage>
 
-    <sr-wamp-core on-open="handleWampOpen" on-close="handleWampClose"></sr-wamp-core>
-    <sr-wamp-call id="wampGetBoard" procedure="org.srobo.servos.get_board"
-      on-success="handleGetBoardSuccess"></sr-wamp-call>
+    <sr-wamp on-open="handleWampOpen" on-close="handleWampClose"></sr-wamp>
+    <sr-wamp-procedure id="wampGetBoard" name="org.srobo.servos.get_board"
+      on-success="handleGetBoardSuccess"></sr-wamp-procedure>
   </template>
 
   <script>
