@@ -10,6 +10,7 @@
     "iron-localstorage": "PolymerElements/iron-localstorage#~1.0.4",
     "moment": "~2.10.6",
     "raphael": "~2.1.4",
-    "autobahnjs": "autobahn#~0.9.6"
+    "autobahnjs": "autobahn#~0.9.6",
+    "iron-pages": "PolymerElements/iron-pages#~1.0.3"
   }
 }

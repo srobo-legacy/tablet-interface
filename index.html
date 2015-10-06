@@ -15,11 +15,11 @@
 
     <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
 
+    <link rel="import" href="bower_components/iron-pages/iron-pages.html" />
+
     <link rel="import" href="components/sr-ui-button-bar/sr-ui-button-bar.html" />
     <link rel="import" href="components/sr-ui-fa-button/sr-ui-fa-button.html" />
     <link rel="import" href="components/sr-ui-navigation-drawer/sr-ui-navigation-drawer.html" />
-    <link rel="import" href="components/sr-core-pages/sr-core-pages.html" />
-    <link rel="import" href="components/sr-core-page/sr-core-page.html" />
     <link rel="import" href="components/sr-wamp-status-indicator/sr-wamp-status-indicator.html" />
     <link rel="import" href="components/sr-wamp/sr-wamp.html" />
     <link rel="import" href="components/sr-wamp-procedure/sr-wamp-procedure.html" />
@@ -42,8 +42,8 @@
     </sr-ui-button-bar>
 
     <sr-ui-navigation-drawer>
-      <sr-ui-fa-button action="change-page" data-page="setup" icon="cogs">Set up</sr-ui-fa-button>
-      <sr-ui-fa-button action="change-page" data-page="logs" icon="file-text-o">Logs</sr-ui-fa-button>
+      <sr-ui-fa-button action="change-page" data-page="0" icon="cogs">Set up</sr-ui-fa-button>
+      <sr-ui-fa-button action="change-page" data-page="1" icon="file-text-o">Logs</sr-ui-fa-button>
       <!-- <div style="height: 30px;"></div>
       <sr-ui-fa-button action="change-page" data-page="camera" icon="camera">Camera</sr-ui-fa-button>
       <sr-ui-fa-button action="change-page" data-page="io" icon="file">I/O</sr-ui-fa-button>
@@ -53,15 +53,15 @@
       <div style="flex: 1 1 auto;"></div>
     </sr-ui-navigation-drawer>
 
-    <sr-core-pages style="flex: 1 1 auto;">
-      <sr-core-page name="setup" element="sr-pages-setup"></sr-core-page>
-      <sr-core-page name="logs" element="sr-pages-logs"></sr-core-page>
+    <iron-pages id="pages" style="display: flex; flex: 1 1 auto;">
+      <sr-pages-setup></sr-pages-setup>
+      <sr-pages-logs></sr-pages-logs>
       <!-- <sr-core-page name="camera" element="sr-pages-camera"></sr-core-page>
       <sr-core-page name="io" element="sr-pages-io"></sr-core-page>
       <sr-core-page name="motors" element="sr-pages-motors"></sr-core-page>
       <sr-core-page name="power" element="sr-pages-power"></sr-core-page>
       <sr-core-page name="servos" element="sr-pages-servos"></sr-core-page> -->
-    </sr-core-pages>
+    </iron-pages>
 
     <sr-wamp-status-indicator style="position: fixed; right: 0; bottom: 0;"></sr-wamp-status-indicator>
 
@@ -78,7 +78,7 @@
         });
 
         window.addEventListener("change-page", function(e) {
-          document.querySelector("sr-core-pages").changePage(e.detail.sender.dataset.page);
+          document.querySelector("#pages").select(e.detail.sender.dataset.page);
           document.querySelector("sr-ui-navigation-drawer").close();
         });
       }());
@@ -94,7 +94,7 @@
       });
 
       window.addEventListener("WebComponentsReady", function(e) {
-        document.querySelector("sr-core-pages").changePage("setup");
+        document.querySelector("#pages").select(0);
       });
     </script>
 
@@ -103,7 +103,7 @@
         var wamp = document.querySelector("sr-wamp");
 
         wamp.addEventListener("open", function() {
-          wamp.call('org.srobo.hello', '0.1.0').then(function(result) {
+          wamp.call('org.srobo.hello', ['0.1.0']).then(function(result) {
             if (!result['compatible']) {
               window.location.reload();
             }
@@ -155,31 +155,30 @@
     <script>
       document.querySelector("sr-wamp").addEventListener("open", function() {
         console.log("Loading custom components…");
-        var userCodeUrl = "http://" + location.hostname + ":10000";
+        var userCodeUrl = "http://" + location.hostname + ":5080";
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", userCodeUrl + "/custom_pages");
+        xhr.open("GET", userCodeUrl + "/user/pages");
         xhr.responseType = "json";
         xhr.addEventListener("load", function(e) {
           var pages = e.target.response.pages;
           console.log("Got some custom components:", pages);
-          pages.forEach(function(page) {
+          pages.forEach(function(page, index) {
             var link = document.createElement("link");
             link.rel = "import";
             link.href = userCodeUrl + page.import_url;
 
             link.addEventListener("load", function(e) {
-              var pageElement = document.createElement("sr-core-page");
-              pageElement.name = page.name;
+              var pageElement = document.createElement(page.element);
               pageElement.element = page.element;
               pageElement.hidden = true;
               pageElement.dataset.custom = true;
-              document.querySelector("sr-core-pages").appendChild(pageElement);
+              document.querySelector("#pages").appendChild(pageElement);
 
               var btn = document.createElement("sr-ui-fa-button");
               btn.icon = page.icon;
               btn.textContent = page.title;
               btn.action = "change-page";
-              btn.dataset.page = page.name;
+              btn.dataset.page = index;
               btn.dataset.custom = true;
               document.querySelector("sr-ui-navigation-drawer").appendChild(btn);
             });
