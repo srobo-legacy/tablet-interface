@@ -4,7 +4,7 @@
 Example:
 
     <sr-wamp-subscribe
-        auto="wamp"
+        auto
         topic="my.rpc.call"></sr-wamp-subscribe>
 
 @group SR WAMP Elements
@@ -32,14 +32,18 @@ Example:
 
       properties: {
         topic: String,
-        auto: String
+        auto: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true,
+        },
       },
 
       subscribe: function() {
         this.$.wamp.subscribe(
           this.topic,
           function(args, kwargs, details) {
-              this.fire("handle", {
+              this.fire('handle', {
                 args: args, kwargs: kwargs, details: details
               });
           }.bind(this),
@@ -53,20 +57,10 @@ Example:
         this.$.wamp.unsubscribe(this._subscription);
       },
       handleOpen: function() {
-        if (this.auto === "wamp") {
+        if (this.auto) {
           this.subscribe();
         }
       },
-      onPageShow: function() {
-        if (this.auto === "page") {
-          this.subscribe();
-        }
-      },
-      onPageHide: function() {
-        if (this.auto === "page") {
-          this.unsubscribe();
-        }
-      }
     });
   </script>
 </dom-module>

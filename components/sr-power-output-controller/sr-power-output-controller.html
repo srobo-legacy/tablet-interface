@@ -64,11 +64,11 @@ You can get the current state with the `state` attribute.
     <sr-wamp-procedure id="wampGetState"
       procedure="org.srobo.power.get_output_state"
       on-success="handleGetStateSuccess"></sr-wamp-procedure>
-    <sr-wamp-subscribe auto="wamp" topic="org.srobo.power.output_state"
+    <sr-wamp-subscribe auto topic="org.srobo.power.output_state"
       on-handle="handleState"></sr-wamp-subscribe>
     <sr-wamp-publish id="publishValue"
       topic="org.srobo.power.output_state"></sr-wamp-publish>
-    <sr-wamp-subscribe id="wampSubRobotState" auto="wamp"
+    <sr-wamp-subscribe id="wampSubRobotState" auto
       topic="org.srobo.state"
       on-handle="handleRobotState"></sr-wamp-subscribe>
     <sr-wamp-procedure id="wampGetRobotState" name="org.srobo.state"

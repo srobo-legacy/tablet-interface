@@ -143,21 +143,21 @@ Example:
         </p>
       </div>
 
-      <sr-wamp-subscribe auto="wamp" topic="org.srobo.state"
+      <sr-wamp-subscribe auto topic="org.srobo.state"
           on-handle="handleState"></sr-wamp-subscribe>
-      <sr-wamp-subscribe auto="wamp" topic="org.srobo.project.name"
+      <sr-wamp-subscribe auto topic="org.srobo.project.name"
           on-handle="handleProjectName"></sr-wamp-subscribe>
-      <sr-wamp-subscribe auto="wamp" topic="org.srobo.project.version"
+      <sr-wamp-subscribe auto topic="org.srobo.project.version"
           on-handle="handleProjectVersion"></sr-wamp-subscribe>
-      <sr-wamp-subscribe auto="wamp" topic="org.srobo.environment.version"
+      <sr-wamp-subscribe auto topic="org.srobo.environment.version"
           on-handle="handleEnvironmentVersion"></sr-wamp-subscribe>
-      <sr-wamp-procedure auto="wamp" name="org.srobo.state"
+      <sr-wamp-procedure auto name="org.srobo.state"
           on-success="handleState"></sr-wamp-procedure>
-      <sr-wamp-procedure auto="wamp" name="org.srobo.environment.version"
+      <sr-wamp-procedure auto name="org.srobo.environment.version"
           on-success="handleEnvironmentVersion"></sr-wamp-procedure>
-      <sr-wamp-procedure auto="wamp" name="org.srobo.project.version"
+      <sr-wamp-procedure auto name="org.srobo.project.version"
           on-success="handleProjectVersion"></sr-wamp-procedure>
-      <sr-wamp-procedure auto="wamp" name="org.srobo.project.name"
+      <sr-wamp-procedure auto name="org.srobo.project.name"
           on-success="handleProjectName"></sr-wamp-procedure>
     </template>
 

@@ -46,11 +46,11 @@ mode controller.
 
     <sr-wamp id="wamp" on-open="handleWampOpen"
       on-close="handleWampClose"></sr-wamp>
-    <sr-wamp-subscribe auto="wamp" topic="org.srobo.ruggeduinos.pin_mode"
+    <sr-wamp-subscribe auto topic="org.srobo.ruggeduinos.pin_mode"
       on-handle="handleValue"></sr-wamp-subscribe>
     <sr-wamp-publish id="publishValue"
       topic="org.srobo.ruggeduinos.pin_mode"></sr-wamp-publish>
-    <sr-wamp-subscribe id="wampSubRobotState" auto="wamp"
+    <sr-wamp-subscribe id="wampSubRobotState" auto
       topic="org.srobo.state" on-handle="handleRobotState"></sr-wamp-subscribe>
     <sr-wamp-procedure id="wampGetRobotState" name="org.srobo.state"
         on-success="handleRobotState"></sr-wamp-procedure>

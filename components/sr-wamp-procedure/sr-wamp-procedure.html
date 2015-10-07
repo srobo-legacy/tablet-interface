@@ -4,7 +4,7 @@
 Example:
 
     <sr-wamp-procedure
-        auto="wamp"
+        auto
         procedure="my.rpc.call"></sr-wamp-procedure>
 
 @group SR WAMP Elements
@@ -32,22 +32,21 @@ Example:
 
       properties: {
         name: String,
-        auto: String,
+        auto: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true,
+        },
       },
 
       handleOpen: function() {
-        if (this.auto === "wamp") {
-          this.go();
-        }
-      },
-      onPageShow: function() {
-        if (this.auto === "page") {
+        if (this.auto) {
           this.go();
         }
       },
       go: function(args, kwargs, options) {
         this.$.wamp.call(this.name, args, kwargs, options).then(function(result) {
-          this.fire("success", {result: result});
+          this.fire('success', {result: result});
         }.bind(this));
       }
     });

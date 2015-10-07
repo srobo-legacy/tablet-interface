@@ -69,11 +69,11 @@ You can get the current value with the `value` attribute.
       on-close="handleWampClose"></sr-wamp>
     <sr-wamp-procedure id="wampGetServo" name="org.srobo.servos.get_servo"
       on-success="handleGetServoSuccess"></sr-wamp-procedure>
-    <sr-wamp-subscribe auto="wamp" topic="org.srobo.servos.servo_value"
+    <sr-wamp-subscribe auto topic="org.srobo.servos.servo_value"
       on-handle="handleValue"></sr-wamp-subscribe>
     <sr-wamp-publish id="publishValue"
       topic="org.srobo.servos.servo_value"></sr-wamp-publish>
-    <sr-wamp-subscribe id="wampSubState" auto="wamp" topic="org.srobo.state"
+    <sr-wamp-subscribe id="wampSubState" auto topic="org.srobo.state"
       on-handle="handleState"></sr-wamp-subscribe>
     <sr-wamp-procedure id="wampGetState" name="org.srobo.state"
       on-success="handleState"></sr-wamp-procedure>

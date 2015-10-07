@@ -58,11 +58,11 @@ You can get/set the current zone using the `zone` attribute.
       <button data-zone="3" style="background: #ffff00"
           class$="[[ _buttonClass(3, zone) ]]"></button>
 
-      <sr-wamp-subscribe auto="wamp" topic="org.srobo.zone"
+      <sr-wamp-subscribe auto topic="org.srobo.zone"
           on-handle="handleZone"></sr-wamp-subscribe>
       <sr-wamp-publish id="wampPublishZone"
           topic="org.srobo.zone"></sr-wamp-publish>
-      <sr-wamp-procedure auto="wamp" name="org.srobo.zone"
+      <sr-wamp-procedure auto name="org.srobo.zone"
           on-success="handleZone"></sr-wamp-procedure>
   </template>
 

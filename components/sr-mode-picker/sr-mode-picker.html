@@ -61,11 +61,11 @@ of `dev` or `comp`.
       <span class="fa fa-trophy"></span> Competition
     </button>
 
-    <sr-wamp-subscribe auto="wamp" topic="org.srobo.mode"
+    <sr-wamp-subscribe auto topic="org.srobo.mode"
       on-handle="handleMode"></sr-wamp-subscribe>
     <sr-wamp-publish id="wampPublishMode"
       topic="org.srobo.mode"></sr-wamp-publish>
-    <sr-wamp-procedure auto="wamp" name="org.srobo.mode"
+    <sr-wamp-procedure auto name="org.srobo.mode"
       on-success="handleMode"></sr-wamp-procedure>
   </template>
 
