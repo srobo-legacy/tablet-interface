@@ -1,13 +1,13 @@
 <!--
-`sr-pages-motors` provides a page allowing you to control any motor connected
+`sr-motors-page` provides a page allowing you to control any motor connected
 to the robot.
 
 Example:
 
-    <sr-core-page online="sr-pages-motors" offline="sr-pages-motors"></sr-core-page>
+    <sr-core-page online="sr-motors-page" offline="sr-motors-page"></sr-core-page>
 
 @group SR Pages Elements
-@element sr-pages-motors
+@element sr-motors-page
 -->
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
@@ -19,7 +19,7 @@ Example:
 <link rel="import" href="../sr-wamp-publish/sr-wamp-publish.html" />
 <link rel="import" href="../sr-wamp-subscribe/sr-wamp-subscribe.html" />
 
-<dom-module id="sr-pages-motors">
+<dom-module id="sr-motors-page">
   <template>
     <style>
       :host {
@@ -44,7 +44,7 @@ Example:
 
   <script>
     Polymer({
-      is: "sr-pages-motors",
+      is: "sr-motors-page",
 
       handleBoardAdded: function(e) {
         var serialNumber = e.detail.serialNumber;

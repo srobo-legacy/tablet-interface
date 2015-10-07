@@ -25,13 +25,13 @@
     <link rel="import" href="components/sr-wamp-procedure/sr-wamp-procedure.html" />
     <link rel="import" href="components/sr-wamp-subscribe/sr-wamp-subscribe.html" />
 
-    <link rel="import" href="components/sr-pages-camera/sr-pages-camera.html" />
-    <link rel="import" href="components/sr-pages-io/sr-pages-io.html" />
-    <link rel="import" href="components/sr-pages-logs/sr-pages-logs.html" />
-    <link rel="import" href="components/sr-pages-motors/sr-pages-motors.html" />
-    <link rel="import" href="components/sr-pages-power/sr-pages-power.html" />
-    <link rel="import" href="components/sr-pages-servos/sr-pages-servos.html" />
-    <link rel="import" href="components/sr-pages-setup/sr-pages-setup.html" />
+    <link rel="import" href="components/sr-camera-page/sr-camera-page.html" />
+    <link rel="import" href="components/sr-io-page/sr-io-page.html" />
+    <link rel="import" href="components/sr-logs-page/sr-logs-page.html" />
+    <link rel="import" href="components/sr-motors-page/sr-motors-page.html" />
+    <link rel="import" href="components/sr-power-page/sr-power-page.html" />
+    <link rel="import" href="components/sr-servos-page/sr-servos-page.html" />
+    <link rel="import" href="components/sr-setup-page/sr-setup-page.html" />
   </head>
 
   <body>
@@ -45,21 +45,11 @@
       <sr-ui-fa-button action="change-page" data-page="0" icon="cogs">Set up</sr-ui-fa-button>
       <sr-ui-fa-button action="change-page" data-page="1" icon="file-text-o">Logs</sr-ui-fa-button>
       <div style="height: 30px;"></div>
-      <!-- <sr-ui-fa-button action="change-page" data-page="camera" icon="camera">Camera</sr-ui-fa-button>
-      <sr-ui-fa-button action="change-page" data-page="io" icon="file">I/O</sr-ui-fa-button>
-      <sr-ui-fa-button action="change-page" data-page="power" icon="power-off">Power Outputs</sr-ui-fa-button>
-      <sr-ui-fa-button action="change-page" data-page="motors" icon="arrows">Motors</sr-ui-fa-button>
-      <sr-ui-fa-button action="change-page" data-page="servos" icon="wrench">Servos</sr-ui-fa-button> -->
     </sr-ui-navigation-drawer>
 
     <iron-pages id="pages" style="display: flex; flex: 1 1 auto;">
-      <sr-pages-setup></sr-pages-setup>
-      <sr-pages-logs></sr-pages-logs>
-      <!-- <sr-core-page name="camera" element="sr-pages-camera"></sr-core-page>
-      <sr-core-page name="io" element="sr-pages-io"></sr-core-page>
-      <sr-core-page name="motors" element="sr-pages-motors"></sr-core-page>
-      <sr-core-page name="power" element="sr-pages-power"></sr-core-page>
-      <sr-core-page name="servos" element="sr-pages-servos"></sr-core-page> -->
+      <sr-setup-page></sr-setup-page>
+      <sr-logs-page></sr-logs-page>
     </iron-pages>
 
     <sr-wamp-status-indicator style="position: fixed; right: 0; bottom: 0;"></sr-wamp-status-indicator>

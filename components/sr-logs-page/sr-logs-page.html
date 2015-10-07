@@ -1,15 +1,15 @@
 <!--
-`sr-pages-logs` provides a page which allows the user to see the current log
+`sr-logs-page` provides a page which allows the user to see the current log
 and also view any available old logs.
 
 Example:
 
     <sr-core-page
-        online="sr-pages-logs"
-        offline="sr-pages-logs"></sr-core-page>
+        online="sr-logs-page"
+        offline="sr-logs-page"></sr-core-page>
 
 @group SR Pages Elements
-@element sr-pages-logs
+@element sr-logs-page
 -->
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
@@ -21,7 +21,7 @@ Example:
 <link rel="import" href="../sr-wamp-publish/sr-wamp-publish.html" />
 <link rel="import" href="../sr-wamp-subscribe/sr-wamp-subscribe.html" />
 
-<dom-module id="sr-pages-logs">
+<dom-module id="sr-logs-page">
   <template>
     <style>
       :host {
@@ -54,7 +54,7 @@ Example:
 
   <script>
     Polymer({
-      is: "sr-pages-logs",
+      is: "sr-logs-page",
 
       handleJumpToBottom: function() {
         this.$.logs.currentLog.scrollToBottom();

@@ -1,13 +1,13 @@
 <!--
-`sr-pages-servos` provides a page allowing you to control any servo connected
+`sr-servos-page` provides a page allowing you to control any servo connected
 to the robot.
 
 Example:
 
-    <sr-core-page online="sr-pages-servos" offline="sr-pages-servos"></sr-core-page>
+    <sr-core-page online="sr-servos-page" offline="sr-servos-page"></sr-core-page>
 
 @group SR Pages Elements
-@element sr-pages-servos
+@element sr-servos-page
 -->
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
@@ -15,7 +15,7 @@ Example:
 <link rel="import" href="../sr-servos-controller/sr-servos-controller.html" />
 <link rel="import" href="../sr-ui-toolbar/sr-ui-toolbar.html" />
 
-<dom-module id="sr-pages-servos">
+<dom-module id="sr-servos-page">
   <template>
     <style>
       :host {
@@ -40,7 +40,7 @@ Example:
 
   <script>
     Polymer({
-      is: "sr-pages-servos",
+      is: "sr-servos-page",
 
       handleBoardAdded: function(e) {
         var serialNumber = e.detail.serialNumber;

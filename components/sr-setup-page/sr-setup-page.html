@@ -1,13 +1,13 @@
 <!--
-`sr-pages-setup` provides a set up page containing controls to set the mode and
+`sr-setup-page` provides a set up page containing controls to set the mode and
 zone and, while running, view the current project information.
 
 Example:
 
-    <sr-core-page online="sr-pages-setup" offline="sr-pages-setup"></sr-core-page>
+    <sr-core-page online="sr-setup-page" offline="sr-setup-page"></sr-core-page>
 
 @group SR Pages Elements
-@element sr-pages-setup
+@element sr-setup-page
 -->
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
@@ -20,7 +20,7 @@ Example:
 <link rel="import" href="../sr-mode-picker/sr-mode-picker.html" />
 <link rel="import" href="../sr-zone-picker/sr-zone-picker.html" />
 
-<dom-module id="sr-pages-setup">
+<dom-module id="sr-setup-page">
   <template>
     <style>
       :host {
@@ -170,7 +170,7 @@ Example:
 
   <script>
     Polymer({
-      is: 'sr-pages-setup',
+      is: 'sr-setup-page',
 
       properties: {
         disabled: {

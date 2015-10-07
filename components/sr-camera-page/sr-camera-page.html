@@ -1,13 +1,13 @@
 <!--
-`sr-pages-camera` provides a page containing controls for viewing the image on
+`sr-camera-page` provides a page containing controls for viewing the image on
 the camera and also libkoki marker information.
 
 Example:
 
-    <sr-core-page online="sr-pages-camera" offline="sr-pages-camera"></sr-core-page>
+    <sr-core-page online="sr-camera-page" offline="sr-camera-page"></sr-core-page>
 
 @group SR Pages Elements
-@element sr-pages-camera
+@element sr-camera-page
 -->
 
 <link rel="import" href="/bower_components/polymer/polymer.html" />
@@ -19,7 +19,7 @@ Example:
 <link rel="import" href="../sr-camera-frame/sr-camera-frame.html" />
 <link rel="import" href="../sr-ui-toolbar/sr-ui-toolbar.html" />
 
-<dom-module id="sr-pages-camera">
+<dom-module id="sr-camera-page">
   <template>
     <style>
       :host {
@@ -88,7 +88,7 @@ Example:
 
   <script>
     Polymer({
-      is: "sr-pages-camera",
+      is: "sr-camera-page",
 
       created: function() {
         this._markerInfo = {};
