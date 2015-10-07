@@ -64,18 +64,6 @@ Example:
 
       properties: {
         icon: String,
-        action: String,
-      },
-
-      ready: function() {
-        this.addEventListener('click', this.handleClick.bind(this));
-      },
-
-      handleClick: function() {
-        if (this.action) {
-          var e = new CustomEvent(this.action, {detail: {sender: this}});
-          window.dispatchEvent(e);
-        }
       },
 
       _fontAwesomeClass: function(icon) {

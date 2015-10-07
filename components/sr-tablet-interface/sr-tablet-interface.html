@@ -50,8 +50,8 @@
     </sr-ui-button-bar>
 
     <sr-ui-navigation-drawer id="navigationDrawer">
-      <sr-ui-fa-button action="change-page" data-page="0" icon="cogs">Set up</sr-ui-fa-button>
-      <sr-ui-fa-button action="change-page" data-page="1" icon="file-text-o">Logs</sr-ui-fa-button>
+      <sr-ui-fa-button on-click="_selectPage0" icon="cogs">Set up</sr-ui-fa-button>
+      <sr-ui-fa-button on-click="_selectPage1" icon="file-text-o">Logs</sr-ui-fa-button>
       <div style="height: 30px;"></div>
     </sr-ui-navigation-drawer>
 
@@ -65,7 +65,7 @@
     <sr-wamp id="wamp" on-open="_handleWampOpen" on-close="_handleWampClose"></sr-wamp>
     <sr-wamp-procedure id="wampStart" name="org.srobo.start"></sr-wamp-procedure>
     <sr-wamp-procedure id="wampStop" name="org.srobo.stop"></sr-wamp-procedure>
-    <sr-wamp-subscribe id="wampSubState" auto topic="org.srobo.state" on-handle="_handleState"></sr-wamp-subscribe>
+    <sr-wamp-subscribe auto topic="org.srobo.state" on-handle="_handleState"></sr-wamp-subscribe>
     <sr-wamp-procedure id="wampCallState" name="org.srobo.state" on-success="_handleState"></sr-wamp-procedure>
   </template>
 
@@ -75,8 +75,7 @@
 
       ready: function() {
         window.addEventListener("change-page", function(e) {
-          this.$.pages.select(e.detail.sender.dataset.page);
-          this.closeNavigationDrawer();
+          this.selectPage(e.detail.sender.dataset.page);
         }.bind(this));
       },
 
@@ -92,6 +91,18 @@
       },
       closeNavigationDrawer: function() {
         this.$.navigationDrawer.close();
+      },
+
+      selectPage: function(index) {
+        console.log('Selecting page:', index);
+        this.$.pages.select(index);
+        this.closeNavigationDrawer();
+      },
+      _selectPage0: function() {
+        this.selectPage(0);
+      },
+      _selectPage1: function() {
+        this.selectPage(1);
       },
 
       loadCustomPages: function() {
@@ -115,8 +126,11 @@
               var btn = document.createElement('sr-ui-fa-button');
               btn.setAttribute('icon', 'cubes');
               Polymer.dom(btn).textContent = page.title;
-              btn.setAttribute('action', 'change-page');
-              btn.dataset.page = currentPageIndex;
+              (function(index) {
+                btn.addEventListener('click', function() {
+                  this.selectPage(index);
+                }.bind(this));
+              }.bind(this)(currentPageIndex));
               btn.dataset.custom = true;
               Polymer.dom(this.$.navigationDrawer).appendChild(btn);
 
