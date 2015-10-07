@@ -72,8 +72,10 @@ Example:
       },
 
       handleClick: function() {
-        var e = new CustomEvent(this.action, {detail: {sender: this}});
-        window.dispatchEvent(e);
+        if (this.action) {
+          var e = new CustomEvent(this.action, {detail: {sender: this}});
+          window.dispatchEvent(e);
+        }
       },
 
       _fontAwesomeClass: function(icon) {

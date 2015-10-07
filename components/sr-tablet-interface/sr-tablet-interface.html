@@ -1,0 +1,174 @@
+<link rel="import" href="/bower_components/polymer/polymer.html" />
+
+<link rel="import" href="/bower_components/iron-pages/iron-pages.html" />
+
+<link rel="import" href="../sr-ui-button-bar/sr-ui-button-bar.html" />
+<link rel="import" href="../sr-ui-fa-button/sr-ui-fa-button.html" />
+<link rel="import" href="../sr-ui-navigation-drawer/sr-ui-navigation-drawer.html" />
+<link rel="import" href="../sr-wamp-status-indicator/sr-wamp-status-indicator.html" />
+<link rel="import" href="../sr-wamp/sr-wamp.html" />
+<link rel="import" href="../sr-wamp-procedure/sr-wamp-procedure.html" />
+<link rel="import" href="../sr-wamp-subscribe/sr-wamp-subscribe.html" />
+
+<link rel="import" href="../sr-camera-page/sr-camera-page.html" />
+<link rel="import" href="../sr-io-page/sr-io-page.html" />
+<link rel="import" href="../sr-logs-page/sr-logs-page.html" />
+<link rel="import" href="../sr-motors-page/sr-motors-page.html" />
+<link rel="import" href="../sr-power-page/sr-power-page.html" />
+<link rel="import" href="../sr-servos-page/sr-servos-page.html" />
+<link rel="import" href="../sr-setup-page/sr-setup-page.html" />
+
+<dom-module id="sr-tablet-interface">
+  <template>
+    <style>
+      :host {
+        background: white;
+
+        display: flex;
+        flex-direction: row;
+
+        width: 100%;
+        height: 100%;
+      }
+
+      #statusIndicator {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+      }
+
+      #pages {
+        display: flex;
+        flex: 1 1 auto;
+      }
+    </style>
+
+    <sr-ui-button-bar>
+      <sr-ui-fa-button on-click="toggleNavigationDrawer" icon="bars"></sr-ui-fa-button>
+      <div style="height: 20px;"></div>
+      <sr-ui-fa-button id="playButton" on-click="toggleRobot" icon="play" hidden></sr-ui-fa-button>
+    </sr-ui-button-bar>
+
+    <sr-ui-navigation-drawer id="navigationDrawer">
+      <sr-ui-fa-button action="change-page" data-page="0" icon="cogs">Set up</sr-ui-fa-button>
+      <sr-ui-fa-button action="change-page" data-page="1" icon="file-text-o">Logs</sr-ui-fa-button>
+      <div style="height: 30px;"></div>
+    </sr-ui-navigation-drawer>
+
+    <iron-pages id="pages" selected="0">
+      <sr-setup-page></sr-setup-page>
+      <sr-logs-page></sr-logs-page>
+    </iron-pages>
+
+    <sr-wamp-status-indicator id="statusIndicator"></sr-wamp-status-indicator>
+
+    <sr-wamp id="wamp" on-open="_handleWampOpen" on-close="_handleWampClose"></sr-wamp>
+    <sr-wamp-procedure id="wampStart" name="org.srobo.start"></sr-wamp-procedure>
+    <sr-wamp-procedure id="wampStop" name="org.srobo.stop"></sr-wamp-procedure>
+    <sr-wamp-subscribe id="wampSubState" auto topic="org.srobo.state" on-handle="_handleState"></sr-wamp-subscribe>
+    <sr-wamp-procedure id="wampCallState" name="org.srobo.state" on-success="_handleState"></sr-wamp-procedure>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'sr-tablet-interface',
+
+      ready: function() {
+        window.addEventListener("change-page", function(e) {
+          this.$.pages.select(e.detail.sender.dataset.page);
+          this.closeNavigationDrawer();
+        }.bind(this));
+      },
+
+      toggleRobot: function() {
+        if (this.$.playButton.icon === 'stop') {
+          this.$.wampStop.go();
+        } else if (this.$.playButton.icon === 'play') {
+          this.$.wampStart.go();
+        }
+      },
+      toggleNavigationDrawer: function() {
+        this.$.navigationDrawer.toggle();
+      },
+      closeNavigationDrawer: function() {
+        this.$.navigationDrawer.close();
+      },
+
+      loadCustomPages: function() {
+        console.log("Loading custom pages…");
+        var userCodeUrl = "http://" + location.hostname + ":5080/user";
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", userCodeUrl + "/pages");
+        xhr.responseType = "json";
+        xhr.addEventListener("load", function(e) {
+          var pages = e.target.response.pages;
+          console.log("Got some custom pages:", pages);
+
+          var currentPageIndex = 2;  // number of built-in pages
+          pages.forEach(function(page) {
+            Polymer.Base.importHref(userCodeUrl + page.import_url, function(e) {
+              // success
+              var pageElement = document.createElement(page.name);
+              pageElement.dataset.custom = true;
+              Polymer.dom(this.$.pages).appendChild(pageElement);
+
+              var btn = document.createElement('sr-ui-fa-button');
+              btn.setAttribute('icon', 'cubes');
+              Polymer.dom(btn).textContent = page.title;
+              btn.setAttribute('action', 'change-page');
+              btn.dataset.page = currentPageIndex;
+              btn.dataset.custom = true;
+              Polymer.dom(this.$.navigationDrawer).appendChild(btn);
+
+              currentPageIndex += 1;
+            }.bind(this), function(e) {
+              // error
+            }.bind(this));
+          }.bind(this));
+        }.bind(this));
+        xhr.send();
+      },
+
+      removeCustomPages: function() {
+        var customElements = Polymer.dom(this.root).querySelectorAll("[data-custom=true]");
+        for (var i = 0; i < customElements.length; i++) {
+          customElements[i].parentNode.removeChild(customElements[i]);
+        }
+
+        if (this.$.pages.selected >= 2) {
+          this.$.pages.select(0);
+        }
+      },
+
+      _handleWampOpen: function() {
+        this.$.wampCallState.go();
+
+        this.$.wamp.call('org.srobo.hello', ['0.1.0']).then(function(result) {
+          if (!result['compatible']) {
+            window.location.reload();
+          }
+        });
+
+        this.$.playButton.hidden = false;
+      },
+      _handleWampClose: function() {
+        this.$.playButton.hidden = true;
+      },
+
+      _handleState: function(e) {
+        var state = e.detail.result || e.detail.args[0];
+        if (state === 'started') {
+          this.$.playButton.icon = 'stop';
+          setTimeout(this.loadCustomPages.bind(this), 1000);
+        } else if (state === 'stopped') {
+          this.$.playButton.icon = 'play';
+          this.removeCustomPages();
+        } else if (state === 'booting') {
+          this.$.playButton.icon = 'cog fa-spin';
+        } else if (state === 'stopping') {
+          this.$.playButton.icon = 'cog fa-spin';
+        }
+      }
+    });
+  </script>
+</dom-module>
