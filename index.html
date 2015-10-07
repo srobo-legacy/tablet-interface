@@ -47,7 +47,7 @@
       <div style="height: 30px;"></div>
     </sr-ui-navigation-drawer>
 
-    <iron-pages id="pages" style="display: flex; flex: 1 1 auto;">
+    <iron-pages id="pages" selected="0" style="display: flex; flex: 1 1 auto;">
       <sr-setup-page></sr-setup-page>
       <sr-logs-page></sr-logs-page>
     </iron-pages>
@@ -80,10 +80,6 @@
         } else if (e.detail.sender.icon == "stop") {
           document.querySelector("#wamp-stop").go();
         }
-      });
-
-      window.addEventListener("WebComponentsReady", function(e) {
-        document.querySelector("#pages").select(0);
       });
     </script>
 
