@@ -116,28 +116,31 @@
           console.log("Got some custom pages:", pages);
 
           var currentPageIndex = 2;  // number of built-in pages
+          var loadElement = function(name, title, pageIndex) {
+            var pageElement = document.createElement(name);
+            pageElement.dataset.custom = true;
+            Polymer.dom(this.$.pages).appendChild(pageElement);
+
+            var btn = document.createElement('sr-ui-fa-button');
+            btn.setAttribute('icon', 'cubes');
+            Polymer.dom(btn).textContent = title;
+            btn.addEventListener('click', this.selectPage.bind(this, pageIndex));
+            btn.dataset.custom = true;
+            Polymer.dom(this.$.navigationDrawer).appendChild(btn);
+          }.bind(this);
+
           pages.forEach(function(page) {
-            Polymer.Base.importHref(userCodeUrl + page.import_url, function(e) {
-              // success
-              var pageElement = document.createElement(page.name);
-              pageElement.dataset.custom = true;
-              Polymer.dom(this.$.pages).appendChild(pageElement);
-
-              var btn = document.createElement('sr-ui-fa-button');
-              btn.setAttribute('icon', 'cubes');
-              Polymer.dom(btn).textContent = page.title;
-              (function(index) {
-                btn.addEventListener('click', function() {
-                  this.selectPage(index);
-                }.bind(this));
-              }.bind(this)(currentPageIndex));
-              btn.dataset.custom = true;
-              Polymer.dom(this.$.navigationDrawer).appendChild(btn);
-
+            if (page.import_url) {
+              Polymer.Base.importHref(userCodeUrl + page.import_url, function(e) {
+                loadElement(page.name, page.title, currentPageIndex);
+                currentPageIndex += 1;
+              }, function(e) {
+                // error
+              });
+            } else {
+              loadElement(page.name, page.title, currentPageIndex);
               currentPageIndex += 1;
-            }.bind(this), function(e) {
-              // error
-            }.bind(this));
+            }
           }.bind(this));
         }.bind(this));
         xhr.send();
