@@ -56,10 +56,14 @@ Example:
       #old img.selected {
         opacity: 1;
       }
+
+      .toolbar h1 {
+        flex: 1 1 auto;
+      }
     </style>
 
-    <sr-ui-toolbar>
-      <h1 flex>Camera</h1>
+    <sr-ui-toolbar class="toolbar">
+      <h1>Camera</h1>
 
       <template is="dom-if" if="{{ connected }}">
         <button on-click="handlePlayPauseClicked">Play</button>
